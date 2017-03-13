@@ -94,7 +94,7 @@
           <edb-slider layout="{{layout}}" loading="{{slide.loading}}" slides="{{slide.items}}"></edb-slider>
           
           <edb-grid layout="{{layout}}" loading="{{feature.loading}}">
-          <template is="dom-repeat" items="{{feature.items}}" as="feature" sort="sortBySortOrder">
+          <template is="dom-repeat" items="{{feature.items}}" as="feature">
             <edb-card class$="{{feature.cardType}}" image="{{feature.image.src}}" title="{{feature.title.en}}" subtitle="{{feature.subtitle.en}}">
               <p>{{limitText(feature.content.en,120)}}</p>
             </edb-card>
@@ -151,21 +151,21 @@
           }
         }
       },
-      sortBySortOrder: function( a,b ){
-        if(!a.sortOrder && a.sortOrder !== 0){
-          return 0;
-        }
-        if(!b.sortOrder && b.sortOrder !== 0){
-          return 0;
-        }
-        if(a.sortOrder > b.sortOrder){
-          return -1;
-        }
-        if(a.sortOrder < b.sortOrder){
-          return 1;
-        }
-        return 0;
-      },
+      // sortBySortOrder: function( a,b ){
+      //   if(!a.sortOrder && a.sortOrder !== 0){
+      //     return 0;
+      //   }
+      //   if(!b.sortOrder && b.sortOrder !== 0){
+      //     return 0;
+      //   }
+      //   if(a.sortOrder > b.sortOrder){
+      //     return -1;
+      //   }
+      //   if(a.sortOrder < b.sortOrder){
+      //     return 1;
+      //   }
+      //   return 0;
+      // },
       limitText: function( t,n ){
         return t.slice(0,n)+'...';
       },
