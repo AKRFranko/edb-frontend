@@ -27,6 +27,7 @@
         position:relative;
         width:100%;
         height:100%;
+        
         float:left;
         @apply(--layout-vertical);
         cursor:pointer;
@@ -34,10 +35,11 @@
       #grid .cell-inner{
         /*background:blue;*/
         @apply(--layout-center-center);
-        
+        clear:both;
       }
       #grid .cell-inner > *{
         @apply(--layout-flex);
+        clear:both;
         
       }
       :host[raised] #grid .cell-inner > *{

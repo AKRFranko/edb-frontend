@@ -96,17 +96,45 @@
         background:#fff
         padding:0;
       }
-      section,article{
+      section,article,edb-page{
+        display:block;
         @apply(--layout-vertical);
         width:100%;
         height:100%;
         margin:0;
-        min-height:100%;
-        min-width:100%;
-        display:block;
-        float:left;
+        /*min-height:100%;*/
+        /*min-width:100%;*/
+        
+        
       }
-      
+      div.grid{
+        width:100%;
+        
+        @apply(--layout-horizontal);
+        @apply(--layout-wrap);
+        box-sizing:border-box;
+        padding:40px;
+      }
+      div.grid article{
+        
+      }
+      article.address,
+      article.showroom,
+      article.map,
+      article.form{
+        display:block;
+        width:50%;
+        
+        box-sizing:border-box;
+      }
+      edb-map{
+        width:100vw;
+        height:100vh;
+        min-width:100%;
+        min-height:100%;
+        max-width:100%;
+        max-height:100%;
+      }
     </style>
     <edb-layout-query layout="{{layout}}" is-mini-layout="{{isMiniLayout}}"></edb-layout-query>
     <app-scrollpos-control selected="{{page}}"></app-scrollpos-control>
@@ -134,7 +162,7 @@
         
         <section id="contact">
           <edb-page title="Contact" image="https://placehold.it/1500/920/ff0000/ffffff">
-            <edb-grid layout="{{layout}}">
+            <div class="grid">
             <article class="address">
               <h3 class="edb-subtitle">ADDRESS</h3>
               <span class="street-address">534 mccaffrey</span>
@@ -144,8 +172,8 @@
               <span class="phone">514-738-6484</span>
               <span class="phone">1-844-738-6484</span>
               <span class="email"><a href="mailto:info@elementdebase.com">info@elementdebase.com</a></span>
-              
             </article>  
+            
             <article class="showroom">
               <h3 class="edb-subtitle">SHOWROOM OPEN TO THE PUBLIC</h3>
               <table>
@@ -157,10 +185,16 @@
               <p class="edb-footnote">* to arrange an appointment, please call us within our opening hours or write to us at least 24 hours in advance at <a href="mailto:info@elementdebase.com">info@elementdebase.com</a></p>
               <p>Our showroom is open to the public. everyone is welcome to pass by during our opening hours.</p>
             </article>
+            
             <article class="map">
               <edb-map></edb-map>
             </article>
-            </edb-grid>
+            <article class="form">
+              <form>
+                <p>MANANANANANANNA</p>
+              </form>
+            </article>
+            </div>
             
             
             
@@ -198,7 +232,7 @@
         },
         page: {
           type: String,
-          value: 'home',
+          value: 'contact',
           notify: true
         },
         slide:{
