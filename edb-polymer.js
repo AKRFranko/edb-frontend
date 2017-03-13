@@ -51,7 +51,7 @@
       //   });
       //   console.log('sorted!', items.map(function(i){return i.title.en}))
       // };
-      console.log(this.name, items.length)e
+      console.log(this.name, items.length);
       this.set('loading', false );
       this.set('items', items || []);
       if(this.app){
