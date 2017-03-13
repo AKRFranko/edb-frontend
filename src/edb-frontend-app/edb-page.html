@@ -19,16 +19,17 @@
         position:relative;
         width:100%;
         height:0;
-        padding-top:60%;
+        padding-top:calc(100vh - 140px);
         background:#000;
       }
-      .header-inner{
+      .header-inner,.header-inner iron-image{
         position:absolute;
         width:100%;
         height:100%;
         top:0;left:0;bottom:0;right:0;
         @apply(--layout-vertical);
         @apply(--layout-center-center);
+        z-index:0;
         
       }
       
@@ -38,18 +39,19 @@
         line-height:1.2;
         white-space:nowrap;
         text-overflow:ellipsis;
-        
+        z-index:1;
         overflow:hidden;
       }
       .page-subtitle{
         @apply(--edb-font-subhead);
         color:#fff;
+        z-index:1;
       }
       
-      .card-subtitle{
-        @apply(--edb-font-subtitle);
-        line-height:1.2;
-      }
+      /*.card-subtitle{*/
+      /*  @apply(--edb-font-subtitle);*/
+      /*  line-height:1.2;*/
+      /*}*/
       
     
       

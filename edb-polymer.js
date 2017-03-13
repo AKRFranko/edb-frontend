@@ -15,6 +15,7 @@
         computed: '__getRef(name)'
       },
       
+      
       selectedId: {
         type: String,
         notify: true,
