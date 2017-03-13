@@ -152,6 +152,12 @@
         }
       },
       sortBySortOrder: function( a,b ){
+        if(!a.sortOrder && a.sortOrder !== 0){
+          return 0;
+        }
+        if(!b.sortOrder && b.sortOrder !== 0){
+          return 0;
+        }
         if(a.sortOrder > b.sortOrder){
           return -1;
         }
