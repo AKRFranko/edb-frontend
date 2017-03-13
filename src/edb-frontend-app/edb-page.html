@@ -9,6 +9,47 @@
         height:100%;
         
       }
+      #page{
+        display:block;
+        width:100%;
+        height:100%;
+        @apply(--layout-vertical);
+      }
+      .page-header{
+        position:relative;
+        width:100%;
+        height:0;
+        padding-top:60%;
+        background:#000;
+      }
+      .header-inner{
+        position:absolute;
+        width:100%;
+        height:100%;
+        top:0;left:0;bottom:0;right:0;
+        @apply(--layout-vertical);
+        @apply(--layout-center-center);
+        
+      }
+      
+      .page-title{
+        @apply(--edb-font-headline);
+        color:#fff;
+        line-height:1.2;
+        white-space:nowrap;
+        text-overflow:ellipsis;
+        
+        overflow:hidden;
+      }
+      .page-subtitle{
+        @apply(--edb-font-subhead);
+        color:#fff;
+      }
+      
+      .card-subtitle{
+        @apply(--edb-font-subtitle);
+        line-height:1.2;
+      }
       
     
       
@@ -16,9 +57,11 @@
     
     <div id="page">
       <div class="page-header">
+        <div class="header-inner">
         <iron-image class="page-image" preload fade sizing="cover" src="{{image}}"></iron-image>
         <div class="page-title">{{title}}</div>
-        <div class="page-subtitle">{{subtitle}}</div>
+        <!--<div class="page-subtitle">{{subtitle}}</div>-->
+        </div>
       </div>
       <div class="page-body">
         <div class="page-content">

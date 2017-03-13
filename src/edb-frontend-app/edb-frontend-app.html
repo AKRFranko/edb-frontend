@@ -62,7 +62,20 @@
           text-transform: uppercase;
           text-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
         }
-
+        @apply(--edb-font-body);
+      }
+      
+      .edb-title{
+        @apply(--edb-font-title);
+      }
+      .edb-subtitle{
+        @apply(--edb-font-subtitle);
+      }
+      .edb-headline{
+        @apply(--edb-font-headline);
+      }
+      .edb-subhead{
+        @apply(--edb-font-subhead);
       }
       
       edb-card,edb-tile{
@@ -71,9 +84,23 @@
         height:100%;
         margin:0;
       }
+      edb-map{
+        min-height:100%;
+        min-width:100%;
+        width:100%;
+        height:100%;
+      }
       app-toolbar{
         background:#fff
         padding:0;
+      }
+      section,article{
+        @apply(--layout-vertical);
+        width:100%;
+        height:100%;
+        margin:0;
+        min-height:100%;
+        min-width:100%;
       }
       
     </style>
@@ -89,7 +116,7 @@
         
       </app-header>
       <div>
-        <iron-pages>
+        <iron-pages attr-for-selected="id" selected="{{page}}">
         <section id="home">
           <edb-slider layout="{{layout}}" loading="{{slide.loading}}" slides="{{slide.items}}"></edb-slider>
           <edb-grid layout="{{layout}}" loading="{{feature.loading}}">
@@ -103,7 +130,36 @@
         
         <section id="contact">
           <edb-page title="Contact" image="https://placehold.it/1500/920/ff0000/ffffff">
-            <p>wertwert</p>
+            <edb-grid layout="{{layout}}">
+            <article class="address">
+              <h3 class="edb-subtitle">ADDRESS</h3>
+              <span class="street-address">534 mccaffrey</span>
+              <span class="locality">montreal, qc</span>
+              <span class="postcode">h4t 1n1</span>
+              <br>
+              <span class="phone">514-738-6484</span>
+              <span class="phone">1-844-738-6484</span>
+              <span class="email"><a href="mailto:info@elementdebase.com">info@elementdebase.com</a></span>
+              
+            </article>  
+            <article class="showroom">
+              <h3 class="edb-subtitle">SHOWROOM OPEN TO THE PUBLIC</h3>
+              <table>
+                <tr><th>mon – tue</th><td>by appointment*</td></tr>
+                <tr>  <th>wed</th><td>12h00 to 18h00</td></tr>
+                <tr>  <th>thu - fri</th><td>12h00 to 20h00</td></tr>
+                <tr> <th>sat - sun</th><td>13h00 to 17h00</td></tr>
+              </table>
+              <p class="edb-footnote">* to arrange an appointment, please call us within our opening hours or write to us at least 24 hours in advance at <a href="mailto:info@elementdebase.com">info@elementdebase.com</a></p>
+              <p>Our showroom is open to the public. everyone is welcome to pass by during our opening hours.</p>
+            </article>
+            <article class="map">
+              <edb-map></edb-map>
+            </article>
+            </edb-grid>
+            
+            
+            
           </edb-page>
         </section>
           <!--<edb-slider layout="{{layout}}"></edb-slider>-->
