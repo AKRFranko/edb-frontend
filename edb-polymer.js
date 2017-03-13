@@ -43,14 +43,7 @@
     },
     __getRef: EDB.getResourceReference,
     __loadList: function(items) {
-      // if(items && items[0] && items[0].sortOrder){
-      //   items = items.sort( function(a,b){
-      //     checkA =  1*a.sortOrder;
-      //     checkB =  1*b.sortOrder;
-      //     return checkA > checkB ? 1 : checkB > checkA ? -1 : 0;
-      //   });
-      //   console.log('sorted!', items.map(function(i){return i.title.en}))
-      // };
+      
       console.log(this.name, items.length);
       this.set('loading', false );
       this.set('items', items || []);
