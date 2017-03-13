@@ -51,7 +51,7 @@
           return checkA > checkB ? 1 : checkB > checkA ? -1 : 0;
         });
         console.log('sorted!', this.name, items.map(function(i){return i.title.en}))
-      }else{
+      }else{ 
         console.log('unsorted', items)
       }
       
