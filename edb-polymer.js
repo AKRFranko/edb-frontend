@@ -43,7 +43,8 @@
     },
     __getRef: EDB.getResourceReference,
     __loadList: function(items) {
-      if(items && items[0] && items[0].sortOrder){
+      var hasSortOrder = items.some( function(i){ return i||i.hasOwnProperty('sortOrder')});
+      if(hasSortOrder){
         items = items.sort( function(a,b){
           checkA =  1*a.sortOrder;
           checkB =  1*b.sortOrder;
