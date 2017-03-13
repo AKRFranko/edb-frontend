@@ -24,7 +24,8 @@
     "iron-ajax": "^1.4.3",
     "wp-rest": "../edb-admin/bower_components/wp-rest",
     "granite-spinner": "LostInBrittany/spinner-widget#^2.0.1",
-    "querystring-json": "^0.3.12"
+    "querystring-json": "^0.3.12",
+    "iron-pages": "^1.0.8"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

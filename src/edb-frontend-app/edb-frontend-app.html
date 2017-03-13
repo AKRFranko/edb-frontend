@@ -89,10 +89,9 @@
         
       </app-header>
       <div>
-        <!--<iron-pages>-->
+        <iron-pages>
         <section id="home">
           <edb-slider layout="{{layout}}" loading="{{slide.loading}}" slides="{{slide.items}}"></edb-slider>
-          
           <edb-grid layout="{{layout}}" loading="{{feature.loading}}">
           <template is="dom-repeat" items="{{feature.items}}" as="feature">
             <edb-card class$="{{feature.cardType}}" image="{{feature.image.src}}" title="{{feature.title.en}}" subtitle="{{feature.subtitle.en}}">
@@ -101,8 +100,14 @@
           </template>  
           </edb-grid>
         </section>
+        
+        <section id="contact">
+          <edb-page title="Contact" image="https://placehold.it/1500/920/ff0000/ffffff">
+            <p>wertwert</p>
+          </edb-page>
+        </section>
           <!--<edb-slider layout="{{layout}}"></edb-slider>-->
-        <!--</iron-pages>-->
+        </iron-pages>
       </div>
     </app-header-layout>
     
@@ -133,7 +138,7 @@
         },
         page: {
           type: String,
-          value: 'home',
+          value: 'contact',
           notify: true
         },
         slide:{
