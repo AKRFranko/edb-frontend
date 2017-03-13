@@ -1,0 +1,45 @@
+{
+  "name": "transburger-icon",
+  "version": "2.0.0",
+  "authors": [
+    "Kus Cámara"
+  ],
+  "description": "A button with a transformable hamburger menu icon",
+  "keywords": [
+    "web-components",
+    "polymer",
+    "button"
+  ],
+  "main": "transburger-icon.html",
+  "license": "MIT",
+  "homepage": "https://github.com/kcmr/transburger-icon/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kcmr/transburger-icon.git"
+  },
+  "ignore": [
+    "/.*",
+    "*.gif",
+    "*.scss"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0"
+  },
+  "devDependencies": {
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.1.1",
+    "web-component-tester": "^4.2.2",
+    "iron-component-page": "PolymerElements/iron-component-page#^1.1.5"
+  },
+  "resolutions": {
+    "webcomponentsjs": "^0.7.20"
+  },
+  "_release": "2.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.0.0",
+    "commit": "07e11d449486d471370e9890377d6b34f88ad158"
+  },
+  "_source": "git://github.com/kcmr/transburger-icon.git",
+  "_target": "^2.0.0",
+  "_originalSource": "kcmr/transburger-icon"
+}

@@ -1,0 +1,91 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="edb-tile">
+  <template>
+    <style>
+      :host{
+        display:block;
+        width:100%;
+        height:100%;
+        
+      }
+      
+     #tile,#content{
+       display:block;
+       width:100%;
+       height:100%;
+       position:relative;
+       
+       @apply(--layout-vertical);
+       @apply(--layout-justified);
+       @apply(--edb-font-body);
+     }
+     #content{
+       @apply(--layout-vertical);
+       @apply(--layout-center-center);
+       user-select:none;
+     }
+     
+      .background-image,
+      .background-color{
+        position:absolute;
+        z-index:0;
+        top:0;left:0;
+        
+        width:100%;
+        height:100%;
+        
+      }
+    </style>
+    
+    <div id="tile">
+      <iron-image class="background-image" preload fade sizing="cover" src="{{image}}"></iron-image> 
+      <div id="color" class="background-color"></div>
+      <div id="content">
+        <content></content>
+      </div>
+      <paper-ripple></paper-ripple>
+    </div>
+    
+  </template>
+  <script>
+     
+      Polymer({
+  
+        is: 'edb-tile',
+  
+        properties: {
+          layout: {
+            type: String,
+            value: null,
+            notify: true
+          },
+          color: {
+            type: String,
+            value: null,
+            notify: true,
+            observer: 'setColor'
+          },
+          blend: {
+            type: Number,
+            value: 0,
+            notify: true,
+            observer: 'setBlend'
+          }
+          
+         
+        
+        },
+        setColor: function(c){
+          this.$.color.style.background = c;
+        },
+        setBlend: function(b){
+          this.$.color.style.opacity = b;
+        }
+        
+        
+     
+  
+      });
+  </script>
+</dom-module>

@@ -1,0 +1,27 @@
+{
+  "name": "wp-rest",
+  "main": [
+    "wp-rest.html",
+    "wp-rest-resource.html",
+    "wp-rest-document.html"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "iron-ajax": "^1.4.3"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "_release": "4e20c15e73",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "4e20c15e739eb6e9e87d79eb701bc6dfeefa2ee3"
+  },
+  "_source": "/srv/http/codiad/workspace/Code/edb-admin/bower_components/wp-rest",
+  "_target": "*",
+  "_originalSource": "../edb-admin/bower_components/wp-rest"
+}

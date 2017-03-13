@@ -1,0 +1,57 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+</head><body><dom-module id="edb-map">
+  <template>
+    <style>
+      :host{
+        display:block;
+        width:100%;
+        height:100%;
+        
+      }
+      
+     #map{
+       display:block;
+       width:100%;
+       height:100%;
+     }
+      
+    #google{
+      display:block;
+      width:100%;
+      height:calc(100% - 40px);
+    }
+    google-map{
+      width:100%;
+      height:100%;
+    }
+    </style>
+    
+    <div id="map">
+      <div id="google">
+        <google-map map="{{map}}" api-key="AIzaSyBdDY23DjMS6vinyNjD74StRoIiYOZtHZ4" latitude="45.484497" longitude="-73.706519" map-type="roadmap" zoom="11" fit-to-markers="" disable-map-type-control="" disable-street-view-control="">
+          <google-map-marker latitude="45.484497" longitude="-73.706519" icon="/images/edb-pin.png">
+          </google-map-marker>    
+          
+        </google-map>   
+        
+        
+        
+        
+        
+        
+        
+        
+      </div>
+      <div id="form">
+        
+        
+        
+        
+      </div>
+     
+    </div>
+    
+  </template>
+  <script>Polymer({is:"edb-map",properties:{layout:{type:String,value:null,notify:!0},startAddress:{type:String,notify:!0,value:null},endAddress:{type:String,notify:!0,value:{lat:45.484497,lng:-73.706519}},estimates:{type:Array,notify:!0,value:function(){return[{name:"trudeau airport",time:"5min",lat:45.469738,lng:-73.744919},{name:"downtown montreal",time:"5min",lat:45.50348,lng:-73.568489}]}}},setStartAddress:function(t){this.set("startAddress",t.model.estimate),console.log(this.get("startAddress"))}});</script>
+</dom-module></body></html>

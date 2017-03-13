@@ -1,0 +1,6 @@
+{
+  "name": "edb-frontend",
+  "short_name": "edb-frontend",
+  "start_url": "/",
+  "display": "standalone"
+}

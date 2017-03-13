@@ -1,0 +1,179 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<script src="../../creds.js"></script>
+<script src="../../edb.js"></script>
+<script src="../../edb-resources.js"></script>
+<script src="../../edb-polymer.js"></script>
+<dom-module id="edb-frontend-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        max-width:100vw;
+        height:100vh;
+        overflow-x:hidden;
+        overflow-y:auto;
+        --edb-font-body: {
+          font-family:"pragmatica-web-condensed", 'Helvetica Neue', Helvetica, Arial, sans-serif;
+          font-weight:normal;
+          font-size:15px;
+          line-height:1.25;
+          text-transform:lowercase;
+        }
+        
+        --edb-font-title: {
+          font-family:'adobe-caslon-pro', Georgia, 'Times New Roman', Times, serif;
+          font-weight:normal;
+          font-size:22px;
+          line-height:2;
+          text-transform:uppercase;
+        }
+        
+        --edb-font-subtitle: {
+          font-family:'adobe-caslon-pro', Georgia, 'Times New Roman', Times, serif;
+          font-weight:normal;
+          font-size:16px;
+          line-height:2;
+          text-transform:uppercase;
+        }
+        
+        --edb-font-price: {
+          font-family: "pragmatica-web-condensed", 'Helvetica Neue', Helvetica, Arial, sans-serif;
+          font-weight: bold;
+          font-size: 15px;
+          line-height: 1.25;
+          text-transform: uppercase;
+          margin-bottom: 1.5em;
+        }
+        --edb-font-headline: {
+          font-family: "pragmatica-web-condensed", 'Helvetica Neue', Helvetica, Arial, sans-serif;
+          font-size: 45px;
+          line-height: 2;
+          text-transform: uppercase;
+          text-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+        }
+        --edb-font-subhead: {
+          font-family:'adobe-caslon-pro', Georgia, 'Times New Roman', Times, serif;
+          font-size: 22px;
+          text-transform: lowercase;
+          line-height: 1.5;
+          text-transform: uppercase;
+          text-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+        }
+
+      }
+      
+      edb-card,edb-tile{
+        background:#fff;
+        width:100%;
+        height:100%;
+        margin:0;
+      }
+      app-toolbar{
+        background:#fff
+        padding:0;
+      }
+      
+    </style>
+    <edb-layout-query layout="{{layout}}" is-mini-layout="{{isMiniLayout}}"></edb-layout-query>
+    <app-scrollpos-control selected="{{page}}"></app-scrollpos-control>
+
+    
+    <app-header-layout fullbleed>
+      <app-header condenses reveals>
+        
+          <edb-app-toolbar sticky lang="fr" user="{{user}}" cart="{{cart}}" layout="{{layout}}"></edb-app-toolbar>  
+        
+        
+      </app-header>
+      <div>
+        <!--<iron-pages>-->
+        <section id="home">
+          <edb-slider layout="{{layout}}" loading="{{slide.loading}}" slides="{{slide.items}}"></edb-slider>
+          
+          <edb-grid layout="{{layout}}" loading="{{feature.loading}}">
+          <template is="dom-repeat" items="{{feature.items}}" as="feature">
+            <edb-card class$="{{feature.cardType}}" image="{{feature.image.src}}" title="{{feature.title.en}}" subtitle="{{feature.subtitle.en}}">
+              <p>{{limitText(feature.content.en,120)}}</p>
+            </edb-card>
+          </template>  
+          </edb-grid>
+        </section>
+          <!--<edb-slider layout="{{layout}}"></edb-slider>-->
+        <!--</iron-pages>-->
+      </div>
+    </app-header-layout>
+    
+      
+      
+    
+  </template>
+
+  <script>
+  function isDescendant(parent, child) {
+       var node = child.parentNode;
+       while (node != null) {
+           if (node == parent) {
+               return true;
+           }
+           node = node.parentNode;
+       }
+       return false;
+  }
+    Polymer({
+
+      is: 'edb-frontend-app',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'edb-frontend-app',
+        },
+        page: {
+          type: String,
+          value: 'home',
+          notify: true
+        },
+        slide:{
+          type: Object,
+          notify: true,
+          value: function(){
+            return {};
+          }
+        },
+        feature:{
+          type: Object,
+          notify: true,
+          value: function(){
+            return {};
+          }
+        }
+      },
+      // sortBySortOrder: function( a,b ){
+      //   if(a.sortOrder > b.sortOrder){
+      //     return -1;
+      //   }
+      //   if(a.sortOrder < b.sortOrder){
+      //     return 1;
+      //   }
+      //   return 0;
+      // },
+      limitText: function( t,n ){
+        return t.slice(0,n)+'...';
+      },
+      ready: function(){
+        // var slides = new EDB.PolymerResource( 'slides' );
+        
+        var slide = new EDB.PolymerResource('slide', this);
+        slide.refreshItems();
+        var feature = new EDB.PolymerResource('feature', this);
+        feature.refreshItems();
+        // this.set('slides', slides.items );
+        // console.log()
+      }
+
+    });
+  </script>
+</dom-module>

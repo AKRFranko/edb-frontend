@@ -1,0 +1,611 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+</head><body><dom-module id="edb-app-toolbar">
+  <template>
+    <style>
+      :host{
+        display:block;
+        width:100%;
+      }
+      a[tabindex="-1"]{
+        font:inherit;
+        color:inherit;
+        text-decoration:none;
+      }
+      
+      
+      #toolbar{
+        background:#fff;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        @apply(--layout-justified);
+        @apply(--edb-font-body);
+        width:100%;
+        box-sizing:border-box;
+        height:140px;
+        padding:0;
+        
+      }
+      #toolbar .logo{
+        padding:0;
+        color:inherit;
+        text-decoration:none;
+        height:100px;
+        width:100px;
+        margin:20px 40px 0px 40px;
+      }
+      #toolbar .logo paper-icon-button{
+        height:100px;
+        width:100px;
+        padding:0 0 0 0;
+      }
+      #toolbar .menu{
+        box-sizing:border-box;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        @apply(--layout-self-end);
+        margin-right:-20px;
+      }
+      #toolbar .site-menu{
+        
+        
+      }
+      #toolbar .user-menu{
+      
+      }
+      #toolbar .menus{
+        box-sizing:border-box;
+        @apply(--layout-vertical);
+        @apply(--layout-justified);
+        height:100%;
+        font-size:15px;
+        padding:10px 40px;
+      }
+     
+      
+      
+      paper-item{
+        @apply(--edb-font-body);
+        vertical-align:middle;
+        padding:2px 20px;
+        font-weight:normal!important;
+      }
+      #toolbar .site-menu paper-item{
+        transition:all .2s ease-in;
+      }
+      #toolbar .site-menu paper-item.opened{
+        background:#000;
+        color:#fff;
+        /*height: 50px;*/
+        margin-bottom: -20px;
+        margin-top: -5px;
+        padding-top: 0;
+        padding-bottom: 15px;
+      }
+      paper-badge[for="cartWidget"]{
+        margin-top:10px;
+      }
+      #toolbar paper-contact-phone{
+        letter-spacing:0.1em;
+        @apply(--edb-font-body);
+        padding:2px 20px;
+        
+      }
+      
+      #toolbar paper-contact-phone ::content #contentIcon{
+        display:none
+        
+      }
+      iron-collapse-button{
+        user-select:none;
+        cursor:pointer;
+      }
+      .submenu{
+        @apply(--layout-horizontal);
+        margin-left:40px;
+        
+      }
+      
+      .submenu-trigger{
+        margin-left:40px;
+        padding:10px 0;
+      }
+      #catalogMenu{
+        @apply(--edb-font-body);
+        @apply(--layout-vertical);
+        @apply(--layout-start-justified);
+        position:fixed;
+        top:140px;left:0;
+        background:rgba(0,0,0,0.99);
+        color:#fff;
+        width:100%;
+        height:0;
+        overflow:hidden;
+        padding:0;
+        letter-spacing:0.02em;
+        transition:all .2s ease-in;
+        z-index:99999;
+      }
+      #catalogMenu.opened{
+        /*padding:40px 40px 40px 20px;*/
+        padding:40px 0;
+        height:calc(100vh - 140px);
+      }
+      #catalogMenu iron-selector{
+        @apply(--layout-horizontal);
+        @apply(--layout-wrap);
+        max-width:960px;
+        margin:0 auto;
+      }
+      #catalogMenu iron-selector > *{
+        width:50%;
+      }
+      #catalogMenu iron-selector > a paper-item{
+        margin-left:20px;
+        
+      }
+      #cartWidget,#cartWidgetII{
+        padding-right:20px;
+        
+      }
+      
+      #burgerMenu{
+        @apply(--edb-font-body);
+        display:block;
+        position:fixed;
+        top:0;
+        width:100vw;
+        background:rgba(0,0,0,0.8);
+        color:#fff;
+        padding:0 20px;
+        height:0;
+        overflow:hidden;
+        /*position:relative;*/
+        transition:all .2s ease-in;
+        
+      }
+      
+      #burgerMenu .menu-header{
+        position:absolute;
+        top:0;
+        left:0;
+        padding:10px;
+        
+        padding-top:20px;
+      }
+      #burgerMenu .close{
+        position:absolute;
+        top:10px;
+        left:100vw;
+        margin-left:-40px;
+        margin-top:-10px;
+        
+      }
+      #burgerMenuToggle.opened{
+        opacity:0;
+      }
+      #burgerMenu .menu-header .logo{
+        margin:0;
+        
+        height:80px;
+        width:80px;
+      }
+      #burgerMenu .menu-header .logo paper-icon-button{
+        height:80px;
+        width:80px;
+        padding:0;
+        margin-top:-3px;
+      }
+      #burgerMenu.opened{
+        display:block;
+        width:100vw;
+        height:100%;
+        min-height:100vh;
+        padding:140px 40px 40px;
+        overflow:auto;
+      }
+      .menu-columns{
+        @apply(--layout-horizontal);
+        @apply(--layout-justified);
+        box-sizing:border-box;
+        width:100%;
+        margin:0;
+        margin-left:-40px;
+      }
+      .menu-columns .column{
+        width:50%;
+        padding:20px;
+        display:inline-block;
+        vertical-align:top;
+        box-sizing:border-box;
+      }
+      #toolbar .burger-menu{
+        @apply(--layout-vertical);
+      
+        width:calc(100vw - 80px);
+      }
+      #toolbar .burger-submenu{
+        @apply(--layout-horizontal);
+        @apply(--layout-end-justified);
+        width:calc(100vw);
+        margin-left:-120px;
+        margin-top:40px;
+      }
+      #toolbar .user-menu paper-contact-phone{
+        
+          position:absolute;
+          top:10px;
+          left:150px;
+        
+      }
+      #toolbar .burger-menu paper-contact-phone{
+        position:absolute;
+        top:-5px;
+        
+        width:170px;
+        padding:0!important;
+        
+        left:50vw;
+        margin-left:-85px;
+        height:36px;
+        overflow:hidden;
+        text-align:center;
+      }
+      #toolbar .burger-toggle{
+        text-align:right;
+        margin-left:calc(100% - 100px);
+        margin-top:-10px;
+      }
+      #toolbar .burger-menu paper-item{
+        position:relative;
+        min-width:3em;
+        padding:0px 20px 0;
+        max-height:15px;
+        white-space:nowrap;
+        margin:12px 20px 0;
+      }
+      /*app-toolbar .burger-submenu paper-item:first-of-type{*/
+      /*  margin-left:-20px;*/
+      /*}*/
+      
+      #toolbar .burger-submenu paper-item:last-of-type{
+        margin-right:-20px;
+      }
+       
+       
+      @media all and (max-width:320px){
+        
+      }
+      
+      @media all and (max-width:450px){
+        
+       #toolbar .burger-submenu{
+         @apply(--layout-justified);
+         width:100vw;
+         margin-left:-160px;
+       }
+        
+      }
+      @media all and (max-width:768px){
+        
+        #toolbar .logo{
+          margin:0 10px 10px 10px;
+          height:80px;
+          width:80px;
+        }
+        #toolbar .logo paper-icon-button{
+          height:80px;
+          width:80px;
+          padding:0;
+          margin-top:-10px;
+        }
+        #toolbar .menus{
+         padding:10px;
+        }
+        #toolbar .menu{
+          margin-right:0;
+        }
+        #catalogMenu,#toolbar .site-menu,
+        #toolbar .user-menu{
+          display:none;
+        }
+        
+        #toolbar .burger-menu{
+          @apply(--layout-vertical);
+          left:0;
+        }
+       
+        
+      }
+      @media all and (max-width:1024px){
+        
+      }
+      @media all and (min-width:769px){
+        #toolbar .burger-menu, 
+        #burgerMenu{
+          display:none;
+        }
+        
+      }
+      @media all and (max-width:1440px){
+       /*app-toolbar .burger-menu, */
+       /*#burgerMenu{*/
+       /*  display:none;*/
+       /*} */
+      }
+      
+    </style>
+    <div id="toolbar">
+      <a class="logo" href="/" tabindex="-1">
+        <paper-icon-button icon="edb:logo"></paper-icon-button>
+      </a>
+      
+      <div class="menus">
+        <div class="menu user-menu">
+          <paper-contact-phone>+1-844-738-6484</paper-contact-phone>
+          <div hidden$="{{!user}}" class="welcome">Welcome, <b>{{user.name}}</b>!</div>
+          <a href="/#" tabindex="-1">
+            <paper-item hidden$="{{!user}}">account</paper-item>
+          </a>
+          <a href="/#" tabindex="-1">
+            <paper-item hidden$="{{user}}">sign in</paper-item>
+          </a>
+          <a href="/#" tabindex="-1">
+            <paper-item hidden$="{{!user}}">sign out</paper-item>
+          </a>
+          <a href="/#" tabindex="-1" hidden$="{{!user}}">
+            <paper-item>
+              <div id="cartWidget">cart</div>
+              <paper-badge for="cartWidget" label="0"></paper-badge>
+            </paper-item>
+          </a>
+          <a href="/#" tabindex="-1">
+            <paper-item hidden$="{{isFr}}">fr</paper-item>
+          </a>
+          <a href="/#" tabindex="-1">
+            <paper-item hidden$="{{isEn}}">en</paper-item>
+          </a>
+        </div>
+        <div class="menu burger-menu">
+          
+          <paper-contact-phone>+1-844-738-6484</paper-contact-phone>
+          <div class="burger-toggle"><paper-icon-button id="burgerMenuToggle" icon="menu"></paper-icon-button></div>
+          <div class="burger-submenu">
+            <a href="/#" tabindex="-1">
+              <paper-item hidden$="{{!user}}">account</paper-item>
+            </a>
+            <a href="/#" tabindex="-1">
+              <paper-item hidden$="{{user}}">sign in</paper-item>
+            </a>
+            <a href="/#" tabindex="-1">
+              <paper-item hidden$="{{!user}}">sign out</paper-item>
+            </a>
+            
+            <a href="/#" tabindex="-1">
+              <paper-item>
+                <div id="cartWidgetII">cart</div>
+                <paper-badge hidden$="{{!cart.items.length}}" for="cartWidgetII" label="{{cart.items.length}}"></paper-badge>
+              </paper-item>
+            </a>
+            <a href="/#" tabindex="-1">
+              <paper-item hidden$="{{isFr}}">fr</paper-item>
+            </a>
+            <a href="/#" tabindex="-1">
+              <paper-item hidden$="{{isEn}}">en</paper-item>
+            </a>
+          </div>
+        </div>
+        <div class="menu site-menu">
+          <paper-item id="catalogMenuToggle">products</paper-item>
+          <a href="/#" tabindex="-1">
+            <paper-item>order samples</paper-item>
+          </a>
+          <a href="/#" tabindex="-1">
+            <paper-item>contact us</paper-item>
+          </a>
+          <a href="/#" tabindex="-1">
+            <paper-item>lookbooks</paper-item>
+          </a>
+          <a href="/#" tabindex="-1">
+            <paper-item>inspirations</paper-item>
+          </a>
+        </div>
+      </div>
+      <div id="burgerMenu">
+        <div class="menu-header">
+          <a class="logo" href="/#" tabindex="-1">
+            <paper-icon-button icon="edb:logo"></paper-icon-button>
+          </a>
+          <a class="close" href="/#" tabindex="-1">
+            <paper-icon-button icon="close"></paper-icon-button>
+          </a>
+        </div>
+        <div class="menu-columns">
+          <div class="column">
+            <paper-item id="catalogMenuToggle">products</paper-item>
+            <a href="/#" tabindex="-1">
+              <paper-item>order samples</paper-item>
+            </a>
+            <a href="/#" tabindex="-1">
+              <paper-item>contact us</paper-item>
+            </a>
+            <a href="/#" tabindex="-1">
+              <paper-item>lookbooks</paper-item>
+            </a>
+            <a href="/#" tabindex="-1">
+              <paper-item>inspirations</paper-item>
+            </a>
+          </div>
+          <div class="column">
+            <iron-selector selected="{{catalogQuery.selectedCategory}}" attr-for-selected="data-category" selectable="paper-item">
+              <iron-collapse-button>
+                <div slot="collapse-trigger">
+                  <div class="submenu-trigger">Sofas</div>
+                </div>
+                <div slot="collapse-content">
+                  <div class="submenu">
+                    <a href="/#" tabindex="-1" data-category="sofas-3-seat">
+                      <paper-item>3 seater</paper-item>
+                    </a>
+                    <a href="/#" tabindex="-1" data-category="sofas-2-seat">
+                      <paper-item>2 seater</paper-item>
+                    </a>
+                    <a href="/#" tabindex="-1" data-category="sofas-1-seat">
+                      <paper-item>1 seater</paper-item>
+                    </a>
+                    <a href="/#" tabindex="-1" data-category="sofas">
+                      <paper-item>all</paper-item>
+                    </a>
+                  </div>
+                </div>
+              </iron-collapse-button>
+              <a href="/#" tabindex="-1" data-category="sofa-beds">
+                <paper-item>Sofa Beds</paper-item>
+              </a>
+              <iron-collapse-button>
+                <div slot="collapse-trigger">
+                  <div class="submenu-trigger">Sectionals</div>
+                </div>
+                <div slot="collapse-content">
+                  <div class="submenu">
+                    <a href="/#" tabindex="-1" data-category="sofas-sectional-left">
+                      <paper-item>Left Facing</paper-item>
+                    </a>
+                    <a href="/#" tabindex="-1" data-category="sofas-sectional-right">
+                      <paper-item>Right Facing</paper-item>
+                    </a>
+                    <a href="/#" tabindex="-1" data-category="sofas-sectional">
+                      <paper-item>all</paper-item>
+                    </a>
+                  </div>
+                </div>
+              </iron-collapse-button>
+              <a tabindex="-1" data-category="sofas-1-seat" href="/#">
+                <paper-item>Armchairs</paper-item>
+              </a>
+              <a tabindex="-1" data-category="sofas-modular" href="/#">
+                <paper-item>Modular</paper-item>
+              </a>
+              <a tabindex="-1" data-category="side-tables" href="/#">
+                <paper-item>Side Tables</paper-item>
+              </a>
+              <a tabindex="-1" data-category="ottomans" href="/#">
+                <paper-item>Ottomans</paper-item>
+              </a>
+              <a tabindex="-1" data-category="rugs" href="/#">
+                <paper-item>Rugs</paper-item>
+              </a>
+              <a tabindex="-1" data-category="cushions" href="/#">
+                <paper-item>Cushions</paper-item>
+              </a>
+              <a tabindex="-1" data-category="accessories" href="/#">
+                <paper-item>Accessories</paper-item>
+              </a>
+              <a tabindex="-1" data-category="all" href="/#">
+                <paper-item>All</paper-item>
+              </a>
+              <a tabindex="-1" data-category="new" href="/#">
+                <paper-item>New</paper-item>
+              </a>
+              <a tabindex="-1" data-category="sale" href="/#">
+                <paper-item>On Sale</paper-item>
+              </a>
+            </iron-selector>
+          </div>
+        </div>
+        
+      </div>
+      <div id="catalogMenu" class="menu catalog-menu">
+        
+        <iron-selector selected="{{catalogQuery.selectedCategory}}" attr-for-selected="data-category" selectable="paper-item">
+          <iron-collapse-button>
+            <div slot="collapse-trigger">
+              <div class="submenu-trigger">Sofas</div>
+            </div>
+            <div slot="collapse-content">
+              <div class="submenu">
+                <a href="/#" tabindex="-1" data-category="sofas-3-seat">
+                  <paper-item>3 seater</paper-item>
+                </a>
+                <a href="/#" tabindex="-1" data-category="sofas-2-seat">
+                  <paper-item>2 seater</paper-item>
+                </a>
+                <a href="/#" tabindex="-1" data-category="sofas-1-seat">
+                  <paper-item>1 seater</paper-item>
+                </a>
+                <a href="/#" tabindex="-1" data-category="sofas">
+                  <paper-item>all</paper-item>
+                </a>
+              </div>
+            </div>
+          </iron-collapse-button>
+          <a href="/#" tabindex="-1" data-category="sofa-beds">
+            <paper-item>Sofa Beds</paper-item>
+          </a>
+          <iron-collapse-button>
+            <div slot="collapse-trigger">
+              <div class="submenu-trigger">Sectionals</div>
+            </div>
+            <div slot="collapse-content">
+              <div class="submenu">
+                <a href="/#" tabindex="-1" data-category="sofas-sectional-left">
+                  <paper-item>Left Facing</paper-item>
+                </a>
+                <a href="/#" tabindex="-1" data-category="sofas-sectional-right">
+                  <paper-item>Right Facing</paper-item>
+                </a>
+                <a href="/#" tabindex="-1" data-category="sofas-sectional">
+                  <paper-item>all</paper-item>
+                </a>
+              </div>
+            </div>
+          </iron-collapse-button>
+          <a tabindex="-1" data-category="sofas-1-seat" href="/#">
+            <paper-item>Armchairs</paper-item>
+          </a>
+          <a tabindex="-1" data-category="sofas-modular" href="/#">
+            <paper-item>Modular</paper-item>
+          </a>
+          <a tabindex="-1" data-category="side-tables" href="/#">
+            <paper-item>Side Tables</paper-item>
+          </a>
+          <a tabindex="-1" data-category="ottomans" href="/#">
+            <paper-item>Ottomans</paper-item>
+          </a>
+          <a tabindex="-1" data-category="rugs" href="/#">
+            <paper-item>Rugs</paper-item>
+          </a>
+          <a tabindex="-1" data-category="cushions" href="/#">
+            <paper-item>Cushions</paper-item>
+          </a>
+          <a tabindex="-1" data-category="accessories" href="/#">
+            <paper-item>Accessories</paper-item>
+          </a>
+          <a tabindex="-1" data-category="all" href="/#">
+            <paper-item>All</paper-item>
+          </a>
+          <a tabindex="-1" data-category="new" href="/#">
+            <paper-item>New</paper-item>
+          </a>
+          <a tabindex="-1" data-category="sale" href="/#">
+            <paper-item>On Sale</paper-item>
+          </a>
+        </iron-selector>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </div>
+      
+      
+      
+      
+    </div>
+  </template>
+  <script>Polymer({is:"edb-app-toolbar",properties:{layout:{type:String,value:null,notify:!0},lang:{type:String,value:null,notify:!0},isEn:{type:Boolean,notify:!0,computed:"isLang(lang,'en')"},isFr:{type:Boolean,notify:!0,computed:"isLang(lang,'fr')"},user:{type:Object,value:null,notify:!0},cart:{type:Object,value:null,notify:!0}},isLang:function(e,t){return e==t},ready:function(){window.addEventListener("click",function(e){var t=Polymer.dom(e).rootTarget,o=document.querySelector("#catalogMenu"),n=document.querySelector("#catalogMenuToggle");return isDescendant(o,t)||(t==n?(o.classList.toggle("opened"),n.classList.toggle("opened")):t==o?(o.classList.remove("opened"),n.classList.remove("opened")):(o.classList.remove("opened"),n.classList.remove("opened"))),!0}),window.addEventListener("click",function(e){var t=Polymer.dom(e).rootTarget,o=t.parentNode,n=document.querySelector("#burgerMenu"),s=document.querySelector("#burgerMenuToggle");return this.$.catalogMenu.style.top=this.$.toolbar.getBoundingClientRect().bottom+"px",isDescendant(n,t)?o.parentNode&&(o.parentNode.classList.contains("logo")||o.parentNode.classList.contains("close"))&&(n.classList.remove("opened"),s.classList.remove("opened")):t==s?(n.classList.toggle("opened"),s.classList.toggle("opened")):t==n?(n.classList.remove("opened"),s.classList.remove("opened")):isDescendant(s,t)?(n.classList.toggle("opened"),s.classList.toggle("opened")):(n.classList.remove("opened"),s.classList.remove("opened")),!0}.bind(this))}});</script>
+</dom-module></body></html>

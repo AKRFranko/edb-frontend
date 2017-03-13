@@ -1,0 +1,87 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+</head><body><dom-module id="edb-catfish">
+  <template>
+    <style>
+          :host{
+            display:block;
+            width:100%;
+            position:fixed;
+            top:100vh;
+            
+          }
+          #catfish{
+            position:relative;
+            transition:all .2s ease-in;
+            background:red;
+            height:100vh;
+          }
+          .catfish-image{
+            position:relative;
+            width:100%;
+            height:60%;
+            z-index:0;
+          }
+          .catfish-content{
+            width:100%;
+            height:40%;
+            @apply(--layout-vertical);
+          }
+          .catfish-image iron-image{
+            width:100%;
+            height:100%;
+          }
+          paper-icon-button{
+            position:absolute;
+            top:10px;
+            right:10px;
+            z-index:1;
+          }
+          #catfish.opened{
+            margin-top:-100vh;
+          }
+          #catfish.opened paper-icon-button{
+            display:block;
+          }
+          /*#catfish.peeking{*/
+          /*  margin-top:-40px;*/
+          /*}*/
+          /*#catfish .peek{*/
+          /*  display:none;*/
+          /*}*/
+          /*#catfish.peeking .peek{*/
+          /*  display:block;*/
+          /*  height:40px;*/
+          /*}*/
+          @media all and (min-width:768px){
+            #catfish{
+              position:relative;
+              transition:all .2s ease-in;
+              background:red;
+              
+              height:60vh;
+              
+            }
+            #catfish.opened{
+              margin-top:-60vh;
+            }
+            
+            .catfish-content{
+              @apply(--layout-horizontal);
+              
+            }
+          }
+    </style>
+      <div id="catfish">
+        
+        <div class="catfish-image">
+          <iron-image preload="" fade="" sizing="cover" src="http://placehold.it/1500x920"></iron-image>
+        </div>
+        <div class="catfish-content">
+          <content></content>
+        </div>
+        <paper-icon-button icon="close" on-tap="close"></paper-icon-button>
+      </div>
+  </template>
+  <script>Polymer({is:"edb-catfish",properties:{opened:{type:Boolean,value:!1,notify:!0,observer:"setOpened"},auto:{type:Boolean,value:!0,notify:!0}},setOpened:function(e){e?this.$.catfish.classList.add("opened"):this.$.catfish.classList.remove("opened")},open:function(){this.opened||this.set("opened",!0)},close:function(){this.opened&&this.set("opened",!1)},toggle:function(){this.opened?this.close():this.open()},ready:function(){this.auto&&this.async(this.open,3e3)}});</script>
+</dom-module></body></html>

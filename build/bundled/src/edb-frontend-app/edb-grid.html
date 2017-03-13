@@ -1,0 +1,172 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+</head><body><dom-module id="edb-grid">
+  <template>
+    <style>
+      :host{
+        display:block;
+        width:100%;
+        height:100%;
+        
+      }
+      *{
+        box-sizing:border-box;
+      }
+      #grid{
+        display:block;
+        
+        @apply(--layout-vertical);
+        
+        margin:0;padding:0;
+        
+        /*float:left;*/
+        width:100%;
+      }
+      
+      #grid .cell,#grid .cell-inner{
+        position:relative;
+        width:100%;
+        height:100%;
+        float:left;
+        @apply(--layout-vertical);
+      }
+      #grid .cell-inner{
+        /*background:blue;*/
+        @apply(--layout-center-center);
+        
+      }
+      #grid .cell-inner > *{
+        @apply(--layout-flex);
+        
+      }
+      :host[raised] #grid .cell-inner > *{
+        @apply(--shadow-elevation-2dp);
+      }
+      #grid .cell.square{
+        height:0;
+        padding-top:100%;
+      }
+      #grid .cell.square .cell-inner{
+          position:absolute;
+          width:100%;
+          height:100%;
+          @apply(--layout-vertical);
+          @apply(--layout-center-center);
+          top:0;left:0;bottom:0;right:0;
+          margin:0;padding:0;box-sizing:border-box;
+      }
+      
+      /*#grid .cell.hero,*/
+      /*#grid .cell.square.hero,*/
+      /*#grid .cell.full.hero,*/
+      /*#grid.thirds .cell.hero,*/
+      /*#grid.thirds .cell.square.hero,*/
+      /*#grid.thirds .cell.full.hero{*/
+      /*  margin:0px;*/
+      /*  min-width:100%!important;*/
+      /*  height:calc(100vh - 140px);*/
+        
+      /*}*/
+      @media all and (min-width:768px){
+        #grid{
+          @apply(--layout-horizontal);
+          /*@apply(--layout-justified);*/
+          @apply(--layout-wrap);
+          padding:30px;
+        }
+        #grid .cell{
+          /*color:Red;*/
+          width:50%;
+          max-width:50%;
+          
+        }
+        #grid .cell.square{
+          width:50%;
+          max-width:50%;
+          height:0;
+          padding-top:50%;
+        }
+        #grid .cell .cell-inner{
+          padding:10px;
+        }
+        #grid .cell.square .cell-inner{
+            position:absolute;
+            width:100%;
+            height:100%;
+            @apply(--layout-vertical);
+            @apply(--layout-center-center);
+            top:0;left:0;bottom:0;right:0;
+            margin:0;box-sizing:border-box;
+            padding:10px;
+        }
+        #grid .cell.full .cell-inner{
+          padding:10px;
+          
+        }        
+        #grid .cell.full{
+          width:100%;
+          min-width:100%;
+          height:100%;
+        }
+        #grid .cell.full.square{
+          width:100%;
+          max-width:100%;
+          height:0;
+          padding-top:100%;
+          
+        }
+        #grid .cell.full.square .cell-inner{
+            position:absolute;
+            width:100%;
+            height:100%;
+            @apply(--layout-vertical);
+            @apply(--layout-center-center);
+            top:0;left:0;bottom:0;right:0;
+            margin:0;padding:10px;box-sizing:border-box;
+        }
+        
+        
+        
+        /*#grid .cell.square .cell-inner{*/
+        /*    position:absolute;*/
+        /*    width:100%;*/
+        /*    height:100%;*/
+        /*    @apply(--layout-vertical);*/
+        /*    @apply(--layout-center-center);*/
+        /*    top:0;left:0;bottom:0;right:0;*/
+        /*    margin:0;padding:0;box-sizing:border-box;*/
+        /*}*/
+      }
+      @media all and (min-width:900px){
+        
+        #grid.thirds .cell{
+          /*color:Red;*/
+          width:calc(100% / 3);
+          max-width:calc(100% / 3);
+        }
+        #grid.thirds .cell.square{
+          width:calc(100% / 3);
+          max-width:calc(100% / 3);
+          height:0;
+          padding-top:calc(100% / 3);
+        }
+        #grid.thirds .cell.full.square{
+          padding-top:calc(100% );
+        }
+      }
+      
+      
+      #data{
+        display:none;
+      }
+      
+    </style>
+    
+    <div id="grid"></div>
+    <div id="data">
+      <content id="contentNode"></content>
+    </div>
+    <granite-spinner id="spinner" size="50" color="#000" hover="" active="{{loading}}"></granite-spinner>
+  </template>
+  <script>function getToken(){return Number(Date.now()+""+Math.floor(Math.random()*Date.now())).toString(24)}Polymer({is:"edb-grid",properties:{layout:{type:String,value:null,notify:!0},loading:{type:Boolean,notify:!0,value:!0},nodeMap:{type:Object,value:function(){return{}},notify:!0},allowThirds:{type:Boolean,value:!1,observer:"_setThirds"}},_setThirds:function(e){e?this.$.grid.classList.add("thirds"):this.$.grid.classList.remove("thirds")},processNewNode:function(e){if(e.dataset&&"TEMPLATE"!=e.nodeName){console.log("processNewNode",e);var t=e.classList.contains("square"),s=e.classList.contains("full"),o=e.classList.contains("hero"),i=document.createElement("div"),d=document.createElement("div");i.setAttribute("class","cell"),d.setAttribute("class","cell-inner"),d.appendChild(e),i.appendChild(d),t&&i.classList.add("square"),s&&i.classList.add("full"),o&&i.classList.add("hero"),Polymer.dom(this.$.grid).appendChild(i)}},processRemovedNode:function(e){e.dataset&&this.$.grid.removeChild(e.parentNode)},ready:function(){Polymer.dom(this.$.contentNode).observeNodes(function(e){e.addedNodes.forEach(this.processNewNode,this),e.removedNodes.forEach(this.processRemovedNode,this)}.bind(this))}});</script>
+</dom-module></body></html>

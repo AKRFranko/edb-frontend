@@ -1,0 +1,128 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="edb-map">
+  <template>
+    <style>
+      :host{
+        display:block;
+        width:100%;
+        height:100%;
+        
+      }
+      
+     #map{
+       display:block;
+       width:100%;
+       height:100%;
+     }
+      
+    #google{
+      display:block;
+      width:100%;
+      height:calc(100% - 40px);
+    }
+    google-map{
+      width:100%;
+      height:100%;
+    }
+    </style>
+    
+    <div id="map">
+      <div id="google">
+        <google-map 
+        map="{{map}}" 
+        api-key="AIzaSyBdDY23DjMS6vinyNjD74StRoIiYOZtHZ4"
+        latitude="45.484497"
+        longitude="-73.706519" 
+        map-type="roadmap"
+        zoom="11"
+        fit-to-markers
+        disable-map-type-control
+        disable-street-view-control>
+          <google-map-marker latitude="45.484497"
+                             longitude="-73.706519"
+                             icon="/images/edb-pin.png">
+          </google-map-marker>    
+          
+        </google-map>   
+        <!--<google-map-directions map="{{map}}"-->
+        <!--api-key="AIzaSyBdDY23DjMS6vinyNjD74StRoIiYOZtHZ4"-->
+        <!--start-address="{{estimates.0}}"-->
+        <!--end-address="{{endAddress}}"-->
+        <!--travel-mode="DRIVING">-->
+        <!--</google-map-directions>-->
+        
+        
+      </div>
+      <div id="form">
+        <!--<paper-input label="starting location"></paper-input>-->
+        <!--<template is="dom-repeat" items="{{estimates}}" as="estimate">-->
+        <!--  <paper-item on-tap="setStartAddress">{{estimate.name}}</paper-item>-->
+        <!--</template>-->
+      </div>
+     
+    </div>
+    
+  </template>
+  <script>
+     
+      Polymer({
+  
+        is: 'edb-map',
+  
+        properties: {
+          layout: {
+            type: String,
+            value: null,
+            notify: true
+          },
+         startAddress: {type:String,notify:true,value:null},
+         endAddress: {type:String,notify:true,value:{ lat: 45.484497, lng: -73.706519}},
+          estimates: {
+            type: Array,
+            notify: true,
+            value: function(){
+              return [
+                  {
+                    name: 'trudeau airport',
+                    time: '5min',
+                    lat: 45.469738,
+                    lng: -73.744919,
+                    
+                  },
+                  {
+                    name: 'downtown montreal',
+                    time: '5min',
+                    lat: 45.503480,
+                    lng: -73.568489,
+                    
+                  }
+                ]
+              
+              // 5 min from trudeau airport
+              // 25 min from downtown montreal
+              // 30 min from olympic stadium
+              // 25 min from outremont
+              // 20 min from tmr
+              // 30 min from the plateau
+              // 25 min from the mile end
+              // 2 min from ikea (cavendish)
+              // 15 min from ville st-laurent
+              // 5 min from plaza cote-vertu
+            }
+          
+            
+          }
+        
+        },
+        setStartAddress: function( e ){
+          this.set('startAddress', e.model.estimate)
+          console.log(this.get('startAddress'))
+        }
+        
+        
+     
+  
+      });
+  </script>
+</dom-module>
