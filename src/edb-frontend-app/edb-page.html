@@ -48,6 +48,24 @@
         z-index:1;
       }
       
+      #page.no-image .page-header{
+        height:auto;
+        padding:40px;
+        background:none;
+      }
+      #page.no-image .header-inner{
+        color:#000;
+        position:relative;
+      }
+      #page.no-image .page-image{
+        display:none;
+      }
+      #page.no-image .page-title{
+        color:#000;
+      }
+      #page.no-image .page-subtitle{
+        color:#000;
+      }
       /*.card-subtitle{*/
       /*  @apply(--edb-font-subtitle);*/
       /*  line-height:1.2;*/
@@ -60,6 +78,7 @@
     <div id="page">
       <div class="page-header">
         <div class="header-inner">
+          
         <iron-image class="page-image" preload fade sizing="cover" src="{{image}}"></iron-image>
         <div class="page-title">{{title}}</div>
         <!--<div class="page-subtitle">{{subtitle}}</div>-->
@@ -86,9 +105,23 @@
             value: null,
             notify: true
           },
+          noImage: {
+            type: Boolean,
+            value: false,
+            notify: true,
+            observer: 'setNoImage'
+            
+          }
          
         
         },
+        setNoImage: function(noImage){
+          if( noImage){
+            this.$.page.classList.add('no-image');
+          }else{
+            this.$.page.classList.remove('no-image');
+          }
+        }
         
         
      

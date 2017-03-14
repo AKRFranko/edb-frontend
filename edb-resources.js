@@ -62,6 +62,25 @@
   })
   
   
+  EDB.createResourceReference({
+    api: 'wp',
+    name: 'inspiration',
+    path:'inspirations',
+    convert: [
+      { read: 'id', write:'id'},
+      { read: 'featured_image', write:'image.src'},
+      { read: 'featured_media', write:'image.id'},
+      { read: 'title.rendered', write:'title', process: EDB.processors.translate },
+      { read: 'excerpt.rendered', write:'subtitle', process: EDB.processors.translate },
+      { read: 'content.rendered', write:'content', process: EDB.processors.translate },
+      { read: 'meta_box.edb_inspiration_images', write: 'images', process: function( image ){ return {id: image.ID, src: image.full_url }} },
+      { read: 'meta_box.edb_sort_order', write:'sortOrder' },
+    ]
+  });
+  
+  
+ 
+  
 
   
 })(window.EDB);
