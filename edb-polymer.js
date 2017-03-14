@@ -44,15 +44,17 @@
         auth.set('isAuthenticated', EDB.isAuthenticated());
       });
     },
-    
     logout: function(  ){
       var auth = this;
       EDB.logout().then( function(){
         auth.set('user', null );
         auth.set('isAuthenticated', false);
       });
+    },
+    ready: function(){
+      EDB.polymerAuth = this;
     }
-  })
+  });
   EDB.PolymerResource = Polymer({
     is: 'edb-resource',
     properties: {

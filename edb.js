@@ -320,6 +320,9 @@ EDB.isAuthenticated = function(){
 EDB.getAuthUser = function(userId){
   return wpRest.__request('GET','/users/'+userId, null, {} ).then( function(a){
     window.CurrentUser = a;
+    if(EDB.polymerAuth){
+      EDB.polymerAuth.set('user', window.CurrentUser);
+    }
   });
 }
 EDB.login = function( user, pass){
@@ -341,6 +344,9 @@ EDB.logout = function( ){
   wcRest.authSecret = null;
   return wpRest.__request('POST','/logout', null, {} ).then(  function(){
     window.CurrentUser = null;
+    if(EDB.polymerAuth){
+      EDB.polymerAuth.set('user', null );
+    }
     localStorage.setItem('EDB_JWT', null );
     localStorage.setItem('EDB_LASTUSERID', null );
   } );
