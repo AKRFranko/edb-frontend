@@ -155,14 +155,14 @@
         method: method,
         handleAs: 'json',
         body: body,
-        headers: headers,
-        withCredentials: true
+        headers: headers
       });
       
       var promise = function( resolve, reject ){
         var success = function( xhr ){
           var response = xhr.response;
           console.log('resolve request', url)
+          console.log(response.headers);
           resolve( response );
           
         };
