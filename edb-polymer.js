@@ -16,10 +16,38 @@
         },
         notify: true
       },
-      login: function( email, pass ){
-        EDB.login( email, pass );
-        
+      email: {
+        type: String,
+        notify: true
+      },
+      password: {
+        type: String,
+        notify: true
+      },
+      passwordConfirmation: {
+        type: String,
+        notify: true
       }
+    },
+    login: function(  ){
+      var auth = this;
+      EDB.login( this.email, this.password ).then( function(){
+        if(EDB.isAuthenticated()){
+          auth.set('user', window.CurrentUser );
+          auth.set('password', null)
+          auth.set('passwordConfirmation', null)
+        }else{
+          auth.set('user', null );
+        }
+        auth.set('isAuthenticated', EDB.isAuthenticated());
+      });
+    },
+    logout: function(  ){
+      var auth = this;
+      EDB.logout().then( function(){
+        auth.set('user', null );
+        auth.set('isAuthenticated', false);
+      });
     }
   })
   EDB.PolymerResource = Polymer({

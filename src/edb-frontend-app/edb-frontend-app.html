@@ -178,7 +178,7 @@
     </style>
     <!-- app-location binds to the app's URL -->
     <app-location route="{{route}}" use-hash-as-path></app-location>
-    
+    <edb-auth id="auth" user="{{user}}"></edb-auth>
     <!-- this app-route manages the top-level routes -->
     <app-route route="{{route}}" pattern="/:page" data="{{routeData}}"></app-route>
     
@@ -189,7 +189,7 @@
     <app-header-layout fullbleed>
       <app-header condenses reveals>
         
-          <edb-app-toolbar sticky lang="fr" user="{{user}}" cart="{{cart}}" layout="{{layout}}"></edb-app-toolbar>  
+          <edb-app-toolbar sticky lang="fr" user="[[user]]" cart="[[cart]]" layout="[[layout]]"></edb-app-toolbar>  
         
         
       </app-header>
@@ -410,6 +410,7 @@
         feature.refreshItems();
         var inspiration = new EDB.PolymerResource('inspiration', this);
         inspiration.refreshItems();
+        
         // this.set('slides', slides.items );
         // console.log()
       }

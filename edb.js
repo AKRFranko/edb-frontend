@@ -309,8 +309,8 @@ EDB.isAuthenticated = function(){
 }
 EDB.getAuthUser = function(){
   return wpRest.__request('GET','/authenticated', null, {} ).then( function(a){
-    console.log('EDB.getAuthUser', a)
-  })
+    window.CurrentUser = a;
+  });
 }
 EDB.login = function( user, pass){
   wpRest.authKey = user;
@@ -324,12 +324,11 @@ EDB.logout = function( ){
   wpRest.authSecret = null;
   wcRest.authKey = null;
   wcRest.authSecret = null;
-  window.CurrentUser = null;
   return EDB.getAuthUser();
 }
 
 
-wpRest
+
 if (!main.EDB) {
   main.EDB = {};
 }
