@@ -325,24 +325,29 @@ EDB.getAuthUser = function(userId){
       EDB.polymerAuth.set('user', window.CurrentUser);
     }
   });
-}
+};
+
 EDB.login = function( user, pass){
-  wpRest.authKey = user;
-  wpRest.authSecret = pass;
-  wcRest.authKey = user;
-  wcRest.authSecret = pass;
+  
   return jwtRest.__request('POST','/token', {username: user, password: pass }, {} ).then(  function( auth ){
     localStorage.setItem('EDB_JWT', auth.token );
     localStorage.setItem('EDB_LASTUSERID', auth.user_id );
     
     return EDB.getAuthUser( auth.user_id );
   } );
-}
+};
+
+EDB.register = function( user, pass){
+  return wpRest.__request('POST','/register', {username: user, password: pass }, {} ).then(  function( auth ){
+    console.log('register response');
+    // localStorage.setItem('EDB_JWT', auth.token );
+    // localStorage.setItem('EDB_LASTUSERID', auth.user_id );
+    
+    // return EDB.getAuthUser( auth.user_id );
+  } );
+};
+
 EDB.logout = function( ){
-  wpRest.authKey = null;
-  wpRest.authSecret = null;
-  wcRest.authKey = null;
-  wcRest.authSecret = null;
   return wpRest.__request('POST','/logout', null, {} ).then(  function(){
     window.CurrentUser = null;
     if(EDB.polymerAuth){
@@ -351,7 +356,8 @@ EDB.logout = function( ){
     localStorage.setItem('EDB_JWT', null );
     localStorage.setItem('EDB_LASTUSERID', null );
   } );
-}
+};
+
 EDB.autoLogin = function( polyAuth ){
   EDB.polymerAuth = polyAuth;
   if(!jwtRest.JWT) return;
@@ -362,7 +368,7 @@ EDB.autoLogin = function( polyAuth ){
         console.log('HUH? at autoLogin()', valid);
       }
   } )
-}
+};
 
 
 
