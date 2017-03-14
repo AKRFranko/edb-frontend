@@ -329,6 +329,7 @@ EDB.login = function( user, pass){
   wcRest.authSecret = pass;
   return jwtRest.__request('POST','/token', {username: user, password: pass }, {} ).then(  function( auth ){
     localStorage.setItem('EDB_JWT', auth.token );
+    localStorage.setItem('EDB_LASTUSERID', auth.user_id );
     
     return EDB.getAuthUser( auth.user_id );
   } );
@@ -340,14 +341,16 @@ EDB.logout = function( ){
   wcRest.authSecret = null;
   return wpRest.__request('POST','/logout', null, {} ).then(  function(){
     window.CurrentUser = null;
+    localStorage.setItem('EDB_JWT', null );
+    localStorage.setItem('EDB_LASTUSERID', null );
   } );
 }
 EDB.autoLogin = function(){
   return jwtRest.__request('POST','/token/validate', null, {} ).then(  function( valid ){
-    console.log('VALIDATED', valid );
-  } ).catch( function( error ){
-    console.log('VALIDATED', error );
-  })
+      if(valid.code == "jwt_auth_valid_token"){
+        EDB.getAuthUser(localStorage.getItem('EDB_LASTUSERID'));
+      }
+  } )
 }
 EDB.autoLogin();
 
