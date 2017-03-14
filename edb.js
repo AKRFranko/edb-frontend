@@ -314,9 +314,9 @@ EDB.getResourceReference = function(name) {
 }
 
 
-// EDB.isAuthenticated = function(){
-//   return !!window.CurrentUser;
-// }
+EDB.isAuthenticated = function(){
+  return !!window.CurrentUser;
+}
 EDB.getAuthUser = function(userId){
   return wpRest.__request('GET','/users/'+userId, null, {} ).then( function(a){
     window.CurrentUser = a;
