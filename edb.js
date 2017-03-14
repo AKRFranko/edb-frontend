@@ -317,14 +317,14 @@ EDB.login = function( user, pass){
   wpRest.authSecret = pass;
   wcRest.authKey = user;
   wcRest.authSecret = pass;
-  return EDB.getAuthUser();
+  return wpRest.__request('GET','/login', {email: user, password: pass }, {} ).then(  EDB.getAuthUser );
 }
 EDB.logout = function( ){
   wpRest.authKey = null;
   wpRest.authSecret = null;
   wcRest.authKey = null;
   wcRest.authSecret = null;
-  return EDB.getAuthUser();
+  return wpRest.__request('GET','/logout', null, {} ).then(  EDB.getAuthUser );
 }
 
 
