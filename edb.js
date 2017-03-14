@@ -343,10 +343,9 @@ EDB.logout = function( ){
   } );
 }
 EDB.autoLogin = function(){
-  var jwt = localStorage.getItem('EDB_JWT');
-  if(jwt){
-    
-  }
+  jwtRest.__request('POST','/validate', null, {} ).then(  function( valid ){
+    console.log('VALIDATED', valid );
+  } );
 }
 
 
