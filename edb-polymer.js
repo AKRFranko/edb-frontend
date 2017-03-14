@@ -44,6 +44,12 @@
         auth.set('isAuthenticated', EDB.isAuthenticated());
       });
     },
+    register: function(  ){
+      var auth = this;
+      EDB.register( this.email, this.password ).then( function(){
+        auth.login();
+      });
+    },
     logout: function(  ){
       var auth = this;
       EDB.logout().then( function(){
