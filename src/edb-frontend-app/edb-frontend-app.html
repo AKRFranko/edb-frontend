@@ -330,16 +330,19 @@
       <form id="authForm">
         <div class="edb-font-title">Welcome</div>
         
-        <iron-pages selected="{{authMode}}" fallback-selection="0">
-          <div>
-            <iron-selector selected="{{authMode}}" fallback-selection="0">
-              <paper-item>
+        <iron-pages attr-for-selected="id" selected="{{authMode}}" fallback-selection="authModeSelect">
+          <div id="authModeSelect">
+            <iron-selector selected="{{authMode}}" attr-for-selected="data-select" fallback-selection="authModeSelect">
+              <paper-item data-select="login">
                 <paper-item-body two-line>
                   <div>Returning Customers</div>
                   <div secondary>Please <b>sign in</b></div>
                 </paper-item-body>
+                
+              </paper-item>
+              <paper-item data-select="register">
                 <paper-item-body two-line>
-                  <div>Returning Customers</div>
+                  <div>New Customers</div>
                   <div secondary><b>Sign Up</b> for shopping and exclusive offers</div>
                 </paper-item-body>
               </paper-item>
