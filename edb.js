@@ -359,7 +359,7 @@ EDB.autoLogin = function(){
       }
   } )
 }
-EDB.autoLogin();
+
 
 
 if (!main.EDB) {

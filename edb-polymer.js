@@ -53,6 +53,7 @@
     },
     ready: function(){
       EDB.polymerAuth = this;
+      EDB.autoLogin();
     }
   });
   EDB.PolymerResource = Polymer({
