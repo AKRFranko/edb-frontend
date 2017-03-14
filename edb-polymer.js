@@ -14,7 +14,7 @@
       isAuthenticated: {
         type: Boolean,
         value: function(){
-          return EDB.isAuthenticated();
+          // return EDB.isAuthenticated();
         },
         notify: true
       },
