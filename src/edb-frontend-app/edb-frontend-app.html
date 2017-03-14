@@ -451,10 +451,13 @@
         
       },
       observers: ['routePage(route,routeData)'],
-      setAuthModeRegister: function(){
+      setAuthModeRegister: function( e )
+      {
+        e.preventDefault();
         this.set('authMode', 'register');
       },
       setAuthModeLogin: function(){
+        e.preventDefault();
         this.set('authMode', 'login');
       },
       handleLogin: function(){
