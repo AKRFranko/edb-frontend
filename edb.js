@@ -313,7 +313,7 @@ EDB.login = function( user, pass){
   wpRest.authSecret = pass;
   wcRest.authKey = user;
   wcRest.authSecret = pass;
-  
+  return wpRest.__request('GET','/authenticated', null, {} );
 }
 EDB.logout = function( ){
   wpRest.authKey = null;
