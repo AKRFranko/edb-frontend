@@ -312,18 +312,19 @@ EDB.getResourceReference = function(name) {
 // EDB.isAuthenticated = function(){
 //   return !!window.CurrentUser;
 // }
-// EDB.getAuthUser = function(){
-//   return wpRest.__request('GET','/authenticated', null, {} ).then( function(a){
-//     window.CurrentUser = a;
-//   });
-// }
+EDB.getAuthUser = function(userId){
+  return wpRest.__request('GET','/users/'+userId, null, {} ).then( function(a){
+    window.CurrentUser = a;
+  });
+}
 EDB.login = function( user, pass){
   wpRest.authKey = user;
   wpRest.authSecret = pass;
   wcRest.authKey = user;
   wcRest.authSecret = pass;
   return jwtRest.__request('POST','/token', {username: user, password: pass }, {} ).then(  function( auth ){
-    console.log('login', auth);
+    localStorage.setItem('EDB_JWT', auth.token );
+    return EDB.getAuthUser();
   } );
 }
 EDB.logout = function( ){
@@ -331,7 +332,9 @@ EDB.logout = function( ){
   wpRest.authSecret = null;
   wcRest.authKey = null;
   wcRest.authSecret = null;
-  return wpRest.__request('POST','/logout', null, {} ).then(  EDB.getAuthUser );
+  return wpRest.__request('POST','/logout', null, {} ).then(  function(){
+    window.CurrentUser = null;
+  } );
 }
 
 
