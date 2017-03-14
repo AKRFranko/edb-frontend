@@ -8,7 +8,7 @@
         type: Object,
         value: function(){
                  return window.CurrentUser;
-               },,
+               },
         notify: true
       },
       isAuthenticated: {
