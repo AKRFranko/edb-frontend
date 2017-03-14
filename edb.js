@@ -343,10 +343,11 @@ EDB.logout = function( ){
   } );
 }
 EDB.autoLogin = function(){
-  jwtRest.__request('POST','/validate', null, {} ).then(  function( valid ){
+  return jwtRest.__request('POST','/validate', null, {} ).then(  function( valid ){
     console.log('VALIDATED', valid );
   } );
 }
+EDB.autoLogin();
 
 
 if (!main.EDB) {
