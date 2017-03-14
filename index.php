@@ -10,10 +10,13 @@ if ( !(is_user_logged_in()) ){
   $current_user = null;
 }
 
-ob_start('wp_head');
-$buffer = ob_end_flush();
+ob_start();
+wp_head();
+$wphead = ob_get_contents();
+ob_end_clean();
+
 $json_user = json_encode( $current_user );
-$user_embed = "$buffer<script type=\"text/javascript\">window.CurrentUser= $json_user;</script>";
+$user_embed = "$wphead<script type=\"text/javascript\">window.CurrentUser= $json_user;</script>";
 
 echo str_replace($token,"$token_replacement\n$user_embed",$html);
 
