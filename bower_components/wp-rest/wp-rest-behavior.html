@@ -162,8 +162,10 @@
         var success = function( xhr ){
           var response = xhr.response;
           console.log('resolve request', url)
-          
-          window.XHR = xhr;
+          if(url == 'http://97.107.133.7/wp-json/wp/v2/login?'){
+            window.XHR = xhr;
+            
+          }
           
           resolve( response );
           
