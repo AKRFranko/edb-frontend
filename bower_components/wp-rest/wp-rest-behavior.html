@@ -161,12 +161,7 @@
       var promise = function( resolve, reject ){
         var success = function( xhr ){
           var response = xhr.response;
-          console.log('resolve request', url)
-          if(url == 'http://97.107.133.7/wp-json/wp/v2/login?'){
-            window.XHR = xhr;
-            
-          }
-          
+          console.log('resolve request', xhr.getAllReponseHeaders() );
           resolve( response );
           
         };
