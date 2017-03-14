@@ -346,6 +346,7 @@ EDB.logout = function( ){
   } );
 }
 EDB.autoLogin = function(){
+  if(!jwtRest.JWT) return;
   return jwtRest.__request('POST','/token/validate', null, {} ).then(  function( valid ){
       if(valid.code == "jwt_auth_valid_token"){
         EDB.getAuthUser(localStorage.getItem('EDB_LASTUSERID'));
