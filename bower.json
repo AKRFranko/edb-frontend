@@ -27,7 +27,9 @@
     "querystring-json": "^0.3.12",
     "iron-pages": "^1.0.8",
     "paper-input": "^1.1.23",
-    "app-route": "PolymerElements/app-route#^0.9.3"
+    "app-route": "PolymerElements/app-route#^0.9.3",
+    "paper-dialog": "^1.1.0",
+    "paper-dialog-lite": "ryanburns23/paper-dialog-lite#^1.0.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

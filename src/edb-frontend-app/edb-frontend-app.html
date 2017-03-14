@@ -178,7 +178,7 @@
     </style>
     <!-- app-location binds to the app's URL -->
     <app-location route="{{route}}" use-hash-as-path></app-location>
-    <edb-auth id="auth" user="{{user}}"></edb-auth>
+    <edb-auth id="auth" user="{{user}}" email="{{authEmail}}" password="{{authPassword}}"></edb-auth>
     <!-- this app-route manages the top-level routes -->
     <app-route route="{{route}}" pattern="/:page" data="{{routeData}}"></app-route>
     
@@ -319,7 +319,20 @@
     </app-header-layout>
     
       
-      
+    <paper-dialog-lite with-backdrop opened>
+      <form id="authForm">
+        <div id="login">
+          <paper-input type="email" label="Email" value="{{authEmail}}"></paper-input>
+          <paper-input type="password" label="Password" value="{{authPassword}}"></paper-input>
+          <paper-button on-tap="handleLogin">login</paper-button>
+        </div>
+        <!--<iron-pages selected="{{authPanel}}" attr-for-selected="id">-->
+          
+          <!--<div id="register"></div>-->
+          
+        <!--</iron-pages>-->
+      </form>
+    </paper-dialog-lite>
     
   </template>
 
@@ -379,6 +392,12 @@
         }
       },
       observers: ['routePage(route,routeData)'],
+      handleLogin: function(){
+        this.$.auth.login();
+      },
+      handleLogout: function(){
+        this.$.auth.logout();
+      },
       routePage: function( route,data ){
         // console.log('DATA', route,data)
         if(!data || ( data && !data.page)){

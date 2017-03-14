@@ -44,6 +44,7 @@
         auth.set('isAuthenticated', EDB.isAuthenticated());
       });
     },
+    
     logout: function(  ){
       var auth = this;
       EDB.logout().then( function(){

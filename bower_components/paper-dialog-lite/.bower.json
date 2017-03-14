@@ -1,0 +1,28 @@
+{
+  "name": "paper-dialog-lite",
+  "description": "paper-dialog without paper-dialog-behavior or paper-dialog-shared-styles",
+  "main": "paper-dialog-lite.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "iron-overlay-behavior": "PolymerElements/iron-overlay-behavior#^1.10.3",
+    "neon-animation": "PolymerElements/neon-animation#^1.2.4"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "paper-button": "PolymerElements/paper-button",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "homepage": "https://github.com/ryanburns23/paper-dialog-lite",
+  "version": "1.0.0",
+  "_release": "1.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.0",
+    "commit": "a3a797ba90d1de5e1aa3965b7c889fda6876d089"
+  },
+  "_source": "git://github.com/ryanburns23/paper-dialog-lite.git",
+  "_target": "^1.0.0",
+  "_originalSource": "ryanburns23/paper-dialog-lite",
+  "_direct": true
+}
