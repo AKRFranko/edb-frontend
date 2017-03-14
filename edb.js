@@ -304,6 +304,7 @@ EDB.getResourceReference = function(name) {
 }
 
 EDB.verifyAuth = function() {
+  
   var request = wpRest.__request('GET', '', null, {});
   return request.then(function(data) {
     console.log('data',data);
