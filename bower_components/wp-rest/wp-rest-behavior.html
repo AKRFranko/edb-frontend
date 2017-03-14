@@ -162,6 +162,7 @@
         var success = function( xhr ){
           var response = xhr.response;
           console.log('resolve request', url)
+          
           window.XHR = xhr;
           
           resolve( response );
