@@ -352,8 +352,8 @@ EDB.logout = function( ){
     localStorage.setItem('EDB_LASTUSERID', null );
   } );
 }
-EDB.autoLogin = function(){
-  console.log('autoLogin',jwtRest.JWT, EDB.polymerAuth)
+EDB.autoLogin = function( polyAuth ){
+  EDB.polymerAuth = polyAuth;
   if(!jwtRest.JWT) return;
   return jwtRest.__request('POST','/token/validate', null, {} ).then(  function( valid ){
       console.log('tokev/val', valid.code);

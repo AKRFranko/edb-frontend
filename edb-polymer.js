@@ -52,9 +52,8 @@
       });
     },
     ready: function(){
-      EDB.polymerAuth = this;
       
-      EDB.autoLogin();
+      EDB.autoLogin( this );
     }
   });
   EDB.PolymerResource = Polymer({
