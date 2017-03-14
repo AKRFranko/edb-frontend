@@ -386,7 +386,7 @@
             <paper-input type="password" label="Confirm Password" value="{{authPasswordConfirmation}}"></paper-input>
             <div class="button-row">
               <a href="/#" on-tap="setAuthModeLogin">login instead</a>
-              <paper-button on-tap="handleLogin">register</paper-button>    
+              <paper-button on-tap="handleRegister">register</paper-button>    
             </div>
             
           </div>
@@ -478,6 +478,9 @@
       },
       handleLogin: function(){
         this.$.auth.login();
+      },
+      handleRegister: function(){
+        this.$.auth.register();
       },
       handleLogout: function(){
         this.$.auth.logout();
