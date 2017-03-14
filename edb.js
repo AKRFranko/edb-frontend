@@ -307,13 +307,17 @@ EDB.getResourceReference = function(name) {
 EDB.isAuthenticated = function(){
   return !!window.CurrentUser;
 }
-
+EDB.getAuthUser = function(){
+  return wpRest.__request('GET','/authenticated', null, {} ).then( function(a){
+    console.log('EDB.getAuthUser', a)
+  })
+}
 EDB.login = function( user, pass){
   wpRest.authKey = user;
   wpRest.authSecret = pass;
   wcRest.authKey = user;
   wcRest.authSecret = pass;
-  return wpRest.__request('GET','/authenticated', null, {} );
+  return EDB.getAuthUser();
 }
 EDB.logout = function( ){
   wpRest.authKey = null;
@@ -321,9 +325,11 @@ EDB.logout = function( ){
   wcRest.authKey = null;
   wcRest.authSecret = null;
   window.CurrentUser = null;
+  return EDB.getAuthUser();
 }
-EDB.logout();
 
+
+wpRest
 if (!main.EDB) {
   main.EDB = {};
 }
