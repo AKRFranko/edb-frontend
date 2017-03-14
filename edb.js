@@ -303,6 +303,19 @@ EDB.getResourceReference = function(name) {
   return EDB._refs[name];
 }
 
+EDB.login = function( user, pass){
+  wpRest.authKey = user;
+  wpRest.authSecret = pass;
+  wcRest.authKey = user;
+  wcRest.authSecret = pass;
+}
+EDB.logout = function( ){
+  wpRest.authKey = null;
+  wpRest.authSecret = null;
+  wcRest.authKey = null;
+  wcRest.authSecret = null;
+}
+EDB.logout();
 
 if (!main.EDB) {
   main.EDB = {};
