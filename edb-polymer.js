@@ -51,9 +51,9 @@
           checkB =  1*b.sortOrder;
           return checkA > checkB ? 1 : checkB > checkA ? -1 : 0;
         });
-        console.log('sorted!', this.name, items.map(function(i){return i.title.en}))
+        // console.log('sorted!', this.name, items.map(function(i){return i.title.en}))
       }else{ 
-        console.log('unsorted', items)
+        // console.log('unsorted', items)
       }
       
       this.set('loading', false );
