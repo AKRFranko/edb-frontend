@@ -303,29 +303,24 @@ EDB.getResourceReference = function(name) {
   return EDB._refs[name];
 }
 
-EDB.verifyAuth = function() {
-  
-  var request = wpRest.__request('GET', '/users/self', null, {});
-  
-  return request.then(function(data) {
-    console.log('data',data);
-  });
-  
-};
 
-EDB.verifyAuth();
+EDB.isAuthenticated = function(){
+  return !!window.CurrentUser;
+}
 
 EDB.login = function( user, pass){
   wpRest.authKey = user;
   wpRest.authSecret = pass;
   wcRest.authKey = user;
   wcRest.authSecret = pass;
+  
 }
 EDB.logout = function( ){
   wpRest.authKey = null;
   wpRest.authSecret = null;
   wcRest.authKey = null;
   wcRest.authSecret = null;
+  window.CurrentUser = null;
 }
 EDB.logout();
 

@@ -1,6 +1,27 @@
 (function(EDB){
   if(!EDB) throw new Error('Missing EDB namespace.');
   var app;
+  EDB.PolymerAuth = Polymer({
+    is: 'edb-auth',
+    properties: {
+      user: {
+        type: Object,
+        value: null,
+        notify: true
+      },
+      isAuthenticated: {
+        type: Boolean,
+        value: function(){
+          return EDB.isAuthenticated();
+        },
+        notify: true
+      },
+      login: function( email, pass ){
+        EDB.login( email, pass );
+        
+      }
+    }
+  })
   EDB.PolymerResource = Polymer({
     is: 'edb-resource',
     properties: {

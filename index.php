@@ -6,7 +6,7 @@ $blogname = get_bloginfo('blogname');
 $token_replacement = "<base href=\"$template_directory/\"><title>$blogname</title>";
 
 $current_user = wp_get_current_user(); 
-if ( !($current_user instanceof WP_User) ){
+if ( !(is_user_logged_in()) ){
   $current_user = null;
 }
 $json_user = json_encode( $current_user );
