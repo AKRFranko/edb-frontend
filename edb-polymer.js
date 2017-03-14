@@ -14,8 +14,13 @@
         value: null,
         computed: '__getRef(name)'
       },
-      
-      
+      params: {
+        type: Obeject,
+        notify: true,
+        value: function(){
+          return { context: 'view' }
+        }
+      },
       selectedId: {
         type: String,
         notify: true,

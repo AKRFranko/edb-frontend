@@ -162,7 +162,7 @@ var ResourceReference = function ResourceReference(options) {
 
   this.list = function(params) {
     params = params || { };
-    params.context = 'edit';
+    // params.context = 'view';
     params.per_page=params.per_page||100;
     var request = api.__request('GET', path, null, params);
     return request.then(function(items) {
