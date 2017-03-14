@@ -4,20 +4,25 @@
 
 
 var wpRest = document.createElement('wp-rest'),
-  wcRest = document.createElement('wp-rest');
+  wcRest = document.createElement('wp-rest'),
+  jwtRest = document.createElement('wp-rest');
 
 wpRest.name = 'worpdress';
 wcRest.name = 'woocommerce';
 wpRest.host = window.creds.apiHost;
 wpRest.namespace = window.creds.apiNamespace;
-wpRest.authKey = window.creds.authKey;
-wpRest.authSecret = window.creds.authSecret;
+// wpRest.authKey = window.creds.authKey;
+// wpRest.authSecret = window.creds.authSecret;
 
 wcRest.host = window.creds.apiHost;
 wcRest.namespace = 'wc/v1';
-wcRest.authKey = window.creds.authKey;
-wcRest.authSecret = window.creds.authSecret;
+// wcRest.authKey = window.creds.authKey;
+// wcRest.authSecret = window.creds.authSecret;
 
+jwtRest.host = window.creds.apiHost;
+jwtRest.namespace = 'jwt-auth/v1';
+// wcRest.authKey = window.creds.authKey;
+// wcRest.authSecret = window.creds.authSecret;
 
 function findValueAtPath(path, object) {
   var parts = path.split('.');
@@ -304,20 +309,22 @@ EDB.getResourceReference = function(name) {
 }
 
 
-EDB.isAuthenticated = function(){
-  return !!window.CurrentUser;
-}
-EDB.getAuthUser = function(){
-  return wpRest.__request('GET','/authenticated', null, {} ).then( function(a){
-    window.CurrentUser = a;
-  });
-}
+// EDB.isAuthenticated = function(){
+//   return !!window.CurrentUser;
+// }
+// EDB.getAuthUser = function(){
+//   return wpRest.__request('GET','/authenticated', null, {} ).then( function(a){
+//     window.CurrentUser = a;
+//   });
+// }
 EDB.login = function( user, pass){
   wpRest.authKey = user;
   wpRest.authSecret = pass;
   wcRest.authKey = user;
   wcRest.authSecret = pass;
-  return wpRest.__request('POST','/login', {email: user, password: pass }, {} ).then(  EDB.getAuthUser );
+  return jwtRest.__request('POST','/token', {username: user, password: pass }, {} ).then(  function( auth ){
+    console.log('login', auth);
+  } );
 }
 EDB.logout = function( ){
   wpRest.authKey = null;
