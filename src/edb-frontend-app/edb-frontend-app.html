@@ -174,6 +174,9 @@
         margin-left:auto;
         margin-right:auto;
       }
+      paper-dialog-lite{
+        --iron-overlay-backdrop-opacity: 0.9;
+      }
       
     </style>
     <!-- app-location binds to the app's URL -->
@@ -319,7 +322,7 @@
     </app-header-layout>
     
       
-    <paper-dialog-lite with-backdrop opened>
+    <paper-dialog-lite with-backdrop entry-animation="scale-up-animation" exit-animation="fade-out-animation" opened>
       <form id="authForm">
         <div id="login">
           <paper-input type="email" label="Email" value="{{authEmail}}"></paper-input>
