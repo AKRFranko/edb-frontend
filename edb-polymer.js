@@ -34,14 +34,14 @@
     login: function(  ){
       var auth = this;
       EDB.login( this.email, this.password ).then( function(){
-        if(EDB.isAuthenticated()){
-          auth.set('user', window.CurrentUser );
-          auth.set('password', null)
-          auth.set('passwordConfirmation', null)
-        }else{
-          auth.set('user', null );
-        }
-        auth.set('isAuthenticated', EDB.isAuthenticated());
+        // if(EDB.isAuthenticated()){
+        //   auth.set('user', window.CurrentUser );
+        //   auth.set('password', null)
+        //   auth.set('passwordConfirmation', null)
+        // }else{
+        //   auth.set('user', null );
+        // }
+        // auth.set('isAuthenticated', EDB.isAuthenticated());
       });
     },
     
