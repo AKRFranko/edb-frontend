@@ -356,7 +356,7 @@ EDB.autoLogin = function(){
   console.log('autoLogin',jwtRest.JWT, EDB.polymerAuth)
   if(!jwtRest.JWT) return;
   return jwtRest.__request('POST','/token/validate', null, {} ).then(  function( valid ){
-    console.log(valid.code)
+      console.log('tokev/val', valid.code);
       if(valid.code == "jwt_auth_valid_token"){
         EDB.getAuthUser(localStorage.getItem('EDB_LASTUSERID'));
       }
