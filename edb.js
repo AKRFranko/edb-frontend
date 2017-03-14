@@ -324,7 +324,7 @@ EDB.login = function( user, pass){
   wcRest.authSecret = pass;
   return jwtRest.__request('POST','/token', {username: user, password: pass }, {} ).then(  function( auth ){
     localStorage.setItem('EDB_JWT', auth.token );
-    return EDB.getAuthUser();
+    return EDB.getAuthUser( auth.user_id );
   } );
 }
 EDB.logout = function( ){
