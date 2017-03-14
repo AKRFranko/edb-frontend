@@ -7,20 +7,25 @@ var wpRest = document.createElement('wp-rest'),
   wcRest = document.createElement('wp-rest'),
   jwtRest = document.createElement('wp-rest');
 
+var jwt = localStorage.getItem('EDB_JWT');
+
 wpRest.name = 'worpdress';
 wcRest.name = 'woocommerce';
 wpRest.host = window.creds.apiHost;
 wpRest.namespace = window.creds.apiNamespace;
+wpRest.JWT = jwt;
 // wpRest.authKey = window.creds.authKey;
 // wpRest.authSecret = window.creds.authSecret;
 
 wcRest.host = window.creds.apiHost;
 wcRest.namespace = 'wc/v1';
+wcRest.JWT = jwt;
 // wcRest.authKey = window.creds.authKey;
 // wcRest.authSecret = window.creds.authSecret;
 
 jwtRest.host = window.creds.apiHost;
 jwtRest.namespace = 'jwt-auth/v1';
+jwtRest.JWT = jwt;
 // wcRest.authKey = window.creds.authKey;
 // wcRest.authSecret = window.creds.authSecret;
 
@@ -324,6 +329,7 @@ EDB.login = function( user, pass){
   wcRest.authSecret = pass;
   return jwtRest.__request('POST','/token', {username: user, password: pass }, {} ).then(  function( auth ){
     localStorage.setItem('EDB_JWT', auth.token );
+    
     return EDB.getAuthUser( auth.user_id );
   } );
 }
@@ -336,7 +342,12 @@ EDB.logout = function( ){
     window.CurrentUser = null;
   } );
 }
-
+EDB.autoLogin = function(){
+  var jwt = localStorage.getItem('EDB_JWT');
+  if(jwt){
+    
+  }
+}
 
 
 if (!main.EDB) {
