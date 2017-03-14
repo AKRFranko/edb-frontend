@@ -19,5 +19,5 @@ $json_user = json_encode( $current_user );
 $user_embed = "$wphead<script type=\"text/javascript\">window.CurrentUser= $json_user;</script>";
 
 echo str_replace($token,"$token_replacement\n$user_embed",$html);
-var_dump($_SERVER['HTTP_REFERER']);
+
 
