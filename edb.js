@@ -321,6 +321,7 @@ EDB.getAuthUser = function(userId){
   return wpRest.__request('GET','/users/'+userId, null, {} ).then( function(a){
     window.CurrentUser = a;
     if(EDB.polymerAuth){
+      console.log('setting User', window.CurrentUser);
       EDB.polymerAuth.set('user', window.CurrentUser);
     }
   });
