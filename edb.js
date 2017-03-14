@@ -345,7 +345,9 @@ EDB.logout = function( ){
 EDB.autoLogin = function(){
   return jwtRest.__request('POST','/validate', null, {} ).then(  function( valid ){
     console.log('VALIDATED', valid );
-  } );
+  } ).catch( function( error ){
+    console.log('VALIDATED', error );
+  })
 }
 EDB.autoLogin();
 
