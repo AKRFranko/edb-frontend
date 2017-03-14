@@ -114,7 +114,7 @@
     
     factoryImpl: function(refName, appRef) {
       var it = this;
-      var params = {};
+      var params = { context: 'view'};
       this.set('name',refName);
       this.app = appRef;
       
