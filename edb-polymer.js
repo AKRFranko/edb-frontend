@@ -15,7 +15,7 @@
         computed: '__getRef(name)'
       },
       params: {
-        type: Obeject,
+        type: Object,
         notify: true,
         value: function(){
           return { context: 'view' }
