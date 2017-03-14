@@ -455,10 +455,13 @@
       {
         e.preventDefault();
         this.set('authMode', 'register');
+        console.log(this.get('authMode'))
       },
       setAuthModeLogin: function(){
         e.preventDefault();
+        
         this.set('authMode', 'login');
+        console.log(this.get('authMode'))
       },
       handleLogin: function(){
         this.$.auth.login();
