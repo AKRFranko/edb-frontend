@@ -18,7 +18,7 @@
         type: Object,
         notify: true,
         value: function(){
-          return { context: 'view' }
+          return { context: 'view' };
         }
       },
       selectedId: {
