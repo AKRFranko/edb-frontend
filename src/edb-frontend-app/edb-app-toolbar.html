@@ -345,7 +345,7 @@
       <div class="menus">
         <div class="menu user-menu">
           <paper-contact-phone>+1-844-738-6484</paper-contact-phone>
-          <div hidden$="{{!user}}" class="welcome">Welcome, <b>{{user.name}}</b>!</div>
+          <div hidden$="{{!user}}" class="welcome">Welcome, <b>{{user.data.display_name}}</b>!</div>
           <a href="/#" tabindex="-1">
             <paper-item hidden$="{{!user}}">account</paper-item>
           </a>
@@ -358,7 +358,7 @@
           <a href="/#" tabindex="-1" hidden$="{{!user}}">
             <paper-item>
               <div id="cartWidget">cart</div>
-              <paper-badge for="cartWidget" label="0"></paper-badge>
+              <paper-badge hidden$="{{!cart.items.length}}"  for="cartWidget" label="{{cart.items.length}}"></paper-badge>
             </paper-item>
           </a>
           <a href="/#" tabindex="-1">
