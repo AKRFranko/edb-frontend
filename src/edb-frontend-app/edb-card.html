@@ -98,11 +98,11 @@
       </div>
       <div class="card-body">
         <div class="card-content">
-          <div class="card-title">{{title}}</div>
-          <div class="card-subtitle">{{subtitle}}</div>
+          <div hidden$="{{!title}}" class="card-title">{{title}}</div>
+          <div hidden$="{{!subtitle}}" class="card-subtitle">{{subtitle}}</div>
           <content></content>
         </div>
-        <div class="card-icon">
+        <div class="card-icon" hidden$="{{noIcon}}">
           <iron-icon icon="edb:chevron-right"></iron-icon>
         </div>  
       </div>
@@ -124,6 +124,11 @@
             value: null,
             notify: true
           },
+          noIcon: {
+            type: Boolean,
+            value: false,
+            notify: true
+          }
          
         
         },
