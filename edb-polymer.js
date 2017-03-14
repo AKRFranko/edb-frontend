@@ -6,7 +6,9 @@
     properties: {
       user: {
         type: Object,
-        value: null,
+        value: function(){
+                 return window.CurrentUser;
+               },,
         notify: true
       },
       isAuthenticated: {
