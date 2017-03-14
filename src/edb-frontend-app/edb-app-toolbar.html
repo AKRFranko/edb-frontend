@@ -105,7 +105,9 @@
         margin-left:40px;
         
       }
-      
+      paper-item{
+        cursor:pointer;
+      }
       .submenu-trigger{
         margin-left:40px;
         padding:10px 0;
@@ -651,7 +653,11 @@
               notify: true
             },
         },
-        
+        openAuthDialog: function(){
+          if(this.dialog){
+            this.dialog.open();
+          }
+        },
         isLang: function(current, expected){
           return current == expected;
         },
