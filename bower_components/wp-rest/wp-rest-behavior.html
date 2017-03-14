@@ -90,7 +90,6 @@
      var headers = {  'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/json' };
      if(this.JWT){
       // headers['Authorization'] = null;//'Basic ' + window.btoa( this.authKey + ":" + this.authSecret );  
-    // }else{
        headers['Authorization'] = 'Bearer ' + this.JWT;
      }
      return headers;
