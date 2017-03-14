@@ -94,6 +94,9 @@
         @apply(--edb-font-subhead);
       }
       
+      form{
+        @apply(--edb-font-body);
+      }
       edb-card,edb-tile{
         background:#fff;
         width:100%;
@@ -371,7 +374,7 @@
             <paper-input type="password" label="Password" value="{{authPassword}}"></paper-input>
             <paper-input type="password" label="Confirm Password" value="{{authPasswordConfirmation}}"></paper-input>
             <div class="button-row">
-              <a href="/#" on-tap="setAuthModeRegister">login instead</a>
+              <a href="/#" on-tap="setAuthModeLogin">login instead</a>
               <paper-button on-tap="handleLogin">register</paper-button>    
             </div>
             
