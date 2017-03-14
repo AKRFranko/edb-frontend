@@ -4,4 +4,12 @@ $token = '<title>edb-frontend</title>';
 $template_directory = get_bloginfo('template_directory');
 $blogname = get_bloginfo('blogname');
 $token_replacement = "<base href=\"$template_directory/\"><title>$blogname</title>";
-echo str_replace($token,$token_replacement,$html);
+
+$current_user = wp_get_current_user(); 
+if ( !($current_user instanceof WP_User) ){
+  $current_user = null;
+}
+$json_user = json_encode( $current_user );
+$user_embed = "<script type=\"text/javascript\">window.CurrentUser= $json_user;</script>";
+
+echo str_replace($token,"$token_replacement\n$user_embed",$html);
