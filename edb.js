@@ -352,6 +352,7 @@ EDB.logout = function( ){
   } );
 }
 EDB.autoLogin = function(){
+  console.log('autoLogin',jwtRest.JWT)
   if(!jwtRest.JWT) return;
   return jwtRest.__request('POST','/token/validate', null, {} ).then(  function( valid ){
       if(valid.code == "jwt_auth_valid_token"){
