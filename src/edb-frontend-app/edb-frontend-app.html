@@ -434,9 +434,22 @@
           value: function(){
             return {};
           }
+        },
+        
+        authMode: {
+          type: String,
+          value: 'authModeSelect',
+          notify: true
         }
+        
       },
       observers: ['routePage(route,routeData)'],
+      setAuthModeRegister: function(){
+        this.set('authMode', 'register');
+      },
+      setAuthModeLogin: function(){
+        this.set('authMode', 'login');
+      },
       handleLogin: function(){
         this.$.auth.login();
       },
