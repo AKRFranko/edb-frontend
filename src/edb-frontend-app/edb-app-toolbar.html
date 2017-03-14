@@ -347,9 +347,9 @@
           <a href="/#" tabindex="-1">
             <paper-item hidden$="{{!user}}">account</paper-item>
           </a>
-          <a href="/#" tabindex="-1">
-            <paper-item hidden$="{{user}}">sign in</paper-item>
-          </a>
+          <!--<a href="/#" tabindex="-1">-->
+            <paper-item hidden$="{{user}}" on-tap="dialog.open">sign in</paper-item>
+          <!--</a>-->
           <a href="/#" tabindex="-1">
             <paper-item hidden$="{{!user}}">sign out</paper-item>
           </a>
@@ -374,9 +374,10 @@
             <a href="/#" tabindex="-1">
               <paper-item hidden$="{{!user}}">account</paper-item>
             </a>
-            <a href="/#" tabindex="-1">
-              <paper-item hidden$="{{user}}">sign in</paper-item>
-            </a>
+            <paper-item hidden$="{{user}}" on-tap="dialog.open">sign in</paper-item>
+            <!--<a href="/#" tabindex="-1">-->
+            <!--  <paper-item hidden$="{{user}}">sign in</paper-item>-->
+            <!--</a>-->
             <a href="/#" tabindex="-1">
               <paper-item hidden$="{{!user}}">sign out</paper-item>
             </a>

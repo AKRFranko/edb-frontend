@@ -196,7 +196,7 @@
     <app-header-layout fullbleed>
       <app-header condenses reveals>
         
-          <edb-app-toolbar sticky lang="fr" user="[[user]]" cart="[[cart]]" layout="[[layout]]"></edb-app-toolbar>  
+          <edb-app-toolbar id="toolbar" sticky lang="fr" user="[[user]]" cart="[[cart]]" layout="[[layout]]"></edb-app-toolbar>  
         
         
       </app-header>
@@ -326,7 +326,7 @@
     </app-header-layout>
     
       
-    <paper-dialog-lite with-backdrop entry-animation="scale-up-animation" exit-animation="fade-out-animation" opened>
+    <paper-dialog-lite id="authDialog" with-backdrop entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <form id="authForm">
         <div id="login">
           <paper-input type="email" label="Email" value="{{authEmail}}"></paper-input>
@@ -440,7 +440,7 @@
         feature.refreshItems();
         var inspiration = new EDB.PolymerResource('inspiration', this);
         inspiration.refreshItems();
-        
+        this.$.toolbar.dialog = this.$.authDialog;
         // this.set('slides', slides.items );
         // console.log()
       }
