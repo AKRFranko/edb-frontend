@@ -5,19 +5,19 @@ $template_directory = get_bloginfo('template_directory');
 $blogname = get_bloginfo('blogname');
 $token_replacement = "<base href=\"$template_directory/\"><title>$blogname</title>";
 
-$current_user = wp_get_current_user(); 
-if ( !(is_user_logged_in()) ){
-  $current_user = null;
-}
+// $current_user = wp_get_current_user(); 
+// if ( !(is_user_logged_in()) ){
+//   $current_user = null;
+// }
 
-ob_start();
-wp_head();
-$wphead = ob_get_contents();
-ob_end_clean();
+// ob_start();
+// wp_head();
+// $wphead = ob_get_contents();
+// ob_end_clean();
+// $wphead
+// $json_user = json_encode( $current_user );
+// $user_embed = "<script type=\"text/javascript\">window.CurrentUser= $json_user;</script>";
 
-$json_user = json_encode( $current_user );
-$user_embed = "$wphead<script type=\"text/javascript\">window.CurrentUser= $json_user;</script>";
-
-echo str_replace($token,"$token_replacement\n$user_embed",$html);
+echo str_replace($token,"$token_replacement",$html);
 
 
