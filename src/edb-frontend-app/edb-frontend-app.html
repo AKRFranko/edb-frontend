@@ -328,6 +328,20 @@
       
     <paper-dialog-lite id="authDialog" with-backdrop entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <form id="authForm">
+        <div class="edb-font-title">Welcome</div>
+        <iron-selector selected="{{authMode}}">
+          <paper-item>
+            <paper-item-body two-line>
+              <div>Returning Customers</div>
+              <div secondary>Please <b>sign in</b></div>
+            </paper-item-body>
+            <paper-item-body two-line>
+              <div>Returning Customers</div>
+              <div secondary><b>Sign Up</b> for shopping and exclusive offers</div>
+            </paper-item-body>
+             
+          </paper-item>
+        </iron-selector>
         <div id="login">
           <paper-input type="email" label="Email" value="{{authEmail}}"></paper-input>
           <paper-input type="password" label="Password" value="{{authPassword}}"></paper-input>
