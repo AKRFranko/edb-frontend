@@ -131,7 +131,7 @@
       // console.log(params, this.queryString)
       
       var xhr = document.createElement('iron-request');
-      
+      xhr.withCredentials=true;
       // var url = this.__getUrl( path );
       var headers = this.__getHeaders();
       var body;
