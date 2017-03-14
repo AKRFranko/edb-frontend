@@ -172,6 +172,8 @@
         background:#000;
         width:400px;
         height:400px;
+        box-sizing:border-box;
+        padding:40px;
       }
       
       .centered-text{
@@ -351,7 +353,21 @@
           <div id="login">
             <paper-input type="email" label="Email" value="{{authEmail}}"></paper-input>
             <paper-input type="password" label="Password" value="{{authPassword}}"></paper-input>
-            <paper-button on-tap="handleLogin">login</paper-button>
+            <div class="button-row">
+              <a href="/#" on-tap="setAuthModeRegister">register instead</a>
+              <paper-button on-tap="handleLogin">login</paper-button>    
+            </div>
+            
+          </div>
+          <div id="register">
+            <paper-input type="email" label="Email" value="{{authEmail}}"></paper-input>
+            <paper-input type="password" label="Password" value="{{authPassword}}"></paper-input>
+            <paper-input type="password" label="Confirm Password" value="{{authPasswordConfirmation}}"></paper-input>
+            <div class="button-row">
+              <a href="/#" on-tap="setAuthModeRegister">login instead</a>
+              <paper-button on-tap="handleLogin">register</paper-button>    
+            </div>
+            
           </div>
         </iron-pages>
         
