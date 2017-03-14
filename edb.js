@@ -303,6 +303,15 @@ EDB.getResourceReference = function(name) {
   return EDB._refs[name];
 }
 
+EDB.verifyAuth = function() {
+  
+  var request = api.__request('GET', '', null, params);
+  return request.then(function(data) {
+    console.log('data',data);
+    
+  });
+};
+EDB.verifyAuth();
 EDB.login = function( user, pass){
   wpRest.authKey = user;
   wpRest.authSecret = pass;
