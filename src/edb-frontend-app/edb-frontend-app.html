@@ -345,7 +345,7 @@
     </app-header-layout>
     
       
-    <paper-dialog-lite id="authDialog" with-backdrop entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+    <paper-dialog-lite id="authDialog" hidden$="{{user}}" with-backdrop entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <form id="authForm">
         <div class="edb-title">Welcome</div>
         
