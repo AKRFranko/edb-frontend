@@ -353,8 +353,8 @@ EDB.logout = function( ){
     if(EDB.polymerAuth){
       EDB.polymerAuth.set('user', null );
     }
-    localStorage.setItem('EDB_JWT', null );
-    localStorage.setItem('EDB_LASTUSERID', null );
+    localStorage.removeItem('EDB_JWT' );
+    localStorage.removeItem('EDB_LASTUSERID');
   } );
 };
 
