@@ -345,7 +345,7 @@
     </app-header-layout>
     
       
-    <paper-dialog modal id="authDialog" hidden$="{{user}}" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+    <paper-dialog modal id="authDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <form id="authForm">
         <div class="edb-title">Welcome</div>
         
@@ -456,7 +456,10 @@
         }
         
       },
-      observers: ['routePage(route,routeData)'],
+      observers: ['routePage(route,routeData)','closeAuthDialog(user)'],
+      closeAuthDialog: function( user ){
+        this.$.authDialog.close();
+      },
       setAuthModeRegister: function( e )
       {
         e.preventDefault();
