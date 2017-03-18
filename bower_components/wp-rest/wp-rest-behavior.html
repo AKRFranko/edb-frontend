@@ -130,12 +130,12 @@
       }else{
         merged = params;
       }
-      if(this.consumerKey && this.consumerSecret){
-        Object.assign(merged, {
-          consumer_key: this.consumerKey,
-          consumer_secret: this.consumerSecret
-        })
-      }
+      // if(this.consumerKey && this.consumerSecret){
+      //   Object.assign(merged, {
+      //     consumer_key: this.consumerKey,
+      //     consumer_secret: this.consumerSecret
+      //   })
+      // }
       return QSJS().encode( merged );
     },
     __sendRequest: function( method, url, data, params ){
