@@ -92,8 +92,12 @@
      
      if(this.JWT && this.JWT !== null){
       // headers['Authorization'] = null;//'Basic ' + window.btoa( this.authKey + ":" + this.authSecret );  
+      // console.log('JWT' ,this.JWT)
        headers['Authorization'] = 'Bearer ' + this.JWT;
-     }
+     }//else if(this.consumerKey && this.consumerSecret){
+      // console.log('CONSUMER TOKENS' ,this.consumerKey , this.consumerSecret)
+      //  headers['Authorization'] = 'Basic ' + window.btoa( this.consumerKey + ":" + this.consumerSecret );  
+    // }
      return headers;
    },
     __nameChanged: function( name ){
@@ -125,6 +129,12 @@
         }, params );
       }else{
         merged = params;
+      }
+      if(this.consumerKey && this.consumerSecret){
+        Object.assign(merged, {
+          consumer_key: this.consumerKey,
+          consumer_secret: this.consumerSecret
+        })
       }
       return QSJS().encode( merged );
     },

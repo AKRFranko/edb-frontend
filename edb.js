@@ -20,6 +20,8 @@ wpRest.JWT = jwt;
 wcRest.host = window.creds.apiHost;
 wcRest.namespace = 'wc/v1';
 wcRest.JWT = jwt;
+wcRest.consumerKey = window.creds.consumerKey;
+wcRest.consumerSecret = window.creds.consumerSecret;
 // wcRest.authKey = window.creds.authKey;
 // wcRest.authSecret = window.creds.authSecret;
 

@@ -521,6 +521,9 @@
         var inspiration = new EDB.PolymerResource('inspiration', this);
         inspiration.refreshItems();
         this.$.toolbar.dialog = this.$.authDialog;
+        
+        var product = new EDB.PolymerResource('product', this);
+        product.refreshItems();
         // this.set('slides', slides.items );
         // console.log()
       }
