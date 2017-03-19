@@ -234,7 +234,7 @@
           <section id="products">
             
             <edb-grid layout="{{layout}}" loading="{{product.loading}}">
-              <template is="dom-repeat" items="{{computeCatalogItems(product.items)}}" as="feature" filter="{{_filterCatalog(filterData.filter)}}">
+              <template is="dom-repeat" items="{{computeCatalogItems(product.items)}}" as="product" filter="{{_filterCatalog(filterData.filter)}}">
                 <edb-card image="{{product.images.0.src}}" title="{{product.name}}" subtitle="{{formatMoney(product.price)}}">
                   <p>{{limitText(product.description.en,120)}}</p>
                 </edb-card>
@@ -534,7 +534,7 @@
               catalog.push( variation );
             }
           });
-          console.log(catalog);
+          
           return catalog;
         },
         handleLogin: function(){
