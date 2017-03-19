@@ -536,7 +536,7 @@
               bucketVariations.forEach( function( v ){
                 // var variation_attribute = v.attributes[0].name;
                 // var attr = {};
-                attr[variation_attribute] = v.attributes[0].option;
+                // attr[variation_attribute] = v.attributes[0].option;
                 var newItem = Object.assign( { attributes: [] }, variation );
                 newItem.attributes.push(v.attributes[0]);
                 catalog.push( newItem );
@@ -545,7 +545,7 @@
               catalog.push( variation );
             }
           });
-          console.log(catalog.length, products.length);
+          
           return catalog;
         },
         handleLogin: function(){
