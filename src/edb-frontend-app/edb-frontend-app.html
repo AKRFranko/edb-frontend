@@ -529,28 +529,31 @@
           },[]);
           
           var catalog= [];
-          objectsArray.forEach( function( variation ){
-            var attributes = variation.attributes;
+          objectsArray.forEach( function( product ){
+            var attributes = product.attributes;
             var bucketVariations =  [];
-            attributes.forEach( function( attr ){
+            product.forEach( function( attr ){
               var bucket = bucketsArray.filter( function( item ){ return item.meta.edb_bucket_slug == 'edb_'+attr.name; } );
               if( bucket.length > 0){
                   bucketVariations = bucketVariations.concat( bucket[0].variations );
               }
             });
             if(bucketVariations.length > 0){
+              var variations = product.variations;
+              var newVariations = [];
               bucketVariations.forEach( function( v ){
-                // var variation_attribute = v.attributes[0].name;
-                // var attr = {};
-                // attr[variation_attribute] = v.attributes[0].option;
-                
-                var newItem = Object.assign( { attributes: [] }, variation );
-                newItem.attributes.push(v.attributes[0]);
-                catalog.push( newItem );
+                variations.forEach( function( variation ){
+                  var attributes = variation.attributes||[];
+                  attributes.push( v.attributes[0] );
+                  var copy = Object.assign( {}, variation );
+                  copy.attributes = attributes;
+                  newVariations.push( copy );
+                });
               })
-            }else{
-              catalog.push( variation );
+              product.variations = newVariations;
+              
             }
+            catalog.push( product );
           });
           
           return catalog;
