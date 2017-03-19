@@ -510,6 +510,7 @@
         },
         computeCatalogItems: function( products ){
           if(!products) return [];
+          return products;
           
           var bucketsArray = products.filter( function( p ){
             return p.meta.edb_is_bucket == '1';
