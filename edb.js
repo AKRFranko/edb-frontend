@@ -14,22 +14,22 @@ wcRest.name = 'woocommerce';
 wpRest.host = window.creds.apiHost;
 wpRest.namespace = window.creds.apiNamespace;
 wpRest.JWT = jwt;
-// wpRest.authKey = window.creds.authKey;
-// wpRest.authSecret = window.creds.authSecret;
+wpRest.authKey = window.creds.authKey;
+wpRest.authSecret = window.creds.authSecret;
 
 wcRest.host = window.creds.apiHost;
 wcRest.namespace = 'wc/v1';
 wcRest.JWT = jwt;
 wcRest.consumerKey = window.creds.consumerKey;
 wcRest.consumerSecret = window.creds.consumerSecret;
-// wcRest.authKey = window.creds.authKey;
-// wcRest.authSecret = window.creds.authSecret;
+wcRest.authKey = window.creds.authKey;
+wcRest.authSecret = window.creds.authSecret;
 
 jwtRest.host = window.creds.apiHost;
 jwtRest.namespace = 'jwt-auth/v1';
 jwtRest.JWT = jwt;
-// wcRest.authKey = window.creds.authKey;
-// wcRest.authSecret = window.creds.authSecret;
+wcRest.authKey = window.creds.authKey;
+wcRest.authSecret = window.creds.authSecret;
 
 function findValueAtPath(path, object) {
   var parts = path.split('.');
@@ -38,6 +38,9 @@ function findValueAtPath(path, object) {
     return o[part] || {
       __fake__: true
     };
+    // return part == '*' ? o :o[part] || {
+    //   __fake__: true
+    // };
   }, object);
   if (value.__fake__) return null;
   return value;
@@ -47,6 +50,12 @@ function setValueAtPath(path, object, value) {
   var parts = path.split('.');
   var last = parts.length - 1;
   var o = object;
+  // if(path =='*'){
+  //   Object.keys(value).forEach( function( k ){
+  //     setValueAtPath( k, object, value[k]);
+  //   } );
+  //   return object;
+  // }
   parts.reduce(function(o, part, index) {
     if (!o[part]) {
       if (index == last) {
@@ -80,7 +89,7 @@ function convertObject(object, converters) {
   return converters.reduce(function(target, converter) {
     return converter.write(object, target);
   }, {
-    meta_box: {}
+   
   });
 }
 
@@ -331,11 +340,21 @@ EDB.getAuthUser = function(){
 
 EDB.login = function( user, pass){
   
-  return jwtRest.__request('POST','/token', {username: user, password: pass }, {} ).then(  function( auth ){
-    localStorage.setItem('EDB_JWT', auth.token );
-    localStorage.setItem('EDB_LASTUSERID', auth.user_id );
-    
-    return EDB.getAuthUser( auth.user_id );
+  return wpRest.__request('POST','/login', {username: user, password: pass }, {} ).then(  function( user ){
+    if(user){
+      window.CurrentUser = user;
+      if(EDB.polymerAuth){
+        EDB.polymerAuth.set('user', window.CurrentUser);
+      }
+      return jwtRest.__request('POST','/token', {username: user, password: pass }, {} ).then(  function( auth ){
+        console.log('token response', auth )
+        localStorage.setItem('EDB_JWT', auth.token );
+        localStorage.setItem('EDB_LASTUSERID', auth.user_id );    
+      });
+    }
+    // console,lig
+    console.log('login response', user )
+    // return EDB.getAuthUser( auth.user_id );
   } );
 };
 

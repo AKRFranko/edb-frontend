@@ -12,9 +12,12 @@
       write: 'description',
       process: EDB.processors.translate
     }, {
-      read: 'attributes.edb_material',
-      write: 'material'
+      read: 'attributes',
+      write: 'attributes'
     },{
+        read: 'meta_box',
+        write: 'meta'
+      },{
         read: 'images',
         write: 'images'
       }, {
@@ -23,6 +26,14 @@
     }, {
       read: 'images.0.src',
       write: 'image.src'
+    },
+    , {
+      read: 'variations',
+      write: 'variations'
+    },
+    {
+      read: 'categories',
+      write: 'categories'
     }]
   });
   

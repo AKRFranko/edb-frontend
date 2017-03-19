@@ -203,165 +203,178 @@
         @apply(--layout-center);
         @apply(--layout-justified);
       }
-      
-      
     </style>
     <!-- app-location binds to the app's URL -->
     <app-location route="{{route}}" use-hash-as-path></app-location>
     <edb-auth id="auth" user="{{user}}" email="{{authEmail}}" password="{{authPassword}}"></edb-auth>
     <!-- this app-route manages the top-level routes -->
-    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}"></app-route>
+    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subRoute}}"></app-route>
+    <app-route route="{{route}}" pattern="/products/:filter" data="{{filterData}}"></app-route>
     
     <edb-layout-query layout="{{layout}}" is-mini-layout="{{isMiniLayout}}"></edb-layout-query>
     <app-scrollpos-control selected="{{page}}"></app-scrollpos-control>
-
-    
     <app-header-layout fullbleed>
       <app-header condenses reveals>
-        
-          <edb-app-toolbar id="toolbar" sticky lang="fr" user="[[user]]" cart="[[cart]]" layout="[[layout]]"></edb-app-toolbar>  
-        
-        
+        <edb-app-toolbar id="toolbar" sticky lang="fr" user="[[user]]" cart="[[cart]]" layout="[[layout]]"></edb-app-toolbar>
       </app-header>
       <div>
         <iron-pages attr-for-selected="id" selected="{{page}}">
-        <section id="home">
-          <edb-slider layout="{{layout}}" loading="{{slide.loading}}" slides="{{slide.items}}"></edb-slider>
-          <edb-grid layout="{{layout}}" loading="{{feature.loading}}">
-          <template is="dom-repeat" items="{{feature.items}}" as="feature">
-            <edb-card class$="{{feature.cardType}}" image="{{feature.image.src}}" title="{{feature.title.en}}" subtitle="{{feature.subtitle.en}}">
-              <p>{{limitText(feature.content.en,120)}}</p>
-            </edb-card>
-          </template>  
-          </edb-grid>
-        </section>
-        <section id="inspiration">
-          <edb-page title="Elements of inspiration" no-image>
-            <p class="centered-text">in this section, we present a collection of our favourite snap shots from our photo sessions. each week, we select and add images that we like. random angles, interesting details, creative decors, cosy textures, beautiful colors or dynamic configurations. no specific function other than to inspire beauty and style around us. these are our feel good pics! happy viewing.</p>
-            <edb-grid layout="{{layout}}" loading="{{inspiration.loading}}">
-            <template is="dom-repeat" items="{{inspiration.items}}" as="inspiration">
-              <edb-card image="{{inspiration.image.src}}" no-icon class="square">
-                <p class="edb-title">{{inspiration.title.en}}</p>
-              </edb-card>
-            </template>  
+          
+          <section id="home">
+            <edb-slider layout="{{layout}}" loading="{{slide.loading}}" slides="{{slide.items}}"></edb-slider>
+            <edb-grid layout="{{layout}}" loading="{{feature.loading}}">
+              <template is="dom-repeat" items="{{feature.items}}" as="feature">
+                <edb-card class$="{{feature.cardType}}" image="{{feature.image.src}}" title="{{feature.title.en}}" subtitle="{{feature.subtitle.en}}">
+                  <p>{{limitText(feature.content.en,120)}}</p>
+                </edb-card>
+              </template>
             </edb-grid>
-          </edb-page>
-        </section>
-        
-        <section id="contact">
-          <edb-page title="Contact" image="http://installatex.ca/wp-content/uploads/2017/03/contact.jpg">
-            <div class="columns">
-              <div class="column">
-                <article class="address">
-                  <h3 class="edb-title">ADDRESS</h3>
-                  <span class="street-address">534 mccaffrey</span>
-                  <span class="locality">montreal, qc</span>
-                  <span class="postcode">h4t 1n1</span>
-                  <br>
-                  <span class="phone">514-738-6484</span>
-                  <span class="phone">1-844-738-6484</span>
-                  <span class="email"><a href="mailto:info@elementdebase.com">info@elementdebase.com</a></span>
-                </article> 
-                <article class="map">
-                  <edb-map></edb-map>
-                  <p>our showroom is conveniently located in montreal near the junction of the 40 and the 13.</p>
-                  
-                  <p>approximate time without heavy traffic:</p>
-                  <ul>
-                  <li>5 min from trudeau airport</li>
-                  <li> 25 min from downtown montreal</li>
-                  <li> 30 min from olympic stadium</li>
-                  <li> 25 min from outremont</li>
-                  <li> 20 min from tmr</li>
-                  <li> 30 min from the plateau</li>
-                  <li> 25 min from the mile end</li>
-                  <li> 2 min from ikea (cavendish)</li>
-                  <li> 15 min from ville st-laurent</li>
-                  <li> 5 min from plaza cote-vertu</li>
-                  </ul>
-                </article>
-              </div>
-              <div class="column">
-                <article class="showroom">
-                  <h3 class="edb-title">SHOWROOM OPEN TO THE PUBLIC</h3>
-                  <table>
-                    <tr><th>mon – tue</th><td>by appointment*</td></tr>
-                    <tr>  <th>wed</th><td>12h00 to 18h00</td></tr>
-                    <tr>  <th>thu - fri</th><td>12h00 to 20h00</td></tr>
-                    <tr> <th>sat - sun</th><td>13h00 to 17h00</td></tr>
-                  </table>
-                  <p class="edb-footnote">* to arrange an appointment, please call us within our opening hours or write to us at least 24 hours in advance at <a href="mailto:info@elementdebase.com">info@elementdebase.com</a></p>
-                  <p>Our showroom is open to the public. everyone is welcome to pass by during our opening hours.</p>
-                </article>
-                
-              
-                <article class="form">
-                  <form id="contactForm">
-                    <h3 class="edb-title">WRITE TO US</h3>
-                    <p>we'll respond within 24 hours</p>
-                    <paper-input label="name" type="text"></paper-input>
-                    <paper-input label="email" type="email"></paper-input>
-                    <paper-input label="confirm email" type="email"></paper-input>
-                    <paper-input label="phone number" type="tel"></paper-input>
-                    <paper-input label="subject" type="text"></paper-input>
-                    <paper-textarea rows="5" label="your message"></paper-textarea>
-                    <paper-button>send</paper-button>
-                  </form>
-                </article>
-              </div>
-            <div>
-             
-
+          </section>
+          
+          <section id="products">
             
-          </edb-page>
-        </section>
-        <section id="order-samples">
-          <edb-page title="Order Samples" image="http://installatex.ca/wp-content/uploads/2017/03/samples.jpg">
-            <form id="samplesForm">
-              <p>order your free fabric samples to validate your choice at home. you will receive by mail our complete collection of upholstery fabrics. please allow 2-4 business days depending on where you are located in canada.</p>
-              <p>samples are only available for sofa fabrics, not for accessories such as throw cushions.</p>
+            <edb-grid layout="{{layout}}" loading="{{product.loading}}">
+              <template is="dom-repeat" items="{{computeCatalogItems(product.items)}}" as="feature" filter="{{_filterCatalog(filterData.filter)}}">
+                <edb-card image="{{product.image.src}}" title="{{product.name}}" subtitle="{{formatMoney(product.price)}}">
+                  <p>{{limitText(product.description.en,120)}}</p>
+                </edb-card>
+              </template>
+            </edb-grid>
+          </section>
+          
+          <section id="inspiration">
+            <edb-page title="Elements of inspiration" no-image>
+              <p class="centered-text">in this section, we present a collection of our favourite snap shots from our photo sessions. each week, we select and add images that we like. random angles, interesting details, creative decors, cosy textures, beautiful colors or dynamic configurations.
+                no specific function other than to inspire beauty and style around us. these are our feel good pics! happy viewing.</p>
+              <edb-grid layout="{{layout}}" loading="{{inspiration.loading}}">
+                <template is="dom-repeat" items="{{inspiration.items}}" as="inspiration">
+                  <edb-card image="{{inspiration.image.src}}" no-icon class="square">
+                    <p class="edb-title">{{inspiration.title.en}}</p>
+                  </edb-card>
+                </template>
+              </edb-grid>
+            </edb-page>
+          </section>
+          <section id="contact">
+            <edb-page title="Contact" image="http://installatex.ca/wp-content/uploads/2017/03/contact.jpg">
               <div class="columns">
                 <div class="column">
-                  <div>
-                    <paper-input label="name" type="text"></paper-input>
-                    <paper-input label="email" type="email"></paper-input>
-                    <paper-input label="confirm email" type="email"></paper-input>      
-                  </div>
+                  <article class="address">
+                     <h3 class="edb-title">ADDRESS</h3>
+ <span class="street-address">534 mccaffrey</span>
+ <span class="locality">montreal, qc</span>
+ <span class="postcode">h4t 1n1</span>
+
+                    <br> <span class="phone">514-738-6484</span>
+ <span class="phone">1-844-738-6484</span>
+ <span class="email"><a href="mailto:info@elementdebase.com">info@elementdebase.com</a></span>
+
+                  </article>
+                  <article class="map">
+                    <edb-map></edb-map>
+                    <p>our showroom is conveniently located in montreal near the junction of the 40 and the 13.</p>
+                    <p>approximate time without heavy traffic:</p>
+                    <ul>
+                      <li>5 min from trudeau airport</li>
+                      <li>25 min from downtown montreal</li>
+                      <li>30 min from olympic stadium</li>
+                      <li>25 min from outremont</li>
+                      <li>20 min from tmr</li>
+                      <li>30 min from the plateau</li>
+                      <li>25 min from the mile end</li>
+                      <li>2 min from ikea (cavendish)</li>
+                      <li>15 min from ville st-laurent</li>
+                      <li>5 min from plaza cote-vertu</li>
+                    </ul>
+                  </article>
                 </div>
                 <div class="column">
-                  <div>
-                    <paper-input label="street address" type="text"></paper-input>
-                    <paper-input label="province" type="text"></paper-input>
-                    <paper-input label="city" type="text"></paper-input>
-                    <paper-input label="postal code" type="text"></paper-input>
-                    <paper-button>send</paper-button>    
+                  <article class="showroom">
+                     <h3 class="edb-title">SHOWROOM OPEN TO THE PUBLIC</h3>
+
+                    <table>
+                      <tr>
+                        <th>mon – tue</th>
+                        <td>by appointment*</td>
+                      </tr>
+                      <tr>
+                        <th>wed</th>
+                        <td>12h00 to 18h00</td>
+                      </tr>
+                      <tr>
+                        <th>thu - fri</th>
+                        <td>12h00 to 20h00</td>
+                      </tr>
+                      <tr>
+                        <th>sat - sun</th>
+                        <td>13h00 to 17h00</td>
+                      </tr>
+                    </table>
+                    <p class="edb-footnote">* to arrange an appointment, please call us within our opening hours or write to us at least 24 hours in advance at
+                      <a href="mailto:info@elementdebase.com">info@elementdebase.com</a>
+                    </p>
+                    <p>Our showroom is open to the public. everyone is welcome to pass by during our opening hours.</p>
+                  </article>
+                  <article class="form">
+                    <form id="contactForm">
+                       <h3 class="edb-title">WRITE TO US</h3>
+
+                      <p>we'll respond within 24 hours</p>
+                      <paper-input label="name" type="text"></paper-input>
+                      <paper-input label="email" type="email"></paper-input>
+                      <paper-input label="confirm email" type="email"></paper-input>
+                      <paper-input label="phone number" type="tel"></paper-input>
+                      <paper-input label="subject" type="text"></paper-input>
+                      <paper-textarea rows="5" label="your message"></paper-textarea>
+                      <paper-button>send</paper-button>
+                    </form>
+                  </article>
+                </div>
+                <div>
+            </edb-page>
+          </section>
+          <section id="order-samples">
+            <edb-page title="Order Samples" image="http://installatex.ca/wp-content/uploads/2017/03/samples.jpg">
+              <form id="samplesForm">
+                <p>order your free fabric samples to validate your choice at home. you will receive by mail our complete collection of upholstery fabrics. please allow 2-4 business days depending on where you are located in canada.</p>
+                <p>samples are only available for sofa fabrics, not for accessories such as throw cushions.</p>
+                <div class="columns">
+                  <div class="column">
+                    <div>
+                      <paper-input label="name" type="text"></paper-input>
+                      <paper-input label="email" type="email"></paper-input>
+                      <paper-input label="confirm email" type="email"></paper-input>
+                    </div>
+                  </div>
+                  <div class="column">
+                    <div>
+                      <paper-input label="street address" type="text"></paper-input>
+                      <paper-input label="province" type="text"></paper-input>
+                      <paper-input label="city" type="text"></paper-input>
+                      <paper-input label="postal code" type="text"></paper-input>
+                      <paper-button>send</paper-button>
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              
-            </form>
-          </edb-page>
-        </section>
+              </form>
+            </edb-page>
+          </section>
           <!--<edb-slider layout="{{layout}}"></edb-slider>-->
         </iron-pages>
-      </div>
+        </div>
     </app-header-layout>
-    
-      
     <paper-dialog modal id="authDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <form id="authForm">
         <div class="edb-title">Welcome</div>
-        
         <iron-pages attr-for-selected="id" selected="{{authMode}}" fallback-selection="authModeSelect">
           <div id="authModeSelect">
             <iron-selector selected="{{authMode}}" attr-for-selected="data-select" fallback-selection="authModeSelect">
               <paper-item data-select="login">
                 <paper-item-body two-line>
                   <div>Returning Customers</div>
-                  <div secondary>Please <b>sign in</b></div>
+                  <div secondary>Please <b>sign in</b>
+                  </div>
                 </paper-item-body>
-                
               </paper-item>
               <paper-item data-select="register">
                 <paper-item-body two-line>
@@ -370,15 +383,14 @@
                 </paper-item-body>
               </paper-item>
             </iron-selector>
-          </div>  
+          </div>
           <div id="login">
             <paper-input type="email" label="Email" value="{{authEmail}}"></paper-input>
             <paper-input type="password" label="Password" value="{{authPassword}}"></paper-input>
             <div class="button-row">
               <a href="/#" on-tap="setAuthModeRegister">register instead</a>
-              <paper-button on-tap="handleLogin">login</paper-button>    
+              <paper-button on-tap="handleLogin">login</paper-button>
             </div>
-            
           </div>
           <div id="register">
             <paper-input type="email" label="Email" value="{{authEmail}}"></paper-input>
@@ -386,148 +398,199 @@
             <paper-input type="password" label="Confirm Password" value="{{authPasswordConfirmation}}"></paper-input>
             <div class="button-row">
               <a href="/#" on-tap="setAuthModeLogin">login instead</a>
-              <paper-button on-tap="handleRegister">register</paper-button>    
+              <paper-button on-tap="handleRegister">register</paper-button>
             </div>
-            
           </div>
         </iron-pages>
-        
-        
       </form>
     </paper-dialog>
-    
   </template>
-
   <script>
-  function isDescendant(parent, child) {
-       var node = child.parentNode;
-       while (node != null) {
-           if (node == parent) {
-               return true;
-           }
-           node = node.parentNode;
-       }
-       return false;
-  }
-    Polymer({
-
-      is: 'edb-frontend-app',
-
-      properties: {
-        user: {
-          type: Object,
-          notify: true
+    function isDescendant(parent, child) {
+         var node = child.parentNode;
+         while (node != null) {
+             if (node == parent) {
+                 return true;
+             }
+             node = node.parentNode;
+         }
+         return false;
+    }
+      Polymer({
+  
+        is: 'edb-frontend-app',
+  
+        properties: {
+          user: {
+            type: Object,
+            notify: true
+          },
+          route: {
+            type: Object,
+            notify: true
+          },
+          routeData: {
+            type: Object,
+            notify: true
+          },
+          page: {
+            type: String,
+            value: 'home',
+            notify: true
+          },
+          slide:{
+            type: Object,
+            notify: true,
+            value: function(){
+              return {};
+            }
+          },
+          feature:{
+            type: Object,
+            notify: true,
+            value: function(){
+              return {};
+            }
+          },
+          product:{
+            type: Object,
+            notify: true,
+            value: function(){
+              return {};
+            }
+          },
+          inspiration:{
+            type: Object,
+            notify: true,
+            value: function(){
+              return {};
+            }
+          },
+          
+          authMode: {
+            type: String,
+            value: 'authModeSelect',
+            notify: true
+          }
+          
         },
-        route: {
-          type: Object,
-          notify: true
+        observers: ['routePage(route,routeData)','closeAuthDialog(user)'],
+        closeAuthDialog: function( user ){
+          this.$.authDialog.close();
         },
-        routeData: {
-          type: Object,
-          notify: true
+        setAuthModeRegister: function( e )
+        {
+          e.preventDefault();
+          this.set('authMode', 'register');
+          console.log(this.get('authMode'))
         },
-        page: {
-          type: String,
-          value: 'home',
-          notify: true
+        setAuthModeLogin: function( e ){
+          e.preventDefault();
+          
+          this.set('authMode', 'login');
+          console.log(this.get('authMode'))
         },
-        slide:{
-          type: Object,
-          notify: true,
-          value: function(){
-            return {};
+        _filterCatalog: function( filterVal ){
+          return function( product ) {
+            if (!filterVal) return true;
+            if (!product) return false;
+            return product.categories.some( function( c ){
+               return c.slug == filterVal; 
+            });
+          };
+        },
+        computeCatalogItems: function( products ){
+          if(!products) return [];
+          
+          var bucketsArray = products.filter( function( p ){
+            return p.meta.edb_is_bucket == '1';
+          });
+          var objectsArray = products.filter( function( p ){
+            return p.meta.edb_is_bucket != '1';
+          });
+          var variationsArray = objectsArray.reduce( function( all, one ){
+            return all.concat( one.variations.map( function( v ){
+              return Object.assign( {}, one, { variation: v });
+            }));
+          },[]);
+          var catalog= [];
+          variationsArray.forEach( function( variation ){
+            var attributes = variation.attributes;
+            var bucketVariations =  [];
+            attributes.forEach( function( attr ){
+              var bucket = bucketsArray.filter( function( item ){ return item.meta.edb_bucket_slug == 'edb_'+attr.name; } );
+              if( bucket.length ){
+                  bucketVariations = bucketVariations.concat( bucket[0].variations );
+              }
+            });
+            if(bucketVariations.length){
+              bucketVariations.forEach( function( v ){
+                var variation_attribute = v.attributes[0].name;
+                var attr = {};
+                attr[variation_attribute] = v.attributes[0].option;
+                catalog.push( Object.assign( {}, variation, {attributes: attr } ) );
+              })
+            }else{
+              catalog.push( variation );
+            }
+          });
+          return catalog;
+        },
+        handleLogin: function(){
+          this.$.auth.login();
+        },
+        handleRegister: function(){
+          this.$.auth.register();
+        },
+        handleLogout: function(){
+          this.$.auth.logout();
+        },
+        routePage: function( route,data ){
+          // console.log('DATA', route,data)
+          if(!data || ( data && !data.page)){
+            this.set('page', 'home');
+          }else{
+            this.set('page',data.page);
           }
         },
-        feature:{
-          type: Object,
-          notify: true,
-          value: function(){
-            return {};
-          }
+        // sortBySortOrder: function( a,b ){
+        //   if(!a.sortOrder && a.sortOrder !== 0){
+        //     return 0;
+        //   }
+        //   if(!b.sortOrder && b.sortOrder !== 0){
+        //     return 0;
+        //   }
+        //   if(a.sortOrder > b.sortOrder){
+        //     return -1;
+        //   }
+        //   if(a.sortOrder < b.sortOrder){
+        //     return 1;
+        //   }
+        //   return 0;
+        // },
+        limitText: function( t,n ){
+          return t.slice(0,n)+'...';
         },
-        inspiration:{
-          type: Object,
-          notify: true,
-          value: function(){
-            return {};
-          }
+        formatMoney: function( amount ){
+          return EDB.format.money( amount );
         },
-        
-        authMode: {
-          type: String,
-          value: 'authModeSelect',
-          notify: true
+        ready: function(){
+          // var slides = new EDB.PolymerResource( 'slides' );
+          
+          var slide = new EDB.PolymerResource('slide', this);
+          slide.refreshItems();
+          var feature = new EDB.PolymerResource('feature', this);
+          feature.refreshItems();
+          var inspiration = new EDB.PolymerResource('inspiration', this);
+          inspiration.refreshItems();
+          this.$.toolbar.dialog = this.$.authDialog;
+          
+          var product = new EDB.PolymerResource('product', this);
+          product.refreshItems()
+          // this.set('slides', slides.items );
+          // console.log()
         }
-        
-      },
-      observers: ['routePage(route,routeData)','closeAuthDialog(user)'],
-      closeAuthDialog: function( user ){
-        this.$.authDialog.close();
-      },
-      setAuthModeRegister: function( e )
-      {
-        e.preventDefault();
-        this.set('authMode', 'register');
-        console.log(this.get('authMode'))
-      },
-      setAuthModeLogin: function( e ){
-        e.preventDefault();
-        
-        this.set('authMode', 'login');
-        console.log(this.get('authMode'))
-      },
-      handleLogin: function(){
-        this.$.auth.login();
-      },
-      handleRegister: function(){
-        this.$.auth.register();
-      },
-      handleLogout: function(){
-        this.$.auth.logout();
-      },
-      routePage: function( route,data ){
-        // console.log('DATA', route,data)
-        if(!data || ( data && !data.page)){
-          this.set('page', 'home');
-        }else{
-          this.set('page',data.page);
-        }
-      },
-      // sortBySortOrder: function( a,b ){
-      //   if(!a.sortOrder && a.sortOrder !== 0){
-      //     return 0;
-      //   }
-      //   if(!b.sortOrder && b.sortOrder !== 0){
-      //     return 0;
-      //   }
-      //   if(a.sortOrder > b.sortOrder){
-      //     return -1;
-      //   }
-      //   if(a.sortOrder < b.sortOrder){
-      //     return 1;
-      //   }
-      //   return 0;
-      // },
-      limitText: function( t,n ){
-        return t.slice(0,n)+'...';
-      },
-      ready: function(){
-        // var slides = new EDB.PolymerResource( 'slides' );
-        
-        var slide = new EDB.PolymerResource('slide', this);
-        slide.refreshItems();
-        var feature = new EDB.PolymerResource('feature', this);
-        feature.refreshItems();
-        var inspiration = new EDB.PolymerResource('inspiration', this);
-        inspiration.refreshItems();
-        this.$.toolbar.dialog = this.$.authDialog;
-        
-        var product = new EDB.PolymerResource('product', this);
-        product.refreshItems();
-        // this.set('slides', slides.items );
-        // console.log()
-      }
-
-    });
+  
+      });
   </script>
 </dom-module>
