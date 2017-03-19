@@ -43,6 +43,7 @@ function findValueAtPath(path, object) {
     // };
   }, object);
   if (value.__fake__) return null;
+  console.log('findValueAtPath', path, object, value );
   return value;
 }
 
@@ -141,6 +142,7 @@ var Convert = function Convert(read, write, options) {
     };
   }
   this.read = function(source, target) {
+
     var value = findValueAtPath(read, source);
     if (noRead) return null;
     setValueAtPath(readAs, target, process(value));
