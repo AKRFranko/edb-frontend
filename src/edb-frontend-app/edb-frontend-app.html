@@ -532,6 +532,7 @@
           objectsArray.forEach( function( product ){
             var attributes = product.attributes;
             var bucketVariations =  [];
+            
             attributes.forEach( function( attr ){
               var bucket = bucketsArray.filter( function( item ){ return item.meta.edb_bucket_slug == 'edb_'+attr.name; } );
               if( bucket.length > 0){
