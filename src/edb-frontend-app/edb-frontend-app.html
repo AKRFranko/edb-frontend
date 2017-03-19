@@ -550,9 +550,10 @@
                 p.variations = newVariations;
                 catalog.push( p );
               })
-
+            }else{
+              catalog.push( product );  
             }
-            catalog.push( product );
+            
           });
           
           return catalog;
