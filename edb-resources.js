@@ -32,7 +32,7 @@
       read: 'images.0.src',
       write: 'image.src'
     },
-    , {
+    {
       read: 'variations',
       write: 'variations'
     },
