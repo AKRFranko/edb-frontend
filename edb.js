@@ -142,7 +142,6 @@ var Convert = function Convert(read, write, options) {
     };
   }
   this.read = function(source, target) {
-
     var value = findValueAtPath(read, source);
     if (noRead) return null;
     setValueAtPath(readAs, target, process(value));
