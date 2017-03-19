@@ -33,7 +33,7 @@ wcRest.authSecret = window.creds.authSecret;
 
 function findValueAtPath(path, object) {
   var parts = path.split('.');
-  console.log('findValueAtPath', path, object);
+  
   var value = parts.reduce(function(o, part) {
     delete o.__fake__;
     return o[part] || {
@@ -43,8 +43,8 @@ function findValueAtPath(path, object) {
     //   __fake__: true
     // };
   }, object);
+  console.log('findValueAtPath', path, value);
   if (value.__fake__) return null;
-  
   return value;
 }
 
