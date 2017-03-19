@@ -530,11 +530,11 @@
             var bucketVariations =  [];
             attributes.forEach( function( attr ){
               var bucket = bucketsArray.filter( function( item ){ return item.meta.edb_bucket_slug == 'edb_'+attr.name; } );
-              if( bucket.length ){
+              if( bucket.length > 0){
                   bucketVariations = bucketVariations.concat( bucket[0].variations );
               }
             });
-            if(bucketVariations.length){
+            if(bucketVariations.length > 0){
               bucketVariations.forEach( function( v ){
                 // var variation_attribute = v.attributes[0].name;
                 // var attr = {};
