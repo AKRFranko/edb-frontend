@@ -235,7 +235,7 @@
             
             <edb-grid layout="{{layout}}" loading="{{product.loading}}">
               <template is="dom-repeat" items="{{computeCatalogItems(product.items)}}" as="product" filter="{{_filterCatalog(filterData.filter)}}">
-                <edb-card image="{{product.image.src}}" title="{{product.name}}" subtitle="{{formatMoney(product.price)}}">
+                <edb-card image="{{product.image.src}}" title="{{computeCatalogItemName(product)}}" subtitle="{{formatMoney(product.price)}}">
                   <p>{{limitText(product.description.en,120)}}</p>
                 </edb-card>
               </template>
@@ -508,6 +508,10 @@
             
           };
         },
+        computeCatalogItemName: function( item ){
+          console.log('computeCatalogItemName', item );
+          return item.name;
+        },
         computeCatalogItems: function( products ){
           if(!products) return [];
           
@@ -539,7 +543,7 @@
                 // var variation_attribute = v.attributes[0].name;
                 // var attr = {};
                 // attr[variation_attribute] = v.attributes[0].option;
-                variation.name = variation.name + ' ' + v.attributes[0].option;
+                
                 var newItem = Object.assign( { attributes: [] }, variation );
                 newItem.attributes.push(v.attributes[0]);
                 catalog.push( newItem );
