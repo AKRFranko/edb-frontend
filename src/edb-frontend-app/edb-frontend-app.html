@@ -522,11 +522,7 @@
           var objectsArray = products.filter( function( p ){
             return p.meta.edb_is_bucket != '1';
           });
-          var variationsArray = objectsArray.reduce( function( all, one ){
-            return all.concat( one.variations.map( function( v ){
-              return Object.assign( {}, one, { variation: v });
-            }));
-          },[]);
+         
           
           var catalog= [];
           objectsArray.forEach( function( product ){
@@ -543,6 +539,7 @@
               var variations = product.variations;
               var newVariations = [];
               bucketVariations.forEach( function( v ){
+                var p = Object.assign( {}, product );
                 variations.forEach( function( variation ){
                   var attributes = variation.attributes||[];
                   attributes.push( v.attributes[0] );
@@ -550,9 +547,10 @@
                   copy.attributes = attributes;
                   newVariations.push( copy );
                 });
+                p.variations = newVariations;
+                catalog.push( p );
               })
-              product.variations = newVariations;
-              
+
             }
             catalog.push( product );
           });
