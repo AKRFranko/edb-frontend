@@ -20,13 +20,14 @@
       },{
         read: 'images',
         write: 'images'
-      }, {
-      read: 'images.0.id',
-      write: 'image.id'
-    }, {
-      read: 'images.0.src',
-      write: 'image.src'
-    },
+      }
+    //   }, {
+    //   read: 'images.0.id',
+    //   write: 'image.id'
+    // }, {
+    //   read: 'images.0.src',
+    //   write: 'image.src'
+    // },
     , {
       read: 'variations',
       write: 'variations'
