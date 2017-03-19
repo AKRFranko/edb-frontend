@@ -43,7 +43,6 @@ function findValueAtPath(path, object) {
     //   __fake__: true
     // };
   }, object);
-  console.log('findValueAtPath', path, value);
   if (value.__fake__) return null;
   return value;
 }
