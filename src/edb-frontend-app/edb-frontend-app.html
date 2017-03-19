@@ -534,10 +534,12 @@
             });
             if(bucketVariations.length){
               bucketVariations.forEach( function( v ){
-                var variation_attribute = v.attributes[0].name;
-                var attr = {};
+                // var variation_attribute = v.attributes[0].name;
+                // var attr = {};
                 attr[variation_attribute] = v.attributes[0].option;
-                catalog.push( Object.assign( {}, variation, {attributes: attr } ) );
+                var newItem = Object.assign( { attributes: [] }, variation );
+                newItem.attributes.push(v.attributes[0]);
+                catalog.push( newItem );
               })
             }else{
               catalog.push( variation );
