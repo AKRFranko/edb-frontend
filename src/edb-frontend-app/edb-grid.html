@@ -212,14 +212,14 @@
         },
         processNewNode: function( node ){
           if(!node.dataset) return;
-          console.log('processNewNode', node )
+          
           if(node.nodeName =='TEMPLATE'){
-            return;
-            // console.log(node)
+          
+            console.log('TEMPALTE', node)
             // return node.addEventListener('items-changed', function(w){
             //   console.log('qwerqwer', e)
             // })
-            
+            return;  
           }
           // console.log('processNewNode', node);
           // if(!node.dataset.gridId){
