@@ -215,9 +215,9 @@
           
           if(node.nodeName =='TEMPLATE'){
 
-            node.addEventListener('items-changed', function(w){
-              console.log('tempalte-change', w)
-            })
+            // node.addEventListener('items-changed', function(w){
+            //   console.log('tempalte-change', w)
+            // })
             return;  
           }
           // console.log('processNewNode', node);
@@ -260,6 +260,7 @@
         ready: function(){
           
           Polymer.dom(this.$.contentNode).observeNodes(function(info) {
+            console.log('info', info)
             info.addedNodes.forEach( this.processNewNode, this );
             info.removedNodes.forEach( this.processRemovedNode, this );
             
