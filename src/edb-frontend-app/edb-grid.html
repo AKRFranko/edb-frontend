@@ -255,6 +255,9 @@
         processRemovedNode: function( node, index ){
           if(!node.dataset) return;
           console.log('processRemovedNode', node.removeWrapper );
+          if(node.removeWrapper ){
+            node.removeWrapper();
+          }
           // this.set('nodeMap.'+node.dataset.gridId, null );
           // node.parentNode
           // console.log(this.$.grid.querySelector( '.cell:nth-of-type('+index+')' )); 
