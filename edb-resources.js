@@ -58,6 +58,23 @@
     ]
   });
   
+  
+  EDB.createResourceReference({
+    api: 'wp',
+    name: 'material',
+    path:'materials',
+    convert: [
+      { read: 'id', write:'id'},
+      { read: 'featured_image', write:'image.src'},
+      { read: 'featured_media', write:'image.id'},
+      { read: 'title.rendered', write:'title', process: EDB.processors.translate },
+      { read: 'content.rendered', write:'subtitle', process: EDB.processors.translate },
+      { read: 'meta_box', write:'meta'}
+      
+    ]
+  });
+  
+  
    
   
   EDB.createResourceReference({

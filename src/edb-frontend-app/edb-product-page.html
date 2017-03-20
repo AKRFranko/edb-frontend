@@ -90,8 +90,13 @@
             <div class="name">{{product.name}}</div>
             <div class="price">{{formatMoney(product.price)}}</div>
             <iron-selector selectable="paper-item" selected="{{selectedVariation}}" attr-for-selected="data-option">
-              <template is="dom-repeat" items="{{product.variations}}" as="variation">
-                <paper-item data-option="{{variation.attributes.0.option}}">{{variation.attributes.0.option}}</paper-item>
+              <template is="dom-repeat" items="{{product.attributes}}" as="productAttribute" index-as="productAttributeindex">
+              <template is="dom-repeat" items="{{product.variations}}" as="productVariation">
+                  <paper-item data-option="{{variation.attributes.0.option}}">
+                    {{getVariationAttributeValue( productVariation, productAttribute, productAttributeindex ,'name' )}}
+                    <iron-image src="__computeVariationAttribute"
+                  </paper-item>  
+              </template>
               </template>
             </iron-selector>
           </div>
@@ -126,6 +131,13 @@
             },
             notify: true
           },
+          materials: {
+            type: Object,
+            value: function(){
+              return {};
+            },
+            notify: true
+          },
            
          
         
@@ -134,6 +146,9 @@
         productChanged: function(product){
           console.log('productChanged', product);
           
+        },
+        getVariationAttributeValue: function( v, attr, idx, prop ){
+          return v.attributes[idx][prop];
         },
         
         

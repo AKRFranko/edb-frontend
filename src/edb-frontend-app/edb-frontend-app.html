@@ -233,7 +233,7 @@
           </section>
           <section id="product">
             
-            <edb-product-page product="[[product.item]]"></edb-product-page>
+            <edb-product-page product="[[product.item]]" materials="[[material.items]]"></edb-product-page>
             
             
           </section>
@@ -652,7 +652,10 @@
           this.$.toolbar.dialog = this.$.authDialog;
           
           var product = new EDB.PolymerResource('product', this);
-          product.refreshItems()
+          product.refreshItems();
+          
+          var material = new EDB.PolymerResource('material', this);
+              material.refreshItems();
           // this.set('slides', slides.items );
           // console.log()
         }
