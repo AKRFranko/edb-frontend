@@ -498,7 +498,9 @@
           this.$.authDialog.close();
         },
         createProductSlides: function( item ){
-          return (item.images||[]).map( function( i ){ return { image: i }; });
+          if(!item) return;
+          if(!item.images) returnl
+          return (item.images).map( function( i ){ return { image: i }; });
         },
         setSelectedProductId: function( id ){
           this.set('product.selectedId',id);
