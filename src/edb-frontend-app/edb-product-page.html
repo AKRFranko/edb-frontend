@@ -113,11 +113,13 @@
             },
             notify: true
           },
-          
-         
-        
         },
-        
+        observers: ['updateProduct(product.*)'],
+        updateProduct: function(){
+          Object.keys(this.product).forEach( function( k ){
+            this.set('product.'+k,this.product[k]);
+          }, this)
+        },
         createProductSlides: function( item ){
           if(!item) return [];
           if(!item.images) return [];
