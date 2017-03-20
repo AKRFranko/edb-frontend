@@ -166,9 +166,9 @@
     </style>
     
     <div id="grid"></div>
-    <!--<div id="data">-->
+    <div id="data">
       <content id="contentNode"></content>
-    <!--</div>-->
+    </div>
     <granite-spinner id="spinner" size="50" color="#000" hover active="{{loading}}"></granite-spinner>
   </template>
   <script>
@@ -259,6 +259,10 @@
         ready: function(){
           
           Polymer.dom(this.$.contentNode).observeNodes(function(info) {
+            info.addedNodes.forEach( this.processNewNode, this );
+            info.removedNodes.forEach( this.processRemovedNode, this );
+          }.bind(this));
+          Polymer.dom(this.$.data).observeNodes(function(info) {
             info.addedNodes.forEach( this.processNewNode, this );
             info.removedNodes.forEach( this.processRemovedNode, this );
           }.bind(this));
