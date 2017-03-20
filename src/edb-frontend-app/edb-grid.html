@@ -212,6 +212,7 @@
         },
         processNewNode: function( node ){
           if(!node.dataset) return;
+          console.log('processNewNode', node )
           if(node.nodeName =='TEMPLATE'){
             return;
             // console.log(node)
@@ -252,10 +253,10 @@
         },
         processRemovedNode: function( node ){
           if(!node.dataset) return;
-          console.log('processRemovedNode', node.parentNode );
+          // console.log('processRemovedNode', node.parentNode );
           // this.set('nodeMap.'+node.dataset.gridId, null );
           // node.parentNode
-          this.$.grid.appendChild( node ); 
+          // this.$.grid.appendChild( node ); 
         },
         ready: function(){
           
