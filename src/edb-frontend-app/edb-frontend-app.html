@@ -230,7 +230,10 @@
               </template>
             </edb-grid>
           </section>
-          
+          <section id="product">
+            <edb-slider layout="{{layout}}" loading="{{product.loading}}" slides="{{product.item.images}}"></edb-slider>
+            
+          </section>
           <section id="products">
               <iron-pages selected="[[filterData.filter]]" attr-for-selected="data-filter" fallback-selection="all" selectable="div.filtered">
                   <template is="dom-repeat" items="{{filters}}" as="filter">
