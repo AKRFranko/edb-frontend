@@ -216,7 +216,7 @@
           if(node.nodeName =='TEMPLATE'){
             return;  
           }
-          console.log('processNewNode', node);
+
           // if(!node.dataset.gridId){
           //   node.dataset.gridId = getToken();
           // }
@@ -248,9 +248,10 @@
         },
         processRemovedNode: function( node, index ){
           if(!node.dataset) return;
-          // if(node.removeWrapper ){
-          //   node.removeWrapper();
-          // }
+          if(node.removeWrapper ){
+            node.removeWrapper();
+          }
+          
           // this.set('nodeMap.'+node.dataset.gridId, null );
           // node.parentNode
           // console.log(this.$.grid.querySelector( '.cell:nth-of-type('+index+')' )); 
@@ -258,11 +259,8 @@
         ready: function(){
           
           Polymer.dom(this.$.contentNode).observeNodes(function(info) {
-            console.log(info);
             info.addedNodes.forEach( this.processNewNode, this );
             info.removedNodes.forEach( this.processRemovedNode, this );
-            
-            
           }.bind(this));
           
           
