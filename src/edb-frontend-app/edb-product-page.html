@@ -93,7 +93,7 @@
               <template is="dom-repeat" items="{{product.attributes}}" as="productAttribute" index-as="productAttributeindex">
               <template is="dom-repeat" items="{{product.variations}}" as="productVariation">
                   <paper-item data-option="{{variation.attributes.0.option}}">
-                    {{getVariationAttributeValue( productVariation, productAttribute, productAttributeindex ,'name' )}}
+                    <p>{{getVariationAttributeValue( productVariation, productAttribute, productAttributeindex ,'name' )}}</p>
                     <iron-image src="__computeVariationAttribute"
                   </paper-item>  
               </template>
