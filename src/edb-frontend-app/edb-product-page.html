@@ -87,15 +87,15 @@
         <div class="header-inner">
           
         <div class="header-split">
-          <edb-slider layout="{{layout}}" slides="{{createProductSlides(product)}}"></edb-slider>
+          <edb-slider layout="{{layout}}" slides="{{createProductSlides(product,materials)}}"></edb-slider>
           <div id="productMenu">
             <div class="name">{{product.name}}</div>
             <div class="price">{{formatMoney(product.price)}}</div>
             
-            <template is="dom-repeat" items="{{computeAttributes(product)}}" as="attribute">
+            <template is="dom-repeat" items="{{computeAttributes(product,materials)}}" as="attribute">
               <div class="attribute-label">{{attribute.name}}</div>
               <iron-selector>
-              <template is="dom-repeat" items="{{computeAttributeChoices(attribute)}}" as="choice">
+              <template is="dom-repeat" items="{{computeAttributeChoices(attribute,materials)}}" as="choice">
                 <paper-item>{{choice.label}}</paper-item>
               </template>
               </iron-selector>
