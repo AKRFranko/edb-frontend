@@ -214,11 +214,16 @@
           if(!node.dataset) return;
           
           if(node.nodeName =='TEMPLATE'){
-            console.log(node.__attachInstance)
+            // console.log()
             // node.addEventListener('dom-change', function( event, secondary ){
             //   console.log(node.items,secondary);
               
             // })
+            var __detachAndRemoveInstance = node.__detachAndRemoveInstance;
+            node.__detachAndRemoveInstance = function(){
+              console.log('__detachAndRemoveInstance', arguments )
+              node.__detachAndRemoveInstance.apply( node, arguments);
+            }
             return;  
           }
           // console.log('processNewNode', node);
