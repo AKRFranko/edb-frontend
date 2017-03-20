@@ -137,6 +137,7 @@
       }
     },
     __loadItem: function(item) {
+      console.log('LOADITEM', item)
       this.set('loading', false );
       this.set('item', item || {});
       if(this.app){
@@ -181,7 +182,6 @@
       this.app.addEventListener('product-changed', function( e ){
         this.debounce('selectedIdChanged', function(){
           this.set('selectedId', appRef[refName].selectedId );  
-          this.getItem();
         }.bind(this));
       }.bind(this));
       this.refreshItems = function() {
