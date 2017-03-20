@@ -263,14 +263,16 @@
           // console.log(this.$.grid.querySelector( '.cell:nth-of-type('+index+')' )); 
         },
         ready: function(){
-          this.async( function(){
-            Polymer.dom(this.$.contentNode).observeNodes(function(info) {
-              // console.log('info', info)
+          Polymer.dom(this.$.contentNode).observeNodes(function(info) {
+            // console.log('info', info)
+            this.async( function(){
               info.addedNodes.forEach( this.processNewNode, this );
-              info.removedNodes.forEach( this.processRemovedNode, this );
-              
-            }.bind(this));
-          });
+              info.removedNodes.forEach( this.processRemovedNode, this );  
+            });
+            
+            
+          }.bind(this));
+          
           
         }
         // __proxyPrev: function(){
