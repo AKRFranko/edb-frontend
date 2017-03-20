@@ -498,6 +498,7 @@
         },
         setSelectedProductId: function( id ){
           this.product.selectedId = id;
+          var product = EDB.PolymerResource('product', this);
           // this.product.getItem();
           console.log('product.selectedId',id);
         },

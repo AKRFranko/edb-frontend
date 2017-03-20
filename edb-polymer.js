@@ -166,7 +166,7 @@
       console.log(error);
     },
     __getSelectedItem: function(id) {
-      console.log('__getSelectedItem', id );
+      
       if (id == 'new' || !id) {
         this.__unloadItem();
       } else {
@@ -179,7 +179,9 @@
       var params = { context: 'view'};
       this.set('name',refName);
       this.app = appRef;
-      
+      this.app.addEventListener('product-changed', function( e ){
+        console.log("QWERWERQWER", e )
+      })
       this.refreshItems = function() {
         this.set('loading', true );
         var op = it.ref.list( it.params );
