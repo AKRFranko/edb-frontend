@@ -262,7 +262,7 @@
           // console.log(this.$.grid.querySelector( '.cell:nth-of-type('+index+')' )); 
         },
         ready: function(){
-          Polymer.dom(this.$.contentNode).observeNodes(function(info) {
+          Polymer.dom(this.$.data).observeNodes(function(info) {
             
             info.addedNodes.forEach( this.processNewNode, this );
             info.removedNodes.forEach( this.processRemovedNode, this );
