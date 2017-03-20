@@ -216,12 +216,10 @@
           if(node.nodeName =='TEMPLATE'){
             
             node.addEventListener('dom-change', function( event){
-              console.log('changed',node );
+              console.log('changed',Polymer.dom(node) );
               
             })
             return;  
-          }else{
-            node = node.cloneNode();
           }
           // console.log('processNewNode', node);
           // if(!node.dataset.gridId){
