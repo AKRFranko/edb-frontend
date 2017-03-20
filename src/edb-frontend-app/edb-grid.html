@@ -215,8 +215,8 @@
           
           if(node.nodeName =='TEMPLATE'){
             
-            node.addEventListener('dom-change', function( event ){
-              console.log(node.items);
+            node.addEventListener('dom-change', function( event, secondary ){
+              console.log(node.items,secondary);
               
             })
             return;  
