@@ -175,7 +175,7 @@
         <div class="header-inner">
           
         <div class="header-split">
-          <edb-slider layout="{{layout}}" slides="{{createProductSlides(product,materials)}}"></edb-slider>
+          <edb-slider layout="{{layout}}" loading="false" slides="{{createProductSlides(product,materials)}}"></edb-slider>
           <div id="productMenu">
             <div class="name">{{product.name}}</div>
             <div class="price">{{formatMoney(product.price)}}</div>
