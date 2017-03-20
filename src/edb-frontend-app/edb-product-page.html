@@ -20,7 +20,7 @@
         width:100%;
         height:0;
         padding-top:calc(100vh - 140px);
-        background:#000;
+       
       }
       
       .header-inner,.header-split{
@@ -33,7 +33,9 @@
         z-index:0;
         
       }
-      
+      edb-slider{
+        background:#000;
+      }
       
       .header-split{
         position:relative;
@@ -76,7 +78,7 @@
         <div class="header-split">
           <edb-slider layout="{{layout}}" loading="{{product.loading}}" slides="{{createProductSlides(product.item)}}"></edb-slider>
           <div id="productMenu">
-            
+            <div class="name">{{product.name}}</div>
           </div>
         </div>
         </div>
@@ -113,6 +115,7 @@
          
         
         },
+        
         createProductSlides: function( item ){
           if(!item) return [];
           if(!item.images) return [];
