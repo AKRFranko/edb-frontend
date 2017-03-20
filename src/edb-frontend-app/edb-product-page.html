@@ -80,6 +80,7 @@
           <edb-slider layout="{{layout}}" loading="{{!product}}" slides="{{createProductSlides(product)}}"></edb-slider>
           <div id="productMenu">
             <div class="name">{{product.name}}</div>
+            <div class="price">{{formatMoney(product.price)}}</div>
           </div>
         </div>
         </div>
@@ -123,7 +124,9 @@
           // return [];
           return (item.images).map( function( i ){ return { image: i }; });
         },
-        
+        formatMoney: function( amount ){
+          return EDB.format.money( amount );
+        },
         
      
   
