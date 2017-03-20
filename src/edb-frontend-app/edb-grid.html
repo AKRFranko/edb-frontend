@@ -255,6 +255,7 @@
         processRemovedNode: function( node, index ){
           if(!node.dataset) return;
           if(node.removeWrapper ){
+            console.log('removeWrapper', index );
             node.removeWrapper();
           }
           // this.set('nodeMap.'+node.dataset.gridId, null );
