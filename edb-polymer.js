@@ -197,7 +197,7 @@
       };
       this.getItem = function() {
         this.set('loading', true );
-        var op = it.ref.get(this.selectedId,{},  it.params).then( function(){
+        var op = it.ref.get(this.selectedId,it.params).then( function(){
           console.log('WTF 2?', arguments );
           return arguments[0];
         })

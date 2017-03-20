@@ -221,6 +221,7 @@ var ResourceReference = function ResourceReference(options) {
 
     var request = api.__request('GET', path + '/' + id, null, params);
     return request.then(function(item) {
+      console.log('QWERQWERQWER', item )
       loadObject(item, converters);
     });
 
