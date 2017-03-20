@@ -216,7 +216,7 @@
           if(node.nodeName =='TEMPLATE'){
             
             node.addEventListener('dom-change', function( event){
-              console.log('changed',Polymer.dom(node) );
+              console.log('changed',Polymer.dom(node).childNodes() );
               
             })
             return;  
