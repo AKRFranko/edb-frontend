@@ -510,7 +510,11 @@
         },
         computeCatalogItemName: function( item ){
           console.log('computeCatalogItemName', item );
-          return item.name;
+          var names = [ item.name ];
+          var bucketAttributes = item.attributes.map( function( attr ){
+            
+          } )
+          return names.join(' ');
         },
         computeCatalogItems: function( products ){
           if(!products) return [];
@@ -538,11 +542,13 @@
             if(bucketVariations.length > 0){
               var variations = product.variations;
               var newVariations = [];
+              var value = v.attributes[0];
+              value.isBucketOption=true;
               bucketVariations.forEach( function( v ){
                 var p = Object.assign( {}, product );
                 variations.forEach( function( variation ){
                   var attributes = variation.attributes||[];
-                  attributes.push( v.attributes[0] );
+                  attributes.push(value );
                   var copy = Object.assign( {}, variation );
                   copy.attributes = attributes;
                   newVariations.push( copy );
@@ -550,7 +556,7 @@
                 p.variations = newVariations;
                 p.attributes = p.attributes.map( function( attr ){ 
                   if( attr.name == v.attributes[0].name){
-                    return v.attributes[0];
+                    return value;
                   }
                   return attr;
                 });
