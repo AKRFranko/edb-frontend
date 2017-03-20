@@ -234,7 +234,7 @@
           <section id="products">
             
             <edb-grid layout="{{layout}}" loading="{{product.loading}}">
-              <template is="dom-repeat" items="{{computeCatalogItems(product.items)}}" as="product" filter="{{_filterCatalog(filterData.filter)}}">
+              <template is="dom-repeat" items="{{computeCatalogItems(product.items,filterData.filter)}}" as="product" filter="{{_filterCatalog(filterData.filter)}}">
                 <edb-card image="{{product.images.0.src}}" title="{{computeCatalogItemName(product)}}" subtitle="{{formatMoney(product.price)}}">
                   <p>{{limitText(product.description.en,120)}}</p>
                 </edb-card>
