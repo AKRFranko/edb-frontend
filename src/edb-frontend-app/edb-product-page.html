@@ -166,7 +166,12 @@
           return product.attributes || [];
         },
         computeAttributeChoices: function( attr ){
-          console.log('computeAttributeChoices', attr );
+          var foundMaterials = (this.get('materials')||[]).filter( function( m ){
+            return m.meta.edb_material_attribute == 'attr';
+          });
+          
+          console.log('computeAttributeChoices', foundMaterials );
+          return foundMaterials;
         },
         createProductSlides: function( item ){
           if(!item) return [];
