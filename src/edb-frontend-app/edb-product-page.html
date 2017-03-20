@@ -90,15 +90,18 @@
             <div class="name">{{product.name}}</div>
             <div class="price">{{formatMoney(product.price)}}</div>
             
-              <template is="dom-repeat" items="{{product.attributes}}" as="productAttribute" index-as="productAttributeindex">
-                <h3>{{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'name')}}</h3>
-                <iron-selector selectable="paper-item" selected="{{selectedVariation}}" attr-for-selected="data-option">
-                <template is="dom-repeat" items="{{product.variations}}" as="productVariation">
-                  <paper-item data-option="{{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'option')}}">
-                    {{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'option')}}
+            <template is="dom-repet" items="{{attributes}}" as="attribute">
+              <h3>{{attribute.name}}</h3>
+            </template>
+              <!--<template is="dom-repeat" items="{{product.attributes}}" as="productAttribute" index-as="productAttributeindex">-->
+              <!--  <h3>{{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'name')}}</h3>-->
+              <!--  <iron-selector selectable="paper-item" selected="{{selectedVariation}}" attr-for-selected="data-option">-->
+              <!--  <template is="dom-repeat" items="{{product.variations}}" as="productVariation">-->
+              <!--    <paper-item data-option="{{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'option')}}">-->
+              <!--      {{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'option')}}-->
                     
-                  </paper-item>  
-              </template>
+              <!--    </paper-item>  -->
+              <!--</template>-->
               </iron-selector>
               </template>
             
