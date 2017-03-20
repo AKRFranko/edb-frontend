@@ -507,7 +507,7 @@
           return function( product ) {
             if (!filterVal) return true;
             if (!product) return false;
-            if( filerVal == 'all'){
+            if( filterVal == 'all'){
              return true; 
             }else if(filterVal == 'new'){
              return Date.now() - product.created < days30;
