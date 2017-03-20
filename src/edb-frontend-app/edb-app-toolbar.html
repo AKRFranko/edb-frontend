@@ -679,7 +679,7 @@
                 menu.classList.remove('opened');
                 toggler.classList.remove('opened');
               }
-            }else if(clickTarget.nodeName == 'A'){
+            }else if(clickTarget.parentNode.nodeName == 'A'){
               menu.classList.remove('opened');
               toggler.classList.remove('opened');  
             }
