@@ -248,7 +248,7 @@
             wrap.classList.add('hero')
           }
           node.removeWrapper = function(){
-            wrap.parentNode.removeChild( wrap );
+            Polymer.dom(this.$.grid).removeChild( wrap );
           }
           Polymer.dom(this.$.grid).appendChild(wrap);
           
@@ -257,6 +257,7 @@
         processRemovedNode: function( node, index ){
           if(!node.dataset) return;
           if(node.removeWrapper ){
+            console.log('removing wrapper');
             node.removeWrapper();
           }
           // this.set('nodeMap.'+node.dataset.gridId, null );
