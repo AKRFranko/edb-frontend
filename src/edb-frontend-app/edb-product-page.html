@@ -88,9 +88,11 @@
         width:100%;
         background:#fcfcfc;
         @apply(--layout-horizontal);
-        @apply(--layout-center);
         @apply(--layout-wrap);
         box-sizing:border-box;
+      }
+      iron-selector paper-button{
+        @apply(--layout-flex);
       }
       iron-selector.slipcover paper-button{
         margin:0;
