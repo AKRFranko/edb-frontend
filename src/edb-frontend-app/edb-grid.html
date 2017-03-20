@@ -214,11 +214,10 @@
           if(!node.dataset) return;
           
           if(node.nodeName =='TEMPLATE'){
-          
-            console.log('TEMPALTE', node)
-            // return node.addEventListener('items-changed', function(w){
-            //   console.log('qwerqwer', e)
-            // })
+
+            node.addEventListener('items-changed', function(w){
+              console.log('tempalte-change', w)
+            })
             return;  
           }
           // console.log('processNewNode', node);
