@@ -180,9 +180,10 @@
       this.set('name',refName);
       this.app = appRef;
       this.app.addEventListener('product-changed', function( e ){
-        this.set('selectedId', appRef[refName].selectedId );
-        console.log('selectedId', appRef[refName].selectedId )
-        
+        this.debounce('selectedIdChanged', function(){
+          this.set('selectedId', appRef[refName].selectedId );  
+        }.bind(this))
+
       }.bind(this));
       this.refreshItems = function() {
         this.set('loading', true );
