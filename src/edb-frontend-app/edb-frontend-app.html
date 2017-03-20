@@ -497,8 +497,9 @@
           this.$.authDialog.close();
         },
         setSelectedProductId: function( id ){
-          this.set('product.selectedId', id );
-           console.log(this.product)
+          this.product.selectedId = id;
+          this.product.getItem();
+          console.log('product.selectedId',id);
         },
         setAuthModeRegister: function( e )
         {
