@@ -77,7 +77,7 @@
         <div class="header-inner">
           
         <div class="header-split">
-          <edb-slider layout="{{layout}}" loading="{{!product}}" slides="{{createProductSlides(product)}}"></edb-slider>
+          <edb-slider layout="{{layout}}" slides="{{createProductSlides(product)}}"></edb-slider>
           <div id="productMenu">
             <div class="name">{{product.name}}</div>
             <div class="price">{{formatMoney(product.price)}}</div>
@@ -117,6 +117,11 @@
          
         
         },
+        observers: ['productChanged(product)'],
+        productChanged: function(product){
+          console.log('productChanged', product);
+        },
+        
         
         createProductSlides: function( item ){
           if(!item) return [];
