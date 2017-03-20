@@ -96,6 +96,7 @@ function convertObject(object, converters) {
 
 function loadObject(object, converters) {
   if (!object) return {};
+  console.log('loadObject', object,converters );
   converters = (converters || []).concat(EDB.converters);
   return converters.reduce(function(target, converter) {
     return converter.read(object, target);
@@ -218,10 +219,8 @@ var ResourceReference = function ResourceReference(options) {
   };
 
   this.get = function(id, params) {
-
     var request = api.__request('GET', path + '/' + id, null, params);
     return request.then(function(item) {
-      console.log('QWERQWERQWER', item )
       loadObject(item, converters);
     });
 
