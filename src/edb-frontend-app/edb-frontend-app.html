@@ -497,9 +497,8 @@
           this.$.authDialog.close();
         },
         setSelectedProductId: function( id ){
-          var product = EDB.getResourceReference('product');
-          product.selectedId = id;
-          product.getItem();
+          this.set('product.selectedId', id );
+           
         },
         setAuthModeRegister: function( e )
         {
