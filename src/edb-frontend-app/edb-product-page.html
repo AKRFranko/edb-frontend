@@ -77,7 +77,9 @@
         @apply(--edb-font-subtitle);
       }
     
-      
+      .attribute-label{
+        @apply(--edb-font-body2);
+      }
     </style>
     
     <div id="page">
@@ -91,7 +93,7 @@
             <div class="price">{{formatMoney(product.price)}}</div>
             
             <template is="dom-repeat" items="{{computeAttributes(product)}}" as="attribute">
-              <h3>{{attribute.name}}</h3>
+              <div class="attribute-label">{{attribute.name}}</div>
               <iron-selector>
               <template is="dom-repeat" items="{{computeAttributeChoices(attribute)}}" as="choice">
                 <paper-item>{{choice.label}}</paper-item>
