@@ -198,7 +198,7 @@
       this.getItem = function() {
         this.set('loading', true );
         var op = it.ref.get(this.selectedId,{},  it.params).then( function(){
-          
+          console.log('WTF?', arguments );
           return arguments[0];
         })
         op.then(it.__loadItem.bind(it)).
