@@ -96,7 +96,7 @@
               <div class="attribute-label">{{attribute.name}}</div>
               <iron-selector>
               <template is="dom-repeat" items="{{computeAttributeChoices(attribute,product.variations)}}" as="choice">
-                <paper-item data-value$="{{choice.option}}">
+                <paper-item class$="{{choice.classnames}}" data-value$="{{choice.option}}">
                   <iron-icon class="choice-icon" hidden$="{{!choice.icon}}" src="{{choice.icon}}"></iron-icon>
                   <div class="choice-label" hidden$="{{!choice.label}}">{{choice.label}}</div>
                 </paper-item>
@@ -185,9 +185,9 @@
           return attr.options.map( function( option ){
             var material = attr.materials[option];
             if(material){
-              return { icon: material.image.src, material: material, value: option };
+              return { icon: material.image.src, material: material, value: option, classnames: 'material-choice edb_' + attr.name };
             }else{
-              return { text: option, value: option }
+              return { text: option, value: option,, classnames: 'text-choice edb_' + attr.name };
             }
           });
           // console.log('computeAttributeChoices', attr, variations);
