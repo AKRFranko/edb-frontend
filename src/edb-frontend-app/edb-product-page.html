@@ -173,15 +173,25 @@
             var foundMaterials = materials.filter( function( m ){
               return m.meta.edb_material_attribute == 'edb_'+attr.name;
             });
-            attr.materials = foundMaterials;
+            attr.materials = foundMaterials.reduce( function(o,k){
+              o[k.meta.edb_material_number] = k;
+              return o;
+            }, {});
             return attr;
           });
         },
         computeAttributeChoices: function( attr, variations ){
           
-          
-          console.log('computeAttributeChoices', attr, variations);
-          return [];
+          return attr.options.map( function( option ){
+            var material = attr.materials[option];
+            if(material){
+              return { icon: material.image.src, material: material, value: option };
+            }else{
+              return { text: option, value: option }
+            }
+          });
+          // console.log('computeAttributeChoices', attr, variations);
+          // return [];
         },
         createProductSlides: function( item ){
           if(!item) return [];
