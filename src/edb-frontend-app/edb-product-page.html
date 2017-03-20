@@ -95,7 +95,7 @@
                 <iron-selector selectable="paper-item" selected="{{selectedVariation}}" attr-for-selected="data-option">
                 <template is="dom-repeat" items="{{product.variations}}" as="productVariation">
                   <paper-item data-option="{{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'option')}}">
-                    
+                    {{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'option')}}
                     
                   </paper-item>  
               </template>
