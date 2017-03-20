@@ -137,7 +137,7 @@
       }
     },
     __loadItem: function(item) {
-      console.log('LOADITEM', item)
+      
       this.set('loading', false );
       this.set('item', item || {});
       if(this.app){
@@ -197,7 +197,10 @@
       };
       this.getItem = function() {
         this.set('loading', true );
-        var op = it.ref.get(this.selectedId, it.params);
+        var op = it.ref.get(this.selectedId, it.params).then( function(){
+          console.log('WTF?', arguments );
+          return arguments[0];
+        })
         op.then(it.__loadItem.bind(it)).
         catch (it.__triggerError.bind(it));
         return op;
