@@ -166,11 +166,12 @@
         
         computeAttributes: function( product,materials ){
           
-          return (product.attributes || []).map( function(attr){
+          return (product.attributes || []).map( function( attr ){
             var foundMaterials = materials.filter( function( m ){
               return m.meta.edb_material_attribute == 'edb_'+attr.name;
             });
             attr.materials = foundMaterials;
+            return attr;
           });
         },
         computeAttributeChoices: function( attr, variations ){
