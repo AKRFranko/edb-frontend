@@ -512,6 +512,7 @@
           console.log('computeCatalogItemName', item );
           var names = [ item.name ];
           var bucketAttributes = item.attributes.filter( function( attr ){
+            console.log(attr)
             return attr.isBucketOption;
           } ).map( function( attr ){ return attr.option });
           return names.join(' ');
