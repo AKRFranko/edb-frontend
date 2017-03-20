@@ -219,11 +219,6 @@
             //   console.log(node.items,secondary);
               
             // })
-            var __detachAndRemoveInstance = node.__detachAndRemoveInstance;
-            node.__detachAndRemoveInstance = function(){
-              console.log('__detachAndRemoveInstance', arguments )
-              node.__detachAndRemoveInstance.apply( node, arguments);
-            }
             return;  
           }
           // console.log('processNewNode', node);
@@ -268,13 +263,15 @@
           // console.log(this.$.grid.querySelector( '.cell:nth-of-type('+index+')' )); 
         },
         ready: function(){
+          this.async( function(){
+            Polymer.dom(this.$.contentNode).observeNodes(function(info) {
+              // console.log('info', info)
+              info.addedNodes.forEach( this.processNewNode, this );
+              info.removedNodes.forEach( this.processRemovedNode, this );
+              
+            }.bind(this));
+          });
           
-          Polymer.dom(this.$.contentNode).observeNodes(function(info) {
-            // console.log('info', info)
-            info.addedNodes.forEach( this.processNewNode, this );
-            info.removedNodes.forEach( this.processRemovedNode, this );
-            
-          }.bind(this));
         }
         // __proxyPrev: function(){
         //   this.$.swiper._swiper.slidePrev();
