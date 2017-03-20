@@ -180,7 +180,8 @@
       this.set('name',refName);
       this.app = appRef;
       this.app.addEventListener('product-changed', function( e ){
-        console.log("QWERWERQWER", e )
+        var path = e.detail.path;
+        console.log("QWERWERQWER", path )
       })
       this.refreshItems = function() {
         this.set('loading', true );
