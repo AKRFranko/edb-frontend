@@ -679,10 +679,10 @@
                 menu.classList.remove('opened');
                 toggler.classList.remove('opened');
               }
-            }else if(clickTarget.parentNode.id !== 'trigger'){
-              
-              menu.classList.remove('opened');
-              toggler.classList.remove('opened');  
+            }else{
+              console.log(clickTarget.parentNode);
+              // menu.classList.remove('opened');
+              // toggler.classList.remove('opened');  
             }
             
             return true;
