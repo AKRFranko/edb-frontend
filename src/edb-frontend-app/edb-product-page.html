@@ -134,6 +134,17 @@
         height:2em;
         padding:2px;
       }
+      paper-button{
+        font-family: "pragmatica-web-condensed", 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size:13px;
+        padding:10px 40px;
+        
+        background:#000;
+        color:#fff;
+        border-radius:1px;
+        margin-top:20px;
+        
+      }
       
     </style>
     
@@ -168,7 +179,7 @@
               <paper-icon-button class="increase" icon="add"></paper-icon-button>
             </div>
             <div class="add-to-cart">
-              <paper-button raised>add to cart</paper-button>
+              <paper-button id="addToCart" raised>add to cart</paper-button>
             </div>
               <!--<template is="dom-repeat" items="{{product.attributes}}" as="productAttribute" index-as="productAttributeindex">-->
               <!--  <h3>{{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'name')}}</h3>-->
