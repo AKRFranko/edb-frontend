@@ -66,12 +66,14 @@
       #productMenu{
         width:300px;
         color:#000;
+        box-sizing:border-box;
+        padding:0 40px;
       }
       
-      .productMenu .name{
+      #productMenu .name{
         @apply(--edb-font-title);
       }
-      .productMenu .price{
+      #productMenu .price{
         @apply(--edb-font-subtitle);
       }
     
@@ -87,6 +89,11 @@
           <div id="productMenu">
             <div class="name">{{product.name}}</div>
             <div class="price">{{formatMoney(product.price)}}</div>
+            <iron-selector selectable="paper-item" selected="{{selectedVariation}}" attr-for-selected="data-option">
+              <template is="dom-repeat" items="{{product.variations}}" as="variation">
+                <paper-item data-option="{{variation.attributes.0.option}}">{{variation.attributes.0.option}}</paper-item>
+              </template>
+            </iron-selector>
           </div>
         </div>
         </div>
