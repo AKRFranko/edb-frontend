@@ -237,9 +237,11 @@
                     <div class="filtered" data-filter$="{{filter}}">
                       <edb-grid layout="{{layout}}" loading="{{product.loading}}">
                         <template is="dom-repeat" items="{{computeCatalogItems(product.items)}}" as="product" filter="{{_filterCatalog(filter)}}">
+                          <a href="/#/product/{{product.id}}" tabindex="-1">
                           <edb-card image="{{product.images.0.src}}" title="{{computeCatalogItemName(product)}}" subtitle="{{formatMoney(product.price)}}">
                             <p>{{limitText(product.description.en,120)}}</p>
                           </edb-card>
+                          </a>
                         </template>
                       </edb-grid>
                     </div>  
