@@ -248,7 +248,6 @@
             wrap.classList.add('hero')
           }
           node.removeWrapper = function(){
-            console.log('removeWrapper', wrap.parentNode );
             wrap.parentNode.removeChild( wrap );
           }
           Polymer.dom(this.$.grid).appendChild(wrap);
