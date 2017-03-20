@@ -119,6 +119,11 @@
       .product-options{
         
       }
+      .lower,.increase{
+        border-radius:50%;
+        background:#000;
+        color:#fff;
+      }
       
     </style>
     
@@ -147,9 +152,13 @@
             </div>
             
             <div class="product-quantity">
-              <paper-icon-button icon="remove"></paper-icon-button>
+              <div>Quantity</div>
+              <paper-icon-button class="lower" icon="remove"></paper-icon-button>
               <paper-input no-label-float label="qty" value="{{wantedQty}}"></paper-input>
-              <paper-icon-button icon="add"></paper-icon-button>
+              <paper-icon-button class="increase" icon="add"></paper-icon-button>
+            </div>
+            <div class="add-to-cart">
+              <paper-button raised>add to cart</paper-button>
             </div>
               <!--<template is="dom-repeat" items="{{product.attributes}}" as="productAttribute" index-as="productAttributeindex">-->
               <!--  <h3>{{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'name')}}</h3>-->
