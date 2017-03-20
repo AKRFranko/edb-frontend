@@ -214,10 +214,10 @@
           if(!node.dataset) return;
           
           if(node.nodeName =='TEMPLATE'){
-
-            // node.addEventListener('items-changed', function(w){
-            //   console.log('tempalte-change', w)
-            // })
+            
+            node.addEventListener('dom-change', function(w){
+              console.log('tempalte-change', w)
+            })
             return;  
           }
           // console.log('processNewNode', node);
@@ -254,7 +254,6 @@
         },
         processRemovedNode: function( node, index ){
           if(!node.dataset) return;
-          console.log('processRemovedNode', node.removeWrapper );
           if(node.removeWrapper ){
             node.removeWrapper();
           }
