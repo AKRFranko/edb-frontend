@@ -250,12 +250,12 @@
           
           
         },
-        processRemovedNode: function( node ){
+        processRemovedNode: function( node, b ){
           if(!node.dataset) return;
-          console.log('processRemovedNode', node );
+          console.log('processRemovedNode', node, b );
           // this.set('nodeMap.'+node.dataset.gridId, null );
           // node.parentNode
-          // this.$.grid.appendChild( node ); 
+          // this.$.grid.removeChild( node ); 
         },
         ready: function(){
           
