@@ -232,7 +232,7 @@
           </section>
           
           <section id="products">
-              <iron-selector selected="[[filterData.filter]]" attr-for-selected="data-filter" fallback-selection="all" selectable="div.filtered">
+              <iron-pages selected="[[filterData.filter]]" attr-for-selected="data-filter" fallback-selection="all" selectable="div.filtered">
                   <template is="dom-repeat" items="{{filters}}" as="filter">
                     <div class="filtered" data-filter$="{{filter}}">
                       <edb-grid layout="{{layout}}" loading="{{product.loading}}">
@@ -244,7 +244,7 @@
                       </edb-grid>
                     </div>  
                   </template>
-              </iron-selector>
+              </iron-pages>
             
           </section>
           
