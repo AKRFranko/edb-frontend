@@ -168,7 +168,8 @@
           return product.attributes || [];
         },
         computeAttributeChoices: function( attr ){
-          var foundMaterials = (this.get('materials')||[]).filter( function( m ){
+          var materials = this.get('materials')||[];
+          var foundMaterials = materials.filter( function( m ){
             return m.meta.edb_material_attribute == 'attr';
           });
           
