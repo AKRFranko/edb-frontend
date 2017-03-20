@@ -101,7 +101,12 @@
          
         
         },
-        
+        createProductSlides: function( item ){
+          if(!item) return [];
+          if(!item.images) return [];
+          // return [];
+          return (item.images).map( function( i ){ return { image: i }; });
+        },
         
         
      
