@@ -68,6 +68,7 @@
         color:#000;
         box-sizing:border-box;
         padding:0 40px 0 20px;
+        @apply(--layout-vertical);
       }
       
       #productMenu .name{
@@ -112,8 +113,11 @@
         box-sizing:border-box;
         margin:3px;
       }
-      .quantity{
+      .product-quantity{
         @apply(--layout-horizontal);
+      }
+      .product-options{
+        
       }
       
     </style>
@@ -128,6 +132,7 @@
             <div class="name">{{product.name}}</div>
             <div class="price">{{formatMoney(product.price)}}</div>
             
+            <div class="product-options">
             <template is="dom-repeat" items="{{computeAttributes(product,materials)}}" as="attribute">
               <div class="attribute-label">{{attribute.name}}</div>
               <iron-selector class$="{{attribute.name}}">
@@ -139,7 +144,9 @@
               </template>
               </iron-selector>
             </template>
-            <div class="quantity">
+            </div>
+            
+            <div class="product-quantity">
               <paper-icon-button icon="remove"></paper-icon-button>
               <paper-input no-label-float label="qty" value="{{wantedQty}}"></paper-input>
               <paper-icon-button icon="add"></paper-icon-button>
