@@ -63,6 +63,9 @@
           
         <div class="header-split">
           <edb-slider layout="{{layout}}" loading="{{product.loading}}" slides="{{createProductSlides(product.item)}}"></edb-slider>
+          <div id="desktopProductMenu">
+            
+          </div>
         </div>
         </div>
       </div>
@@ -87,23 +90,18 @@
             value: null,
             notify: true
           },
-          noImage: {
-            type: Boolean,
-            value: false,
-            notify: true,
-            observer: 'setNoImage'
-            
-          }
+          product: {
+            type: Object,
+            value: function(){
+              return {};
+            },
+            notify: true
+          },
+          
          
         
         },
-        setNoImage: function(noImage){
-          if( noImage){
-            this.$.page.classList.add('no-image');
-          }else{
-            this.$.page.classList.remove('no-image');
-          }
-        }
+        
         
         
      
