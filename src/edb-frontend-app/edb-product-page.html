@@ -170,7 +170,7 @@
         computeAttributeChoices: function( attr ){
           var materials = this.get('materials')||[];
           var foundMaterials = materials.filter( function( m ){
-            return m.meta.edb_material_attribute == 'attr';
+            return m.meta.edb_material_attribute == attr;
           });
           
           console.log('computeAttributeChoices', foundMaterials );
