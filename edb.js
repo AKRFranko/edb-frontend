@@ -96,11 +96,13 @@ function convertObject(object, converters) {
 
 function loadObject(object, converters) {
   if (!object) return {};
-  console.log('loadObject', object,converters );
+  
   converters = (converters || []).concat(EDB.converters);
-  return converters.reduce(function(target, converter) {
+  var loaded =  converters.reduce(function(target, converter) {
     return converter.read(object, target);
   }, {})
+  console.log('loadObject', loaded );
+  return loaded;
 }
 
 function loadCollection(array, converters) {
