@@ -243,8 +243,8 @@
             wrap.classList.add('hero')
           }
           node.removeWrapper = function(){
-            Polymer.dom(this.$.grid).removeChild( wrap );
-          }.bind(this);
+            wrap.parentNode.removeChild( wrap );
+          };
           
           Polymer.dom(this.$.grid).appendChild(wrap);
         },
@@ -262,12 +262,12 @@
           
           Polymer.dom(this.$.contentNode).observeNodes(function(info) {
             info.addedNodes.forEach( this.processNewNode, this );
-            // info.removedNodes.forEach( this.processRemovedNode, this );
-          }.bind(this));
-          Polymer.dom(this.$.data).observeNodes(function(info) {
-            info.addedNodes.forEach( this.processNewNode, this );
             info.removedNodes.forEach( this.processRemovedNode, this );
           }.bind(this));
+          // Polymer.dom(this.$.data).observeNodes(function(info) {
+          //   info.addedNodes.forEach( this.processNewNode, this );
+          //   info.removedNodes.forEach( this.processRemovedNode, this );
+          // }.bind(this));
           
           
         }
