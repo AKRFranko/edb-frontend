@@ -500,7 +500,10 @@
         },
         
         setSelectedProductId: function( id ){
-          this.set('product.selectedId',id);
+          if(this.get('product')){
+            this.set('product.selectedId',id);  
+          }
+          
           // console.log('product.selectedId',id);
         },
         setAuthModeRegister: function( e )
