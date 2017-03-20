@@ -95,7 +95,7 @@
             <template is="dom-repeat" items="{{computeAttributes(product,materials)}}" as="attribute">
               <div class="attribute-label">{{attribute.name}}</div>
               <iron-selector>
-              <template is="dom-repeat" items="{{computeAttributeChoices(attribute,materials)}}" as="choice">
+              <template is="dom-repeat" items="{{computeAttributeChoices(attribute,product.variations)}}" as="choice">
                 <paper-item>{{choice.label}}</paper-item>
               </template>
               </iron-selector>
@@ -165,14 +165,18 @@
         },
         
         computeAttributes: function( product,materials ){
-          return product.attributes || [];
-        },
-        computeAttributeChoices: function( attr, materials ){
-          var foundMaterials = materials.filter( function( m ){
-            return m.meta.edb_material_attribute == 'edb_'+attr;
-          });
           
-          console.log('computeAttributeChoices', foundMaterials );
+          return (product.attributes || []).map( function(){
+            var foundMaterials = materials.filter( function( m ){
+              return m.meta.edb_material_attribute == 'edb_'+attr;
+            });
+            attr.materials = foundMaterials;
+          });
+        },
+        computeAttributeChoices: function( attr, variations ){
+          
+          
+          console.log('computeAttributeChoices', attr, variations);
           return [];
         },
         createProductSlides: function( item ){
