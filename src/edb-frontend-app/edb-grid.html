@@ -245,17 +245,19 @@
           if(isHero){
             wrap.classList.add('hero')
           }
-          
+          node.removeWrapper = function(){
+            wrap.parentNode.removeChild( wrap );
+          }
           Polymer.dom(this.$.grid).appendChild(wrap);
           
           
         },
         processRemovedNode: function( node, index ){
           if(!node.dataset) return;
-          console.log('processRemovedNode', node, index );
+          console.log('processRemovedNode', node.removeWrapper );
           // this.set('nodeMap.'+node.dataset.gridId, null );
           // node.parentNode
-          console.log(this.$.grid.querySelector( '.cell:nth-of-type('+index+')' )); 
+          // console.log(this.$.grid.querySelector( '.cell:nth-of-type('+index+')' )); 
         },
         ready: function(){
           
