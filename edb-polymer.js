@@ -166,7 +166,6 @@
       console.log(error);
     },
     __getSelectedItem: function(id) {
-      console.log('getSelectedItem', id );
       if (id == 'new' || !id) {
         this.__unloadItem();
       } else {
