@@ -526,10 +526,10 @@
           
           var catalog= [];
           objectsArray.forEach( function( product ){
-            var attributes = product.attributes;
+            var productAttributes = product.attributes;
             var bucketVariations =  [];
             
-            attributes.forEach( function( attr ){
+            productAttributes.forEach( function( attr ){
               var bucket = bucketsArray.filter( function( item ){ return item.meta.edb_bucket_slug == 'edb_'+attr.name; } );
               if( bucket.length > 0){
                   bucketVariations = bucketVariations.concat( bucket[0].variations );
@@ -548,6 +548,11 @@
                   newVariations.push( copy );
                 });
                 p.variations = newVariations;
+                p.attributes = p.attributes.map( function( attr ){ 
+                  if( attr.name == v.attributes[0].name){
+                    return v.attributes[0];
+                  }
+                });
                 catalog.push( p );
               })
             }else{
