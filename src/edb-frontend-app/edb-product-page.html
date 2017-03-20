@@ -92,8 +92,8 @@
             <iron-selector selectable="paper-item" selected="{{selectedVariation}}" attr-for-selected="data-option">
               <template is="dom-repeat" items="{{product.attributes}}" as="productAttribute" index-as="productAttributeindex">
               <template is="dom-repeat" items="{{product.variations}}" as="productVariation">
-                  <paper-item data-option="{{variation.attributes.0.option}}">
-                    <p>{{getVariationAttributeValue( productVariation, productAttribute, productAttributeindex ,'name' )}}</p>
+                  <paper-item data-option="{{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'name')}}">
+                    {{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'name')}}
                     <iron-image src="__computeVariationAttribute"
                   </paper-item>  
               </template>
