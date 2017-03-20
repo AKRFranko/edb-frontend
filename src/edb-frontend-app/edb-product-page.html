@@ -105,6 +105,8 @@
       }
       iron-selector paper-button{
         @apply(--layout-flex);
+        background:#fefefe;
+        color:#000;
       }
       iron-selector.slipcover paper-button{
         margin:0;
@@ -149,6 +151,9 @@
         padding:2px;
       }
       
+      #addToCart{
+        float:right;
+      }
       
     </style>
     
@@ -183,7 +188,7 @@
               <paper-icon-button class="increase" icon="add"></paper-icon-button>
             </div>
             <div class="add-to-cart">
-              <paper-button id="addToCart" raised>add to cart</paper-button>
+              <paper-button id="addToCart">add to cart</paper-button>
             </div>
               <!--<template is="dom-repeat" items="{{product.attributes}}" as="productAttribute" index-as="productAttributeindex">-->
               <!--  <h3>{{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'name')}}</h3>-->
