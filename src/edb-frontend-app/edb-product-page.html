@@ -89,16 +89,19 @@
           <div id="productMenu">
             <div class="name">{{product.name}}</div>
             <div class="price">{{formatMoney(product.price)}}</div>
-            <iron-selector selectable="paper-item" selected="{{selectedVariation}}" attr-for-selected="data-option">
+            
               <template is="dom-repeat" items="{{product.attributes}}" as="productAttribute" index-as="productAttributeindex">
-              <template is="dom-repeat" items="{{product.variations}}" as="productVariation">
-                  <paper-item data-option="{{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'name')}}">
-                    {{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'name')}}
+                <h3>{{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'name')}}</h3>
+                <iron-selector selectable="paper-item" selected="{{selectedVariation}}" attr-for-selected="data-option">
+                <template is="dom-repeat" items="{{product.variations}}" as="productVariation">
+                  <paper-item data-option="{{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'option')}}">
+                    
                     
                   </paper-item>  
               </template>
+              </iron-selector>
               </template>
-            </iron-selector>
+            
           </div>
         </div>
         </div>
