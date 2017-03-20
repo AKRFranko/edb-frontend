@@ -67,7 +67,7 @@
         width:300px;
         color:#000;
         box-sizing:border-box;
-        padding:0 40px;
+        padding:0 40px 0 20px;
       }
       
       #productMenu .name{
@@ -87,6 +87,7 @@
         background:#fcfcfc;
         @apply(--layout-horizontal);
         @apply(--layout-wrap);
+        box-sizing:border-box;
       }
       iron-selector.slipcover paper-button{
         margin:0;
@@ -98,6 +99,7 @@
         height:0;
         padding-top:calc(100% / 4);
         position:relative;
+        box-sizing:border-box;
       }
       iron-selector.slipcover paper-button iron-image{
         position:absolute;
@@ -107,6 +109,8 @@
         left:0;
         bottom:0;
         right:0;
+        box-sizing:border-box;
+        margin:3px;
       }
     </style>
     
@@ -131,6 +135,11 @@
               </template>
               </iron-selector>
             </template>
+            <div class="quantity">
+              <paper-icon-button icon="remove"></paper-icon-button>
+              <paper-input no-label-float label="qty" value="{{wantedQty}}"></paper-input>
+              <paper-icon-button icon="add"></paper-icon-button>
+            </div>
               <!--<template is="dom-repeat" items="{{product.attributes}}" as="productAttribute" index-as="productAttributeindex">-->
               <!--  <h3>{{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'name')}}</h3>-->
               <!--  <iron-selector selectable="paper-item" selected="{{selectedVariation}}" attr-for-selected="data-option">-->
