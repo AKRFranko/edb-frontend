@@ -90,8 +90,13 @@
             <div class="name">{{product.name}}</div>
             <div class="price">{{formatMoney(product.price)}}</div>
             
-            <template is="dom-repet" items="{{attributes}}" as="attribute">
+            <template is="dom-repeat" items="{{computeAttributes(product)}}" as="attribute">
               <h3>{{attribute.name}}</h3>
+              <iron-selector>
+              <template is="dom-repeat" items="{{computeAttributeChoices(attribute)}}" as="choice">
+                <paper-item>{{choice.label}}</paper-item>
+              </template>
+              </iron-selector>
             </template>
               <!--<template is="dom-repeat" items="{{product.attributes}}" as="productAttribute" index-as="productAttributeindex">-->
               <!--  <h3>{{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'name')}}</h3>-->
@@ -157,7 +162,12 @@
           return v.attributes[idx][prop];
         },
         
-        
+        computeAttributes: function( product ){
+          return product.attributes || [];
+        },
+        computeAttributeChoices: function( attr ){
+          console.log('computeAttributeChoices', attr );
+        },
         createProductSlides: function( item ){
           if(!item) return [];
           if(!item.images) return [];
