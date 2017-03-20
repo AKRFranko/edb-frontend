@@ -96,7 +96,10 @@
               <div class="attribute-label">{{attribute.name}}</div>
               <iron-selector>
               <template is="dom-repeat" items="{{computeAttributeChoices(attribute,product.variations)}}" as="choice">
-                <paper-item>{{choice.label}}</paper-item>
+                <paper-item data-value$="{{choice.option}}">
+                  <iron-icon class="choice-icon" hidden$="{{!choice.icon}}" src="{{choice.icon}}"></iron-icon>
+                  <div class="choice-label" hidden$="{{!choice.label}}">{{choice.label}}</div>
+                </paper-item>
               </template>
               </iron-selector>
             </template>
