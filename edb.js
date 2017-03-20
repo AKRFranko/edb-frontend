@@ -100,8 +100,7 @@ function loadObject(object, converters) {
   converters = (converters || []).concat(EDB.converters);
   var loaded =  converters.reduce(function(target, converter) {
     return converter.read(object, target);
-  }, {})
-  console.log('loadObject', loaded );
+  }, {});
   return loaded;
 }
 
@@ -216,14 +215,14 @@ var ResourceReference = function ResourceReference(options) {
     var data = convertObject(data, converters);
     var request = api.__request('POST', path, data, params);
     return request.then(function(item) {
-      loadObject(items, converters);
+      return loadObject(items, converters);
     });
   };
 
   this.get = function(id, params) {
     var request = api.__request('GET', path + '/' + id, null, params);
     return request.then(function(item) {
-      loadObject(item, converters);
+      return loadObject(item, converters);
     });
 
   };
@@ -232,7 +231,7 @@ var ResourceReference = function ResourceReference(options) {
     var data = convertObject(data, converters);
     var request = api.__request('PUT', path + '/' + id, data, params);
     return request.then(function(item) {
-      loadObject(items, converters);
+      return loadObject(items, converters);
     });
   };
 
