@@ -1,0 +1,113 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="edb-product-page">
+  <template>
+    <style>
+      :host{
+        display:block;
+        width:100%;
+        height:100%;
+        
+      }
+      #page{
+        display:block;
+        width:100%;
+        height:100%;
+        @apply(--layout-vertical);
+      }
+      .page-header{
+        position:relative;
+        width:100%;
+        height:0;
+        padding-top:calc(100vh - 140px);
+        background:#000;
+      }
+      .header-inner{
+        position:absolute;
+        width:100%;
+        height:100%;
+        top:0;left:0;bottom:0;right:0;
+        @apply(--layout-vertical);
+        @apply(--layout-center-center);
+        z-index:0;
+        
+      }
+      
+      .header-split{
+        @apply(--layout-horizontal);
+      }
+      .page-title{
+        @apply(--edb-font-headline);
+        color:#fff;
+        line-height:1.2;
+        white-space:nowrap;
+        text-overflow:ellipsis;
+        z-index:1;
+        overflow:hidden;
+      }
+      .page-subtitle{
+        @apply(--edb-font-subhead);
+        color:#fff;
+        z-index:1;
+      }
+      
+      
+      
+    
+      
+    </style>
+    
+    <div id="page">
+      <div class="page-header">
+        <div class="header-inner">
+          
+        <div class="header-split">
+          <edb-slider layout="{{layout}}" loading="{{product.loading}}" slides="{{createProductSlides(product.item)}}"></edb-slider>
+        </div>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="page-content">
+          <content></content>
+        </div>
+      </div>
+    </div>
+    
+  </template>
+  <script>
+     
+      Polymer({
+  
+        is: 'edb-product-page',
+  
+        properties: {
+          
+          layout: {
+            type: String,
+            value: null,
+            notify: true
+          },
+          noImage: {
+            type: Boolean,
+            value: false,
+            notify: true,
+            observer: 'setNoImage'
+            
+          }
+         
+        
+        },
+        setNoImage: function(noImage){
+          if( noImage){
+            this.$.page.classList.add('no-image');
+          }else{
+            this.$.page.classList.remove('no-image');
+          }
+        }
+        
+        
+     
+  
+      });
+  </script>
+</dom-module>

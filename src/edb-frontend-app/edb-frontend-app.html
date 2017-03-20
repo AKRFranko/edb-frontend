@@ -232,8 +232,9 @@
             </edb-grid>
           </section>
           <section id="product">
-            <h1>{{product.item.name}}</h1>
-            <edb-slider layout="{{layout}}" loading="{{product.loading}}" slides="{{createProductSlides(product.item)}}"></edb-slider>
+            
+            <edb-product-page product="{{product}}"></edb-product-page>
+            
             
           </section>
           <section id="products">
