@@ -180,9 +180,8 @@
       this.set('name',refName);
       this.app = appRef;
       this.app.addEventListener('product-changed', function( e ){
-        var path = e.detail.path;
-        console.log("QWERWERQWER", path )
-      })
+        this.set('selectedId', appRef[refName].selectedId );
+      }.bind(this));
       this.refreshItems = function() {
         this.set('loading', true );
         var op = it.ref.list( it.params );
