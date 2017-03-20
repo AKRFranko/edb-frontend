@@ -235,17 +235,19 @@
             
             
               <iron-selector selected="[[filterData.filter]]" attr-for-selected="data-filter" fallback-selection="all">
-                <edb-grid layout="{{layout}}" loading="{{product.loading}}">
+                
                   <template is="dom-repeat" items="{{filters}}" as="filter">
                     <div data-filter$="{{filter}}">
+                      <edb-grid layout="{{layout}}" loading="{{product.loading}}">
                       <template is="dom-repeat" items="{{computeCatalogItems(product.items)}}" as="product" filter="{{_filterCatalog(filter)}}">
                         <edb-card image="{{product.images.0.src}}" title="{{computeCatalogItemName(product)}}" subtitle="{{formatMoney(product.price)}}">
                           <p>{{limitText(product.description.en,120)}}</p>
                         </edb-card>
                      </template>
+                     </edb-grid>
                     </div>  
                   </template>
-                </edb-grid>
+                
               </iron-selector>
             
           </section>
