@@ -164,16 +164,15 @@
           return v.attributes[idx][prop];
         },
         
-        computeAttributes: function( product ){
+        computeAttributes: function( product,materials ){
           return product.attributes || [];
         },
-        computeAttributeChoices: function( attr ){
-          var materials = this.get('materials')||[];
+        computeAttributeChoices: function( attr, materials ){
           var foundMaterials = materials.filter( function( m ){
-            return m.meta.edb_material_attribute == attr;
+            return m.meta.edb_material_attribute == 'edb_'+attr;
           });
           
-          console.log('computeAttributeChoices', materials, foundMaterials );
+          console.log('computeAttributeChoices', foundMaterials );
           return [];
         },
         createProductSlides: function( item ){
