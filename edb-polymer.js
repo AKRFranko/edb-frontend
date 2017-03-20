@@ -181,6 +181,7 @@
       this.app.addEventListener('product-changed', function( e ){
         this.debounce('selectedIdChanged', function(){
           this.set('selectedId', appRef[refName].selectedId );  
+          this.getItem();
         }.bind(this));
       }.bind(this));
       this.refreshItems = function() {
