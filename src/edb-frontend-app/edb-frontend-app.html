@@ -511,9 +511,9 @@
         computeCatalogItemName: function( item ){
           console.log('computeCatalogItemName', item );
           var names = [ item.name ];
-          var bucketAttributes = item.attributes.map( function( attr ){
-            
-          } )
+          var bucketAttributes = item.attributes.filter( function( attr ){
+            return attr.isBucketOption;
+          } ).map( function( attr ){ return attr.option });
           return names.join(' ');
         },
         computeCatalogItems: function( products ){
