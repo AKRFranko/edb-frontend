@@ -217,8 +217,11 @@
             
             node.addEventListener('dom-change', function( event){
               console.log('changed',node );
+              
             })
             return;  
+          }else{
+            node = node.cloneNode();
           }
           // console.log('processNewNode', node);
           // if(!node.dataset.gridId){
