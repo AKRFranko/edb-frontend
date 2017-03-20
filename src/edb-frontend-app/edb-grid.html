@@ -264,7 +264,7 @@
         ready: function(){
           
           Polymer.dom(this.$.data).observeNodes(function(info) {
-            
+            console.log(info);
             info.addedNodes.forEach( this.processNewNode, this );
             info.removedNodes.forEach( this.processRemovedNode, this );
             
