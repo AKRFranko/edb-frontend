@@ -596,6 +596,7 @@
                 var value = v.attributes[0];
                 value.isBucketOption=true;
                 console.log(value.option, productAttributes.filter( function(a){ return a.name='edb_'+value.name }));
+                
                 var p = Object.assign( {}, product );
                 variations.forEach( function( variation ){
                   var attributes = variation.attributes||[];
