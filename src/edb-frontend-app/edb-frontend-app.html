@@ -593,7 +593,7 @@
                 
                 var value = v.attributes[0];
                 value.isBucketOption=true;
-                var relevantProductOptions = productAttributes.filter( function(a){ return a.name='edb_'+value.name }).map( function( a ){ return a.options });
+                var relevantProductOptions = productAttributes.filter( function(a){ return a.name='edb_'+value.name }).reduce( function( r,a ){ return r.concat(a.options); });
                 relevantProductOptions.forEach( function( rpo ){
                   console.log(rpo,value.option,rpo==value.option);
                   
