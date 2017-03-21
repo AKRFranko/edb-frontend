@@ -597,7 +597,7 @@
                 value.isBucketOption=true;
                 var relevantProductOptions = productAttributes.filter( function(a){ return a.name='edb_'+value.name }).map( function( a ){ return a.options })
                 if(!(~relevantProductOptions.indexOf(value.option))){
-                  console.log("Doesnt work:", value.option, 'is not in', relevantProductOptions.join(',') )
+                  console.log(~relevantProductOptions.indexOf(value.option),"Doesnt work: '" + value.option + "' is not in", relevantProductOptions );
                 }
                 
                 
