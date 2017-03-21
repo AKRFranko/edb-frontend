@@ -573,6 +573,8 @@
           var objectsArray = products.filter( function( p ){
             return p.meta.edb_is_bucket != '1';
           }).map( function( o ){ 
+            var variations = o.variations;
+            var newVariations = [];
             o.attributes.forEach( function( attribute ){
               var attributeBuckets = bucketsArray.filter( function( item ){ return item.meta.edb_bucket_slug == 'edb_'+attribute.name; } );
               if(attributeBuckets.length > 0){
@@ -580,9 +582,18 @@
                     attribute.bucketOptions = attributeBucket.variations.filter( function( bvar ){
                       return ~attribute.options.indexOf(bvar.attributes[0].option);
                     });
+                    attribute.bucketOptions.forEach( function( option ){
+                      variations.forEach( function( variation ){
+                        var vattr= variation.attributes;
+                        console.log('vattr=',vattr);
+                        newVariations.push( Object.assign(variation, {}) )
+                      })
+                    })
+                    
                 })  
               }
             });
+            
             
             // console.log('attributes', o.attributes );
             return o;
