@@ -585,16 +585,16 @@
                     attribute.bucketOptions.forEach( function( option ){
                       variations.forEach( function( variation ){
                         var vattr= variation.attributes;
-                        console.log('vattr=',vattr, option);
-                        newVariations.push( Object.assign(variation, {}) )
+                        vattr.push( option.attributes[0] );
+                        newVariations.push( Object.assign(variation, { attributes: vattr }));
                       })
                     })
-                    
-                })  
+                });
+              }else{
+                newVariations = variations;
               }
             });
-            
-            
+            o.variations = newVariations;
             // console.log('attributes', o.attributes );
             return o;
           });
