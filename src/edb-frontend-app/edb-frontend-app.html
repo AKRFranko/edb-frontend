@@ -572,8 +572,12 @@
           });
           var objectsArray = products.filter( function( p ){
             return p.meta.edb_is_bucket != '1';
+          }).map( function( o ){ 
+            var attributes = o.attributes;
+            console.log('attributes', o.attributes );
+            return o;
           });
-         
+          
           
           var catalog= [];
           objectsArray.forEach( function( product ){
@@ -586,6 +590,7 @@
                   bucketVariations = bucketVariations.concat( bucket[0].variations );
               }
             });
+            
             if(bucketVariations.length > 0){
               var variations = product.variations;
               var newVariations = [];
@@ -593,11 +598,7 @@
                 
                 var value = v.attributes[0];
                 value.isBucketOption=true;
-                var relevantProductOptions = productAttributes.filter( function(a){ return a.name='edb_'+value.name }).reduce( function( r,a ){ return r.concat(a.options); });
-                relevantProductOptions.forEach( function( rpo ){
-                  console.log(rpo,value.option,rpo==value.option);
-                  
-                })
+                
                 
                 // if(relevantProductOptions.indexOf(value.option) == -1 ){
                 //   console.log(~relevantProductOptions.indexOf(value.option),"Doesnt work: '" + value.option + "' is not in", relevantProductOptions );
