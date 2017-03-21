@@ -574,9 +574,11 @@
             return p.meta.edb_is_bucket != '1';
           }).map( function( o ){ 
             o.attributes.forEach( function( attribute ){
-              var attributeBucket = bucketsArray.filter( function( item ){ return item.meta.edb_bucket_slug == 'edb_'+attribute.name; } );
-              if(attributeBucket.length > 0){
-                attribute.bucketVariations = attributeBucket.variations;
+              var attributeBuckets = bucketsArray.filter( function( item ){ return item.meta.edb_bucket_slug == 'edb_'+attribute.name; } );
+              if(attributeBuckets.length > 0){
+                attributeBuckets.forEach( function(attributeBucket){
+                    attribute.bucketVariations = attributeBucket.variations;
+                })  
               }
             });
             
