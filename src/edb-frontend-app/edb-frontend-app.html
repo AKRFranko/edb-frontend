@@ -573,7 +573,13 @@
           var objectsArray = products.filter( function( p ){
             return p.meta.edb_is_bucket != '1';
           }).map( function( o ){ 
-            var attributes = o.attributes;
+            o.attributes.forEach( function( attribute ){
+              var attributeBucket = bucketsArray.filter( function( item ){ return item.meta.edb_bucket_slug == 'edb_'+attribute.name; } );
+              if(attributeBucket.length > 0){
+                attribute.bucket = attributeBucket;
+              }
+            });
+            
             console.log('attributes', o.attributes );
             return o;
           });
