@@ -561,7 +561,9 @@
           var bucketAttributes = item.attributes.filter( function( attr ){
             return attr.isBucketOption;
           } ).map( function( attr ){ return attr.option });
-          return names.concat(bucketAttributes).join(' ');
+          return names.concat(bucketAttributes.map( function( a ){
+            return a.replace(/\s\d+x\d/, '');
+          })).join(' ');
         },
         computeCatalogItems: function( products ){
           if(!products) return [];
@@ -590,6 +592,7 @@
               var variations = product.variations;
               var newVariations = [];
               bucketVariations.forEach( function( v ){
+                console.log( v, 'is in', productAttributes , '?');
                 var value = v.attributes[0];
                 value.isBucketOption=true;
                 var p = Object.assign( {}, product );
