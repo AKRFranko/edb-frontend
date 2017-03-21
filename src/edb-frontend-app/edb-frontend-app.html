@@ -577,20 +577,20 @@
               var attributeBuckets = bucketsArray.filter( function( item ){ return item.meta.edb_bucket_slug == 'edb_'+attribute.name; } );
               if(attributeBuckets.length > 0){
                 attributeBuckets.forEach( function(attributeBucket){
-                    attribute.bucketVariations = attributeBucket.variations.filter( function( bvar ){
+                    attribute.bucketOptions = attributeBucket.variations.filter( function( bvar ){
                       return ~attribute.options.indexOf(bvar.attributes[0].option);
                     });
                 })  
               }
             });
             
-            console.log('attributes', o.attributes );
+            // console.log('attributes', o.attributes );
             return o;
           });
           
-          
+          return products;
           var catalog= [];
-          
+           
           return catalog;
         },
         handleLogin: function(){
