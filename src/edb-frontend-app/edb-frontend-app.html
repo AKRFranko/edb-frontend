@@ -596,7 +596,7 @@
                 var value = v.attributes[0];
                 value.isBucketOption=true;
                 var relevantProductOptions = productAttributes.filter( function(a){ return a.name='edb_'+value.name }).map( function( a ){ return a.options })
-                if(!~relevantProductOptions.indexOf(value.option)){
+                if(!(~relevantProductOptions.indexOf(value.option))){
                   console.log("Doesnt work:", value.option, 'is not in', relevantProductOptions.join(',') )
                 }
                 
