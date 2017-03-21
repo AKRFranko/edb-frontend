@@ -592,8 +592,9 @@
               var variations = product.variations;
               var newVariations = [];
               bucketVariations.forEach( function( v ){
-                console.log( v, 'is in', productAttributes , '?');
+                
                 var value = v.attributes[0];
+                console.log('value', value);
                 value.isBucketOption=true;
                 var p = Object.assign( {}, product );
                 variations.forEach( function( variation ){
