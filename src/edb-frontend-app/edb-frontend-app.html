@@ -595,7 +595,7 @@
                 value.isBucketOption=true;
                 var relevantProductOptions = productAttributes.filter( function(a){ return a.name='edb_'+value.name }).map( function( a ){ return a.options });
                 
-                console.log(value.option, relevantProductOptions.join(' '));
+                console.log(value.option, relevantProductOptions.join(' '), relevantProductOptions.indexOf(value.option));
                 // if(relevantProductOptions.indexOf(value.option) == -1 ){
                 //   console.log(~relevantProductOptions.indexOf(value.option),"Doesnt work: '" + value.option + "' is not in", relevantProductOptions );
                 //   return ;
