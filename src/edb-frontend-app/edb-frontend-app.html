@@ -561,9 +561,7 @@
           var bucketAttributes = item.attributes.filter( function( attr ){
             return attr.isBucketOption;
           } ).map( function( attr ){ return attr.option });
-          return names.concat(bucketAttributes.map( function( a ){
-            return a.replace(/\s\d+x\d/, '');
-          })).join(' ');
+          return names.concat(bucketAttributes).join(' ');
         },
         computeCatalogItems: function( products ){
           if(!products) return [];
@@ -595,9 +593,10 @@
                 
                 var value = v.attributes[0];
                 value.isBucketOption=true;
-                var relevantProductOptions = productAttributes.filter( function(a){ return a.name='edb_'+value.name }).map( function( a ){ return a.options })
-                if(!(~relevantProductOptions.indexOf(value.option))){
+                var relevantProductOptions = productAttributes.filter( function(a){ return a.name='edb_'+value.name }).map( function( a ){ return a.options });
+                if(!~relevantProductOptions.indexOf(value.option) ){
                   console.log(~relevantProductOptions.indexOf(value.option),"Doesnt work: '" + value.option + "' is not in", relevantProductOptions );
+                  return ;
                 }
                 
                 
