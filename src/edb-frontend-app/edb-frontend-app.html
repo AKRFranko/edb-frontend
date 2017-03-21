@@ -595,7 +595,7 @@
                 value.isBucketOption=true;
                 var relevantProductOptions = productAttributes.filter( function(a){ return a.name='edb_'+value.name }).map( function( a ){ return a.options });
                 
-                console.log(relevantProductOptions.join(' '));
+                console.log(value.option, relevantProductOptions.join(' '));
                 
                 
                 // if(relevantProductOptions.indexOf(value.option) == -1 ){
