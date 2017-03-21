@@ -576,7 +576,7 @@
             o.attributes.forEach( function( attribute ){
               var attributeBucket = bucketsArray.filter( function( item ){ return item.meta.edb_bucket_slug == 'edb_'+attribute.name; } );
               if(attributeBucket.length > 0){
-                attribute.bucket = attributeBucket;
+                attribute.bucketVariations = attributeBucket.variations;
               }
             });
             
@@ -586,53 +586,7 @@
           
           
           var catalog= [];
-          objectsArray.forEach( function( product ){
-            var productAttributes = product.attributes;
-            var bucketVariations =  [];
-            
-            productAttributes.forEach( function( attr ){
-              var bucket = bucketsArray.filter( function( item ){ return item.meta.edb_bucket_slug == 'edb_'+attr.name; } );
-              if( bucket.length > 0){
-                  bucketVariations = bucketVariations.concat( bucket[0].variations );
-              }
-            });
-            
-            if(bucketVariations.length > 0){
-              var variations = product.variations;
-              var newVariations = [];
-              bucketVariations.forEach( function( v ){
-                
-                var value = v.attributes[0];
-                value.isBucketOption=true;
-                
-                
-                // if(relevantProductOptions.indexOf(value.option) == -1 ){
-                //   console.log(~relevantProductOptions.indexOf(value.option),"Doesnt work: '" + value.option + "' is not in", relevantProductOptions );
-                //   return ;
-                // }
-                
-                
-                var p = Object.assign( {}, product );
-                variations.forEach( function( variation ){
-                  var attributes = variation.attributes||[];
-                  attributes.push(value );
-                  var copy = Object.assign( {}, variation );
-                  copy.attributes = attributes;
-                  newVariations.push( copy );
-                });
-                p.variations = newVariations;
-                p.attributes = p.attributes.map( function( attr ){ 
-                  if( attr.name == v.attributes[0].name){
-                    return value;
-                  }
-                  return attr;
-                });
-                catalog.push( p );
-              })
-            }else{
-              catalog.push( product );  
-            }
-          });
+          
           return catalog;
         },
         handleLogin: function(){
