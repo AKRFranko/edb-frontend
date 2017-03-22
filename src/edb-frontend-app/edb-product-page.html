@@ -363,8 +363,9 @@
           });
         },
         __computeAnatomy: function( a ){
+          if(!a) return;
           var k = Object.keys(a);
-          console.log(a, a[k.shift()]);
+          
           return a[k.shift()].src;
         },
         computeAttributeChoices: function( attr, variations ){
