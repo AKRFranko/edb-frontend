@@ -24,7 +24,7 @@
       #page{
         display:block;
         width:100%;
-        height:100%;
+        min-height:100%;
         @apply(--layout-vertical);
         @apply(--edb-font-body);
       }
@@ -34,6 +34,10 @@
         height:0;
         padding-top:calc(100vh - 140px);
        
+      }
+      .page-body{
+        /*background:Red;*/
+        padding:20px;
       }
       
       .header-inner,.header-split{
@@ -211,74 +215,77 @@
           height:483px;
           
         }
+        .page-body{
+          padding:40px;
+        }
+        .text{
+          max-width:500px;
+        }
         
       }
       
+      .title{
+        @apply(--edb-font-title)
+        margin-bottom:40px;
+        
+      };
     </style>
     
     <div id="page">
       <div class="page-header">
         <div class="header-inner">
           
-        <div class="header-split">
-          <edb-slider layout="{{layout}}" loading=false slides="{{createProductSlides(product,materials)}}"></edb-slider>
-          <div id="productMenu">
-            <div class="group">
-              <div class="name">{{product.name}}</div>
-              <div class="price">{{formatMoney(product.price)}}</div>
-            </div>
-            <div class="product-options">
-            <template is="dom-repeat" items="{{computeAttributes(product,materials)}}" as="attribute">
+         <div class="header-split">
+            <edb-slider layout="{{layout}}" loading=false slides="{{createProductSlides(product,materials)}}"></edb-slider>
+            <div id="productMenu">
               <div class="group">
-              <div class="attribute-label">{{attribute.name}}</div>
-              <iron-selector class$="{{attribute.name}}">
-              <template is="dom-repeat" items="{{computeAttributeChoices(attribute,product.variations)}}" as="choice">
-                <paper-button class$="[[choice.classnames]]" data-value$="[[choice.option]]">
-                  <iron-image preload fade sizing="cover" class="choice-icon" hidden$="[[!choice.icon]]" src="[[choice.icon]]"></iron-image>
-                  <div class="choice-label" hidden$="[[!choice.label]]">[[choice.label]]</div>
-                </paper-button>
-              </template>
-              </iron-selector>
+                <div class="name">{{product.name}}</div>
+                <div class="price">{{formatMoney(product.price)}}</div>
               </div>
-            </template>
-            </div>
-            <div class="group">
-            <div class="attribute-label">Quantity</div>
-            <div class="product-quantity">
+              <div class="product-options">
+                <template is="dom-repeat" items="{{computeAttributes(product,materials)}}" as="attribute">
+                  <div class="group">
+                    <div class="attribute-label">{{attribute.name}}</div>
+                      <iron-selector class$="{{attribute.name}}">
+                        <template is="dom-repeat" items="{{computeAttributeChoices(attribute,product.variations)}}" as="choice">
+                          <paper-button class$="[[choice.classnames]]" data-value$="[[choice.option]]">
+                            <iron-image preload fade sizing="cover" class="choice-icon" hidden$="[[!choice.icon]]" src="[[choice.icon]]"></iron-image>
+                            <div class="choice-label" hidden$="[[!choice.label]]">[[choice.label]]</div>
+                          </paper-button>
+                        </template>
+                      </iron-selector>
+                  </div>
+                  
+                </template>
+              </div>
+              <div class="group">
+                <div class="attribute-label">Quantity</div>
+                <div class="product-quantity">
+                  <paper-icon-button class="lower" icon="remove"></paper-icon-button>
+                  <paper-input no-label-float label="qty" value="{{wantedQty}}"></paper-input>
+                  <paper-icon-button class="increase" icon="add"></paper-icon-button>
+                </div>
+              </div>
+            
+              <div class="add-to-cart">
+                <paper-button id="addToCart">add to cart</paper-button>
+              </div>
               
-              <paper-icon-button class="lower" icon="remove"></paper-icon-button>
-              <paper-input no-label-float label="qty" value="{{wantedQty}}"></paper-input>
-              <paper-icon-button class="increase" icon="add"></paper-icon-button>
-            </div>
-            </div>
             
-            <div class="add-to-cart">
-              <paper-button id="addToCart">add to cart</paper-button>
             </div>
-              <!--<template is="dom-repeat" items="{{product.attributes}}" as="productAttribute" index-as="productAttributeindex">-->
-              <!--  <h3>{{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'name')}}</h3>-->
-              <!--  <iron-selector selectable="paper-item" selected="{{selectedVariation}}" attr-for-selected="data-option">-->
-              <!--  <template is="dom-repeat" items="{{product.variations}}" as="productVariation">-->
-              <!--    <paper-item data-option="{{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'option')}}">-->
-              <!--      {{getVariationAttributeValue(productVariation,productAttribute,productAttributeindex,'option')}}-->
-                    
-              <!--    </paper-item>  -->
-              <!--</template>-->
-              </iron-selector>
-              </template>
-            
-          </div>
         </div>
         </div>
       </div>
+    
       <div class="page-body">
         <div class="page-content">
           <div class="product-description">
-            {{product.description}}
+            <div class="title">Description</div>
+            <div class="text">{{product.description.en}}</div>
           </div>
-          <content></content>
         </div>
       </div>
+      
     </div>
     
   </template>
