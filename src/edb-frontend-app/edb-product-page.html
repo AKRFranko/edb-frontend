@@ -366,7 +366,8 @@
           if(!a) return;
           var k = Object.keys(a);
           
-          return a[k.shift()].src;
+          return a[k.shift()].full_url;
+          
         },
         computeAttributeChoices: function( attr, variations ){
           
