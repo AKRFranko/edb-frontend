@@ -203,6 +203,9 @@
         edb-slider{
           width:100%;
         }
+        .attribute-group{
+          width:50%;
+        }
       }
       @media all and (min-width:769px){
         .header-split{
@@ -269,7 +272,7 @@
               </div>
               <div class="product-options">
                 <template is="dom-repeat" items="{{computeAttributes(product,materials)}}" as="attribute">
-                  <div class="group">
+                  <div class="group attribute-group">
                     <div class="attribute-label">{{attribute.name}}</div>
                       <iron-selector class$="{{attribute.name}}">
                         <template is="dom-repeat" items="{{computeAttributeChoices(attribute,product.variations)}}" as="choice">
