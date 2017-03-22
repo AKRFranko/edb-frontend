@@ -163,9 +163,28 @@
         padding:2px;
       }
       
+      .group{
+        display:block;
+        width:100%;
+        height:100%;
+      }
       #addToCart{
         float:right;
         
+      }
+      
+      @media all and (max-width:768px){
+       .header-split{
+         @apply(--layout-vertical);
+       } 
+       #productMenu{
+         width:100%;
+        @apply(--layout-horizontal); 
+        @apply(--layout-wrap); 
+       }
+        edb-slider{
+          width:100%;
+        }
       }
       
     </style>
@@ -177,11 +196,13 @@
         <div class="header-split">
           <edb-slider layout="{{layout}}" loading=false slides="{{createProductSlides(product,materials)}}"></edb-slider>
           <div id="productMenu">
-            <div class="name">{{product.name}}</div>
-            <div class="price">{{formatMoney(product.price)}}</div>
-            
+            <div class="group">
+              <div class="name">{{product.name}}</div>
+              <div class="price">{{formatMoney(product.price)}}</div>
+            </div>
             <div class="product-options">
             <template is="dom-repeat" items="{{computeAttributes(product,materials)}}" as="attribute">
+              <div class="group">
               <div class="attribute-label">{{attribute.name}}</div>
               <iron-selector class$="{{attribute.name}}">
               <template is="dom-repeat" items="{{computeAttributeChoices(attribute,product.variations)}}" as="choice">
@@ -191,8 +212,10 @@
                 </paper-button>
               </template>
               </iron-selector>
+              </div>
             </template>
             </div>
+            <div class="group">
             <div class="attribute-label">Quantity</div>
             <div class="product-quantity">
               
@@ -200,6 +223,8 @@
               <paper-input no-label-float label="qty" value="{{wantedQty}}"></paper-input>
               <paper-icon-button class="increase" icon="add"></paper-icon-button>
             </div>
+            </div>
+            
             <div class="add-to-cart">
               <paper-button id="addToCart">add to cart</paper-button>
             </div>
