@@ -295,7 +295,7 @@
             <div class="text">{{product.meta.edb_why_we_love_content}}</div>
           </div>
           <div class="product-description" hidden$="{{!product.meta.edb_anatomy_en}}">
-            <iron-image fade preload src="{{product.meta.edb_anatomy_en}}" style="width:100%;height:100%;"></iron-image>
+            <iron-image fade preload src="{{__computeAnatomy(product.meta.edb_anatomy_en)}}" style="width:100%;height:100%;"></iron-image>
           </div>
         </div>
       </div>
@@ -355,6 +355,10 @@
             }, {});
             return attr;
           });
+        },
+        __computeAnatomy: function( a ){
+          var k = Object.keys(a)[0];
+          return a[k].src;
         },
         computeAttributeChoices: function( attr, variations ){
           
