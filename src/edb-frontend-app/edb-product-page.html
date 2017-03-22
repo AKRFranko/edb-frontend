@@ -363,8 +363,8 @@
           });
         },
         __computeAnatomy: function( a ){
-          var k = Object.keys(a)[0];
-          return a[k].src;
+          var k = Object.keys(a);
+          return a[k.shift()].src;
         },
         computeAttributeChoices: function( attr, variations ){
           
