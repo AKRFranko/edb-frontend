@@ -129,13 +129,16 @@
             });
             
             var token = genToken( product, bucketOption );
+            
             var catalogEntry = { 
               token: token,
               product: product,
               variations: newVariations,
               name: fullName( product, bucketOption )
             };
+            
             Catalog[token]=catalogEntry;
+            
           });
         });
 
