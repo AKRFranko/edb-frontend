@@ -29,7 +29,7 @@
     Buckets = {}, Catalog = {};
 
 
-  function genToken (){
+  function genToken(){
     return Number(Math.floor( Math.random() * Date.now() ) + '' + Date.now()).toString(24);
   };
   
