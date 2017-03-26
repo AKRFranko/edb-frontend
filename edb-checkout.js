@@ -116,7 +116,7 @@
         Object.keys(buckets).forEach( function( bucketSlug ){
           var bucket = buckets[bucketSlug];
           var variations = product.variations;
-          var newVariations = [];
+          // var newVariations = [];
           Object.keys(bucket).forEach( function( bucketOption ){
             // variations.forEach( function( variation ){
             //   var copy = Object.assign( {},variation );
@@ -124,7 +124,7 @@
             //     name: bucketSlug,
             //     option: bucketOption,
             //     bucket: bucket
-            //   })
+            //   });
             //   newVariations.push( copy );
             // });
             
@@ -133,7 +133,7 @@
             var catalogEntry = { 
               token: token,
               product: product,
-              variations: newVariations,
+              variations: variations,
               name: fullName( product, bucketOption )
             };
             
