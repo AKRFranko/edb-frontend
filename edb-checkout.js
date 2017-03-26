@@ -118,15 +118,15 @@
           var variations = product.variations;
           var newVariations = [];
           Object.keys(bucket).forEach( function( bucketOption ){
-            variations.forEach( function( variation ){
-              var copy = Object.assign( {},variation );
-              copy.attributes.push({
-                name: bucketSlug,
-                option: bucketOption,
-                bucket: bucket
-              })
-              newVariations.push( copy );
-            });
+            // variations.forEach( function( variation ){
+            //   var copy = Object.assign( {},variation );
+            //   copy.attributes.push({
+            //     name: bucketSlug,
+            //     option: bucketOption,
+            //     bucket: bucket
+            //   })
+            //   newVariations.push( copy );
+            // });
             
             var token = genToken( product, bucketOption );
             
