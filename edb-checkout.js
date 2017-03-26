@@ -121,6 +121,7 @@
             var newVariations = [];
             variations.forEach( function( variation ){
               var copy = Object.assign( {},variation );
+              console.log('copy attrbiutes', copy.attributes)
               // copy.attributes.push({
               //   name: bucketSlug,
               //   option: bucketOption,
