@@ -121,11 +121,11 @@
             var newVariations = [];
             variations.forEach( function( variation ){
               var copy = Object.assign( {},variation );
-              copy.attributes.push({
-                name: bucketSlug,
-                option: bucketOption,
-                bucket: bucket
-              });
+              // copy.attributes.push({
+              //   name: bucketSlug,
+              //   option: bucketOption,
+              //   bucket: bucket
+              // });
               newVariations.push( copy );
             });
             
