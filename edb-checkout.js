@@ -50,7 +50,11 @@
     
     products.forEach(function( product) {
       if(product.meta.edb_is_bucket == '1'){
-        Buckets[product.meta.edb_bucket_slug]=product;
+        Buckets[product.meta.edb_bucket_slug]={};
+        product.variations.forEach( function( variation ){
+          var option = variation.attributes[0].option;
+          Buckets[product.meta.edb_bucket_slug][option]={ variation: variation, product: product };
+        });
       }else{
         Products.push( product );
       }
@@ -76,6 +80,7 @@
          var slug = bucketSlug(attribute.name);
          return Buckets[slug];
        });
+       console.log( buckets );
        
       // buckets.forEach( function( bucket ){
       //   var token = genToken( bucket.meta.edb_bucket_slug );
