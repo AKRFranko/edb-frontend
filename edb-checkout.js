@@ -1,5 +1,6 @@
 (function() {
 
+  
   var Checkout = {}, Guest = {
     name: 'guest',
     billing_address_1: '',
@@ -24,9 +25,14 @@
     shipping_state: ''
   },
   Customer = Guest,
-    Objects = [],
+    Products = [],
     Buckets = {}, Catalog = {};
 
+
+  function genToken = function(){
+    return Number(Math.floor( Math.random() * Date.now() ) + '' + Date.now()).toString(24);
+  };
+  
   Checkout.setCustomer = function setCustomer(user) {
     if (!user) {
       Customer = Guest;
@@ -42,10 +48,22 @@
       if(product.meta.edb_is_bucket == '1'){
         Buckets[product.meta.edb_bucket_slug]=product;
       }else{
-        Objects.push( product );
+        Products.push( product );
       }
     }, Buckets );
-    console.log('loadProducts',Objects, Buckets );
+    
+    Products.forEach( function( product ){
+     var productHasBucketAttributes = product.attributes.some( function( attribute ){
+       var slug = 'edb_' + attribute.name;
+       return Buckets[slug];
+     });
+     if(!productHasBucketAttributes){
+       var token = genToken();
+       var item = Object.assign( { catalogToken: token }, product );
+       Catalog[token] = product;
+     };
+    });
+    console.log('loadProducts',Catalog );
   }
   EDB.Checkout = Checkout;
 
