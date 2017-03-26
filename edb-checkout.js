@@ -118,22 +118,19 @@
           
           Object.keys(bucket).forEach( function( bucketOption ){
             product.variations.forEach( function( variation, variationIndex ){
-             var attributes = variation.attributes;
-             attributes.push({
+             variation.attributes.push({
                name: bucketSlug,
                bucket: bucket,
                option: bucketOption
              });
-             var token = genToken( bucketOption );
-             var catalogEntry = { 
-               token: token,
-               product: product,
-               variation: variation,
-               attributes: attributes,
-             };
-             Catalog[token]=catalogEntry;
-              
-            });    
+            });
+            var token = genToken( bucketOption );
+            var catalogEntry = { 
+              token: token,
+              product: product,
+              name: fullName( product, bucketOption )
+            };
+            Catalog[token]=catalogEntry;
           });
         });
         
