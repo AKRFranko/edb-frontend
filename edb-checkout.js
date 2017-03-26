@@ -165,6 +165,7 @@
 
   EDB.addToCart = function( productId, attributes ){
     console.log('addToCart',productId, attributes);
+    
   }
 
 

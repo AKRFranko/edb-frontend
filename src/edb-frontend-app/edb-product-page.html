@@ -304,9 +304,9 @@
               <div class="group attribute-group">
                 <div class="attribute-label">Quantity</div>
                 <div class="product-quantity">
-                  <paper-icon-button class="lower" icon="remove"></paper-icon-button>
+                  <paper-icon-button class="lower" on-tap="decrQty" icon="remove"></paper-icon-button>
                   <paper-input no-label-float label="qty" value="{{wantedQty}}"></paper-input>
-                  <paper-icon-button class="increase" icon="add"></paper-icon-button>
+                  <paper-icon-button class="increase" on-tap="incrQty" icon="add"></paper-icon-button>
                 </div>
               </div>
             
@@ -372,6 +372,11 @@
               return {};
             },
             notify: true
+          },
+          wantedQty: {
+            type: Number,
+            notify: true,
+            value: 1
           }
            
          
@@ -399,6 +404,16 @@
             return attr;
           });
         },
+        decrQty: function(){
+          var q = this.get('wantedQty');
+          if(q == 1) return;
+          this.set('wantedQty', q-1);
+        }, 
+        incrQty:function(){
+          var q = this.get('wantedQty');
+          if(q > 100) return;
+          this.set('wantedQty', q+1);
+        },
         __computeAnatomy: function( a ){
           if(!a) return;
           var k = Object.keys(a);
@@ -423,7 +438,7 @@
           this.set('attributes.'+event.model.attribute.name, event.model.attribute.options[event.detail.value]);
         },
         handleAddToCart: function( event ){
-          EDB.addToCart( this.get('product').id, this.get('attributes') );
+          EDB.addToCart( this.get('product').id, this.get('attributes'),this.get('wantedQty') );
         },
         createProductSlides: function( item ){
           if(!item) return [];
