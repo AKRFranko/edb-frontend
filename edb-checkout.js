@@ -44,6 +44,7 @@
     var proxy = {};
     Object.defineProperties(proxy, {
       variation: {
+        configurable: true,
         enumerable: true,
         get: function() {
             return products[productIndex].variations[variationIndex];
@@ -53,6 +54,7 @@
         }
       },
       product: {
+        configurable: true,
         enumerable: true,
         get: function() {
             return products[productIndex];
@@ -105,8 +107,20 @@
           obj[slug] = Buckets[slug];
           return obj;
         }, {});
-        console.log('buckets')
-        console.dir(buckets);
+        function removeDim( str ){
+          return str.replace(/\d+x\d+/,'');
+        }
+        function fullName( product, option ){
+          return product.name + ' ' + removeDim(option);
+        }
+        Object.keys(buckets).forEach( function( bucketSlug ){
+          var bucket = buckets[bucketSlug];
+          Object.keys(bucket).forEach( function( bucketOption ){
+             console.log('bucketOption',bucketOption);
+          });
+        });
+        // console.log('buckets')
+        // console.dir(buckets);
         
 
         // buckets.forEach( function( bucket ){
