@@ -40,8 +40,8 @@
 
   
 
-  function createProductProxy( products , productIndex, variationIndex ){
-    var proxy = {};
+  function createProductProxy( products , productIndex, variationIndex, obj ){
+    var proxy = obj||{};
     Object.defineProperties(proxy, {
       variation: {
         configurable: true,
@@ -114,14 +114,30 @@
           return product.name + ' ' + removeDim(option);
         }
         product.variations.forEach( function( variation, variationIndex ){
-          console.log('v',variation);
+          Object.keys(buckets).forEach( function( bucketSlug ){
+            var bucket = buckets[bucketSlug];
+            var attributes = variation.attributes;
+            Object.keys(bucket).forEach( function( bucketOption ){
+              attributes.push({
+                name: bucketSlug,
+                bucket: bucket,
+                option: bucketOption
+              });
+              var token = genToken( bucketOption );
+              var catalogEntry = { 
+                token: token,
+                product: product,
+                variation: variation,
+                attributes: attributes,
+              };
+              Catalog[token]=catalogEntry;
+            });
+          });
+          // console.log('v',variation);
         });
-        // Object.keys(buckets).forEach( function( bucketSlug ){
-        //   var bucket = buckets[bucketSlug];
-        //   Object.keys(bucket).forEach( function( bucketOption ){
-        //     console.log('bucketOption',bucketOption, bucket[bucketOption].variation );
-        //   });
-        // });
+        console.log('Catalog');
+        console.log(Catalog);
+        
         // console.log('buckets')
         // console.dir(buckets);
         
