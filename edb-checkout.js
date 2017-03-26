@@ -76,10 +76,11 @@
         var slug = bucketSlug(attribute.name);
         return !!Buckets[slug];
        });
-       var buckets = bucketAttributes.map( function( attribute ){
+       var buckets = bucketAttributes.reduce( function( obj, attribute ){
          var slug = bucketSlug(attribute.name);
-         return Buckets[slug];
-       });
+         obj[slug]=Buckets[slug];
+         return obj;
+       }, {} );
        console.log( 'buckets',buckets );
        
       // buckets.forEach( function( bucket ){
