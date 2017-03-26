@@ -29,6 +29,9 @@
     Buckets = {}, Catalog = {};
 
 
+  function bucketSlug( string ){
+    return 'edb_' + string.replace(/$edb_/,'');
+  }
   function genToken( suffix ){
     suffix = suffix || '';
     return Number(Math.floor( Math.random() * Date.now() ) + '' + Date.now()).toString(24) + suffix;
@@ -55,33 +58,42 @@
     
     Products.forEach( function( product ){
      var productHasBucketAttributes = product.attributes.some( function( attribute ){
-       var slug = 'edb_' + attribute.name;
+       var slug = bucketSlug(attribute.name);
        return !!Buckets[slug];
      });
      if(!productHasBucketAttributes){
+       console.log('NOT productHasBucketAttributes')
        var token = genToken();
        var item = Object.assign( { token: token }, product );
        Catalog[token] = product;
      }else{
+       console.log('productHasBucketAttributes')
        var bucketAttributes = product.attributes.filter( function( attribute ){
-        var slug = 'edb_' + attribute.name;
+        var slug = bucketSlug(attribute.name);
         return !!Buckets[slug];
        });
        var buckets = bucketAttributes.map( function( attribute ){
-         var slug = 'edb_' + attribute.name;
+         var slug = bucketSlug(attribute.name);
          return Buckets[slug];
        });
-       buckets.forEach( function( bucket ){
-        var token = genToken( bucket.meta.edb_bucket_slug );
-        var copy = Object.assign( { token: token }, product );
-        Catalog[token] = product;
-       });
+       
+      // buckets.forEach( function( bucket ){
+      //   var token = genToken( bucket.meta.edb_bucket_slug );
+      //   var copy = Object.assign( { token: token, bucket: bucket  }, product );
+      //   copy.attributes.forEach( function( attr, index ){
+      //     var slug = bucketSlug(attr.name);
+      //     if(slug == bucket.meta.edb_bucket_slug){
+      //       copy.attributes[index].option = 
+      //     }
+      //   })
+      //   Catalog[token] = product;
+      // });
        
      }
     });
     
      
-    console.log('loadProducts',Catalog );
+    // console.log('loadProducts',Catalog );
     
   }
   EDB.Checkout = Checkout;
