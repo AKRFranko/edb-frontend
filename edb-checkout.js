@@ -61,9 +61,16 @@
        var token = genToken();
        var item = Object.assign( { catalogToken: token }, product );
        Catalog[token] = product;
-     };
+     }else{
+       var buckets = product.attributes.filter( function( attribute ){
+        var slug = 'edb_' + attribute.name;
+        return Buckets[slug];
+       });
+       console.log('buckets', buckets);
+     }
     });
-    console.log('loadProducts',Catalog );
+    // console.log('loadProducts',Catalog );
+    
   }
   EDB.Checkout = Checkout;
 
