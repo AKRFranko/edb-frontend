@@ -134,7 +134,7 @@
             var catalogEntry = { 
               token: token,
               product: product,
-              variations: variations,
+              variations: newVariations,
               name: fullName( product, bucketOption )
             };
             
