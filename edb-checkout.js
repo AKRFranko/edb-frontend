@@ -155,7 +155,7 @@
     console.log('Catalog Loaded!',Object.keys(Catalog).length, 'entries.' );
     
     if(catalogCallback){
-      var entries = Object.keys(Catalog).map( function( k ){ return Catalog[k];});
+      var entries = Object.keys(Catalog).map( function( k ){ return Catalog[k]; });
       console.log('Catalog', entries );
       catalogCallback( entries );
     }
@@ -163,9 +163,9 @@
   }
   EDB.Checkout = Checkout;
 
-
-
-
+  EDB.addToCart = function( productId, attributes ){
+    console.log('addToCart',productId, attributes);
+  }
 
 
   // var getToken = function(){ return (Math.random()*Date.now() + '' +Date.now()).toString(24) }
