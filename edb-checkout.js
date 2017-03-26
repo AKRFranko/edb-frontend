@@ -117,16 +117,15 @@
           var bucket = buckets[bucketSlug];
           
           Object.keys(bucket).forEach( function( bucketOption ){
-            var variations = product.variations;
-            var newVariations = [];
-            variations.forEach( function( variation ){
+            var newVariations = [];  
+            product.variations.forEach( function( variation ){
               var copy = Object.assign( {},variation );
               console.log('copy attrbiutes', copy.attributes)
-              // copy.attributes.push({
-              //   name: bucketSlug,
-              //   option: bucketOption,
-              //   bucket: bucket
-              // });
+              copy.attributes.push({
+                name: bucketSlug,
+                option: bucketOption,
+                bucket: bucket
+              });
               newVariations.push( copy );
             });
             
