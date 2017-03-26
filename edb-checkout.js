@@ -127,7 +127,7 @@
             var catalogEntry = { 
               token: token,
               product: product,
-              name: fullName( product.name, bucketOption )
+              name: fullName( product, bucketOption )
             };
             Catalog[token]=catalogEntry;
           });
