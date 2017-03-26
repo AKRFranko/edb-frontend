@@ -103,6 +103,7 @@
         });
         var buckets = bucketAttributes.reduce(function(obj, attribute) {
           var slug = bucketSlugIt(attribute.name);
+          
           obj[slug] = Buckets[slug];
           return obj;
         }, {});
