@@ -340,16 +340,16 @@ EDB.getAuthUser = function(){
   });
 };
 
-EDB.login = function( user, pass){
+EDB.login = function( userLogin, userPass){
   
-  return wpRest.__request('POST','/login', {username: user, password: pass }, {} ).then(  function( user ){
+  return wpRest.__request('POST','/login', {username: userLogin, password: userPass }, {} ).then(  function( user ){
     if(user){
       window.CurrentUser = user;
       if(EDB.polymerAuth){
         EDB.polymerAuth.set('user', window.CurrentUser);
       }
-      console.log('user', user );
-      return jwtRest.__request('POST','/token', {username: user, password: pass }, {} ).then(  function( auth ){
+      
+      return jwtRest.__request('POST','/token', {username: userLogin, password: userPass }, {} ).then(  function( auth ){
         console.log('token response', auth )
         localStorage.setItem('EDB_JWT', auth.token );
         localStorage.setItem('EDB_LASTUSERID', auth.user_id );    
