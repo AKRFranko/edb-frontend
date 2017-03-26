@@ -348,6 +348,7 @@ EDB.login = function( user, pass){
       if(EDB.polymerAuth){
         EDB.polymerAuth.set('user', window.CurrentUser);
       }
+      console.log('user', user );
       return jwtRest.__request('POST','/token', {username: user, password: pass }, {} ).then(  function( auth ){
         console.log('token response', auth )
         localStorage.setItem('EDB_JWT', auth.token );
