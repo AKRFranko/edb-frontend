@@ -66,12 +66,12 @@
        return !!Buckets[slug];
      });
      if(!productHasBucketAttributes){
-       console.log('NOT productHasBucketAttributes')
-       var token = genToken();
-       var item = Object.assign( { token: token }, product );
-       Catalog[token] = product;
+        throw new Error('Unhanded: NOT productHasBucketAttributes');
+      // var token = genToken();
+      // var item = Object.assign( { token: token }, product );
+      // Catalog[token] = product;
      }else{
-       console.log('productHasBucketAttributes')
+      // console.log('productHasBucketAttributes')
        var bucketAttributes = product.attributes.filter( function( attribute ){
         var slug = bucketSlug(attribute.name);
         return !!Buckets[slug];
@@ -80,7 +80,7 @@
          var slug = bucketSlug(attribute.name);
          return Buckets[slug];
        });
-       console.log( buckets );
+       console.log( 'buckets',buckets );
        
       // buckets.forEach( function( bucket ){
       //   var token = genToken( bucket.meta.edb_bucket_slug );
