@@ -102,7 +102,7 @@
           return !!Buckets[slug];
         });
         var buckets = bucketAttributes.reduce(function(obj, attribute) {
-          var slug = bucketSlugIt(attribute.name);
+          var slug = bucketSlug(attribute.name);
           obj[slug] = Buckets[slug];
           return obj;
         }, {});
@@ -114,19 +114,25 @@
         }
         Object.keys(buckets).forEach( function( bucketSlug ){
           var bucket = buckets[bucketSlug];
+          var variations = product.variations;
+          var newVariations = [];
           Object.keys(bucket).forEach( function( bucketOption ){
-            product.variations.forEach( function( variation, variationIndex ){
-             variation.attributes.forEach(function(attr,i){
-               var slug = bucketSlugIt( attr.name );
-               if(slug == bucketSlug){
-                 variation.attributes[i].bucket=bucket;
-               }
-             });
+            variations.forEach( function( variation ){
+              var copy = Object.assign( {},variation );
+              copy.attributes.push({
+                name: bucketSlug,
+                option: bucketOption,
+                bucket: bucket
+              })
+              newVariations.push( copy );
             });
+            
+            
             var token = genToken( product, bucketOption );
             var catalogEntry = { 
               token: token,
               product: product,
+              varaiations: variations,
               name: fullName( product, bucketOption )
             };
             Catalog[token]=catalogEntry;
