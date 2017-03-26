@@ -576,7 +576,7 @@
         },
         computeCatalogItems: function( products ){
           if(!products) return [];
-          
+          return products;
           
           var bucketsArray = this._onlyBuckets( products );
           var objectsArray = this._onlyObjects( products );
