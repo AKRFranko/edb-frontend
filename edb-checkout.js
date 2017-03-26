@@ -29,8 +29,9 @@
     Buckets = {}, Catalog = {};
 
 
-  function genToken(){
-    return Number(Math.floor( Math.random() * Date.now() ) + '' + Date.now()).toString(24);
+  function genToken( suffix ){
+    suffix = suffix || '';
+    return Number(Math.floor( Math.random() * Date.now() ) + '' + Date.now()).toString(24) + suffix;
   };
   
   Checkout.setCustomer = function setCustomer(user) {
@@ -59,7 +60,7 @@
      });
      if(!productHasBucketAttributes){
        var token = genToken();
-       var item = Object.assign( { catalogToken: token }, product );
+       var item = Object.assign( { token: token }, product );
        Catalog[token] = product;
      }else{
        var bucketAttributes = product.attributes.filter( function( attribute ){
@@ -70,11 +71,17 @@
          var slug = 'edb_' + attribute.name;
          return Buckets[slug];
        });
+       buckets.forEach( function( bucket ){
+        var token = genToken( bucket.meta.edb_bucket_slug );
+        var copy = Object.assign( { token: token }, product );
+        Catalog[token] = product;
+       });
        
-       console.log('buckets', buckets);
      }
     });
-    // console.log('loadProducts',Catalog );
+    
+     
+    console.log('loadProducts',Catalog );
     
   }
   EDB.Checkout = Checkout;
