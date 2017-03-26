@@ -665,7 +665,9 @@
           this.$.toolbar.dialog = this.$.authDialog;
           
           var product = new EDB.PolymerResource('product', this);
-          product.refreshItems();
+          product.refreshItems().then( function(){
+            EDB.Checkout.loadProducts( product.items );
+          })
           
           var material = new EDB.PolymerResource('material', this);
               material.refreshItems();
