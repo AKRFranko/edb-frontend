@@ -116,9 +116,7 @@
         Object.keys(buckets).forEach( function( bucketSlug ){
           var bucket = buckets[bucketSlug];
           Object.keys(bucket).forEach( function( bucketOption ){
-            
              console.log('bucketOption',bucketOption, bucket[bucketOption].variation );
-             
           });
         });
         // console.log('buckets')
