@@ -47,6 +47,9 @@
         enumerable: true,
         get: function() {
             return products[productIndex].variations[variationIndex];
+        },
+        valueOf: function(){
+          return products[productIndex].variations[variationIndex];
         }
       },
       product: {
