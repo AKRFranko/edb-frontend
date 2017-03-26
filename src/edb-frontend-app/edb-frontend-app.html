@@ -575,43 +575,43 @@
             return p.meta.edb_is_bucket != '1';
           })
         },
-        computeCatalogItems: function( products ){
-          if(!products) return [];
-          return products;
-          var bucketsArray = this._onlyBuckets( products );
-          var objectsArray = this._onlyObjects( products );
-          objectsArray = objectsArray.map( function( o ){ 
-            var variations = o.variations;
-            var newVariations = [];
-            o.attributes.forEach( function( attribute ){
-              var attributeBuckets = bucketsArray.filter( function( item ){ return item.meta.edb_bucket_slug == 'edb_'+attribute.name; } );
-              if(attributeBuckets.length > 0){
-                attributeBuckets.forEach( function(attributeBucket){
-                    attribute.bucketOptions = attributeBucket.variations.filter( function( bvar ){
-                      return ~attribute.options.indexOf(bvar.attributes[0].option);
-                    });
-                    attribute.bucketOptions.forEach( function( option ){
-                      variations.forEach( function( variation ){
-                        var vattr= variation.attributes;
-                        vattr.push( option.attributes[0] );
-                        newVariations.push( Object.assign(variation, { attributes: vattr }));
-                      })
-                    })
-                });
-              }else{
-                newVariations = variations;
-              }
-            });
-            o.variations = newVariations;
-            return o;
-          });
+        // computeCatalogItems: function( products ){
+        //   if(!products) return [];
+        //   return products;
+        //   var bucketsArray = this._onlyBuckets( products );
+        //   var objectsArray = this._onlyObjects( products );
+        //   objectsArray = objectsArray.map( function( o ){ 
+        //     var variations = o.variations;
+        //     var newVariations = [];
+        //     o.attributes.forEach( function( attribute ){
+        //       var attributeBuckets = bucketsArray.filter( function( item ){ return item.meta.edb_bucket_slug == 'edb_'+attribute.name; } );
+        //       if(attributeBuckets.length > 0){
+        //         attributeBuckets.forEach( function(attributeBucket){
+        //             attribute.bucketOptions = attributeBucket.variations.filter( function( bvar ){
+        //               return ~attribute.options.indexOf(bvar.attributes[0].option);
+        //             });
+        //             attribute.bucketOptions.forEach( function( option ){
+        //               variations.forEach( function( variation ){
+        //                 var vattr= variation.attributes;
+        //                 vattr.push( option.attributes[0] );
+        //                 newVariations.push( Object.assign(variation, { attributes: vattr }));
+        //               })
+        //             })
+        //         });
+        //       }else{
+        //         newVariations = variations;
+        //       }
+        //     });
+        //     o.variations = newVariations;
+        //     return o;
+        //   });
           
-          // console.log(objectsArray);
-          return objectsArray;
-          var catalog= [];
+        //   // console.log(objectsArray);
+        //   return objectsArray;
+        //   var catalog= [];
            
-          return catalog;
-        },
+        //   return catalog;
+        // },
         handleLogin: function(){
           this.$.auth.login();
         },
@@ -629,21 +629,7 @@
             this.set('page',data.page);
           }
         },
-        // sortBySortOrder: function( a,b ){
-        //   if(!a.sortOrder && a.sortOrder !== 0){
-        //     return 0;
-        //   }
-        //   if(!b.sortOrder && b.sortOrder !== 0){
-        //     return 0;
-        //   }
-        //   if(a.sortOrder > b.sortOrder){
-        //     return -1;
-        //   }
-        //   if(a.sortOrder < b.sortOrder){
-        //     return 1;
-        //   }
-        //   return 0;
-        // },
+       
         limitText: function( t,n ){
           return t.slice(0,n)+'...';
         },

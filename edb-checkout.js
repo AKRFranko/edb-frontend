@@ -33,9 +33,8 @@
     return 'edb_' + string.replace(/$edb_/, '');
   }
 
-  function genToken(suffix) {
-    suffix = suffix || '';
-    return Number(Math.floor(Math.random() * Date.now()) + '' + Date.now()).toString(24) + suffix;
+  function genToken(p,v) {
+    return p.name+'-'+v.attributes.map( function(){ return attr.option }).join('-');
   };
 
   
@@ -123,7 +122,7 @@
                option: bucketOption
              });
             });
-            var token = genToken( bucketOption );
+            var token = genToken( product, variation, bucketOption );
             var catalogEntry = { 
               token: token,
               product: product,
@@ -138,10 +137,14 @@
     });
 
 
-    console.log('loadProducts',Object.keys(Catalog).length );
+    console.log('Catalog Loaded!',Object.keys(Catalog).length, 'entries.' );
+    
     if(catalogCallback){
-      catalogCallback( Object.keys(Catalog).map( function( k ){ return Catalog[k];}) );
+      var entries = Object.keys(Catalog).map( function( k ){ return Catalog[k];});
+      console.log('Catalog', entries );
+      catalogCallback( entries );
     }
+    
   }
   EDB.Checkout = Checkout;
 
