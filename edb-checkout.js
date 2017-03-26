@@ -37,10 +37,15 @@
 
 
   Checkout.loadProducts = function loadProducts(products) {
-    console.log('loadProducts',products)
-    products.reduce(function(Buckets, product) {
-      // if (product.attributes)
-    });
+    
+    products.forEach(function( product) {
+      if(product.meta.edb_is_bucket == '1'){
+        Buckets[product.meta.edb_bucket_slug]=product;
+      }else{
+        Objects.push( product );
+      }
+    }, Buckets );
+    console.log('loadProducts',Objects, Buckets );
   }
   EDB.Checkout = Checkout;
 
