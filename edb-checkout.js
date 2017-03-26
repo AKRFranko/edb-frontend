@@ -120,12 +120,15 @@
             var newVariations = [];  
             product.variations.forEach( function( variation ){
               var copy = Object.assign( {},variation );
-              console.log('copy attrbiutes', copy.attributes)
-              copy.attributes.push({
+              var copyAttributes = [].concat(variation.attributes);
+              
+              copyAttributes.push({
                 name: bucketSlug,
                 option: bucketOption,
                 bucket: bucket
               });
+              copy.attributes = copyAttributes;
+              console.log('copy attrbiutes', copyAttributes)
               newVariations.push( copy );
             });
             
