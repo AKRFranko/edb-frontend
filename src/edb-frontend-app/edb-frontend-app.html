@@ -246,10 +246,10 @@
                   <template is="dom-repeat" items="{{filters}}" as="filter">
                     <div class="filtered" data-filter$="{{filter}}">
                       <edb-grid layout="{{layout}}" loading="{{product.loading}}">
-                        <template is="dom-repeat" items="{{computeCatalogItems(product.items)}}" as="product" filter="{{_filterCatalog(filter)}}">
-                          <a href="{{computeCatalogItemUrl(product)}}" tabindex="-1">
-                          <edb-card image="{{product.images.0.src}}" title="{{computeCatalogItemName(product)}}" subtitle="{{formatMoney(product.price)}}">
-                            <p>{{limitText(product.description.en,120)}}</p>
+                        <template is="dom-repeat" items="{{catalog}}" as="entry" filter="{{_filterCatalog(filter)}}">
+                          <a href="{{computeCatalogItemUrl(entry.product)}}" tabindex="-1">
+                          <edb-card image="{{entry.product.images.0.src}}" title="{{entry.name}}" subtitle="{{formatMoney(entry.product.price)}}">
+                            <p>{{limitText(entry.product.description.en,120)}}</p>
                           </edb-card>
                           </a>
                         </template>
@@ -660,12 +660,14 @@
           
           // var inspiration = new EDB.PolymerResource('inspiration', this);
           // inspiration.refreshItems();
-          
+          var it = this;
           this.$.toolbar.dialog = this.$.authDialog;
           
           var product = new EDB.PolymerResource('product', this);
           product.refreshItems().then( function(){
-            EDB.Checkout.loadProducts( product.items );
+            EDB.Checkout.loadProducts( product.items, function( catalog ){
+              it.set('catalog',catalog);
+            } );
           })
           
           var material = new EDB.PolymerResource('material', this);

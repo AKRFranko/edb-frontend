@@ -72,7 +72,7 @@
     }
   }
 
-  Checkout.loadProducts = function loadProducts(products) {
+  Checkout.loadProducts = function loadProducts(products, catalogCallback ) {
 
     products.forEach(function(product,productIndex) {
       if (product.meta.edb_is_bucket == '1') {
@@ -139,7 +139,9 @@
 
 
     console.log('loadProducts',Object.keys(Catalog).length );
-
+    if(catalogCallback){
+      catalogCallback( Object.keys(Catalog).map( function( k ){ return Catalog[k];}) );
+    }
   }
   EDB.Checkout = Checkout;
 
