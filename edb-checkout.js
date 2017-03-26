@@ -138,7 +138,7 @@
     });
 
 
-    console.log('loadProducts',Catalog );
+    console.log('loadProducts',Object.keys(Catalog).length );
 
   }
   EDB.Checkout = Checkout;
