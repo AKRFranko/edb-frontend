@@ -113,12 +113,15 @@
         function fullName( product, option ){
           return product.name + ' ' + removeDim(option);
         }
-        Object.keys(buckets).forEach( function( bucketSlug ){
-          var bucket = buckets[bucketSlug];
-          Object.keys(bucket).forEach( function( bucketOption ){
-             console.log('bucketOption',bucketOption, bucket[bucketOption].variation );
-          });
+        product.variations.forEach( function( variation, variationIndex ){
+          console.log('v',variation);
         });
+        // Object.keys(buckets).forEach( function( bucketSlug ){
+        //   var bucket = buckets[bucketSlug];
+        //   Object.keys(bucket).forEach( function( bucketOption ){
+        //     console.log('bucketOption',bucketOption, bucket[bucketOption].variation );
+        //   });
+        // });
         // console.log('buckets')
         // console.dir(buckets);
         
