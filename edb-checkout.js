@@ -115,7 +115,6 @@
         }
         Object.keys(buckets).forEach( function( bucketSlug ){
           var bucket = buckets[bucketSlug];
-          
           Object.keys(bucket).forEach( function( bucketOption ){
             product.variations.forEach( function( variation, variationIndex ){
              variation.attributes.push({
@@ -128,36 +127,18 @@
             var catalogEntry = { 
               token: token,
               product: product,
-              name: fullName( product, bucketOption )
+              name: fullName( product.name, bucketOption )
             };
             Catalog[token]=catalogEntry;
           });
         });
-        
-        console.log('Catalog');
-        console.log(Catalog);
-        
-        // console.log('buckets')
-        // console.dir(buckets);
-        
 
-        // buckets.forEach( function( bucket ){
-        //   var token = genToken( bucket.meta.edb_bucket_slug );
-        //   var copy = Object.assign( { token: token, bucket: bucket  }, product );
-        //   copy.attributes.forEach( function( attr, index ){
-        //     var slug = bucketSlug(attr.name);
-        //     if(slug == bucket.meta.edb_bucket_slug){
-        //       copy.attributes[index].option = 
-        //     }
-        //   })
-        //   Catalog[token] = product;
-        // });
-
+       
       }
     });
 
 
-    // console.log('loadProducts',Catalog );
+    console.log('loadProducts',Catalog );
 
   }
   EDB.Checkout = Checkout;
