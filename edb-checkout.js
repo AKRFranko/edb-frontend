@@ -81,7 +81,11 @@
           Buckets[product.meta.edb_bucket_slug][option] = createProductProxy( products, productIndex, variationIndex );
         });
       } else {
-        Products.push(product);
+        if(product.variations.length == 0){
+            console.log(product.name, 'has no variations but has attributes: ', product.attributes);
+        }
+        Products.push(product);  
+
       }
     }, Buckets);
 
@@ -92,11 +96,9 @@
       });
       if (!productHasBucketAttributes) {
         throw new Error('Unhanded: NOT productHasBucketAttributes');
-        // var token = genToken();
-        // var item = Object.assign( { token: token }, product );
-        // Catalog[token] = product;
+        
       } else {
-        // console.log('productHasBucketAttributes')
+        console.log('productHasBucketAttributes')
         var bucketAttributes = product.attributes.filter(function(attribute) {
           var slug = bucketSlugIt(attribute.name);
           return !!Buckets[slug];
@@ -128,7 +130,6 @@
                 bucket: bucket
               });
               copy.attributes = copyAttributes;
-              console.log('copy attrbiutes', copyAttributes)
               newVariations.push( copy );
             });
             
