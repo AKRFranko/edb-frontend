@@ -102,7 +102,9 @@
           obj[slug] = Buckets[slug];
           return obj;
         }, {});
-        console.log('buckets',buckets)
+        console.log('buckets')
+        console.dir(buckets);
+        
 
         // buckets.forEach( function( bucket ){
         //   var token = genToken( bucket.meta.edb_bucket_slug );
