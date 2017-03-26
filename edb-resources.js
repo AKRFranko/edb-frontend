@@ -39,6 +39,9 @@
     {
       read: 'categories',
       write: 'categories'
+    },{
+      read: 'stock_quantity',
+      write:'stockQuantity'
     }]
   });
   
