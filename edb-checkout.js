@@ -1,6 +1,6 @@
 (function() {
 
-  
+
   var Checkout = {}, Guest = {
     name: 'guest',
     billing_address_1: '',
@@ -29,13 +29,35 @@
     Buckets = {}, Catalog = {};
 
 
-  function bucketSlug( string ){
-    return 'edb_' + string.replace(/$edb_/,'');
+  function bucketSlug(string) {
+    return 'edb_' + string.replace(/$edb_/, '');
   }
-  function genToken( suffix ){
+
+  function genToken(suffix) {
     suffix = suffix || '';
-    return Number(Math.floor( Math.random() * Date.now() ) + '' + Date.now()).toString(24) + suffix;
+    return Number(Math.floor(Math.random() * Date.now()) + '' + Date.now()).toString(24) + suffix;
   };
+
+  
+
+  function createProductProxy( products , productIndex, variationIndex ){
+    var proxy = {};
+    Object.defineProperties(proxy, {
+      variation: {
+        enumerable: true,
+        get: function() {
+            return products[productIndex].variations[variationIndex];
+        }
+      },
+      product: {
+        enumerable: true,
+        get: function() {
+            return products[productIndex];
+        }
+      }
+    });
+    return proxy;
+  }
   
   Checkout.setCustomer = function setCustomer(user) {
     if (!user) {
@@ -45,62 +67,61 @@
     }
   }
 
-
   Checkout.loadProducts = function loadProducts(products) {
-    
-    products.forEach(function( product) {
-      if(product.meta.edb_is_bucket == '1'){
-        Buckets[product.meta.edb_bucket_slug]={};
-        product.variations.forEach( function( variation ){
+
+    products.forEach(function(product,productIndex) {
+      if (product.meta.edb_is_bucket == '1') {
+        Buckets[product.meta.edb_bucket_slug] = {};
+        product.variations.forEach(function(variation,variationIndex) {
           var option = variation.attributes[0].option;
-          Buckets[product.meta.edb_bucket_slug][option]={ variation: variation, product: product };
+          Buckets[product.meta.edb_bucket_slug][option] = createProductProxy( products, productIndex, variationIndex );
         });
-      }else{
-        Products.push( product );
+      } else {
+        Products.push(product);
       }
-    }, Buckets );
-    
-    Products.forEach( function( product ){
-     var productHasBucketAttributes = product.attributes.some( function( attribute ){
-       var slug = bucketSlug(attribute.name);
-       return !!Buckets[slug];
-     });
-     if(!productHasBucketAttributes){
-        throw new Error('Unhanded: NOT productHasBucketAttributes');
-      // var token = genToken();
-      // var item = Object.assign( { token: token }, product );
-      // Catalog[token] = product;
-     }else{
-      // console.log('productHasBucketAttributes')
-       var bucketAttributes = product.attributes.filter( function( attribute ){
+    }, Buckets);
+
+    Products.forEach(function(product) {
+      var productHasBucketAttributes = product.attributes.some(function(attribute) {
         var slug = bucketSlug(attribute.name);
         return !!Buckets[slug];
-       });
-       var buckets = bucketAttributes.reduce( function( obj, attribute ){
-         var slug = bucketSlug(attribute.name);
-         obj[slug]=Buckets[slug];
-         return obj;
-       }, {} );
-       console.log( 'buckets',buckets );
-       
-      // buckets.forEach( function( bucket ){
-      //   var token = genToken( bucket.meta.edb_bucket_slug );
-      //   var copy = Object.assign( { token: token, bucket: bucket  }, product );
-      //   copy.attributes.forEach( function( attr, index ){
-      //     var slug = bucketSlug(attr.name);
-      //     if(slug == bucket.meta.edb_bucket_slug){
-      //       copy.attributes[index].option = 
-      //     }
-      //   })
-      //   Catalog[token] = product;
-      // });
-       
-     }
+      });
+      if (!productHasBucketAttributes) {
+        throw new Error('Unhanded: NOT productHasBucketAttributes');
+        // var token = genToken();
+        // var item = Object.assign( { token: token }, product );
+        // Catalog[token] = product;
+      } else {
+        // console.log('productHasBucketAttributes')
+        var bucketAttributes = product.attributes.filter(function(attribute) {
+          var slug = bucketSlug(attribute.name);
+          return !!Buckets[slug];
+        });
+        var buckets = bucketAttributes.reduce(function(obj, attribute) {
+          var slug = bucketSlug(attribute.name);
+          obj[slug] = Buckets[slug];
+          return obj;
+        }, {});
+        console.log('buckets',buckets)
+
+        // buckets.forEach( function( bucket ){
+        //   var token = genToken( bucket.meta.edb_bucket_slug );
+        //   var copy = Object.assign( { token: token, bucket: bucket  }, product );
+        //   copy.attributes.forEach( function( attr, index ){
+        //     var slug = bucketSlug(attr.name);
+        //     if(slug == bucket.meta.edb_bucket_slug){
+        //       copy.attributes[index].option = 
+        //     }
+        //   })
+        //   Catalog[token] = product;
+        // });
+
+      }
     });
-    
-     
+
+
     // console.log('loadProducts',Catalog );
-    
+
   }
   EDB.Checkout = Checkout;
 
