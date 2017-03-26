@@ -29,7 +29,7 @@
     Buckets = {}, Catalog = {};
 
 
-  function bucketSlug(string) {
+  function bucketSlugIt(string) {
     return 'edb_' + string.replace(/$edb_/, '');
   }
 
@@ -87,7 +87,7 @@
 
     Products.forEach(function(product) {
       var productHasBucketAttributes = product.attributes.some(function(attribute) {
-        var slug = bucketSlug(attribute.name);
+        var slug = bucketSlugIt(attribute.name);
         return !!Buckets[slug];
       });
       if (!productHasBucketAttributes) {
@@ -98,11 +98,11 @@
       } else {
         // console.log('productHasBucketAttributes')
         var bucketAttributes = product.attributes.filter(function(attribute) {
-          var slug = bucketSlug(attribute.name);
+          var slug = bucketSlugIt(attribute.name);
           return !!Buckets[slug];
         });
         var buckets = bucketAttributes.reduce(function(obj, attribute) {
-          var slug = bucketSlug(attribute.name);
+          var slug = bucketSlugIt(attribute.name);
           obj[slug] = Buckets[slug];
           return obj;
         }, {});
@@ -116,10 +116,11 @@
           var bucket = buckets[bucketSlug];
           Object.keys(bucket).forEach( function( bucketOption ){
             product.variations.forEach( function( variation, variationIndex ){
-             variation.attributes.push({
-               name: bucketSlug,
-               bucket: bucket,
-               option: bucketOption
+             variation.attributes.forEach(function(attr,i){
+               var slug = bucketSlugIt( attr.name );
+               if(slug == bucketSlug){
+                 variation.attributes[i].bucket=bucket;
+               }
              });
             });
             var token = genToken( product, bucketOption );
