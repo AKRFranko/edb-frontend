@@ -128,12 +128,11 @@
               newVariations.push( copy );
             });
             
-            
             var token = genToken( product, bucketOption );
             var catalogEntry = { 
               token: token,
               product: product,
-              varaiations: variations,
+              variations: newVariations,
               name: fullName( product, bucketOption )
             };
             Catalog[token]=catalogEntry;
