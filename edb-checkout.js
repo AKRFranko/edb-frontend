@@ -34,7 +34,7 @@
   }
 
   function genToken(p,v) {
-    return p.name+'-'+v.attributes.map( function(){ return attr.option }).join('-');
+    return p.id+'-'+v;
   };
 
   
@@ -122,7 +122,7 @@
                option: bucketOption
              });
             });
-            var token = genToken( product, variation, bucketOption );
+            var token = genToken( product, bucketOption );
             var catalogEntry = { 
               token: token,
               product: product,
