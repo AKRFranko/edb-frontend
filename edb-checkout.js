@@ -55,17 +55,22 @@
     Products.forEach( function( product ){
      var productHasBucketAttributes = product.attributes.some( function( attribute ){
        var slug = 'edb_' + attribute.name;
-       return Buckets[slug];
+       return !!Buckets[slug];
      });
      if(!productHasBucketAttributes){
        var token = genToken();
        var item = Object.assign( { catalogToken: token }, product );
        Catalog[token] = product;
      }else{
-       var buckets = product.attributes.filter( function( attribute ){
+       var bucketAttributes = product.attributes.filter( function( attribute ){
         var slug = 'edb_' + attribute.name;
-        return Buckets[slug];
+        return !!Buckets[slug];
        });
+       var buckets = bucketAttributes.map( function( attribute ){
+         var slug = 'edb_' + attribute.name;
+         return Buckets[slug];
+       });
+       
        console.log('buckets', buckets);
      }
     });
