@@ -113,28 +113,30 @@
         function fullName( product, option ){
           return product.name + ' ' + removeDim(option);
         }
-        product.variations.forEach( function( variation, variationIndex ){
-          Object.keys(buckets).forEach( function( bucketSlug ){
-            var bucket = buckets[bucketSlug];
-            var attributes = variation.attributes;
-            Object.keys(bucket).forEach( function( bucketOption ){
-              attributes.push({
-                name: bucketSlug,
-                bucket: bucket,
-                option: bucketOption
-              });
-              var token = genToken( bucketOption );
-              var catalogEntry = { 
-                token: token,
-                product: product,
-                variation: variation,
-                attributes: attributes,
-              };
-              Catalog[token]=catalogEntry;
-            });
+        Object.keys(buckets).forEach( function( bucketSlug ){
+          var bucket = buckets[bucketSlug];
+          
+          Object.keys(bucket).forEach( function( bucketOption ){
+            product.variations.forEach( function( variation, variationIndex ){
+             var attributes = variation.attributes;
+             attributes.push({
+               name: bucketSlug,
+               bucket: bucket,
+               option: bucketOption
+             });
+             var token = genToken( bucketOption );
+             var catalogEntry = { 
+               token: token,
+               product: product,
+               variation: variation,
+               attributes: attributes,
+             };
+             Catalog[token]=catalogEntry;
+              
+            });    
           });
-          // console.log('v',variation);
         });
+        
         console.log('Catalog');
         console.log(Catalog);
         
