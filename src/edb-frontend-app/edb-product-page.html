@@ -366,6 +366,13 @@
             },
             notify: true
           },
+          attributes: {
+            type: Object,
+            value: function(){
+              return {};
+            },
+            notify: true
+          }
            
          
         
@@ -414,13 +421,12 @@
           // return [];
         },
         __handleSelectedChanged: function( event ){
-          console.log(event.detail);
-          console.log(event.model.attribute);
-          console.log(event.model.choice);
+          this.set('attributes.'+event.model.attribute.name, event.model.attribute.options[event.detail.value]);
+          
         },
                                  
         handleAddToCart: function( event ){
-          console.log('event', event );
+          console.log('event', this.get('attributes') );
         },
         createProductSlides: function( item ){
           if(!item) return [];
