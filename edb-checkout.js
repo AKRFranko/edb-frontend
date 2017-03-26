@@ -25,7 +25,7 @@
     shipping_state: ''
   },
   Customer = Guest,
-    Products = [],
+    Products = {},
     Buckets = {}, Catalog = {};
 
 
@@ -84,12 +84,13 @@
         if(product.variations.length == 0){
             console.log(product.name, 'has no variations but has attributes: ', product.attributes);
         }
-        Products.push(product);  
+        Products[product.id] = product;  
 
       }
     }, Buckets);
 
-    Products.forEach(function(product) {
+    Object.keys(Products).forEach(function(productId) {
+      var product = Products[productId];
       var productHasBucketAttributes = product.attributes.some(function(attribute) {
         var slug = bucketSlugIt(attribute.name);
         return !!Buckets[slug];
@@ -163,8 +164,14 @@
   }
   EDB.Checkout = Checkout;
 
-  EDB.addToCart = function( productId, attributes ){
-    console.log('addToCart',productId, attributes);
+
+  
+
+  EDB.getProductStock = function(productId, attributes ){
+    var baseStock = Products[productId].stock
+  }
+  EDB.addToCart = function( productId, attributes, qty ){
+    console.log('addToCart',productId, attributes, qty);
     
   }
 
