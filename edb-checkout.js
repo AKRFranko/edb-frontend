@@ -188,7 +188,11 @@
         var pid = e.product.id;
         
         e.variations.forEach( function( v  ){
-            console.log(pid, v )  
+            var attrs = v.attributes.reduce( function( o, a){
+                o[a.name]=a.option;
+                return o;
+            }, {} )
+            console.log(pid, attrs )  
         });  
         
         
