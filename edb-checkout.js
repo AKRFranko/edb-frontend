@@ -267,8 +267,8 @@
       }
       return entry.product.stock_quantity;
     }
-
   }
+  
   
   function runTest(entries){
      
