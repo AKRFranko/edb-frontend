@@ -26,7 +26,7 @@
   },
   Customer = Guest,
     Products = {},
-    Buckets = {}, Catalog = {};
+    Buckets = {}, Catalog = {},Cart = {};
 
 
   function bucketSlugIt(string) {
@@ -96,6 +96,7 @@
         return !!Buckets[slug];
       });
       if (!productHasBucketAttributes) {
+        console.log(product);
         throw new Error('Unhanded: NOT productHasBucketAttributes');
         
       } else {
@@ -162,17 +163,25 @@
     }
     
   }
+  
   EDB.Checkout = Checkout;
 
 
   
 
-  EDB.getProductStock = function(productId, attributes ){
-    var baseStock = Products[productId].stock
-  }
+  // EDB.getProductStock = function(productId, attributes ){
+  //   var baseStock = Products[productId].stockQuantity;
+  //   if(Products[productId].variations.length == 0 ){
+  //     return baseStock;
+  //   }
+  //   console.log('find stock',Products[productId], attributes );
+  //   return 0;
+  // }
   EDB.addToCart = function( productId, attributes, qty ){
+    EDB.getProductStock();
     console.log('addToCart',productId, attributes, qty);
-    
+    var token = Number( Date.now() + '' + Math.floor( Math.random() * Date.now() )  ).toString(24);
+    Cart[token] = { productId: productId, attributes: attributes, qty: qty };
   }
 
 
