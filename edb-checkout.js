@@ -63,6 +63,26 @@
     return proxy;
   }
   
+  Checkout.productHasBucketAttributes = function productHasBucketAttributes( product ){
+    return product.attributes.some( function( attribute){
+        var slug = bucketSlugIt(attribute.name);
+        return !!Buckets[slug];
+    })
+  }
+  
+  Checkout.getProductAttributeBuckets = function getProductAttributeBuckets( product ){
+    var bucketAttributes = product.attributes.filter(function(attribute) {
+      var slug = bucketSlugIt(attribute.name);
+      return !!Buckets[slug];
+    });
+    return bucketAttributes.reduce(function(obj, attribute) {
+      var slug = bucketSlugIt(attribute.name);
+      
+      obj[slug] = Buckets[slug];
+      return obj;
+    }, {});
+  }
+  
   Checkout.setCustomer = function setCustomer(user) {
     if (!user) {
       Customer = Guest;
@@ -91,26 +111,14 @@
 
     Object.keys(Products).forEach(function(productId) {
       var product = Products[productId];
-      var productHasBucketAttributes = product.attributes.some(function(attribute) {
-        var slug = bucketSlugIt(attribute.name);
-        return !!Buckets[slug];
-      });
-      if (!productHasBucketAttributes) {
+      var hasBucketAttributes = Checkout.productHasBucketAttributes( product );
+      if (!hasBucketAttributes) {
         console.log(product);
         throw new Error('Unhanded: NOT productHasBucketAttributes');
         
       } else {
         console.log('productHasBucketAttributes')
-        var bucketAttributes = product.attributes.filter(function(attribute) {
-          var slug = bucketSlugIt(attribute.name);
-          return !!Buckets[slug];
-        });
-        var buckets = bucketAttributes.reduce(function(obj, attribute) {
-          var slug = bucketSlugIt(attribute.name);
-          
-          obj[slug] = Buckets[slug];
-          return obj;
-        }, {});
+        var buckets = Checkout.getProductAttributeBuckets( product );
         function removeDim( str ){
           return str.replace(/\d+x\d+/,'');
         }
