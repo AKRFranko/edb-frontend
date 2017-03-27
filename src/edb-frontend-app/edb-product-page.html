@@ -131,6 +131,7 @@
         margin-left:-3px;
         margin-right:3px;
       }
+      
       iron-selector.slipcover paper-button{
         margin:0;
         padding:0;
@@ -146,7 +147,10 @@
         position:relative;
         box-sizing:border-box;
         
-        
+        border:0;
+      }
+      iron-selector.slipcover paper-button.iron-selected{
+        border-color:transparent;
       }
       .availability-icon{
         position:absolute;
@@ -169,7 +173,12 @@
         bottom:0;
         right:0;
         box-sizing:border-box;
-        margin:3px;
+        margin:1px;
+        border:2px solid transparent;
+        transition:all .2s ease-in;
+      }
+      iron-selector.slipcover paper-button iron-image{
+        border-color:#000;
       }
       .product-quantity{
         @apply(--layout-horizontal);
