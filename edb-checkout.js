@@ -185,11 +185,12 @@
       console.log('Catalog', entries );
       catalogCallback( entries );
       entries.forEach( function( e ){
-        var attrs = e.attributes.reduce( function( obj, attr ){
+        var pid = e.product.id;
+        var attrs = e.product.attributes.reduce( function( obj, attr ){
           obj[attr.name]=attr.option;
           return obj;
         }, {});
-        console.log(attrs);
+        console.log(pid,attrs);
       })
     }
     
