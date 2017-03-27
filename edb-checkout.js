@@ -26,9 +26,16 @@
   },
   Customer = Guest,
     Products = {},
-    Buckets = {}, Catalog = {},Cart = {},Combinations={};
+    Buckets = {}, Catalog = {},Cart = {},Blackboard={};
 
 
+
+  function tokenizeAttr(attributes){
+    return attributes.reduce( function( s, a){
+      return s + a.name+':'+a.option + ';';
+    }, ''  );
+  }
+  
   function bucketSlugIt(string) {
     return 'edb_' + string.replace(/$edb_/, '');
   }
@@ -59,7 +66,12 @@
       variations: variations ,
       name: fullName( product, option )
     };
-    
+    var pid = product.id;
+    Blackboard[pid]={};
+    variations.forEach( function( v  ){
+        var attrs = tokenizeAttr(v.attributes);
+        Blackboard[pid][attrs]=Object.assign( { variation: v }, catalogEntry );
+    }); 
     Catalog[token]=catalogEntry;
     
   }
@@ -219,23 +231,13 @@
     delete Cart[token];
   };
 
-  // Checkout.getStock = function( productId, attributes ){
+  Checkout.getStock = function( productId, attributes ){
+    var attrToken = tokenizeAttr(attributes);
+    var entry = Blackboard[productId][attrToken];
     
-  //   if(product.stockQuantity <= 0) return product.stockQuantity;
-  //   else{
-  //     var hasBuckets = Checkout.productHasBucketAttributes(product);
-  //     if(!hasBuckets){
-  //       console.log('PRODUCT HAS NO BUCKET ATTRIBUTES');
-  //       return 0;
-  //     }else{
-  //       var buckets = Checkout.getProductAttributeBuckets( product );
-  //       var count = attributes.reduce( function( n, a ){
-  //         console.log('count', n, a);
-  //         return n;
-  //       }, null );
-  //     }
-  //   }
-  // }
+    return entry;
+  
+  }
   
   function runTest(entries){
      
@@ -249,7 +251,7 @@
                 return o;
             }, {} );
             console.log(e.name);
-            // console.log('', Checkout.getStock(pid, attrs) );
+            console.log('', Checkout.getStock(pid, attrs) );
             console.log('______');
             // console.log( )  
         });  
