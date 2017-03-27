@@ -254,7 +254,7 @@
       }else{
         var minBucketCount = entry.variation.attributes.reduce( function( min, attr ){
           if(!attr.bucket) return min;
-          console.log('bucket', attr.bucket[attr.option]);
+          console.log('bucket', attr.bucket[attr.option].variation);
           return min;
         }, null );
         // console.log(entry.variation)
