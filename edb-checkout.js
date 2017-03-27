@@ -219,23 +219,23 @@
     delete Cart[token];
   };
 
-  Checkout.getStock = function( productId, attributes ){
-    var product = Products[productId];
-    if(product.stockQuantity <= 0) return product.stockQuantity;
-    else{
-      var hasBuckets = Checkout.productHasBucketAttributes(product);
-      if(!hasBuckets){
-        console.log('PRODUCT HAS NO BUCKET ATTRIBUTES');
-        return 0;
-      }else{
-        var buckets = Checkout.getProductAttributeBuckets( product );
-        var count = attributes.reduce( function( n, a ){
-          console.log('count', n, a);
-          return n;
-        }, null );
-      }
-    }
-  }
+  // Checkout.getStock = function( productId, attributes ){
+    
+  //   if(product.stockQuantity <= 0) return product.stockQuantity;
+  //   else{
+  //     var hasBuckets = Checkout.productHasBucketAttributes(product);
+  //     if(!hasBuckets){
+  //       console.log('PRODUCT HAS NO BUCKET ATTRIBUTES');
+  //       return 0;
+  //     }else{
+  //       var buckets = Checkout.getProductAttributeBuckets( product );
+  //       var count = attributes.reduce( function( n, a ){
+  //         console.log('count', n, a);
+  //         return n;
+  //       }, null );
+  //     }
+  //   }
+  // }
   
   function runTest(entries){
      
@@ -249,7 +249,7 @@
                 return o;
             }, {} );
             console.log(e.name);
-            console.log('', Checkout.getStock(pid, attrs) );
+            // console.log('', Checkout.getStock(pid, attrs) );
             console.log('______');
             // console.log( )  
         });  
