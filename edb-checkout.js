@@ -221,7 +221,6 @@
   
   function runTest(entries){
      
-    
       
       entries.forEach( function( e ){
         var pid = e.product.id;
@@ -240,7 +239,6 @@
         
         
       });
-    
   }
   EDB.Checkout = Checkout;
 
