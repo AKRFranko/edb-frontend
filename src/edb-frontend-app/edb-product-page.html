@@ -394,9 +394,9 @@
         computeStockIcon: function( pid, attr, choice, attributes ){
           
           var attrs = {};
-          attrs[attr.name]=choice.option;
+          attrs[attr.name]=choice.value;
           var stockQty = EDB.Checkout.getStock(pid, Object.assign( {}, attributes, attrs) );
-          console.log('stockQty',stockQty, 'attr',attr, 'choice', choice,'attributes', attributes)
+          
           return null;
         },
         
