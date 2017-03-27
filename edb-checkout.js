@@ -163,7 +163,7 @@
               copy.attributes = copyAttributes;
               newVariations.push( copy );
             });
-            addCatalogEntry( product, bucketOption, pnewVariations );
+            addCatalogEntry( product, bucketOption, newVariations );
           });
         });
 
