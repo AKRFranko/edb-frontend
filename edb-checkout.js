@@ -253,6 +253,7 @@
       }
       var hasBuckets = Checkout.productHasBucketAttributes( entry.product );
       if(!hasBuckets){
+        console.log('returning variation stock');
         return entry.variation.stock_quantity;
       }else{
         var minBucketCount = entry.variation.attributes.reduce( function( min, attr ){
@@ -262,6 +263,7 @@
           return min;
         }, null );
         var variationQty = entry.variation.stock_quantity === null ? 0 : entry.variation.stock_quantity;
+        console.log('returning min stock between',minBucketCount,variationQty);
         return Math.min(minBucketCount,variationQty);
       }
       return entry.product.stock_quantity;
