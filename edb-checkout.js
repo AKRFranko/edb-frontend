@@ -246,10 +246,7 @@
       var attrToken = tokenizeAttr(attributes);
       var entry = Blackboard[productId][attrToken];  
       if(!entry){
-        console.log('NOT ENTRY');
-        console.log('ID WORKS?', !!Blackboard[productId]);
-        console.log('KEY WORKS?', !!Blackboard[productId][attrToken], attrToken, Object.keys(Blackboard[productId]));
-        return console.log('NOT ENTRY',productId,attrToken);
+        return console.error('NOT ENTRY',productId,attrToken);
       }
       var hasBuckets = Checkout.productHasBucketAttributes( entry.product );
       if(!hasBuckets){
@@ -265,7 +262,7 @@
           return min;
         }, null );
         var variationQty = entry.variation.stock_quantity === null ? 0 : entry.variation.stock_quantity;
-        console.log('returning min stock between',minBucketCount,variationQty);
+        // console.log('returning min stock between',minBucketCount,variationQty);
         return Math.min(minBucketCount === null ? 0 : minBucketCount ,variationQty);
       }
       return entry.product.stock_quantity;
@@ -284,14 +281,11 @@
                 o[a.name]=a.option;
                 return o;
             }, {} );
-            console.log(e.name);
-            console.log('', Checkout.getStock(pid, attrs) );
-            console.log('______');
-            // console.log( )  
+            console.log(e.name, 'Stock', Checkout.getStock(pid, attrs) );
+            
+
         });  
-        
-        
-        
+
       });
   }
   EDB.Checkout = Checkout;
