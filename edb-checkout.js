@@ -260,6 +260,7 @@
           if(!attr.bucket) return min;
           var qty = attr.bucket[attr.option].variation.stock_quantity;
           if(qty === null) return min;
+          if( min === null) return qty;
           if(qty < min) return qty;
           return min;
         }, null );
