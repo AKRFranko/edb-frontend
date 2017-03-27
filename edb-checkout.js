@@ -89,6 +89,8 @@
     return proxy;
   }
   
+  
+  
   Checkout.productHasBucketAttributes = function productHasBucketAttributes( product ){
     return product.attributes.some( function( attribute){
         var slug = bucketSlugIt(attribute.name);
@@ -182,6 +184,13 @@
       var entries = Object.keys(Catalog).map( function( k ){ return Catalog[k]; });
       console.log('Catalog', entries );
       catalogCallback( entries );
+      entries.forEach( function( e ){
+        var attrs = e.attributes.reduce( function( obj, attr ){
+          obj[attr.name]=attr.option;
+          return obj;
+        }, {});
+        console.log(attrs);
+      })
     }
     
   }
