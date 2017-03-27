@@ -31,8 +31,8 @@
 
   function sortAlpha( array, key ){
     return array.sort(function(a, b) {
-        var textA = a[key].toUpperCase();
-        var textB = b[key].toUpperCase();
+        var textA = a[key];
+        var textB = b[key];
         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
     });  
   }
@@ -45,7 +45,7 @@
       })
     }
     
-    return sortAlpha(attributes).reduce( function( s, a){
+    return sortAlpha(attributes,'name').reduce( function( s, a){
       return s + a.name+':'+a.option + ';';
     }, '' );  
     
