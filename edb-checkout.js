@@ -29,17 +29,26 @@
     Buckets = {}, Catalog = {},Cart = {},Blackboard={};
 
 
+  function sortAlpha( array, key ){
+    return array.sort(function(a, b) {
+        var textA = a[key].toUpperCase();
+        var textB = b[key].toUpperCase();
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });  
+  }
+  
 
   function tokenizeAttr(attributes){
-    if(Array.isArray(attributes)){
-      return attributes.reduce( function( s, a){
-        return s + a.name+':'+a.option + ';';
-      }, ''  );  
-    }else{
-      return Object.keys(attributes).reduce( function( s, a){
-        return s + a+':'+attributes[a] + ';';
-      }, ''  );  
+    if(!Array.isArray(attributes)){
+      attributes = Object.keys(attributes).map( function( k ){
+        return { name: k, option:attributes[k]};
+      })
     }
+    
+    return sortAlpha(attributes).reduce( function( s, a){
+      return s + a.name+':'+a.option + ';';
+    }, '' );  
+    
     
   }
   
