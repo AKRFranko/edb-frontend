@@ -51,9 +51,11 @@
   }
   
   function bucketSlugIt(string) {
-    return 'edb_' + string.replace(/$edb_/, '');
+    return 'edb_' + stripEDB(string);
   }
-
+  function stripEDB(string){
+    return string.replace(/edb_/, '');
+  }
   function genSlug(p,v) {
     return p.id+'-'+v;
   };
