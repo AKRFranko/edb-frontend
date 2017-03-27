@@ -26,7 +26,7 @@
   },
   Customer = Guest,
     Products = {},
-    Buckets = {}, Catalog = {},Cart = {};
+    Buckets = {}, Catalog = {},Cart = {},Combinations={};
 
 
   function bucketSlugIt(string) {
@@ -36,7 +36,30 @@
   function genToken(p,v) {
     return p.id+'-'+v;
   };
-
+  
+  
+  // remove 99x99 from variation name;
+  function removeDim( str ){
+    return str.replace(/\d+x\d+/,'');
+  }
+  // create variation name
+  function fullName( product, option ){
+    return product.name + ' ' + removeDim(option);
+  }
+  
+  function addCatalogEntry( product, option, variations ){
+    var token = genToken( product, option );
+    
+    var catalogEntry = { 
+      token: token,
+      product: product,
+      variations: variations ,
+      name: fullName( product, option )
+    };
+    
+    Catalog[token]=catalogEntry;
+    
+  }
   
 
   function createProductProxy( products , productIndex, variationIndex, obj ){
@@ -113,47 +136,34 @@
       var product = Products[productId];
       var hasBucketAttributes = Checkout.productHasBucketAttributes( product );
       if (!hasBucketAttributes) {
+        console.error(new Error('Unhanded: NOT productHasBucketAttributes'));
         console.log(product);
-        throw new Error('Unhanded: NOT productHasBucketAttributes');
+        addCatalogEntry( product, '', product.variations );
         
       } else {
         console.log('productHasBucketAttributes')
         var buckets = Checkout.getProductAttributeBuckets( product );
-        function removeDim( str ){
-          return str.replace(/\d+x\d+/,'');
-        }
-        function fullName( product, option ){
-          return product.name + ' ' + removeDim(option);
-        }
         Object.keys(buckets).forEach( function( bucketSlug ){
           var bucket = buckets[bucketSlug];
-          
+          // expand variations to include bucket attributes.
           Object.keys(bucket).forEach( function( bucketOption ){
             var newVariations = [];  
             product.variations.forEach( function( variation ){
               var copy = Object.assign( {},variation );
               var copyAttributes = [].concat(variation.attributes);
-              
-              copyAttributes.push({
-                name: bucketSlug,
-                option: bucketOption,
-                bucket: bucket
+              var newAttribute = {};
+              Object.defineProperties(newAttribute, {
+                name: { enumerable: true, value: bucketSlug },
+                option: { enumerable: true, value: bucketOption },
+                bucket: {enumerable: true, get: function(){
+                  return buckets[bucketSlug];
+                }}
               });
+              copyAttributes.push(newAttribute);
               copy.attributes = copyAttributes;
               newVariations.push( copy );
             });
-            
-            var token = genToken( product, bucketOption );
-            
-            var catalogEntry = { 
-              token: token,
-              product: product,
-              variations: newVariations,
-              name: fullName( product, bucketOption )
-            };
-            
-            Catalog[token]=catalogEntry;
-            
+            addCatalogEntry( product, bucketOption, pnewVariations );
           });
         });
 
@@ -161,6 +171,7 @@
       }
     });
 
+    
 
     console.log('Catalog Loaded!',Object.keys(Catalog).length, 'entries.' );
     
