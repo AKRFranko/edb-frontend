@@ -44,12 +44,10 @@
         return { name: k, option:attributes[k]};
       })
     }
-    
     return sortAlpha(attributes,'name').reduce( function( s, a){
       return s + a.name+':'+a.option + ';';
     }, '' );  
-    
-    
+
   }
   
   function bucketSlugIt(string) {
