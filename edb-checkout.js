@@ -181,6 +181,7 @@
     var entries = Object.keys(Catalog).map( function( k ){ return Catalog[k]; });
     console.log('Catalog loaded with %s items',entries.length);
     catalogCallback( entries );
+    
     runTest( entries );
     
   }
@@ -218,6 +219,22 @@
     delete Cart[token];
   };
 
+  Checkout.getStock = function( product, attributes ){
+    if(product.stockQuantity <= 0) return product.stockQuantity;
+    else{
+      var hasBuckets = Checkout.productHasBucketAttributes(product);
+      if(!hasBuckets){
+        console.log('PRODUCT HAS NO BUCKET ATTRIBUTES');
+        return 0;
+      }else{
+        var buckets = Checkout.getProductAttributeBuckets( product );
+        var count = attributes.reduce( function( n, a ){
+          console.log('count', n, a);
+          return n;
+        }, null );
+      }
+    }
+  }
   
   function runTest(entries){
      
