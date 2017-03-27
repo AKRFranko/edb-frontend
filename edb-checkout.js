@@ -33,9 +33,12 @@
     return 'edb_' + string.replace(/$edb_/, '');
   }
 
-  function genToken(p,v) {
+  function genSlug(p,v) {
     return p.id+'-'+v;
   };
+  function genToken(){
+    return Number( Date.now() + '' + Math.floor( Math.random() * Date.now() )  ).toString(24);
+  }
   
   
   // remove 99x99 from variation name;
@@ -48,7 +51,7 @@
   }
   
   function addCatalogEntry( product, option, variations ){
-    var token = genToken( product, option );
+    var token = genSlug( product, option );
     
     var catalogEntry = { 
       token: token,
@@ -183,7 +186,7 @@
     
   }
   
-  EDB.Checkout = Checkout;
+  
 
 
   
@@ -196,15 +199,28 @@
   //   console.log('find stock',Products[productId], attributes );
   //   return 0;
   // }
-  EDB.addToCart = function( productId, attributes, qty ){
-    EDB.getProductStock();
+  Checkout.addToCart = function( productId, attributes, qty ){
     console.log('addToCart',productId, attributes, qty);
-    var token = Number( Date.now() + '' + Math.floor( Math.random() * Date.now() )  ).toString(24);
-    Cart[token] = { productId: productId, attributes: attributes, qty: qty };
-  }
+    var token = genToken();
+    Cart[token] = { 
+      productId: productId, 
+      attributes: attributes, 
+      qty: qty, 
+      token: token
+    };
+    return token;
+  };
+  
+  Checkout.removeFromCart = function( token ){
+    delete Cart[token];
+  };
+  
+  Checkout.removeFromCart = function( token ){
+    delete Cart[token];
+  };
 
 
-  // var getToken = function(){ return (Math.random()*Date.now() + '' +Date.now()).toString(24) }
+  // var genSlug = function(){ return (Math.random()*Date.now() + '' +Date.now()).toString(24) }
 
   // var Customer = function( user ){
   //   var customer = this;
@@ -248,8 +264,8 @@
 
   //   var items = {};
   //   cart.addItem = function( prod, qty ){
-  //     var token = getToken();
-  //     items[token]={ cartToken: token, product: prod, quantity: qty };
+  //     var token = genSlug();
+  //     items[token]={ cgenSlug: token, product: prod, quantity: qty };
   //     return token;
   //   }
   //   cart.updateItem = function( token, data ){
@@ -284,6 +300,6 @@
   // Calc.cartItem = function( item ){}
 
 
-
+  EDB.Checkout = Checkout;
 
 })()

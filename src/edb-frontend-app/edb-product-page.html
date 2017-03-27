@@ -438,7 +438,7 @@
           this.set('attributes.'+event.model.attribute.name, event.model.attribute.options[event.detail.value]);
         },
         handleAddToCart: function( event ){
-          EDB.addToCart( this.get('product').id, this.get('attributes'),this.get('wantedQty') );
+          EDB.Checkout.addToCart( this.get('product').id, this.get('attributes'),this.get('wantedQty') );
         },
         createProductSlides: function( item ){
           if(!item) return [];
