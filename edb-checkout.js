@@ -259,8 +259,8 @@
         var minBucketCount = entry.variation.attributes.reduce( function( min, attr ){
           if(!attr.bucket) return min;
           var qty = attr.bucket[attr.option].variation.stock_quantity;
-          console.log('bucket variation qty', attr.option, qty);
-          if(qty !== null && qty < min) return qty;
+          if(qty === null) return min;
+          if(qty < min) return qty;
           return min;
         }, null );
         var variationQty = entry.variation.stock_quantity === null ? 0 : entry.variation.stock_quantity;
