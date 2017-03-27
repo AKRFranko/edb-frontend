@@ -186,15 +186,11 @@
       catalogCallback( entries );
       entries.forEach( function( e ){
         var pid = e.product.id;
-        var attrs = {};
-        e.variations.forEach( function(v){
-          attrs = v.attributes.reduce( function( obj, attr ){
-            console.log(attr);
-            obj[attr.name]=attr.option;
-            return obj;
-          }, attrs);  
-        });
-        console.log(pid,attrs);
+        
+        e.variations.forEach( function( v  ){
+            console.log(pid, v )  
+        });  
+        
         
         
       });
