@@ -219,7 +219,8 @@
     delete Cart[token];
   };
 
-  Checkout.getStock = function( product, attributes ){
+  Checkout.getStock = function( productId, attributes ){
+    var product = Products[productId];
     if(product.stockQuantity <= 0) return product.stockQuantity;
     else{
       var hasBuckets = Checkout.productHasBucketAttributes(product);
