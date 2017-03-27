@@ -45,7 +45,7 @@
       })
     }
     return sortAlpha(attributes,'name').reduce( function( s, a){
-      return s + a.name+':'+a.option + ';';
+      return s + stripEDB(a.name)+':'+a.option + ';';
     }, '' );  
 
   }
