@@ -188,6 +188,7 @@
         var pid = e.product.id;
         var attrs = e.product.attributes.reduce( function( obj, attr ){
           console.log(attr);
+          
           obj[attr.name]=attr.option;
           return obj;
         }, {});
