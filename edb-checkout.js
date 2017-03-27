@@ -254,17 +254,16 @@
       }else{
         var minBucketCount = entry.variation.attributes.reduce( function( min, attr ){
           if(!attr.bucket) return min;
-          console.log('bucket', attr.bucket[attr.option].variation );
+          var qty = attr.bucket[attr.option].variation.stock_quantity;
+          if(qty !== null && qty < min) return qty;
           return min;
         }, null );
-        // console.log(entry.variation)
+        var variationQty = entry.variation.stock_quantity === null ? 0 : entry.variation.stock_quantity;
+        return Math.min(minBucketCount,variationQty);
       }
-      return entry;
+      return entry.product.stock_quantity;
     }
-    
-    
-    
-  
+
   }
   
   function runTest(entries){
