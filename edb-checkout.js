@@ -221,7 +221,7 @@
   
   function runTest(entries){
      
-    if(catalogCallback){
+    
       
       entries.forEach( function( e ){
         var pid = e.product.id;
@@ -240,7 +240,7 @@
         
         
       });
-    }
+    
   }
   EDB.Checkout = Checkout;
 
