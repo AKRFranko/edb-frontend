@@ -395,9 +395,8 @@
           
           var attrs = {};
           attrs[attr.name]=attr.option;
-
           var stockQty = EDB.Checkout.getStock(pid, Object.assign( {}, attributes, attrs) );
-          console.log('stockQty',stockQty)
+          console.log('stockQty',stockQty,attr)
           return null;
         },
         
