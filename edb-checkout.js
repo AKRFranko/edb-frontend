@@ -74,7 +74,7 @@
       name: fullName( product, option )
     };
     var pid = product.id;
-    Blackboard[pid]={};
+    Blackboard[pid]=Blackboard[pid]||{};
     variations.forEach( function( v  ){
         var attrs = tokenizeAttr(v.attributes);
         Blackboard[pid][attrs]=Object.assign( { variation: v }, catalogEntry );
