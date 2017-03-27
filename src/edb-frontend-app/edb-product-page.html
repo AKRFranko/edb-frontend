@@ -398,8 +398,10 @@
           var stockQty = EDB.Checkout.getStock(pid, Object.assign( {}, attributes, attrs) );
           console.log('stockQty',stockQty)
           if(stockQty){
-            console.log('edb:in-stock');
             return 'edb:in-stock';
+          }else{
+            // TODOD COMPUTE RESTOCK
+            return 'edb:restocking';
           }
           return null;
         },
