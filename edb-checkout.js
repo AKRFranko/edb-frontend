@@ -232,10 +232,16 @@
   };
 
   Checkout.getStock = function( productId, attributes ){
-    var attrToken = tokenizeAttr(attributes);
-    var entry = Blackboard[productId][attrToken];
+    if(!attributes){
+      console.log('not attributes', productId, attributes );
+    }else{
+      var attrToken = tokenizeAttr(attributes);
+      var entry = Blackboard[productId][attrToken];  
+      return entry;
+    }
     
-    return entry;
+    
+    
   
   }
   
