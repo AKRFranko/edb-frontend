@@ -253,7 +253,7 @@
       var attrToken = tokenizeAttr(attributes);
       var entry = Blackboard[productId][attrToken];  
       if(!entry){
-        return console.error('NOT ENTRY',productId,attrToken);
+        return null;//console.error('NOT ENTRY',productId,attrToken);
       }
       var hasBuckets = Checkout.productHasBucketAttributes( entry.product );
       if(!hasBuckets){
