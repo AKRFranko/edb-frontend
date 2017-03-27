@@ -37,8 +37,8 @@
       }, ''  );  
     }else{
       return Object.keys(attributes).reduce( function( s, a){
-               return s + a+':'+attributes[a] + ';';
-             }, ''  );  
+        return s + a+':'+attributes[a] + ';';
+      }, ''  );  
     }
     
   }
@@ -245,6 +245,17 @@
       
       var attrToken = tokenizeAttr(attributes);
       var entry = Blackboard[productId][attrToken];  
+      var hasBuckets = Checkout.productHasBucketAttributes( entry.product );
+      if(!hasBuckets){
+        return entry.variation.stock_quantity;
+      }else{
+        var minBucketCount = entry.variation.attributes.reduce( function( min, attr ){
+          if(!attr.bucket) return min;
+          console.log(attr.bucket);
+          return min;
+        }, null );
+        // console.log(entry.variation)
+      }
       return entry;
     }
     
