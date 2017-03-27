@@ -31,9 +31,16 @@
 
 
   function tokenizeAttr(attributes){
-    return attributes.reduce( function( s, a){
-      return s + a.name+':'+a.option + ';';
-    }, ''  );
+    if(Array.isArray(attributes)){
+      return attributes.reduce( function( s, a){
+        return s + a.name+':'+a.option + ';';
+      }, ''  );  
+    }else{
+      return Object.keys(attributes).reduce( function( s, a){
+               return s + a+':'+attributes[a] + ';';
+             }, ''  );  
+    }
+    
   }
   
   function bucketSlugIt(string) {
@@ -235,6 +242,7 @@
     if(!attributes){
       console.log('not attributes', productId, attributes );
     }else{
+      
       var attrToken = tokenizeAttr(attributes);
       var entry = Blackboard[productId][attrToken];  
       return entry;
