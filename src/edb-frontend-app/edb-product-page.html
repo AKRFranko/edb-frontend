@@ -414,10 +414,10 @@
          
         
         },
-        observers: ['productChanged(product)'],
+        observers: ['productChanged(product)','updateAttributesFromQueryString(product.*)'],
         productChanged: function(product){
           console.log('productChanged', product);
-          this.updateAttributesFromQueryString();
+          
         },
         getVariationAttributeValue: function( v, attr, idx, prop ){
           return v.attributes[idx][prop];
