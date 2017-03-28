@@ -496,7 +496,10 @@
         },
         attached: function(){
           var query = QSJS().decode(window.location.href.slice(window.location.href.indexOf('?')+1))||{};
-          this.set('attributes', query);
+          this.set('attributes', Objet.keys(query).reduce( function( o, k){
+            o[k.repalce(/^edb_/,'')]=query[k];
+            return o;
+          }, {}));
           
         }
      
