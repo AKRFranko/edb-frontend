@@ -238,8 +238,15 @@
           </section>
           <section id="cart">
             <template is="dom-repeat" items="{{cart}}">
-              <p>{{item.quantity}}</p>
-              <paper-button on-tap="handleRemoveCartItem">remove</paper-button>
+              <div class="cart-item">
+                
+                <edb-card image="{{entry.product.images.0.src}}" title="{{entry.name}}" subtitle="{{formatMoney(entry.product.price)}}">
+                  <p>{{item.quantity}}</p>
+                  <paper-button on-tap="handleRemoveCartItem">remove</paper-button>  
+                </edb-card>
+                
+              </div>
+              
             </template>
           </section>
           <section id="product">
