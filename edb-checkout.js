@@ -255,12 +255,12 @@
 
 
 
-    var entries = Object.keys(Catalog).map(function(k) {
-      return Catalog[k];
-    });
+    // var entries = Object.keys(Catalog).map(function(k) {
+    //   return Catalog[k];
+    // });
     
-    console.log('Catalog loaded with %s items', entries.length);
-    app.set('catalog',entries);
+    // console.log('Catalog loaded with %s items', entries.length);
+    // app.set('1catalog',entries);
     
     loadSessionCart();
     updateApp();
