@@ -73,6 +73,12 @@
       <div class="cart-item-image">
         <iron-image preload fade sizing="cover" src="{{computeImage(item,materials.*)}}"></iron-image>
       </div>
+      <div class="cart-item-attributes">
+        <template is="dom-repeat" items="[[item.variation.attributes]]" as="attribute">
+          <p>{{attribute.name}}</p>
+        </template>
+      </div>
+      
       <div class="cart-item-body">
         <div class="cart-item-content">
           <div hidden$="{{!title}}" class="cart-item-title">{{title}}</div>
@@ -113,7 +119,9 @@
         
         },
         computeImage: function( item){
-         console.log('computeImage',item );
+          var productImage = item.product.images[0].src;
+          var variationImage = item.variation.image.src;
+          return variationImage ? variationImage : productImage;
         }
         
         
