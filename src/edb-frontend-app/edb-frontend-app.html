@@ -225,6 +225,7 @@
       <div>
         <template is="dom-repeat" items="{{cart}}">
           <p>{{item.quantity}}</p>
+          <paper-button on-tap="handleRemoveCartItem">remove</paper-button>
         </template>
         <iron-pages attr-for-selected="id" selected="{{page}}">
           
@@ -638,6 +639,9 @@
         },
         handleLogout: function(){
           this.$.auth.logout();
+        },
+        handleRemoveCartItem: function( event ){
+          console.log('handleRemoveCartItem', event.model.item, event.detail );
         },
         routePage: function( route,data ){
           
