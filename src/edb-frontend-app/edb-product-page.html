@@ -491,10 +491,13 @@
           return EDB.format.money( amount );
         },
         ready: function(){
-          var query = QSJS().decode(window.location.href.slice(window.location.href.indexOf('?')+1));
+          var query = QSJS().decode(window.location.href.slice(window.location.href.indexOf('?')+1))||{};
           this.async( function(){
-            this.set('attributes',query||{});
-          });
+            Object.keys(query).forEach(function(attr){
+              this.querySelector('.'+attr).selected = query[attr];
+            });
+            this.set('attributes',query);
+          })
         }
      
   
