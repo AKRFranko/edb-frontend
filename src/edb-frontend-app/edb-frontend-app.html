@@ -556,8 +556,8 @@
             var bucketAttributes = product.attributes.filter( function( attr ){
             return product.isBucketOption;
             } ).map( function( attr ){ return attr.name + '=' + attr.option; });
-            console.log('computeCatalogItemUrl',entry)
-            return '/#/product/'+id+'/?';
+            // console.log('computeCatalogItemUrl',entry)
+            return '/#/product/'+id+'/?'+QSJS().encode(entry.option);
         },
         computeCatalogItemName: function( item ){
           
