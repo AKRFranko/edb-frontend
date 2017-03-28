@@ -209,7 +209,7 @@
       }
     </style>
     <!-- app-location binds to the app's URL -->
-    <app-location route="{{route}}" use-hash-as-path></app-location>
+    <app-location route="{{route}}" use-hash-as-path query="{{query}}"></app-location>
     <edb-auth id="auth" user="{{user}}" email="{{authEmail}}" password="{{authPassword}}"></edb-auth>
     <!-- this app-route manages the top-level routes -->
     <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subRoute}}"></app-route>
@@ -502,6 +502,13 @@
             value: function(){
               return ['all','sofas', 'sofas-1-seat','sofas-2-seat','sofas-3-seat','sofas-sectional','sofas-sectional-left','sofas-sectional-right'];
             }
+          },
+          query: {
+            type: Object,
+            notify: true,
+            value: function(){
+              return {};
+            }
           }
           
         },
@@ -550,7 +557,7 @@
             
           };
         },
-        computeCatalogItemUrl: function( entry ){
+        computeCatalogItemUrl: function( entry, qs ){
             var product = entry.product;
             var id = product.id;
             var bucketAttributes = product.attributes.filter( function( attr ){
