@@ -492,7 +492,9 @@
         },
         ready: function(){
           var query = QSJS().decode(window.location.href.slice(window.location.href.indexOf('?')+1));
-          this.set('attributes',query||{});
+          this.async( function(){
+            this.set('attributes',query||{});
+          });
         }
      
   
