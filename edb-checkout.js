@@ -93,6 +93,20 @@
     console.log('sessionItems',sessionItems);
   }
   
+  
+  function updateApp(){
+    app.set('cart', [] );
+    
+    app.set('cart',Object.keys(Cart).map( function( uuid ){
+      return Cart[uuid];
+    }));
+    app.set('catalog', [] );
+    
+    app.set('catalog',Object.keys(Catalog).map(function(uuid) {
+      return Catalog[uuid];
+    }));
+  }
+  
   function addCatalogEntry(product, option, variations) {
     var token = tokenizeAttr(product.id, option);
 
@@ -291,31 +305,16 @@
         }, entry);
         sessionStorage.setItem('EDB_CART|'+uuid, JSON.stringify({pid:productId, attributes: attributes, quantity: qty })  );
       }
-      app.set('cart',Object.keys(Cart).map( function( uuid ){
-        return Cart[uuid];
-      }));
-      console.log('CART', app.get('cart'));
+      updateApp();
+      
     }
   };
-  function updateApp(){
-    app.set('cart', [] );
-    
-    app.set('cart',Object.keys(Cart).map( function( uuid ){
-      return Cart[uuid];
-    }));
-    app.set('catalog', [] );
-    
-    app.set('catalog',Object.keys(Catalog).map(function(uuid) {
-      return Catalog[uuid];
-    }));
-  }
+  
 
   Checkout.removeFromCart = function(uuid) {
     delete Cart[uuid];
     sessionStorage.removeItem('EDB_CART|'+uuid);
-    app.set('cart',Object.keys(Cart).map( function( uuid ){
-      return Cart[uuid];
-    }));
+    updateApp();
   };
 
   Checkout.getStock = function(productId, attributes) {
