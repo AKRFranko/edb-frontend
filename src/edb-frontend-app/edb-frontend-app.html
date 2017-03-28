@@ -223,6 +223,9 @@
         <edb-app-toolbar id="toolbar" sticky lang="fr" user="[[user]]" cart="[[cart]]" layout="[[layout]]"></edb-app-toolbar>
       </app-header>
       <div>
+        <template is="dom-repeat" items="{{cart}}">
+          <p>{{item.quantity}}</p>
+        </template>
         <iron-pages attr-for-selected="id" selected="{{page}}">
           
           <section id="home">
@@ -491,7 +494,13 @@
               return {};
             }
           },
-          
+          cart: {
+            type: Array,
+            notify: true,
+            value: function(){
+              return [];
+            }
+          },
           authMode: {
             type: String,
             value: 'authModeSelect',
@@ -661,9 +670,7 @@
           
           var product = new EDB.PolymerResource('product', this);
           product.refreshItems().then( function(){
-            EDB.Checkout.init( product.items, function( catalog ){
-              it.set('catalog',catalog);
-            } );
+            EDB.Checkout.init( it, product.items );
           })
           
           var material = new EDB.PolymerResource('material', this);

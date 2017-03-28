@@ -1,6 +1,7 @@
 (function() {
 
 
+  var app;
   var Checkout = {}, Guest = {
     name: 'guest',
     billing_address_1: '',
@@ -171,8 +172,8 @@
     }
   }
 
-  Checkout.init = function loadProducts(products, catalogCallback) {
-    
+  Checkout.init = function loadProducts( polymerApp, products) {
+    app = polymerApp;
 
     products.forEach(function(product, productIndex) {
       if (product.meta.edb_is_bucket == '1') {
@@ -247,8 +248,7 @@
     });
     
     console.log('Catalog loaded with %s items', entries.length);
-
-    catalogCallback(entries);
+    app.set('catalog',entries);
     
     loadSessionCart();
     
@@ -291,6 +291,10 @@
         }, entry);
         sessionStorage.setItem('EDB_CART|'+uuid, JSON.stringify({pid:productId, attributes: attributes, quantity: qty })  );
       }
+      app.set('cart',Object.keys(Cart).map( function( uuid ){
+        return Cart[uuid];
+      }));
+      console.log('CART', app.get('cart'));
     }
   };
 
