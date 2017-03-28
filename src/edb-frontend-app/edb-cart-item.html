@@ -31,6 +31,9 @@
      .cart-item-attributes{
        @apply(--layout-vertical-reverse);
      }
+     .cart-item-attribute{
+       @apply(--layout-horizontal);
+     }
      
      .cart-item-image iron-image{
        position:absolute;
@@ -78,7 +81,10 @@
       </div>
       <div class="cart-item-attributes">
         <template is="dom-repeat" items="[[item.variation.attributes]]" as="attribute">
-          <iron-image preload fade sizing="cover" style="width:46px;height:46px" src="[[computeAttributeImage(attribute,materials)]]"></iron-image>
+          <div class="cart-item-attribute">
+            <iron-image preload fade sizing="cover" style="width:46px;height:46px" src="[[computeAttributeImage(attribute,materials)]]"></iron-image>
+            <p>{{attribute.option}}</p>
+          </div>
         </template>
       </div>
       
