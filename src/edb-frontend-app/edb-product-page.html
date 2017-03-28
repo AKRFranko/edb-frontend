@@ -495,7 +495,7 @@
           this.async( function(){
             Object.keys(query).forEach(function(attr){
               this.querySelector('.'+attr).selected = query[attr];
-            });
+            }, this );
             this.set('attributes',query);
           })
         }
