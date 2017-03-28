@@ -301,6 +301,9 @@
   Checkout.removeFromCart = function(uuid) {
     delete Cart[uuid];
     sessionStorage.removeItem('EDB_CART|'+uuid);
+    app.set('cart',Object.keys(Cart).map( function( uuid ){
+      return Cart[uuid];
+    }));
   };
 
   Checkout.getStock = function(productId, attributes) {
