@@ -89,8 +89,8 @@
     sessionItems.forEach( function( item ){
       Checkout.addToCart(item.pid,item.attributes,item.quantity);
     });
-
   }
+  
   function addCatalogEntry(product, option, variations) {
     var token = genSlug(product, option);
 
