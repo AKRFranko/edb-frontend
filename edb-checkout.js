@@ -255,6 +255,7 @@
       var uuid = tokenizeAttr(productId,attributes);
       var entry = Blackboard[uuid];  
       var cartItem = Cart[uuid];
+      var cartItemQty = (cartItem ? cartItem.quantity : 0);
       if(!entry){
         // console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
         return null;
@@ -266,15 +267,15 @@
       }else{
         var minBucketCount = entry.variation.attributes.reduce( function( min, attr ){
           if(!attr.bucket) return min;
-          var qty = attr.bucket[attr.option].variation.stock_quantity;
+          var qty = attr.bucket[attr.option].variation.stock_quantity - cartItemQty;
           if(qty === null) return min;
           if( min === null) return qty;
           if(qty < min) return qty;
           return min;
         }, null );
         var variationQty = entry.variation.stock_quantity === null ? 0 : entry.variation.stock_quantity;
-        console.log('returning min stock, cartITem', cartItem );
-        return Math.min(minBucketCount === null ? 0 : minBucketCount ,variationQty);
+        // console.log('returning min stock, cartITem', cartItem );
+        return Math.min(minBucketCount === null ? 0 : minBucketCount ,variationQty) - cartItemQty;
       }
       
       return entry.product.stock_quantity;
