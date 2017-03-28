@@ -494,7 +494,7 @@
           var query = QSJS().decode(window.location.href.slice(window.location.href.indexOf('?')+1))||{};
           this.async( function(){
             Object.keys(query).forEach(function(attr){
-              console.log(this)
+
               this.querySelector('.'+attr).selected = query[attr];
             }, this );
             this.set('attributes',query);
