@@ -55,9 +55,7 @@
        @apply(--edb-font-body);
        line-height:1.2;
      }
-     .cart-item-subtitle:before{
-       content:'x';
-     }
+     
      .cart-item-body{
        box-sizing:border-box;
        padding:10px 10px;
@@ -91,7 +89,7 @@
       
       <div class="cart-item-body">
         <div hidden$="[[!item.name]]" class="cart-item-title">[[item.name]]</div>
-        <div hidden$="[[!item.quantity]]" c1lass="cart-item-subtitle">[[item.quantity]]</div>
+        <div hidden$="[[!item.quantity]]" c1lass="cart-item-subtitle">x[[item.quantity]]</div>
         <div class="cart-item-content">
           <content></content>
         </div>
