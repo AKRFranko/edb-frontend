@@ -102,6 +102,7 @@
       name: fullName(product, option[Object.keys(option)[0]]),
       option: option
     };
+    
 
     var pid = product.id;
     // Blackboard[pid]=Blackboard[pid]||{};
