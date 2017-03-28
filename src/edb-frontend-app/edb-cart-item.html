@@ -71,7 +71,7 @@
     
     <div id="cart-item">
       <div class="cart-item-image">
-        <iron-image preload fade sizing="cover" src="{{computeImage(cartItem,materials.*)}}"></iron-image>
+        <iron-image preload fade sizing="cover" src="{{computeImage(item,materials.*)}}"></iron-image>
       </div>
       <div class="cart-item-body">
         <div class="cart-item-content">
@@ -112,8 +112,8 @@
           
         
         },
-        computeImage: function( cartItem){
-         console.log('computeImage',cartItem );
+        computeImage: function( item){
+         console.log('computeImage',item );
         }
         
         
