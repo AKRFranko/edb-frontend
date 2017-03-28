@@ -438,11 +438,9 @@
             return null
           }
           // 
-          // var options = attribute.options;
-          // console.log('setSelectedAttribute',options,attribute);
-          console.log('SET',attrKeys[attrKeys.indexOf(attribute.name)], attribute)
-          return 0;
-          // return options.indexOf(attribute.option);
+          var key = attrKeys[attrKeys.indexOf(attribute.name)];
+          var value =attributes[attribute.name];
+          return attribute.options.indexOf(value);
           
         },
         computeAttributes: function( product,materials ){
