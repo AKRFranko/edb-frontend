@@ -82,6 +82,9 @@
         margin-top:20px;
         
       }
+      *{
+        box-sizing:border-box;
+      }
       .edb-title{
         @apply(--edb-font-title);
       }
@@ -193,6 +196,16 @@
         color:#fff;
       }
       
+      #addressForms{
+        width:100%;
+        padding:20px;
+        @apply(--layout-horizontal);
+      }
+      #addressForms form{
+        @apply(--layout-vertical);
+        width:50%;
+        padding:20px;
+      }
       
       .centered-text{
         max-width:700px;
@@ -247,20 +260,25 @@
               </div>
               
             </template>
-            <form id="billing">
-              <paper-input label="address"></paper-input>
-              <paper-input label="city"></paper-input>
-              <paper-input label="province"></paper-input>
-              <paper-input label="country"></paper-input>
-              <paper-input label="postal_code"></paper-input>
-            </form>
-            <form id="shipping">
-              <paper-input label="address"></paper-input>
-              <paper-input label="city"></paper-input>
-              <paper-input label="province"></paper-input>
-              <paper-input label="country"></paper-input>
-              <paper-input label="postal_code"></paper-input>
-            </form>
+            <div id="addressForms">
+              <form id="billing">
+                <div class="title">Billing Address</div>
+                <paper-input label="address"></paper-input>
+                <paper-input label="city"></paper-input>
+                <paper-input label="province"></paper-input>
+                <paper-input label="country"></paper-input>
+                <paper-input label="postal_code"></paper-input>
+              </form>
+              <form id="shipping">
+                <div class="title">Shipping Address</div>
+                <paper-input label="address"></paper-input>
+                <paper-input label="city"></paper-input>
+                <paper-input label="province"></paper-input>
+                <paper-input label="country"></paper-input>
+                <paper-input label="postal_code"></paper-input>
+              </form>  
+            </div>
+            
             
           </section>
           <section id="product">
