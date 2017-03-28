@@ -297,6 +297,18 @@
       console.log('CART', app.get('cart'));
     }
   };
+  function updateApp(){
+    app.set('cart', [] );
+    
+    app.set('cart',Object.keys(Cart).map( function( uuid ){
+      return Cart[uuid];
+    }));
+    app.set('catalog', [] );
+    
+    app.set('catalog',Object.keys(Catalog).map(function(uuid) {
+      return Catalog[uuid];
+    }));
+  }
 
   Checkout.removeFromCart = function(uuid) {
     delete Cart[uuid];
