@@ -96,7 +96,7 @@
 
   function updateApp() {
 
-
+    console.log('updateApp');
     app.set('cart', Object.keys(Cart).map(function(uuid) {
       return Cart[uuid];
     }));
