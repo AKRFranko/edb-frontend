@@ -103,6 +103,16 @@
     app.set('catalog', Object.keys(Catalog).map(function(uuid) {
       return Catalog[uuid];
     }));
+    app.get('cart').forEach( function( item, index ){
+      Object.keys(item).forEach( function(k){
+        app.notifyPath('cart.'+index+'.'+k, item[k]);
+      });
+    });
+    app.get('catalog').forEach( function( item, index ){
+      Object.keys(item).forEach( function(k){
+        app.notifyPath('catalog.'+index+'.'+k, item[k]);
+      });
+    });
   }
 
   function addCatalogEntry(product, option, variations) {
