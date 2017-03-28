@@ -287,7 +287,10 @@
       } else {
         // add to cart.
         Cart[uuid] = Object.assign({
-          quantity: qty
+          quantity: qty,
+          remove: function(){
+            Checkout.removeFromCart(uuid);
+          }
         }, entry);
         sessionStorage.setItem('EDB_CART|' + uuid, JSON.stringify({
           pid: productId,

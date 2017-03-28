@@ -641,7 +641,8 @@
           this.$.auth.logout();
         },
         handleRemoveCartItem: function( event ){
-          console.log('handleRemoveCartItem', event.model.item, event.detail );
+          event.model.item.remove();
+          
         },
         routePage: function( route,data ){
           
