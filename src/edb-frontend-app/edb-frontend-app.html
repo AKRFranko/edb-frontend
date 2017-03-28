@@ -239,7 +239,7 @@
           <section id="cart">
             <template is="dom-repeat" items="{{cart}}" as="cartItem">
               <div class="cart-item">
-                <edb-cart-item item="[[cartITem]]"></edb-cart-item>
+                <edb-cart-item item="[[cartItem]]" materials="[[materials]]"></edb-cart-item>
                 <!--<edb-card image="{{entry.product.images.0.src}}" title="{{entry.name}}" subtitle="{{formatMoney(entry.product.price)}}">-->
                 <!--  <p>{{item.quantity}}</p>-->
                 <!--  <paper-button on-tap="handleRemoveCartItem">remove</paper-button>  -->
@@ -257,13 +257,13 @@
           </section>
           <section id="products">
               <iron-pages selected="[[filterData.filter]]" attr-for-selected="data-filter" fallback-selection="all" selectable="div.filtered">
-                  <template is="dom-repeat" items="{{filters}}" as="filter">
-                    <div class="filtered" data-filter$="{{filter}}">
-                      <edb-grid layout="{{layout}}" loading="{{product.loading}}">
-                        <template is="dom-repeat" items="{{catalog}}" as="entry" filter="{{_filterCatalog(filter)}}">
-                          <a href="{{computeCatalogItemUrl(entry)}}" tabindex="-1">
-                          <edb-card image="{{entry.product.images.0.src}}" title="{{entry.name}}" subtitle="{{formatMoney(entry.product.price)}}">
-                            <p>{{limitText(entry.product.description.en,120)}}</p>
+                  <template is="dom-repeat" items="[[filters]]" as="filter">
+                    <div class="filtered" data-filter$="[[filter]]">
+                      <edb-grid layout="[[layout]]" loading="[[product.loading]]">
+                        <template is="dom-repeat" items="{{catalog}}" as="entry" filter="[[_filterCatalog(filter)]]">
+                          <a href="[[computeCatalogItemUrl(entry)]]" tabindex="-1">
+                          <edb-card image="[[entry.product.images.0.src]]" title="[[entry.name]]" subtitle="[[formatMoney(entry.product.price)]]">
+                            <p>[[limitText(entry.product.description.en,120)]]</p>
                           </edb-card>
                           </a>
                         </template>
