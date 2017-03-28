@@ -120,7 +120,7 @@
         },
         computeAttributeImage: function( attribute, materials ){
           materials.filter( function( m ){ 
-            return m.meta.edb_material_number === attribute.option;
+            return m.meta.edb_material_number == attribute.option;
           } )
           if(materials.length > 0){
             return materials[0].image.src;
