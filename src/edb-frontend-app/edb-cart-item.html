@@ -90,9 +90,9 @@
       </div>
       
       <div class="cart-item-body">
+        <div hidden$="[[!item.name]]" class="cart-item-title">[[item.name]]</div>
+        <div hidden$="[[!item.quantity]]" c1lass="cart-item-subtitle">[[item.quantity]]</div>
         <div class="cart-item-content">
-          <div hidden$="[[!item.name]]" class="cart-item-title">[[item.name]]</div>
-          <div hidden$="[[!item.quantity]]" c1lass="cart-item-subtitle">[[item.quantity]]</div>
           <content></content>
         </div>
         
