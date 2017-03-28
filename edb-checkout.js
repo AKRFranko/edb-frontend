@@ -96,7 +96,7 @@
 
   function updateApp() {
     app.debounce('updateApp', function() {
-      console.log('updateApp');
+      
 
       app.set('cart', Object.keys(Cart).map(function(uuid) {
         return Cart[uuid];
@@ -117,6 +117,8 @@
           app.notifyPath('catalog.' + index + '.' + k, item[k]);
         });
       });
+      
+      console.log('updateApp', app.get('cart'));
 
     })
 
