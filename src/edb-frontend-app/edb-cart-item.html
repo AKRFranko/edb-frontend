@@ -13,10 +13,10 @@
      #cart-item{
        display:block;
        width:100%;
-       height:100%;
+
        position:relative;
        /*padding-top:60%;*/
-       @apply(--layout-vertical);
+       @apply(--layout-horizontal);
        /*@apply(--layout-justified);*/
        @apply(--edb-font-body);
      }
@@ -25,9 +25,8 @@
        position:relative;
        top:0;
        left:0;
-       width:100%;
-       height:0;
-       padding-top:60%;
+       width:150px;
+       height:92px;
      }
      
      .cart-item-image iron-image{
@@ -67,29 +66,7 @@
       overflow:hidden;
       
      }
-     :host.square #cart-item{
-       /*height:160%;*/
-     }
-     :host.square .cart-item-image{
-       padding-top:100%;
-     }
-     :host.square .cart-item-content{
-       /*height:60%;*/
-     }
-     .cart-item-icon{
-       @apply(--layout-vertical);
-       @apply(--layout-center);
-       margin-right:-20px;
-       
-     }
-     .cart-item-icon iron-icon{
-       display:inline-block;
-       top:50%;
-       margin-top:-20px;
-       width:40px;
-       height:40px;
-     }
-      
+    
     </style>
     
     <div id="cart-item">
