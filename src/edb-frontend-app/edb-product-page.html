@@ -417,7 +417,7 @@
         observers: ['productChanged(product)'],
         productChanged: function(product){
           console.log('productChanged', product);
-          
+          this.updateAttributesFromQueryString();
         },
         getVariationAttributeValue: function( v, attr, idx, prop ){
           return v.attributes[idx][prop];
@@ -510,7 +510,7 @@
         formatMoney: function( amount ){
           return EDB.format.money( amount );
         },
-        attached: function(){
+        updateAttributesFromQueryString: function(){
           var queryString = window.location.href.indexOf('?') > -1 ? window.location.href.slice(window.location.href.indexOf('?')+1) : '';
           
           var query = queryString ? QSJS().decode(queryString) : {};
@@ -518,7 +518,9 @@
             o[k.replace(/^edb_/,'')]=query[k];
             return o;
           }, {}));
-          
+        },
+        attached: function(){
+          this.updateAttributesFromQueryString();
         }
      
   
