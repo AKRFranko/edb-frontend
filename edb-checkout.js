@@ -265,7 +265,7 @@
     loadSessionCart();
     updateApp();
     
-    runTest(entries);
+    // runTest(entries);
   
   }
 
