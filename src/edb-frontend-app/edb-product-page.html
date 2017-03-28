@@ -305,7 +305,7 @@
         <div class="header-inner">
           
          <div class="header-split">
-            <edb-slider layout="{{layout}}" loading=false slides="{{createProductSlides(product,materials)}}"></edb-slider>
+            <edb-slider layout="[[layout]]" loading=false slides="{{createProductSlides(product,materials)}}"></edb-slider>
             <div id="productMenu">
               <div class="group">
                 <div class="name">{{product.name}}</div>
@@ -315,8 +315,8 @@
                 <template is="dom-repeat" items="{{computeAttributes(product,materials)}}" as="attribute">
                   <div class="group">
                     <div class="attribute-label">{{attribute.name}}</div>
-                      <iron-selector class$="{{attribute.name}}" on-selected-changed="handleSelectedAttributeChanged" selected="{{setSelectedAttribute(attribute,product)}}">
-                        <template is="dom-repeat" items="{{computeAttributeChoices(attribute,product.variations)}}" as="choice">
+                      <iron-selector class$="{{attribute.name}}" on-selected-changed="handleSelectedAttributeChanged" selected="[[setSelectedAttribute(attribute,product)]]">
+                        <template is="dom-repeat" items="[[computeAttributeChoices(attribute,product.variations)]]" as="choice">
                           <paper-button class$="[[choice.classnames]]" data-value$="[[choice.option]]">
                             <iron-image preload fade sizing="cover" class="choice-icon" hidden$="[[!choice.icon]]" src="[[choice.icon]]"></iron-image>
                             <div class="choice-label" hidden$="[[!choice.label]]">[[choice.label]]</div>
