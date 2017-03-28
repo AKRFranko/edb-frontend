@@ -209,7 +209,7 @@
       }
     </style>
     <!-- app-location binds to the app's URL -->
-    <app-location route="{{route}}" use-hash-as-path query="{{query}}"></app-location>
+    <app-location route="{{route}}" use-hash-as-path query-params="{{query}}"></app-location>
     <edb-auth id="auth" user="{{user}}" email="{{authEmail}}" password="{{authPassword}}"></edb-auth>
     <!-- this app-route manages the top-level routes -->
     <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subRoute}}"></app-route>
