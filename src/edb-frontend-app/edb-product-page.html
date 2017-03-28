@@ -317,7 +317,7 @@
                     <div class="attribute-label">{{attribute.name}}</div>
                       <iron-selector class$="{{attribute.name}}" on-selected-changed="handleSelectedAttributeChanged">
                         <template is="dom-repeat" items="{{computeAttributeChoices(attribute,product.variations)}}" as="choice">
-                          <paper-button class$="[[choice.classnames]]" data-value$="[[choice.option]]">
+                          <paper-button class$="[[choice.classnames]]" data-value$="[[choice.option]]" selected$="choice.selected">
                             <iron-image preload fade sizing="cover" class="choice-icon" hidden$="[[!choice.icon]]" src="[[choice.icon]]"></iron-image>
                             <div class="choice-label" hidden$="[[!choice.label]]">[[choice.label]]</div>
                             <iron-icon class="availability-icon" icon$="{{computeStockIcon(product.id,attribute,choice,attributes,attributes.*)}}"></iron-icon>
@@ -463,14 +463,15 @@
           
         },
         computeAttributeChoices: function( attr, variations ){
-          
+          var attributes = this.attributes();
           return attr.options.map( function( option ){
             var material = attr.materials[option];
+            var selectedAttr = attr.name.replace(/^edb_/,'');
+            var selected = attributes[selectedAttr] && attributes[selectedAttr] == option;
             if(material){
-              return { icon: material.image.src, material: material, value: option, classnames: 'material-choice edb_' + attr.name };
+              return { selected: selected,icon: material.image.src, material: material, value: option, classnames: 'material-choice edb_' + attr.name };
             }else{
-              return { label: option, value: option, classnames: 'text-choice edb_' + attr.name };
-              
+              return { selected: selected,label: option, value: option, classnames: 'text-choice edb_' + attr.name };
             }
           });
           
@@ -490,19 +491,10 @@
         formatMoney: function( amount ){
           return EDB.format.money( amount );
         },
-        ready: function(){
+        attached: function(){
           var query = QSJS().decode(window.location.href.slice(window.location.href.indexOf('?')+1))||{};
-          console.log('QUERU',Object.keys(query))
-          Object.keys(query).forEach(function(attr){
-            var klass = attr.replace(/^edb_/,'');
-            this.set('attributes.'+klass,query[attr]);
-            console.log(klass,this.querySelector('.'+klass))
-            // this.querySelector('.'+klass).selected = query[attr];
-          }, this );
-          // this.async( function(){
-            
-            
-          // })
+          this.set('attributes', query);
+          
         }
      
   
