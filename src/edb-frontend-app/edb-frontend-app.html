@@ -239,7 +239,7 @@
           <section id="cart">
             <template is="dom-repeat" items="{{cart}}" as="cartItem">
               <div class="cart-item">
-                <edb-cart-item item="[[cartItem]]" materials="[[materials]]"></edb-cart-item>
+                <edb-cart-item item="[[cartItem]]" materials="[[material.items]]"></edb-cart-item>
                 <!--<edb-card image="{{entry.product.images.0.src}}" title="{{entry.name}}" subtitle="{{formatMoney(entry.product.price)}}">-->
                 <!--  <p>{{item.quantity}}</p>-->
                 <!--  <paper-button on-tap="handleRemoveCartItem">remove</paper-button>  -->
