@@ -652,7 +652,7 @@
           
           var product = new EDB.PolymerResource('product', this);
           product.refreshItems().then( function(){
-            EDB.Checkout.loadProducts( product.items, function( catalog ){
+            EDB.Checkout.init( product.items, function( catalog ){
               it.set('catalog',catalog);
             } );
           })
