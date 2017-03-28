@@ -496,7 +496,7 @@
             Object.keys(query).forEach(function(attr){
               var klass = attr.replace(/^edb_/,'');
               this.set('attributes.'+klass,query[attr]);
-              
+              console.log(klass,this.querySelector('.'+klass))
               // this.querySelector('.'+klass).selected = query[attr];
             }, this );
             

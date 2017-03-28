@@ -347,7 +347,7 @@
           o[a.name] = a.option;
           return o;
         }, {});
-        console.log(e.name, 'Stock', Checkout.getStock(pid, attrs));
+        // console.log(e.name, 'Stock', Checkout.getStock(pid, attrs));
 
 
       });
