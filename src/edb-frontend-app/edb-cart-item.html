@@ -53,7 +53,7 @@
      }
      .cart-item-body{
        box-sizing:border-box;
-       padding:10px 20px;
+       padding:10px 10px;
        @apply(--layout-horizontal);
      }
      .cart-item-content{
@@ -61,7 +61,7 @@
        /*@apply(--layout-vertical);*/
        /*@apply(--layout-start-justified);*/
       width:100%;
-      padding-right:20px;
+      padding-right:10px;
       max-height:40%;
       overflow:hidden;
       
@@ -85,9 +85,7 @@
           <div hidden$="{{!subtitle}}" class="cart-item-subtitle">{{subtitle}}</div>
           <content></content>
         </div>
-        <div class="cart-item-icon" hidden$="{{noIcon}}">
-          <iron-icon icon="edb:chevron-right"></iron-icon>
-        </div>  
+        
       </div>
       
       <paper-ripple></paper-ripple>
