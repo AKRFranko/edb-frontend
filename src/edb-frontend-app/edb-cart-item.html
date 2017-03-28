@@ -1,0 +1,155 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="edb-cart-item">
+  <template>
+    <style>
+      :host{
+        display:block;
+        width:100%;
+        height:100%;
+        
+      }
+      
+     #cart-item{
+       display:block;
+       width:100%;
+       height:100%;
+       position:relative;
+       /*padding-top:60%;*/
+       @apply(--layout-vertical);
+       /*@apply(--layout-justified);*/
+       @apply(--edb-font-body);
+     }
+     
+     .cart-item-image{
+       position:relative;
+       top:0;
+       left:0;
+       width:100%;
+       height:0;
+       padding-top:60%;
+     }
+     
+     .cart-item-image iron-image{
+       position:absolute;
+       top:0;
+       left:0;
+       width:100%;
+       height:100%;
+     }
+     .cart-item-title{
+       @apply(--edb-font-title);
+       line-height:1.2;
+       white-space:nowrap;
+       text-overflow:ellipsis;
+       
+       overflow:hidden;
+     }
+     .cart-item-subtitle{
+       @apply(--edb-font-subtitle);
+       line-height:1.2;
+     }
+     .cart-item-subtitle:before{
+       content:'_ ';
+     }
+     .cart-item-body{
+       box-sizing:border-box;
+       padding:10px 20px;
+       @apply(--layout-horizontal);
+     }
+     .cart-item-content{
+       /*@apply(--layout-flex);*/
+       /*@apply(--layout-vertical);*/
+       /*@apply(--layout-start-justified);*/
+      width:100%;
+      padding-right:20px;
+      max-height:40%;
+      overflow:hidden;
+      
+     }
+     :host.square #cart-item{
+       /*height:160%;*/
+     }
+     :host.square .cart-item-image{
+       padding-top:100%;
+     }
+     :host.square .cart-item-content{
+       /*height:60%;*/
+     }
+     .cart-item-icon{
+       @apply(--layout-vertical);
+       @apply(--layout-center);
+       margin-right:-20px;
+       
+     }
+     .cart-item-icon iron-icon{
+       display:inline-block;
+       top:50%;
+       margin-top:-20px;
+       width:40px;
+       height:40px;
+     }
+      
+    </style>
+    
+    <div id="cart-item">
+      <div class="cart-item-image">
+        <iron-image preload fade sizing="cover" src="{{image}}"></iron-image>
+      </div>
+      <div class="cart-item-body">
+        <div class="cart-item-content">
+          <div hidden$="{{!title}}" class="cart-item-title">{{title}}</div>
+          <div hidden$="{{!subtitle}}" class="cart-item-subtitle">{{subtitle}}</div>
+          <content></content>
+        </div>
+        <div class="cart-item-icon" hidden$="{{noIcon}}">
+          <iron-icon icon="edb:chevron-right"></iron-icon>
+        </div>  
+      </div>
+      
+      <paper-ripple></paper-ripple>
+    </div>
+    
+  </template>
+  <script>
+     
+      Polymer({
+  
+        is: 'edb-cart-item',
+  
+        properties: {
+          title: {
+            type: String,
+            value: null,
+            notify: true
+          },
+          subtitle: {
+            type: String,
+            value: null,
+            notify: true
+          },
+          image: {
+            type: String,
+            value: null,
+            notify: true
+          },
+          layout: {
+            type: String,
+            value: null,
+            notify: true
+          },
+          noIcon: {
+            type: Boolean,
+            value: false,
+            notify: true
+          }
+         
+        
+        },
+        
+        
+     
+  
+      });
+  </script>
+</dom-module>
