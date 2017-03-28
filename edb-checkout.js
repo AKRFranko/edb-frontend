@@ -93,13 +93,14 @@
   }
   
   function addCatalogEntry(product, option, variations) {
-    var token = genSlug(product, option);
+    var token = tokenizeAttr(product.id, option);
 
     var catalogEntry = {
       token: token,
       product: product,
       variations: variations,
-      name: fullName(product, option)
+      name: fullName(product, option),
+      option: option
     };
 
     var pid = product.id;
@@ -194,7 +195,7 @@
       if (!hasBucketAttributes) {
         console.error(new Error('Unhanded: NOT productHasBucketAttributes'));
         console.log(product);
-        addCatalogEntry(product, '', product.variations);
+        addCatalogEntry(product, {}, product.variations);
 
       } else {
         console.log('productHasBucketAttributes')
@@ -228,7 +229,9 @@
               copy.attributes = copyAttributes;
               newVariations.push(copy);
             });
-            addCatalogEntry(product, bucketOption, newVariations);
+            var attr = {};
+            attr[bucketSlug]=bucketOption;
+            addCatalogEntry(product, attr, newVariations);
           });
         });
 
