@@ -307,7 +307,7 @@
       var uuid = tokenizeAttr(productId, attributes);
       var entry = Blackboard[uuid];
       var cartItem = Cart[uuid];
-      console.log('getSTock', cartItem);
+      // console.log('getSTock', cartItem);
       var cartItemQty = (cartItem  ? cartItem.quantity  : 0);
       if(typeof cartItemQty == 'undefined'){
         cartItemQty = 0;
