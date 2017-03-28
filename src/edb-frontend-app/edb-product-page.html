@@ -490,7 +490,12 @@
         formatMoney: function( amount ){
           return EDB.format.money( amount );
         },
-        
+        ready: function(){
+          var query = QSJS().decode(window.location.href.slice(window.location.href.indexOf('?')+1));
+          if(query){
+            console.log('QUERY',query);
+          }
+        }
      
   
       });
