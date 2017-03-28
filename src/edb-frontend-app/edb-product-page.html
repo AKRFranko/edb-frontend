@@ -474,9 +474,8 @@
         __computeAnatomy: function( a ){
           if(!a) return;
           var k = Object.keys(a);
-          
-          return a[k.shift()].full_url;
-          
+          var img =a[k.shift()]; 
+          return img ? img.full_url ? img.full_url : img.src ? img.src : null : null;
         },
         computeAttributeChoices: function( attr, variations ){
           var attributes = this.get('attributes');
