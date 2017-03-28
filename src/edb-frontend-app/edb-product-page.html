@@ -497,7 +497,7 @@
         attached: function(){
           var query = QSJS().decode(window.location.href.slice(window.location.href.indexOf('?')+1))||{};
           this.set('attributes', Object.keys(query).reduce( function( o, k){
-            o[k.repalce(/^edb_/,'')]=query[k];
+            o[k.replace(/^edb_/,'')]=query[k];
             return o;
           }, {}));
           
