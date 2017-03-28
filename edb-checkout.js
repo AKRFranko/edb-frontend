@@ -99,7 +99,7 @@
       token: token,
       product: product,
       variations: variations,
-      name: fullName(product, options[Object.keys(option)[0]]),
+      name: fullName(product, option[Object.keys(option)[0]]),
       option: option
     };
 
