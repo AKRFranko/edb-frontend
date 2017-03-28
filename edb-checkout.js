@@ -276,7 +276,7 @@
       // if already in cart, update quantity;
       if (cartItem) {
         cartItem.quantity = cartItem.quantity + qty;
-        sessionStorage.setItem('EDB_CART|'+uuid, JSON.stringify({pid:productId, attributes: attributes, qty: cartItem.quantity }) );
+        sessionStorage.setItem('EDB_CART|'+uuid, JSON.stringify({pid:productId, attributes: attributes, quantity: cartItem.quantity }) );
         if (cartItem.quantity == 0) {
           Checkout.removeFromCart(uuid);
         }
@@ -285,7 +285,7 @@
         Cart[uuid] = Object.assign({
           quantity: qty
         }, entry);
-        sessionStorage.setItem('EDB_CART|'+uuid, JSON.stringify({pid:productId, attributes: attributes, qty: qty })  );
+        sessionStorage.setItem('EDB_CART|'+uuid, JSON.stringify({pid:productId, attributes: attributes, quantity: qty })  );
       }
     }
   };
