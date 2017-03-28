@@ -437,8 +437,9 @@
           return null;
         },
         setSelectedAttribute: function(attribute){
-          console.log('setSelectedAttribute');
+          
           var attributes = this.get('attributes')||{};
+          console.log('setSelectedAttribute',attribute,attributes);
           var attrKeys = Object.keys(attributes);
           if(!~attrKeys.indexOf(attribute.name)){
             return null
