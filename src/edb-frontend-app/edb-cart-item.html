@@ -55,7 +55,7 @@
        line-height:1.2;
      }
      .cart-item-subtitle:before{
-       content:'_ ';
+       content:'x';
      }
      .cart-item-body{
        box-sizing:border-box;
@@ -83,7 +83,7 @@
         <template is="dom-repeat" items="[[item.variation.attributes]]" as="attribute">
           <div class="cart-item-attribute">
             <iron-image preload fade sizing="cover" style="width:46px;height:46px" src="[[computeAttributeImage(attribute,materials)]]"></iron-image>
-            <p>{{attribute.option}}</p>
+            <!--<p>{{attribute.option}}</p>-->
           </div>
         </template>
       </div>
@@ -91,7 +91,7 @@
       <div class="cart-item-body">
         <div class="cart-item-content">
           <div hidden$="{{!item.name}}" class="cart-item-title">{{item.name}}</div>
-          <div hidden$="{{!item.price}}" class="cart-item-subtitle">{{item.price}}</div>
+          <div hidden$="{{!item.quantity}}" c1lass="cart-item-subtitle">{{item.quantity}}</div>
           <content></content>
         </div>
         
