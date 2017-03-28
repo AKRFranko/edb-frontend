@@ -292,7 +292,7 @@
         sessionStorage.setItem('EDB_CART|'+uuid, JSON.stringify({pid:productId, attributes: attributes, quantity: qty })  );
       }
       app.set('cart',Object.keys(Cart).map( function( uuid ){
-        return Cart[uuid];
+        return { cartItem: Cart[uuid], catalogItem: Blackboard[uuid] };
       }));
       console.log('CART', app.get('cart'));
     }
