@@ -87,6 +87,7 @@
       return sessionStorage.getItem(key);
     });
     console.log('sessionItems',sessionItems);
+    
   }
   function addCatalogEntry(product, option, variations) {
     var token = genSlug(product, option);
