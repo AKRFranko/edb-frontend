@@ -80,31 +80,31 @@
     return product.name + ' ' + removeDim(option);
   }
 
-  function loadSessionCart(){
-    var sessionCartKeys = Object.keys(sessionStorage).filter( function( key ){
-      return /^EDB_CART|/.test( key );
+  function loadSessionCart() {
+    var sessionCartKeys = Object.keys(sessionStorage).filter(function(key) {
+      return /^EDB_CART|/.test(key);
     });
-    var sessionItems = sessionCartKeys.map( function( key ){
+    var sessionItems = sessionCartKeys.map(function(key) {
       return JSON.parse(sessionStorage.getItem(key));
     });
-    sessionItems.forEach( function( item ){
-      Checkout.addToCart(item.pid,item.attributes,item.quantity);
+    sessionItems.forEach(function(item) {
+      Checkout.addToCart(item.pid, item.attributes, item.quantity);
     });
-    console.log('sessionItems',sessionItems);
+    console.log('sessionItems', sessionItems);
   }
-  
-  
-  function updateApp(){
-    
-    
-    app.set('cart',Object.keys(Cart).map( function( uuid ){
+
+
+  function updateApp() {
+
+
+    app.set('cart', Object.keys(Cart).map(function(uuid) {
       return Cart[uuid];
     }));
-    app.set('catalog',Object.keys(Catalog).map(function(uuid) {
+    app.set('catalog', Object.keys(Catalog).map(function(uuid) {
       return Catalog[uuid];
     }));
   }
-  
+
   function addCatalogEntry(product, option, variations) {
     var token = tokenizeAttr(product.id, option);
 
@@ -115,7 +115,7 @@
       name: fullName(product, option[Object.keys(option)[0]]),
       option: option
     };
-    
+
 
     var pid = product.id;
     // Blackboard[pid]=Blackboard[pid]||{};
@@ -184,7 +184,7 @@
     }
   }
 
-  Checkout.init = function loadProducts( polymerApp, products) {
+  Checkout.init = function loadProducts(polymerApp, products) {
     app = polymerApp;
 
     products.forEach(function(product, productIndex) {
@@ -244,7 +244,7 @@
               newVariations.push(copy);
             });
             var attr = {};
-            attr[bucketSlug]=bucketOption;
+            attr[bucketSlug] = bucketOption;
             addCatalogEntry(product, attr, newVariations);
           });
         });
@@ -255,33 +255,16 @@
 
 
 
-    // var entries = Object.keys(Catalog).map(function(k) {
-    //   return Catalog[k];
-    // });
-    
-    // console.log('Catalog loaded with %s items', entries.length);
-    // app.set('1catalog',entries);
-    
     loadSessionCart();
     updateApp();
-    
-    // runTest(entries);
-  
+
+
   }
 
 
 
 
 
-
-  // EDB.getProductStock = function(productId, attributes ){
-  //   var baseStock = Products[productId].stockQuantity;
-  //   if(Products[productId].variations.length == 0 ){
-  //     return baseStock;
-  //   }
-  //   console.log('find stock',Products[productId], attributes );
-  //   return 0;
-  // }
   Checkout.addToCart = function(productId, attributes, qty) {
     var uuid = tokenizeAttr(productId, attributes);
     var entry = Blackboard[uuid];
@@ -293,7 +276,11 @@
       // if already in cart, update quantity;
       if (cartItem) {
         cartItem.quantity = cartItem.quantity + qty;
-        sessionStorage.setItem('EDB_CART|'+uuid, JSON.stringify({pid:productId, attributes: attributes, quantity: cartItem.quantity }) );
+        sessionStorage.setItem('EDB_CART|' + uuid, JSON.stringify({
+          pid: productId,
+          attributes: attributes,
+          quantity: cartItem.quantity
+        }));
         if (cartItem.quantity == 0) {
           Checkout.removeFromCart(uuid);
         }
@@ -302,17 +289,21 @@
         Cart[uuid] = Object.assign({
           quantity: qty
         }, entry);
-        sessionStorage.setItem('EDB_CART|'+uuid, JSON.stringify({pid:productId, attributes: attributes, quantity: qty })  );
+        sessionStorage.setItem('EDB_CART|' + uuid, JSON.stringify({
+          pid: productId,
+          attributes: attributes,
+          quantity: qty
+        }));
       }
       updateApp();
-      
+
     }
   };
-  
+
 
   Checkout.removeFromCart = function(uuid) {
     delete Cart[uuid];
-    sessionStorage.removeItem('EDB_CART|'+uuid);
+    sessionStorage.removeItem('EDB_CART|' + uuid);
     updateApp();
   };
 
@@ -325,8 +316,8 @@
       var entry = Blackboard[uuid];
       var cartItem = Cart[uuid];
       // console.log('getSTock', cartItem);
-      var cartItemQty = (cartItem  ? cartItem.quantity  : 0);
-      if(typeof cartItemQty == 'undefined'){
+      var cartItemQty = (cartItem ? cartItem.quantity : 0);
+      if (typeof cartItemQty == 'undefined') {
         cartItemQty = 0;
       }
       if (!entry) {
