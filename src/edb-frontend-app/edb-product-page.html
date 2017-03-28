@@ -464,6 +464,7 @@
         },
         computeAttributeChoices: function( attr, variations ){
           var attributes = this.get('attributes');
+          
           return attr.options.map( function( option ){
             var material = attr.materials[option];
             var selectedAttr = attr.name.replace(/^edb_/,'');
