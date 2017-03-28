@@ -312,7 +312,7 @@
                 <div class="price">{{formatMoney(product.price)}}</div>
               </div>
               <div class="product-options">
-                <template is="dom-repeat" items="{{computeAttributes(product,materials)}}" as="attribute">
+                <template is="dom-repeat" items="{{computeAttributes(product,materials,cart)}}" as="attribute">
                   <div class="group">
                     <div class="attribute-label">{{attribute.name}}</div>
                       <iron-selector class$="{{attribute.name}}" on-selected-changed="handleSelectedAttributeChanged" selected="{{setSelectedAttribute(attribute)}}">
@@ -384,6 +384,11 @@
             value: function(){
               return {};
             },
+            notify: true
+          },
+          cart: {
+            type: Array,
+            
             notify: true
           },
           materials: {
