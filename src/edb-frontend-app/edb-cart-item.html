@@ -28,6 +28,9 @@
        width:150px;
        height:92px;
      }
+     .cart-item-attributes{
+       @apply(--layout-vertical);
+     }
      
      .cart-item-image iron-image{
        position:absolute;
@@ -122,9 +125,12 @@
           } )
           if(found.length > 0){
             return found[0].image.src;
+          }else{
+            return null;
           }
           
         },
+        
         computeImage: function( item){
           var productImage = item.product.images[0].src;
           var variationImage = item.variation.image.src;
