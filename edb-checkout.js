@@ -263,6 +263,7 @@
     app.set('catalog',entries);
     
     loadSessionCart();
+    updateApp();
     
     runTest(entries);
   
