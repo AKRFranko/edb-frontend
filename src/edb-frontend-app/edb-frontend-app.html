@@ -247,7 +247,7 @@
                     <div class="filtered" data-filter$="{{filter}}">
                       <edb-grid layout="{{layout}}" loading="{{product.loading}}">
                         <template is="dom-repeat" items="{{catalog}}" as="entry" filter="{{_filterCatalog(filter)}}">
-                          <a href="{{computeCatalogItemUrl(entry.product)}}" tabindex="-1">
+                          <a href="{{computeCatalogItemUrl(entry)}}" tabindex="-1">
                           <edb-card image="{{entry.product.images.0.src}}" title="{{entry.name}}" subtitle="{{formatMoney(entry.product.price)}}">
                             <p>{{limitText(entry.product.description.en,120)}}</p>
                           </edb-card>
@@ -550,12 +550,14 @@
             
           };
         },
-        computeCatalogItemUrl: function( item ){
-            var id = item.id;
-            var bucketAttributes = item.attributes.filter( function( attr ){
-            return attr.isBucketOption;
+        computeCatalogItemUrl: function( entry ){
+            var product = entry.product;
+            var id = product.id;
+            var bucketAttributes = product.attributes.filter( function( attr ){
+            return product.isBucketOption;
             } ).map( function( attr ){ return attr.name + '=' + attr.option; });
-            return '/#/product/'+id+'/?'+bucketAttributes.join('&');
+            console.log('computeCatalogItemUrl',entry)
+            return '/#/product/'+id+'/?';
         },
         computeCatalogItemName: function( item ){
           
