@@ -511,7 +511,8 @@
           return EDB.format.money( amount );
         },
         attached: function(){
-          var query = QSJS().decode(window.location.href.slice(window.location.href.indexOf('?')+1))||{};
+          var queryString = window.location.href.slice(window.location.href.indexOf('?')+1);
+          var query = queryString ? QSJS().decode(queryString) : {};
           this.set('attributes', Object.keys(query).reduce( function( o, k){
             o[k.replace(/^edb_/,'')]=query[k];
             return o;
