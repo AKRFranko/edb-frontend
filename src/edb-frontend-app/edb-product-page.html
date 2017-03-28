@@ -414,7 +414,7 @@
          
         
         },
-        observers: ['productChanged(product)','updateAttributesFromQueryString(product.*)'],
+        observers: ['productChanged(product)'],
         productChanged: function(product){
           console.log('productChanged', product);
           
@@ -481,6 +481,7 @@
           return img ? img.full_url ? img.full_url : img.src ? img.src : null : null;
         },
         computeAttributeChoices: function( attr, variations ){
+          this.updateAttributesFromQueryString();
           var attributes = this.get('attributes');
           
           return attr.options.map( function( option ){
