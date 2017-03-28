@@ -439,7 +439,7 @@
         setSelectedAttribute: function(attribute){
           
           var attributes = this.get('attributes')||{};
-          console.log('setSelectedAttribute',attribute,attributes);
+          
           var attrKeys = Object.keys(attributes);
           if(!~attrKeys.indexOf(attribute.name)){
             return null
@@ -448,6 +448,7 @@
           
           var key = attrKeys[attrKeys.indexOf(attribute.name)];
           var value =attributes[attribute.name];
+          console.log('setSelectedAttribute',key,value, attribute.options.indexOf(value));
           return attribute.options.indexOf(value);
           
         },
