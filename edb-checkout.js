@@ -84,10 +84,12 @@
       return /^EDB_CART|/.test( key );
     });
     var sessionItems = sessionCartKeys.map( function( key ){
-      return sessionStorage.getItem(key);
+      return JSON.parse(sessionStorage.getItem(key));
     });
-    console.log('sessionItems',sessionItems);
-    
+    sessionItems.forEach( function( item ){
+      Checkout.addToCart(item.pid,item.attributes,item.quantity);
+    });
+
   }
   function addCatalogEntry(product, option, variations) {
     var token = genSlug(product, option);
@@ -273,7 +275,7 @@
       // if already in cart, update quantity;
       if (cartItem) {
         cartItem.quantity = cartItem.quantity + qty;
-        sessionStorage.setItem('EDB_CART|'+uuid, cartItem.quantity );
+        sessionStorage.setItem('EDB_CART|'+uuid, JSON.stringify({pid:productId, attributes: attributes, qty: cartItem.quantity }) );
         if (cartItem.quantity == 0) {
           Checkout.removeFromCart(uuid);
         }
@@ -282,7 +284,7 @@
         Cart[uuid] = Object.assign({
           quantity: qty
         }, entry);
-        sessionStorage.setItem('EDB_CART|'+uuid, qty );
+        sessionStorage.setItem('EDB_CART|'+uuid, JSON.stringify({pid:productId, attributes: attributes, qty: qty })  );
       }
     }
   };
