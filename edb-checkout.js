@@ -89,6 +89,7 @@
     sessionItems.forEach( function( item ){
       Checkout.addToCart(item.pid,item.attributes,item.quantity);
     });
+    console.log('sessionItems',sessionItems);
   }
   
   function addCatalogEntry(product, option, variations) {
@@ -302,6 +303,7 @@
       var uuid = tokenizeAttr(productId, attributes);
       var entry = Blackboard[uuid];
       var cartItem = Cart[uuid];
+      console.log('getSTock', cartItem);
       var cartItemQty = (cartItem ? cartItem.quantity : 0);
       if (!entry) {
         // console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
