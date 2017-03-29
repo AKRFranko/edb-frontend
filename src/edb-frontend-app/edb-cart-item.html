@@ -47,18 +47,20 @@
        @apply(--edb-font-body);
        font-weight:bold;
        line-height:1.2;
-
+      width:200px
      }
      .cart-item-subtitle{
        @apply(--edb-font-body);
        font-weight:bold;
        line-height:1.2;
+       width:200px
      }
      .cart-item-total{
        border-top: 1px solid #000;
        margin: 5px 0;
        padding: 5px 0;
        text-align: right;
+       width:200px
      }
      .cart-item-row{
        /*width:100%;*/
@@ -70,8 +72,9 @@
      .cart-item-body{
        box-sizing:border-box;
        padding:10px 10px;
-       width:100px;
+       
        @apply(--layout-vertical);
+       @apply(--layout-flex);
        @apply(--layout-justified);
      }
      .cart-item-content{
