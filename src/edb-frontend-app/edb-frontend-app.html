@@ -337,7 +337,8 @@
               </div>
               
             </template>
-            <div id="addressForms">
+            <p hidden$="{{cart.length}}">You cart is empty.</p>
+            <div id="addressForms" hidden$="{{!cart.length}}">
               <form id="billing">
                 <div class="title">Billing Address
                   <paper-toggle-button on-change="handleAddressToggleChanged" checked$="{{customer.useBillingAddressForShipping}}">use for shipping</paper-toggle-button>
@@ -401,7 +402,7 @@
               </form>
             </div>
             
-            <div id="totals">
+            <div id="totals" hidden$="{{!cart.length}}">
               <div class="title">Totals</div>
               <template is="dom-repeat" items="{{computeCartTotals(cart,customer,cart.*,customer.*)}}" as="line">
                 <div class="line">
