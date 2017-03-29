@@ -68,9 +68,7 @@
     },
     ready: function(){
       
-      EDB.autoLogin( this ).then( function(){
-        setCustomer( window.CurrentUser );
-      });
+      EDB.autoLogin( this );
       
     }
   });

@@ -209,8 +209,7 @@
   }
 
   Checkout.setCustomer = function setCustomer(user) {
-    
-    user = user ||window.CurrentUser;
+    user = user;
     console.log('setCustomer', user );
     
     if (!user) {
@@ -294,7 +293,7 @@
 
     loadSessionCart();
     updateApp();
-
+    console.log('EDB.polymerAuth',EDB.polymerAuth)
 
   }
 
