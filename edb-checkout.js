@@ -365,8 +365,9 @@
             Checkout.removeFromCart(uuid);
           }
         }, entry);
+        
         localStorage.setItem('EDB_CART|' + uuid, JSON.stringify({
-          pid: prodctId,
+          pid: productId,
           stored: Date.now(),
           attributes: attributes,
           quantity: qty
