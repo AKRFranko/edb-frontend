@@ -107,7 +107,7 @@
     app.debounce('updateApp', function() {
       
       
-      
+      console.log('customer',window.CurrenUser ? window.CurrenUser.customer_meta : Guest)
       app.set('customer', window.CurrenUser ? window.CurrenUser.customer_meta : Guest );
       
       app.set('cart', Object.keys(Cart).map(function(uuid) {
