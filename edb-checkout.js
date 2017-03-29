@@ -207,6 +207,7 @@
   }
 
   Checkout.setCustomer = function setCustomer(user) {
+    user = user ||window.CurrentUser;
     if (!user) {
       Customer = Guest;
     } else {
