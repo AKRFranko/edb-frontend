@@ -89,7 +89,9 @@
       
       <div class="cart-item-body">
         <div hidden$="[[!item.name]]" class="cart-item-title">[[item.name]]</div>
-        <div hidden$="[[!item.quantity]]" c1lass="cart-item-subtitle">x[[item.quantity]]</div>
+        <div hidden$="[[!item.quantity]]" class="cart-item-subtitle">x[[item.quantity]]</div>
+        <div class="cart-item-price">{{computeCartItemPrice(item)}}</div>
+        <div class="cart-item-total">{{computeCartItemTotal(item)}}</div>
         <div class="cart-item-content">
           <content></content>
         </div>
@@ -134,6 +136,12 @@
             return null;
           }
           
+        },
+        computeCartItemPrice: function(){
+          return 303;
+        },
+        computeCartItemTotal: function(){
+          return 606;
         },
         
         computeImage: function( item){
