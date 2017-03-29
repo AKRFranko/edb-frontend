@@ -137,11 +137,12 @@
           }
           
         },
-        computeCartItemPrice: function(){
-          return 303;
+        computeCartItemPrice: function( item ){
+          return EDB.checkout.getPrice( item.product.id, item.variation.attributes );
         },
-        computeCartItemTotal: function(){
-          return 606;
+        computeCartItemTotal: function( item ){
+          var price = this.computeCartItemPrice( item );
+          return item.quantity * price;
         },
         
         computeImage: function( item){
