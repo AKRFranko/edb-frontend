@@ -316,6 +316,7 @@
             <template is="dom-repeat" items="{{cart}}" as="cartItem">
               <div class="cart-item">
                 <edb-cart-item item="[[cartItem]]" materials="[[material.items]]">
+                    
                     <paper-button on-tap="handleRemoveCartItem">remove</paper-button>  
                 </edb-cart-item>
                 

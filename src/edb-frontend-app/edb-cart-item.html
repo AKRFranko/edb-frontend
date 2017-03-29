@@ -110,6 +110,11 @@
         
       </div>
       <div class="cart-item-content">
+        <div class="product-quantity">
+          <paper-icon-button class="lower" on-tap="decrQty" icon="remove"></paper-icon-button>
+          <paper-input no-label-float label="qty" value="{{wantedQty}}"></paper-input>
+          <paper-icon-button class="increase" on-tap="incrQty" icon="add"></paper-icon-button>
+        </div>
         <content></content>
       </div>
       
@@ -139,7 +144,25 @@
             notify: true
           }
           
-        
+        wantedQty: {
+          type: number,
+          notify: true,
+          value: null
+        }
+        },
+        observers: ['setQuantity(wantedQty)'],
+        setQuantity: function(qty){
+          console.log('setQuantity',qty);
+        },
+        decrQty: function(){
+          var q = this.get('wantedQty');
+          if(q == 1) return;
+          this.set('wantedQty', q-1);
+        }, 
+        incrQty:function(){
+          var q = this.get('wantedQty');
+          if(q > 100) return;
+          this.set('wantedQty', q+1);
         },
         computeAttributeImage: function( attribute, materials ){
           var found = materials.filter( function( m ){ 
