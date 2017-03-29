@@ -213,16 +213,21 @@
         margin-bottom:20px;
       }
       #totals .line{
-        padding:20px;
+        padding:0 20px;
         @apply(--paper-font-body);
         @apply(--layout-horizontal);
+        
+      }
+      #totals .line:first-of-type{
+        @apply(--paper-font-title);
         
       }
       #totals .line-label{
         width: 50%;
         height:1em;
         margin:0;padding:0;
-        border-bottom: 1px dotted #ccc;
+        padding-bottom:5px;
+        border-bottom: 1px dashed #ccc;
 
       }
       #totals .line .value{
@@ -401,7 +406,7 @@
               <template is="dom-repeat" items="{{computeCartTotals(cart,customer,cart.*,customer.*)}}" as="line">
                 <div class="line">
                   <div class="line-label">{{line.label}}</div>
-                  <div class="line-value">{{line.value}}</div>
+                  <div class="line-value">${{line.value}}</div>
                 </div>
               </template>
             </div>
