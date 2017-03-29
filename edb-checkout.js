@@ -293,7 +293,7 @@
 
     loadSessionCart();
     updateApp();
-    console.log('EDB',EDB)
+    console.log('EDB',EDB.Checkout)
 
   }
 
