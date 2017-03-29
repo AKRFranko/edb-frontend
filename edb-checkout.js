@@ -107,8 +107,9 @@
     app.debounce('updateApp', function() {
       
       
+      EDB.Checkout.setCustomer(window.CurrentUser);
       
-      app.set('customer', window.CurrentUser ? window.CurrentUser.customer_meta : Guest );
+      app.set('customer',Customer);
       
       app.set('cart', Object.keys(Cart).map(function(uuid) {
         return Cart[uuid];
@@ -220,7 +221,7 @@
     } else {
       Customer = Object.assign(Guest, user.customer_meta);
     }
-    updateApp();
+    
   }
 
   Checkout.init = function loadProducts(polymerApp, products) {
