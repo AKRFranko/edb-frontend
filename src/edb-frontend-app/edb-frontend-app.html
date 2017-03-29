@@ -342,7 +342,15 @@
             <div id="payment">
               <div class="title">Payment</div>
               <form id="payment">
-                
+                <div class="twinfields">
+                <paper-input readonly label="first name" value="[[customer.billing_first_name]]"></paper-input>
+                <paper-input readonly label="last name" value="[[customer.billing_last_name]]"></paper-input>
+                </div>
+                <gold-cc-input label="Credit Card Number" value="{{customer.CC}}"></gold-cc-input>
+                <div class="twinfields">
+                  <gold-cc-cvc-input label="Verification" value="{{customer.CC_CVC}}"></gold-cc-cvc-input>
+                  <gold-cc-expiration-input label="Expiration" value="{{customer.CC_EXP}}"></gold-cc-expiration-input>
+                </div>
               </form>
             </div>
             <div id="totals">
