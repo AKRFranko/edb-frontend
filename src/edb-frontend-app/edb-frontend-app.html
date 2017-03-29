@@ -295,9 +295,8 @@
                 <paper-input label="country" value="{{customer.billing_country}}"></paper-input>
                 <paper-input label="postal_code" value="{{customer.billing_postcode}}"></paper-input>
               </form>
-              <form id="shipping">
+              <form id="shipping" hidden$="{{customer.useBillingAddressForShipping}}">
                 <div class="title">Shipping Address</div>
-                <paper-toggle-button on-change="handleAddressToggleChanged" checked$="{{customer.useBillingAddressForShipping}}">use same address as billing</paper-toggle-button>
                 <paper-input label="first name" value="{{customer.shipping_first_name}}"></paper-input>
                 <paper-input label="last name" value="{{customer.shipping_last_name}}"></paper-input>
                 <paper-input label="company" value="{{customer.shipping_company}}"></paper-input>
@@ -624,6 +623,7 @@
         handleAddressToggleChanged: function( event ){
           var el = Polymer.dom(event).localTarget;
           console.log('handleAddressToggleChanged', el.checked );
+          this.set('customer.useBillingAddressForShipping', el.checked);
         }, 
         _filterCatalog: function( filterVal ){
           var days30  =1000 * 60 * 60  * 24  * 30;
