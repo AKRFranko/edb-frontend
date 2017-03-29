@@ -407,6 +407,16 @@ Checkout.getPrice = function(productId, attributes) {
       console.log('returning basic price');
       return price;
     }
+    var bucketModifiers = entry.variation.attributes.reduce(function( mods, attr) {
+      if (!attr.bucket) return mods;
+      var mod = attr.bucket[attr.option].variation.price;
+      if(!isNaN(mod)){
+        return mods+mod;
+      }
+      return mods;
+    }, 0 );
+    console.log('returning basic price+bucket modifiers');
+    return price + mods;
     // var minBucketCount = entry.variation.attributes.reduce(function( min, attr) {
     //   if (!attr.bucket) return min;
     //   var price = attr.bucket[attr.option].variation.price;
