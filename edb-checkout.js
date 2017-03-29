@@ -188,11 +188,15 @@
   }
 
   Checkout.computeCartTotals = function(){
-    
-    return Object.keys(Cart).map( function( uuid ){
-      return { label: Cart[uuid].name, value:Cart[uuid].quantity * Checkout.getPrice( Cart[uuid].product.id, Cart[uuid].variation.attributes )}
+    var subTotal=0;
+    var lines =  Object.keys(Cart).map( function( uuid ){
+      var total = Cart[uuid].quantity * Checkout.getPrice( Cart[uuid].product.id, Cart[uuid].variation.attributes );
+      subTotal += total;
+      return { label: Cart[uuid].name, value: total };
     });
-        
+    lines.push( { label: 'subtotal', value: subTotal });
+    lines.push( { label: 'total', value: subTotal + ' + tax' });
+    return lines;    
     
   }
 
