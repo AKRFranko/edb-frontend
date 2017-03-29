@@ -307,6 +307,7 @@
 
 
   Checkout.updateCartItemQuantity = function( productId, attributes, qty ){
+    console.log('updateCartItemQuantity')
     var uuid = tokenizeAttr(productId, attributes)
     var cartItem = Cart[uuid];
     if(cartItem){
