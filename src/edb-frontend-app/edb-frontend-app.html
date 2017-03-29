@@ -214,8 +214,16 @@
       }
       #totals .line{
         padding:20px;
+        @apply(--paper-font-body);
         @apply(--layout-horizontal);
         
+      }
+      #totals .line-label{
+        width: 50%;
+        height:1em;
+        margin:0;padding:0;
+        border-bottom: 1px dotted #ccc;
+
       }
       #totals .line .value{
         @apply(--layout-flex);
