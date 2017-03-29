@@ -202,6 +202,7 @@
     } else {
       Customer = Object.assign(Guest, user);
     }
+    app.set('customer', Customer );
   }
 
   Checkout.init = function loadProducts(polymerApp, products) {
