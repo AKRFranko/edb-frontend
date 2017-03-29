@@ -282,7 +282,9 @@
             </template>
             <div id="addressForms">
               <form id="billing">
-                <div class="title">Billing Address</div>
+                <div class="title">Billing Address
+                  <paper-toggle-button on-change="handleAddressToggleChanged" checked$="{{customer.useBillingAddressForShipping}}">use address for shipping</paper-toggle-button>
+                </div>
                 <paper-input label="first name" value="{{customer.billing_first_name}}"></paper-input>
                 <paper-input label="last name" value="{{customer.billing_last_name}}"></paper-input>
                 <paper-input label="company" value="{{customer.billing_company}}"></paper-input>
@@ -293,7 +295,7 @@
                 <paper-input label="state" value="{{customer.billing_state}}"></paper-input>
                 <paper-input label="country" value="{{customer.billing_country}}"></paper-input>
                 <paper-input label="postal_code" value="{{customer.billing_postcode}}"></paper-input>
-                <paper-toggle-button on-change="handleAddressToggleChanged" checked$="{{customer.useBillingAddressForShipping}}">use same address for shipping</paper-toggle-button>
+
               </form>
               <form id="shipping" hidden$="{{customer.useBillingAddressForShipping}}">
                 <div class="title">Shipping Address</div>
