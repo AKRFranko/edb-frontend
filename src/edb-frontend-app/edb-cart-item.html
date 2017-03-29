@@ -150,8 +150,16 @@
             value: null
           }
         },
-        observers: ['setQuantity(wantedQty)'],
+        observers: ['setQuantity(wantedQty)','initQuantity(item.quantity)'],
+        initQuantity: function(qty){
+          this.set('wantedQty', qty );
+        },
         setQuantity: function(qty){
+          if(qty === null) return;
+          if(qty == this.get('wantedQty')){
+            return;
+          }
+          
           console.log('setQuantity',qty);
         },
         decrQty: function(){

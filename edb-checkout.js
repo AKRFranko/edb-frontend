@@ -306,7 +306,14 @@
 
 
 
-
+  Checkout.updateCartItemQuantity = function( productId, attributes, qty ){
+    var uuid = tokenizeAttr(productId, attributes)
+    var cartItem = Cart[uuid];
+    if(cartItem){
+      cartItem.quantity = qty;
+    }
+    updateApp();
+  }
   Checkout.addToCart = function(productId, attributes, qty) {
     var uuid = tokenizeAttr(productId, attributes);
     var entry = Blackboard[uuid];
