@@ -1,6 +1,7 @@
 (function(EDB){
   if(!EDB) throw new Error('Missing EDB namespace.');
   var app;
+  console.log('EDB.CHECKOUT',EDB.Checkout);
   EDB.PolymerAuth = Polymer({
     is: 'edb-auth',
     properties: {
