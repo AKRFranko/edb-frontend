@@ -118,9 +118,9 @@
         return Cart[uuid];
       }));
 
-      app.set('catalog', Object.keys(Catalog).map(function(uuid) {
-        return Catalog[uuid];
-      }));
+      // app.set('catalog', Object.keys(Catalog).map(function(uuid) {
+      //   return Catalog[uuid];
+      // }));
 
       app.get('cart').forEach(function(item, index) {
         Object.keys(item).forEach(function(k) {
