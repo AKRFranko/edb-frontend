@@ -236,6 +236,14 @@
         @apply(--edb-font-body);
         font-weight:normal;
       }
+      #shipping{
+        transition:all .2s ease-in;
+      }
+      #shipping[hidden]{
+        visibility:visible;
+        display:block;
+        opacity:0;
+      }
       #cart > .title{
         @apply(--paper-font-title);
         padding:20px 40px;

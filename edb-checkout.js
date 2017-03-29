@@ -388,6 +388,39 @@
     }
   }
 
+Checkout.getPrice = function(productId, attributes) {
+  if (!attributes) {
+    console.log('not attributes', productId, attributes);
+  } else {
+
+    var uuid = tokenizeAttr(productId, attributes);
+    var entry = Blackboard[uuid];
+    var cartItem = Cart[uuid];
+    // console.log('getSTock', cartItem);
+    if (!entry) {
+      // console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
+      return null;
+    }
+    var price = entry.product.price || entry.variation.price;
+    var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
+    if (!hasBuckets) {
+      console.log('returning basic price');
+      return price;
+    }
+    // var minBucketCount = entry.variation.attributes.reduce(function( min, attr) {
+    //   if (!attr.bucket) return min;
+    //   var price = attr.bucket[attr.option].variation.price;
+    //   if (qty === null) return min;
+    //   if (min === null) return qty;
+    //   if (qty < min) return qty;
+    //   return min;
+    // }, null);
+    var variationQty = entry.variation.stock_quantity === null ? 0 : entry.variation.stock_quantity;
+    // console.log('returning min stock, cartITem', cartItem );
+    return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) - cartItemQty;
+  }
+}
+
 
   function runTest(entries) {
 
