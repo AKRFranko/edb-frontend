@@ -219,7 +219,7 @@
     if (!user) {
       Customer = Guest;
     } else {
-      Customer = Object.assign(Guest, user.customer_meta);
+      Customer = Object.assign(Guest, user.customer_meta, {name: user.name });
     }
     
   }

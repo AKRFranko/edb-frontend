@@ -221,6 +221,16 @@
         @apply(--paper-font-title);
         padding:20px 40px;
       }
+      .twinfields{
+        @apply(--layout-horizontal); 
+        @apply(--layout-justified); 
+      }
+      .twinfields paper-input:first-of-type{
+        margin-right:10px;
+      }
+      .twinfields paper-input:last-of-type{
+        margin-left:10px;
+      }
       edb-cart-item{
         border-bottom:1px solid #ccc;
       }
@@ -287,17 +297,25 @@
                 <div class="title">Billing Address
                   <paper-toggle-button on-change="handleAddressToggleChanged" checked$="{{customer.useBillingAddressForShipping}}">use for shipping</paper-toggle-button>
                 </div>
-                <paper-input label="first name" value="{{customer.billing_first_name}}"></paper-input>
-                <paper-input label="last name" value="{{customer.billing_last_name}}"></paper-input>
+                <div class="twinfields">
+                  <paper-input label="first name" value="{{customer.billing_first_name}}"></paper-input>
+                  <paper-input label="last name" value="{{customer.billing_last_name}}"></paper-input>
+                </div>
                 <paper-input label="company" value="{{customer.billing_company}}"></paper-input>
-                <paper-input label="telephone" value="{{customer.billing_phone}}"></paper-input>
-                <paper-input label="email" value="{{customer.billing_email}}"></paper-input>
+                <div class="twinfields">
+                  <paper-input label="telephone" value="{{customer.billing_phone}}"></paper-input>
+                  <paper-input label="email" value="{{customer.billing_email}}"></paper-input>
+                </div>
+                
                 <paper-input label="address" value="{{customer.billing_address_1}}"></paper-input>
-                <paper-input label="city" value="{{customer.billing_city}}"></paper-input>
-                <paper-input label="state" value="{{customer.billing_state}}"></paper-input>
-                <paper-input label="country" value="{{customer.billing_country}}"></paper-input>
-                <paper-input label="postal_code" value="{{customer.billing_postcode}}"></paper-input>
-
+                <div class="twinfields">
+                  <paper-input label="city" value="{{customer.billing_city}}"></paper-input>
+                  <paper-input label="state" value="{{customer.billing_state}}"></paper-input>
+                </div>
+                <div class="twinfields">
+                  <paper-input label="country" value="{{customer.billing_country}}"></paper-input>
+                  <paper-input label="postal_code" value="{{customer.billing_postcode}}"></paper-input>
+                </div>
               </form>
               <form id="shipping" hidden$="{{customer.useBillingAddressForShipping}}">
                 <div class="title">Shipping Address</div>
