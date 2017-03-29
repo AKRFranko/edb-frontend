@@ -89,11 +89,14 @@
   }
 
   function loadSessionCart() {
-    var sessionCartKeys = Object.keys(sessionStorage).filter(function(key) {
-      return /^EDB_CART|/.test(key);
+    var sessionCartKeys = Object.keys(localStorage).filter(function(key) {
+      return /^EDB_CART|/.test(key)
     });
+    var h48 = 60 * 60 * 48 * 1000;
     var sessionItems = sessionCartKeys.map(function(key) {
-      return JSON.parse(sessionStorage.getItem(key));
+      return JSON.parse(localStorage.getItem(key));
+    }).filter( function( item ){
+      return (Date.now() - item.stored < h48)
     });
     sessionItems.forEach(function(item) {
       Checkout.addToCart(item.pid, item.attributes, item.quantity);
@@ -345,8 +348,9 @@
       // if already in cart, update quantity;
       if (cartItem) {
         cartItem.quantity = cartItem.quantity + qty;
-        sessionStorage.setItem('EDB_CART|' + uuid, JSON.stringify({
-          pid: productId,
+        localStorage.setItem('EDB_CART|' + uuid, JSON.stringify({
+          pid: prodctId,
+          stored: Date.now(),
           attributes: attributes,
           quantity: cartItem.quantity
         }));
@@ -361,8 +365,9 @@
             Checkout.removeFromCart(uuid);
           }
         }, entry);
-        sessionStorage.setItem('EDB_CART|' + uuid, JSON.stringify({
-          pid: productId,
+        localStorage.setItem('EDB_CART|' + uuid, JSON.stringify({
+          pid: prodctId,
+          stored: Date.now(),
           attributes: attributes,
           quantity: qty
         }));
@@ -375,8 +380,8 @@
 
   Checkout.removeFromCart = function(uuid) {
     delete Cart[uuid];
-    sessionStorage.removeItem('EDB_CART|' + uuid);
-    updateApp();
+    localStorage.removeItem('EDB_CART|' + uuid);
+    updateApp()
   };
 
   Checkout.getStock = function(productId, attributes) {
