@@ -319,16 +319,24 @@
               </form>
               <form id="shipping" hidden$="{{customer.useBillingAddressForShipping}}">
                 <div class="title">Shipping Address</div>
-                <paper-input label="first name" value="{{customer.shipping_first_name}}"></paper-input>
-                <paper-input label="last name" value="{{customer.shipping_last_name}}"></paper-input>
+                <div class="twinfields">
+                  <paper-input label="first name" value="{{customer.shipping_first_name}}"></paper-input>
+                  <paper-input label="last name" value="{{customer.shipping_last_name}}"></paper-input>
+                </div>
                 <paper-input label="company" value="{{customer.shipping_company}}"></paper-input>
-                <paper-input label="telephone" value="{{customer.shipping_phone}}"></paper-input>
-                <paper-input label="email" value="{{customer.shipping_email}}"></paper-input>
+                <div class="twinfields">
+                  <paper-input label="telephone" value="{{customer.shipping_phone}}"></paper-input>
+                  <paper-input label="email" value="{{customer.shipping_email}}"></paper-input>
+                </div>
                 <paper-input label="address" value="{{customer.shipping_address_1}}"></paper-input>
-                <paper-input label="city" value="{{customer.shipping_city}}"></paper-input>
-                <paper-input label="state" value="{{customer.shipping_state}}"></paper-input>
-                <paper-input label="country" value="{{customer.shipping_country}}"></paper-input>
-                <paper-input label="postal_code" value="{{customer.shipping_postcode}}"></paper-input>
+                <div class="twinfields">
+                  <paper-input label="city" value="{{customer.shipping_city}}"></paper-input>
+                  <paper-input label="state" value="{{customer.shipping_state}}"></paper-input>
+                </div>
+                <div class="twinfields">
+                  <paper-input label="country" value="{{customer.shipping_country}}"></paper-input>
+                  <paper-input label="postal_code" value="{{customer.shipping_postcode}}"></paper-input>
+                </div>
               </form>  
             </div>
             <div id="totals">
