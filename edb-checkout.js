@@ -4,6 +4,10 @@
   var app;
   var Checkout = {}, Guest = {
     name: 'guest',
+    billing_first_name: '',
+    billing_last_name: '',
+    billing_company: '',
+    billing_phone: '18888888888',
     billing_address_1: '',
     billing_address_2: '',
     billing_city: '',
@@ -15,6 +19,10 @@
     billing_phone: '',
     billing_postcode: '',
     billing_state: '',
+    shipping_first_name: '',
+    shipping_last_name: '',
+    shipping_company: '',
+    shipping_phone: '',
     shipping_address_1: '',
     shipping_address_2: '',
     shipping_city: '',
@@ -202,7 +210,7 @@
     if (!user) {
       Customer = Guest;
     } else {
-      Customer = Object.assign(Guest, user);
+      Customer = Object.assign(Guest, user.customer_meta);
     }
     updateApp();
   }
