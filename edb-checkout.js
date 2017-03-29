@@ -108,7 +108,7 @@
       
       
       
-      app.set('customer', Customer );
+      app.set('customer', window.CurrenUser ? window.CurrenUser.customer_meta : Guest );
       
       app.set('cart', Object.keys(Cart).map(function(uuid) {
         return Cart[uuid];
@@ -292,8 +292,10 @@
 
 
     loadSessionCart();
+    
     updateApp();
-    console.log('EDB',EDB.Checkout)
+    
+    
 
   }
 
