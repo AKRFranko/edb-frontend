@@ -622,7 +622,8 @@
           console.log(this.get('authMode'))
         },
         handleAddressToggleChanged: function( event ){
-          console.log('handleAddressToggleChanged', event );
+          var el = Polymer.dom(event).localTarget;
+          console.log('handleAddressToggleChanged', el.checked );
         }, 
         _filterCatalog: function( filterVal ){
           var days30  =1000 * 60 * 60  * 24  * 30;
