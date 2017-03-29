@@ -106,7 +106,7 @@
     if(!app) return;
     app.debounce('updateApp', function() {
       
-      
+      console.log('setting customer', Customer );
       
       app.set('customer', Customer );
       
