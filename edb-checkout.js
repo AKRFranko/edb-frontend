@@ -416,7 +416,7 @@ Checkout.getPrice = function(productId, attributes) {
       return mods;
     }, 0 );
     console.log('returning basic price+bucket modifiers');
-    return price + mods;
+    return price + bucketModifiers;
     // var minBucketCount = entry.variation.attributes.reduce(function( min, attr) {
     //   if (!attr.bucket) return min;
     //   var price = attr.bucket[attr.option].variation.price;
