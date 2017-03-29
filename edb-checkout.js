@@ -193,7 +193,7 @@
     Object.keys(Cart).forEach( function( uuid ){
       var total = Cart[uuid].quantity * Checkout.getPrice( Cart[uuid].product.id, Cart[uuid].variation.attributes );
       subTotal += total;
-      return lines.push({ label: Cart[uuid].name + ' x' + item.quantity, value: total });
+      return lines.push({ label: Cart[uuid].name + ' x' + Cart[uuid].quantity, value: total });
     });
     lines.unshift( { label: 'subtotal', value: subTotal });
     lines.unshift( { label: 'total', value: subTotal + (0.15 * subTotal) });
