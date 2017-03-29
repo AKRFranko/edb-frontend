@@ -54,8 +54,8 @@
        line-height:1.2;
      }
      .cart-item-row{
-       width:100%;
-       min-width:300px;
+       /*width:100%;*/
+       width:300px;
        @apply(--layout-horizontal);
        @apply(--layout-justified);
      }
@@ -63,7 +63,7 @@
      .cart-item-body{
        box-sizing:border-box;
        padding:10px 10px;
-       width:100%;
+       /*width:100%;*/
        @apply(--layout-vertical);
      }
      .cart-item-content{
@@ -91,11 +91,13 @@
           </div>
         </template>
       </div>
-      
+      <div class="cart-item-formula">
+        
+      </div>
       <div class="cart-item-body">
-        <div class="cart-item-row">
+        
           <div class="cart-item-title">[[item.name]]</div><div class="cart-item-price">${{computeCartItemPrice(item)}}</div>  
-        </div>
+        
         <div class="cart-item-row">
         <div class="cart-item-subtitle">x[[item.quantity]]</div><div class="cart-item-total">${{computeCartItemTotal(item)}}</div>
         </div>
