@@ -195,8 +195,10 @@
       subTotal += total;
       return lines.push({ label: Cart[uuid].name + ' x' + Cart[uuid].quantity, value: total });
     });
+    
     lines.unshift( { label: 'subtotal', value: subTotal });
     lines.unshift( { label: 'total', value: subTotal + (0.15 * subTotal) });
+    
     return lines;    
     
   }
