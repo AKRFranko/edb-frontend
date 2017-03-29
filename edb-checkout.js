@@ -90,7 +90,7 @@
 
   function loadSessionCart() {
     var sessionCartKeys = Object.keys(localStorage).filter(function(key) {
-      return /^EDB_CART|/.test(key)
+      return /^EDB_CART/.test(key)
     });
     var h48 = 60 * 60 * 48 * 1000;
     var sessionItems = sessionCartKeys.map(function(key) {
