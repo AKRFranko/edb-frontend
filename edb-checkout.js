@@ -95,6 +95,7 @@
 
 
   function updateApp() {
+    if(!app) return;
     app.debounce('updateApp', function() {
       
       app.set('customer', Customer );
