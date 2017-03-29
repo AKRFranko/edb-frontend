@@ -336,10 +336,7 @@ EDB.getAuthUser = function(){
     if(EDB.polymerAuth){
       console.log('setting User', window.CurrentUser);
       EDB.polymerAuth.set('user', window.CurrentUser);
-      if(EDB.Checkout){
-        console.log('setting Customer')
-        EDB.Checkout.setCustomer( window.CurrentUser );
-      }
+      console.log('EDB.CHECKOUT',EDB.Checkout );
     }
   });
 };

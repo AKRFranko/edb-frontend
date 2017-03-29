@@ -35,19 +35,16 @@
       var auth = this;
       EDB.login( this.email, this.password ).then( function(){
         if(EDB.isAuthenticated()){
-          if(EDB.Checkout){
-            EDB.Checkout.setCustomer( window.CurrentUser );
-          }
+          
           auth.set('user', window.CurrentUser );
           auth.set('password', null)
           auth.set('passwordConfirmation', null)
         }else{
-          if(EDB.Checkout){
-            EDB.Checkout.setCustomer( null );
-          }
+          
           auth.set('user', null );
         }
         auth.set('isAuthenticated', EDB.isAuthenticated());
+        
       });
     },
     register: function(  ){
@@ -59,9 +56,9 @@
     logout: function(  ){
       var auth = this;
       EDB.logout().then( function(){
-        if(EDB.Checkout){
-          EDB.Checkout.setCustomer( null );
-        }
+        // if(EDB.Checkout){
+        //   EDB.Checkout.setCustomer( null );
+        // }
         auth.set('user', null );
         auth.set('isAuthenticated', false);
       });
