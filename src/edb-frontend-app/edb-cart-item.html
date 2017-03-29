@@ -162,8 +162,9 @@
           if(qty == this.get('wantedQty')){
             return;
           }
+          var item = this.get('item');
+          EDB.Checkout.updateCartItemQuantity( item.product.id, item.variation.attributes, qty );
           
-          console.log('setQuantity',qty);
         },
         decrQty: function(){
           var q = this.get('wantedQty');
