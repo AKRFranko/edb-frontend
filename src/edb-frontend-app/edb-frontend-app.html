@@ -209,11 +209,12 @@
       }
       #addressForms form .title{
         @apply(--paper-font-title);
-        
+        margin-bottom:20px;
         
       }
-      #addressForms form .title + paper-toggle-button{
-        margin-bottom:20px;
+      #addressForms form .title paper-toggle-button{
+        @apply(--edb-font-body);
+        font-weight:normal;
       }
       #cart > .title{
         @apply(--paper-font-title);
