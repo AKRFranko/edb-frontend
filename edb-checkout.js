@@ -130,7 +130,7 @@
       
       console.log('updateApp', app.get('cart'));
 
-    })
+    },10);
 
 
   }
