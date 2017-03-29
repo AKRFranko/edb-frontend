@@ -211,7 +211,7 @@
         @apply(--paper-font-title);
         margin-bottom:20px;
       }
-      #cart .title{
+      #cart > .title{
         @apply(--paper-font-title);
         padding:20px 40px;
       }
@@ -293,7 +293,7 @@
               </form>
               <form id="shipping">
                 <div class="title">Shipping Address</div>
-                
+                <paper-toggle-button on-change="handleAddressToggleChanged" checked$="{{customer.useBillingAddressForShipping}}">use same address as billing</paper-toggle-button>
                 <paper-input label="first name" value="{{customer.shipping_first_name}}"></paper-input>
                 <paper-input label="last name" value="{{customer.shipping_last_name}}"></paper-input>
                 <paper-input label="company" value="{{customer.shipping_company}}"></paper-input>
