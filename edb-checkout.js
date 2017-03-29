@@ -447,13 +447,13 @@ Checkout.getPrice = function(productId, attributes) {
       if (!attr.bucket) return mods;
       var mod = attr.bucket[attr.option].variation.price;
       if(!isNaN(mod)){
-        return mods+mod;
+        return Number(mods)+Number(mod);
       }
       return mods;
     }, 0 );
     
     // console.log('returning basic price+bucket modifiers');
-    return price + bucketModifiers;
+    return Number(price) + Number(bucketModifiers);
     
   }
 }
