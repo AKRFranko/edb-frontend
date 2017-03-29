@@ -211,6 +211,10 @@
         @apply(--paper-font-title);
         margin-bottom:20px;
       }
+      #cart .title{
+        @apply(--paper-font-title);
+        margin-bottom:20px;
+      }
       edb-cart-item{
         border-bottom:1px solid #ccc;
       }
@@ -261,6 +265,7 @@
           </section>
           
           <section id="cart">
+            <div class="title">Cart</div>
             <template is="dom-repeat" items="{{cart}}" as="cartItem">
               <div class="cart-item">
                 <edb-cart-item item="[[cartItem]]" materials="[[material.items]]">
@@ -274,6 +279,7 @@
             <div id="addressForms">
               <form id="billing">
                 <div class="title">Billing Address</div>
+                <paper-toggle-button checked$="{{customer.useBillingAddressForShipping}}">use same address for shipping</paper-toggle-button>
                 <paper-input label="first name" value="{{customer.billing_first_name}}"></paper-input>
                 <paper-input label="last name" value="{{customer.billing_last_name}}"></paper-input>
                 <paper-input label="company" value="{{customer.billing_company}}"></paper-input>
