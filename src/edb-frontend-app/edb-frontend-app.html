@@ -575,12 +575,12 @@
           }
           
         },
-        observers: ['routePage(route,routeData)','closeAuthDialog(user)','setCustomer(user)','setSelectedProductId(singleProductData.id)'],
+        observers: ['routePage(route,routeData)','closeAuthDialog(user)','setCustomer(user.*)','setSelectedProductId(singleProductData.id)'],
         closeAuthDialog: function( user ){
           this.$.authDialog.close();
         },
         setCustomer: function( user ){
-          EDB.Checkout.setCustomer( user );
+          EDB.Checkout.setCustomer( this.get('user') );
         },
         setSelectedProductId: function( id ){
           if(this.get('product')){
