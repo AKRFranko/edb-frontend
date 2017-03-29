@@ -111,13 +111,15 @@
       
       app.set('customer',Customer);
       
-      app.set('cart', Object.keys(Cart).map(function(uuid) {
-        return Cart[uuid];
-      }));
+      app.set('cart', [] );
+      app.set('catalog', []);
+      // app.set('cart', Object.keys(Cart).map(function(uuid) {
+      //   return Cart[uuid];
+      // }));
 
-      app.set('catalog', Object.keys(Catalog).map(function(uuid) {
-        return Catalog[uuid];
-      }));
+      // app.set('catalog', Object.keys(Catalog).map(function(uuid) {
+      //   return Catalog[uuid];
+      // }));
 
       app.get('cart').forEach(function(item, index) {
         Object.keys(item).forEach(function(k) {
