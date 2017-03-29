@@ -106,7 +106,7 @@
     if(!app) return;
     app.debounce('updateApp', function() {
       
-      console.log('Customer',Customer);
+      
       
       app.set('customer', Customer );
       
@@ -209,6 +209,7 @@
   }
 
   Checkout.setCustomer = function setCustomer(user) {
+    console.log('setCustomer', user );
     user = user ||window.CurrentUser;
     if (!user) {
       Customer = Guest;
