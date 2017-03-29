@@ -200,13 +200,23 @@
         width:100%;
         padding:20px;
         @apply(--layout-horizontal);
+        border-top:1px solid #000;
       }
       #addressForms form{
         @apply(--layout-vertical);
         width:50%;
         padding:20px;
       }
-      
+      #addressForms form .title{
+        @apply(--paper-font-title);
+        margin-bottom:20px;
+      }
+      edb-cart-item{
+        border-bottom:1px solid #ccc;
+      }
+      edb-cart-item:last-of-type{
+        border:0;
+      }
       .centered-text{
         max-width:700px;
         padding:40px;
@@ -277,6 +287,7 @@
               </form>
               <form id="shipping">
                 <div class="title">Shipping Address</div>
+                
                 <paper-input label="first name" value="{{customer.shipping_first_name}}"></paper-input>
                 <paper-input label="last name" value="{{customer.shipping_last_name}}"></paper-input>
                 <paper-input label="company" value="{{customer.shipping_company}}"></paper-input>
