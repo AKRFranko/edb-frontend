@@ -293,7 +293,7 @@
 
     loadSessionCart();
     updateApp();
-    console.log('EDB.polymerAuth',EDB.polymerAuth)
+    console.log('EDB',EDB)
 
   }
 
