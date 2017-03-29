@@ -98,7 +98,7 @@
     sessionItems.forEach(function(item) {
       Checkout.addToCart(item.pid, item.attributes, item.quantity);
     });
-    console.log('sessionItems', sessionItems);
+    // console.log('sessionItems', sessionItems);
   }
 
 
@@ -228,7 +228,7 @@
 
   Checkout.setCustomer = function setCustomer(user) {
     user = user;
-    console.log('setCustomer', user );
+    // console.log('setCustomer', user );
     
     if (!user) {
       Customer = Guest;
@@ -262,11 +262,11 @@
       var hasBucketAttributes = Checkout.productHasBucketAttributes(product);
       if (!hasBucketAttributes) {
         console.error(new Error('Unhanded: NOT productHasBucketAttributes'));
-        console.log(product);
+        // console.log(product);
         addCatalogEntry(product, {}, product.variations);
 
       } else {
-        console.log('productHasBucketAttributes')
+        // console.log('productHasBucketAttributes')
         var buckets = Checkout.getProductAttributeBuckets(product);
         Object.keys(buckets).forEach(function(bucketSlug) {
           var bucket = buckets[bucketSlug];
@@ -321,7 +321,7 @@
 
 
   Checkout.updateCartItemQuantity = function( productId, attributes, qty ){
-    console.log('updateCartItemQuantity')
+    // console.log('updateCartItemQuantity')
     var uuid = tokenizeAttr(productId, attributes)
     var cartItem = Cart[uuid];
     if(cartItem){
@@ -393,7 +393,7 @@
       }
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
       if (!hasBuckets) {
-        console.log('returning variation stock, cartItem:', cartItem);
+        // console.log('returning variation stock, cartItem:', cartItem);
         return entry.variation.stock_quantity;
       }
       var minBucketCount = entry.variation.attributes.reduce(function(min, attr) {
@@ -412,7 +412,7 @@
 
 Checkout.getPrice = function(productId, attributes) {
   if (!attributes) {
-    console.log('not attributes', productId, attributes);
+    // console.log('not attributes', productId, attributes);
   } else {
 
     var uuid = tokenizeAttr(productId, attributes);
@@ -426,7 +426,7 @@ Checkout.getPrice = function(productId, attributes) {
     var price = entry.product.price || entry.variation.price;
     var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
     if (!hasBuckets) {
-      console.log('returning basic price');
+      // console.log('returning basic price');
       return price;
     }
     
@@ -439,7 +439,7 @@ Checkout.getPrice = function(productId, attributes) {
       return mods;
     }, 0 );
     
-    console.log('returning basic price+bucket modifiers');
+    // console.log('returning basic price+bucket modifiers');
     return price + bucketModifiers;
     
   }
