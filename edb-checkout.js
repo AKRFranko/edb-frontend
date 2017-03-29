@@ -212,6 +212,7 @@
     
     user = user ||window.CurrentUser;
     console.log('setCustomer', user );
+    
     if (!user) {
       Customer = Guest;
     } else {
