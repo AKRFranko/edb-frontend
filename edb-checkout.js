@@ -105,7 +105,7 @@
   function updateApp() {
     if(!app) return;
     app.debounce('updateApp', function() {
-      console.log('Customer',Customer);
+      // console.log('Customer',window.CurrentUser);
       app.set('customer', Customer );
       
       app.set('cart', Object.keys(Cart).map(function(uuid) {
@@ -130,7 +130,7 @@
       
       console.log('updateApp', app.get('cart'));
 
-    },10);
+    })
 
 
   }
