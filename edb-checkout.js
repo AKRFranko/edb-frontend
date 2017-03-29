@@ -97,7 +97,7 @@
   function updateApp() {
     if(!app) return;
     app.debounce('updateApp', function() {
-      
+      console.log('Customer',Customer);
       app.set('customer', Customer );
       
       app.set('cart', Object.keys(Cart).map(function(uuid) {
