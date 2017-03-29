@@ -144,11 +144,11 @@
             notify: true
           },
           
-        wantedQty: {
-          type: Number,
-          notify: true,
-          value: null
-        }
+          wantedQty: {
+            type: Number,
+            notify: true,
+            value: null
+          }
         },
         observers: ['setQuantity(wantedQty)'],
         setQuantity: function(qty){
