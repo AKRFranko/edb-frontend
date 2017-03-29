@@ -188,7 +188,10 @@
   }
 
   Checkout.computeCartTotals = function(){
-    console.log('computeCartTotals', Cart, Customer );
+    app.debounce('computeCartTotals', function(){
+      console.log('computeCartTotals', Cart, Customer );  
+    })
+    
     
   }
 
