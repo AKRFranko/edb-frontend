@@ -113,6 +113,7 @@
       
       // app.set('cart', [] );
       // app.set('catalog', []);
+      
       app.set('cart', Object.keys(Cart).map(function(uuid) {
         return Cart[uuid];
       }));
