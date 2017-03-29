@@ -196,7 +196,7 @@
       return lines.push({ label: Cart[uuid].name + ' x' + item.quantity, value: total });
     });
     lines.unshift( { label: 'subtotal', value: subTotal });
-    lines.unshift( { label: 'total', value: subTotal + ' + tax' });
+    lines.unshift( { label: 'total', value: subTotal + (0.15 * subTotal) });
     return lines;    
     
   }
