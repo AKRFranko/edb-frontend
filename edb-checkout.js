@@ -118,11 +118,13 @@
         return Cart[uuid];
       }));
       
-      if(!app.get('catalog').length){
+      if(!app.catalog){
         app.set('catalog', Object.keys(Catalog).map(function(uuid) {
           return Catalog[uuid];
-        }));  
+        }));    
       }
+      
+      
       
 
       app.get('cart').forEach(function(item, index) {
