@@ -263,6 +263,10 @@
         @apply(--layout-center);
         @apply(--layout-justified);
       }
+      .todo{
+        opacity:0.5;
+        background:#eee;
+      }
     </style>
     <!-- app-location binds to the app's URL -->
     <app-location route="{{route}}" use-hash-as-path></app-location>
@@ -351,11 +355,11 @@
                   <paper-input label="postal_code" value="{{customer.shipping_postcode}}"></paper-input>
                 </div>
               </form>  
-              <form id="payment">
+              <form id="payment" class="todo">
                 <div class="title">Payment</div>
                 <div class="twinfields">
-                <paper-input readonly label="first name" value="[[customer.billing_first_name]]"></paper-input>
-                <paper-input readonly label="last name" value="[[customer.billing_last_name]]"></paper-input>
+                <paper-input read-only label="first name" value="[[customer.billing_first_name]]"></paper-input>
+                <paper-input read-only label="last name" value="[[customer.billing_last_name]]"></paper-input>
                 </div>
                 <gold-cc-input label="Credit Card Number" value="{{customer.CC}}"></gold-cc-input>
                 <div class="twinfields">
@@ -363,9 +367,9 @@
                   <gold-cc-expiration-input label="Expiration" value="{{customer.CC_EXP}}"></gold-cc-expiration-input>
                 </div>
               </form>
-              <form id="payment">
+              <form id="payment" class="todo">
                 <div class="title">Coupon</div>
-                <div class="todo">...</div>
+                <div>...</div>
               </form>
             </div>
             
