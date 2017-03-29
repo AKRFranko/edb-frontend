@@ -91,17 +91,12 @@
           </div>
         </template>
       </div>
-      <div class="cart-item-formula">
-        
-      </div>
+      
       <div class="cart-item-body">
         
-          <div class="cart-item-title">[[item.name]]</div><div class="cart-item-price">${{computeCartItemPrice(item)}}</div>  
-        
-        <div class="cart-item-row">
-        <div class="cart-item-subtitle">x[[item.quantity]]</div><div class="cart-item-total">${{computeCartItemTotal(item)}}</div>
-        </div>
-        
+        <div class="cart-item-title">[[item.name]]</div>
+        <div class="cart-item-subtitle">x[[item.quantity]]</div>
+        <div class="cart-item-total">${{computeCartItemTotal(item)}}</div>
         <div class="cart-item-content">
           <content></content>
         </div>
