@@ -95,7 +95,7 @@
       // console.log('JWT' ,this.JWT)
        headers['Authorization'] = 'Bearer ' + this.JWT;
     } else if(this.authKey && this.authSecret){
-      headers['Authorization'] = 'Basic ' + window.btoa( this.authKey + ":" + this.authSecret );  
+      // headers['Authorization'] = 'Basic ' + window.btoa( this.authKey + ":" + this.authSecret );  
       // console.log('CONSUMER TOKENS' ,this.consumerKey , this.consumerSecret)
       //  headers['Authorization'] = 'Basic ' + window.btoa( this.consumerKey + ":" + this.consumerSecret );  
     }
