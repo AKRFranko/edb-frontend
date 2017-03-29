@@ -1,7 +1,7 @@
 (function(EDB){
   if(!EDB) throw new Error('Missing EDB namespace.');
   var app;
-  console.log('EDB.CHECKOUT',EDB.Checkout);
+  var setCustomer = EDB.Checkout.setCustomer;
   EDB.PolymerAuth = Polymer({
     is: 'edb-auth',
     properties: {
@@ -40,8 +40,9 @@
           auth.set('user', window.CurrentUser );
           auth.set('password', null)
           auth.set('passwordConfirmation', null)
+          setCustomer( window.CurrentUser );
         }else{
-          
+          setCustomer( null);
           auth.set('user', null );
         }
         auth.set('isAuthenticated', EDB.isAuthenticated());
@@ -60,6 +61,7 @@
         // if(EDB.Checkout){
         //   EDB.Checkout.setCustomer( null );
         // }
+        setCustomer( null );
         auth.set('user', null );
         auth.set('isAuthenticated', false);
       });
