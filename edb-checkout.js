@@ -188,10 +188,11 @@
   }
 
   Checkout.computeCartTotals = function(){
-    app.debounce('computeCartTotals', function(){
-      console.log('computeCartTotals', Cart, Customer );  
-    })
     
+    return Object.keys(Cart).map( function( uuid ){
+      return { label: Cart[uuid].name, value:Cart[uuid].quantity * Checkout.getPrice( Cart[uuid].product.id, Cart[uuid].variation.attributes )}
+    });
+        
     
   }
 
