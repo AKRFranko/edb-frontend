@@ -55,6 +55,9 @@
        @apply(--edb-font-body);
        line-height:1.2;
      }
+     .cart-item-rown{
+       @apply(--layout-horizontal);
+     }
      
      .cart-item-body{
        box-sizing:border-box;
@@ -88,10 +91,13 @@
       </div>
       
       <div class="cart-item-body">
-        <div hidden$="[[!item.name]]" class="cart-item-title">[[item.name]]</div>
-        <div hidden$="[[!item.quantity]]" class="cart-item-subtitle">x[[item.quantity]]</div>
-        <div class="cart-item-price">{{computeCartItemPrice(item)}}</div>
-        <div class="cart-item-total">{{computeCartItemTotal(item)}}</div>
+        <div class="cart-item-row">
+          <div class="cart-item-title">[[item.name]]</div><div class="cart-item-price">{{computeCartItemPrice(item)}}</div>  
+        </div>
+        <div class="cart-item-row">
+        <div class="cart-item-subtitle">x[[item.quantity]]</div><div class="cart-item-total">{{computeCartItemTotal(item)}}</div>
+        </div>
+        
         <div class="cart-item-content">
           <content></content>
         </div>
