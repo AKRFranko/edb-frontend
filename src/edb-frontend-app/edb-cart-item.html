@@ -138,7 +138,7 @@
           
         },
         computeCartItemPrice: function( item ){
-          return EDB.checkout.getPrice( item.product.id, item.variation.attributes );
+          return EDB.Checkout.getPrice( item.product.id, item.variation.attributes );
         },
         computeCartItemTotal: function( item ){
           var price = this.computeCartItemPrice( item );
