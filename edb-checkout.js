@@ -407,6 +407,7 @@ Checkout.getPrice = function(productId, attributes) {
       console.log('returning basic price');
       return price;
     }
+    
     var bucketModifiers = entry.variation.attributes.reduce(function( mods, attr) {
       if (!attr.bucket) return mods;
       var mod = attr.bucket[attr.option].variation.price;
@@ -415,19 +416,10 @@ Checkout.getPrice = function(productId, attributes) {
       }
       return mods;
     }, 0 );
+    
     console.log('returning basic price+bucket modifiers');
     return price + bucketModifiers;
-    // var minBucketCount = entry.variation.attributes.reduce(function( min, attr) {
-    //   if (!attr.bucket) return min;
-    //   var price = attr.bucket[attr.option].variation.price;
-    //   if (qty === null) return min;
-    //   if (min === null) return qty;
-    //   if (qty < min) return qty;
-    //   return min;
-    // }, null);
-    var variationQty = entry.variation.stock_quantity === null ? 0 : entry.variation.stock_quantity;
-    // console.log('returning min stock, cartITem', cartItem );
-    return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) - cartItemQty;
+    
   }
 }
 
