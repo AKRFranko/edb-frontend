@@ -54,7 +54,10 @@
        line-height:1.2;
      }
      .cart-item-total{
-       
+       border-top: 1px solid #000;
+       margin: 5px 0;
+       padding: 5px 0;
+       text-align: right;
      }
      .cart-item-row{
        /*width:100%;*/
@@ -100,13 +103,14 @@
         <div class="cart-item-title">[[item.name]]</div>
         <div class="cart-item-subtitle">x[[item.quantity]]</div>
         <div class="cart-item-total">${{computeCartItemTotal(item)}}</div>
-        <div class="cart-item-content">
-          <content></content>
-        </div>
+        
         
       </div>
+      <div class="cart-item-content">
+        <content></content>
+      </div>
       
-      <paper-ripple></paper-ripple>
+      
     </div>
     
   </template>
