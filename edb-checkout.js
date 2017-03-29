@@ -350,6 +350,7 @@
         cartItem.quantity = cartItem.quantity + qty;
         localStorage.setItem('EDB_CART|' + uuid, JSON.stringify({
           pid: productId,
+          
           stored: Date.now(),
           attributes: attributes,
           quantity: cartItem.quantity
@@ -368,6 +369,7 @@
         
         localStorage.setItem('EDB_CART|' + uuid, JSON.stringify({
           pid: productId,
+          
           stored: Date.now(),
           attributes: attributes,
           quantity: qty
