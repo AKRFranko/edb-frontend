@@ -208,6 +208,8 @@
     });
     
     lines.unshift( { label: 'subtotal', value: subTotal });
+    lines.unshift( { label: 'tax', value: (0.15 * subTotal) });
+    lines.unshift( { label: 'shipping', value: 0 });
     lines.unshift( { label: 'total', value: subTotal + (0.15 * subTotal) });
     
     return lines;    
