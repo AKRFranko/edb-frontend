@@ -196,12 +196,24 @@
         color:#fff;
       }
       
-      #addressForms{
+      #addressForms,#totals{
         width:100%;
         padding:20px;
         @apply(--layout-horizontal);
         @apply(--layout-wrap);
         border-top:1px solid #000;
+      }
+      #totals{
+        @apply(--layout-vertical);
+        
+      }
+      #totals .line{
+        @apply(--layout-horizontal);
+        
+      }
+      #totals .line .value{
+        @apply(--layout-flex);
+        text-align:right;
       }
       #addressForms form{
         @apply(--layout-vertical);
@@ -350,6 +362,10 @@
                   <gold-cc-cvc-input label="Verification" value="{{customer.CC_CVC}}"></gold-cc-cvc-input>
                   <gold-cc-expiration-input label="Expiration" value="{{customer.CC_EXP}}"></gold-cc-expiration-input>
                 </div>
+              </form>
+              <form id="payment">
+                <div class="title">Coupon</div>
+                <div class="todo">...</div>
               </form>
             </div>
             
