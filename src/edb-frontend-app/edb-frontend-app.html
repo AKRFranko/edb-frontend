@@ -200,6 +200,7 @@
         width:100%;
         padding:20px;
         @apply(--layout-horizontal);
+        @apply(--layout-wrap);
         border-top:1px solid #000;
       }
       #addressForms form{
@@ -338,10 +339,8 @@
                   <paper-input label="postal_code" value="{{customer.shipping_postcode}}"></paper-input>
                 </div>
               </form>  
-            </div>
-            <div id="payment">
-              <div class="title">Payment</div>
               <form id="payment">
+                <div class="title">Payment</div>
                 <div class="twinfields">
                 <paper-input readonly label="first name" value="[[customer.billing_first_name]]"></paper-input>
                 <paper-input readonly label="last name" value="[[customer.billing_last_name]]"></paper-input>
@@ -353,6 +352,7 @@
                 </div>
               </form>
             </div>
+            
             <div id="totals">
               <div class="title">Totals</div>
               <template is="dom-repeat" items="{{computeCartTotals(cart,customer,cart.*,customer.*)}}" as="line">
