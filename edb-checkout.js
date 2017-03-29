@@ -97,7 +97,8 @@
   function updateApp() {
     app.debounce('updateApp', function() {
       
-
+      app.set('customer', Customer );
+      
       app.set('cart', Object.keys(Cart).map(function(uuid) {
         return Cart[uuid];
       }));
@@ -202,7 +203,7 @@
     } else {
       Customer = Object.assign(Guest, user);
     }
-    app.set('customer', Customer );
+    updateApp();
   }
 
   Checkout.init = function loadProducts(polymerApp, products) {
