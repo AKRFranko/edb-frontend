@@ -339,7 +339,14 @@
                 </div>
               </form>  
             </div>
+            <div id="payment">
+              <div class="title">Payment</div>
+              <form id="payment">
+                
+              </form>
+            </div>
             <div id="totals">
+              <div class="title">Totals</div>
               <template is="dom-repeat" items="{{computeCartTotals(cart,customer,cart.*,customer.*)}}" as="line">
                 <div class="line">
                   <div class="line-label">{{line.label}}</div>

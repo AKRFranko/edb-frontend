@@ -30,7 +30,8 @@
     "app-route": "PolymerElements/app-route#^0.9.3",
     "paper-dialog": "^1.1.0",
     "paper-dialog-lite": "ryanburns23/paper-dialog-lite#^1.0.0",
-    "neon-animation": "^1.2.4"
+    "neon-animation": "^1.2.4",
+    "gold-elements": "^1.0.1"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
