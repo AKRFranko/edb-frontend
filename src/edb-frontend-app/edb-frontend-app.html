@@ -312,6 +312,14 @@
                 <paper-input label="postal_code" value="{{customer.shipping_postcode}}"></paper-input>
               </form>  
             </div>
+            <div id="totals">
+              <template is="dom-repeat" items="{{computeCartTotals(cart,customer,cart.*,customer.*)}}" as="line">
+                <div class="line">
+                  <div class="line-label">{{line.label}}</div>
+                  <div class="line-value">{{line.value}}</div>
+                </div>
+              </template>
+            </div>
             
             
           </section>
@@ -628,6 +636,9 @@
           console.log('handleAddressToggleChanged', el.checked );
           this.set('customer.useBillingAddressForShipping', el.checked);
         }, 
+        computeCartTotals: function(){
+          return EDB.Checkout.computeCartTotals();
+        },
         _filterCatalog: function( filterVal ){
           var days30  =1000 * 60 * 60  * 24  * 30;
           return function( entry ) {

@@ -186,7 +186,10 @@
     return proxy;
   }
 
-
+  Checkout.computeCartTotals = function(){
+    console.log('computeCartTotals', Cart, Customer );
+    
+  }
 
   Checkout.productHasBucketAttributes = function productHasBucketAttributes(product) {
     return product.attributes.some(function(attribute) {
