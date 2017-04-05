@@ -445,7 +445,7 @@
           
           var price = EDB.Checkout.getPrice( product.id, this.get('attributes'));
           console.log('productChanged', product, price);
-          this.set('price', price );
+          this.set('price', price||product.price );
           // this.set('slides', this.createProductSlides(product,this.get('materials')) );
           this.$.slideWrapper.innerHTML='';
           var slider = document.createElement('edb-slider');
