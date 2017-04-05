@@ -306,7 +306,7 @@
           
          <div class="header-split">
            <!--<div class="cart-item-total">${{product.price}}</div>-->
-            <edb-slider id="slider" layout="[[layout]]" loading="false" slides="{{createProductSlides(product,materials)}}"></edb-slider>
+            <edb-slider id="slider" layout="[[layout]]" loading="false" slides="{{slides}}"></edb-slider>
             <div id="productMenu">
               <div class="group">
                 <div class="name">{{product.name}}</div>
@@ -404,6 +404,13 @@
             },
             notify: true
           },
+          slides: {
+            type: Array,
+            value: function(){
+              return [];
+            },
+            notify: true
+          },
           attributes: {
             type: Object,
             value: function(){
@@ -426,7 +433,8 @@
           var price = EDB.Checkout.getPrice( product.id, this.get('attributes'));
           console.log('productChanged', product, price);
           this.set('price', price );
-          this.$.slider.set('slides', this.createProductSlides(product,this.get('materials')));
+          this.set('slides', this.createProductSlides(product,this.get('materials')) );
+          // this.$.slider.set('slides', );
           
         },
         getVariationAttributeValue: function( v, attr, idx, prop ){
