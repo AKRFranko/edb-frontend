@@ -428,7 +428,7 @@
 
 Checkout.getPrice = function(productId, attributes) {
   if (!attributes) {
-    // console.log('not attributes', productId, attributes);
+    console.log('not attributes', productId, attributes);
   } else {
 
     var uuid = tokenizeAttr(productId, attributes);
