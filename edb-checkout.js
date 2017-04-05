@@ -81,7 +81,7 @@
 
   // remove 99x99 from variation name;
   function removeDim(str) {
-    return str.replace(/\d+x\d+/, '');
+    return (str||'').replace(/\d+x\d+/, '');
   }
   // create variation name
   function fullName(product, option) {

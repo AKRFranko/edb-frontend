@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>edb-frontend</title>
+    <meta name="description" content="edb-frontend description">
+
+
+    <!-- See https://goo.gl/OOhYW5 -->
+    <link rel="manifest" href="./manifest.json">
+
+    <script src="./bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="./bower_components/querystring-json/dest/querystring-json.js"></script>
+    <script>
+      window.creds = {};
+      window.creds.apiHost = "http://installatex.ca/wp-json";
+      window.creds.apiNamespace = "wp/v2";
+      window.creds.authKey="ck_9e5fec29072841e84c71941f9573282d91b27d58";
+      window.creds.authSecret="cs_1d32e22fafa026f328b7ad78a247af68cea1d141";
+    </script>
+    
+    <link rel="import" href="./bower_components/wp-rest/wp-rest.html">    
+    
+    <script src="./edb-magic.js"></script>
+    <style>
+
+    </style>
+    
+  </head>
+  <body>
+      <script>window.EDB.Magic.init();</script>
+  </body>
+</html>
