@@ -305,12 +305,12 @@
         <div class="header-inner">
           
          <div class="header-split">
-           <div class="cart-item-total">${{product.price}}</div>
+           <!--<div class="cart-item-total">${{product.price}}</div>-->
             <edb-slider layout="[[layout]]" loading=false slides="{{createProductSlides(product,materials)}}"></edb-slider>
             <div id="productMenu">
               <div class="group">
                 <div class="name">{{product.name}}</div>
-                <div class="price">{{formatMoney(product.price)}}</div>
+                <div class="price">{{formatMoney(product.price,product)}}</div>
               </div>
               <div class="product-options">
                 <template is="dom-repeat" items="{{computeAttributes(product,materials)}}" as="attribute">
@@ -510,7 +510,8 @@
           // return [];
           return (item.images).map( function( i ){ return { image: i }; });
         },
-        formatMoney: function( amount ){
+        formatMoney: function( amount , p){
+          console.log('formatMoney', p)
           return EDB.format.money( amount );
         },
         updateAttributesFromQueryString: function(){
