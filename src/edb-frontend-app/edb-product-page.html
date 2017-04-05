@@ -426,7 +426,7 @@
           var price = EDB.Checkout.getPrice( product.id, this.get('attributes'));
           console.log('productChanged', product, price);
           this.set('price', price );
-          this.$.repeat.slides = createProductSlides(product,this.get('materials'))
+          this.$.repeater.slides = createProductSlides(product,this.get('materials'))
         },
         getVariationAttributeValue: function( v, attr, idx, prop ){
           return v.attributes[idx][prop];
