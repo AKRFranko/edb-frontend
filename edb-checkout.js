@@ -459,10 +459,11 @@ Checkout.getPrice = function(productId, attributes) {
   } else {
 
     var uuid = tokenizeAttr(productId, attributes);
-    console.log('getPrice', uuid)
+    
     
     var entry = Blackboard[uuid];
     var cartItem = Cart[uuid];
+    console.log('getPrice', uuid, entry)
     // console.log('getSTock', cartItem);
     if (!entry) {
       // console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
