@@ -434,6 +434,7 @@ Checkout.getPrice = function(productId, attributes) {
 
     var uuid = tokenizeAttr(productId, attributes);
     console.log('getPrice', uuid)
+    
     var entry = Blackboard[uuid];
     var cartItem = Cart[uuid];
     // console.log('getSTock', cartItem);
