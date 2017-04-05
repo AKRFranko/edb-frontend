@@ -37,6 +37,18 @@
       write: 'variations'
     },
     {
+      read: 'price',
+      write: 'price'
+    },
+    {
+      read: 'regular_price',
+      write: 'regular_price'
+    },
+    {
+      read: 'sale_price',
+      write: 'sale_price'
+    },
+    {
       read: 'categories',
       write: 'categories'
     },{
