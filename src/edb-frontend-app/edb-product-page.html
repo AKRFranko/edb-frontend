@@ -487,7 +487,7 @@
           var value =attributes[attribute.name];
           var index = attribute.options.indexOf(value);
           console.log('setSelectedAttribute',key,index)
-          return attribute.options[index];
+          return index;
           
         },
         computeAttributes: function( product,materials ){
