@@ -310,7 +310,7 @@
             <div id="productMenu">
               <div class="group">
                 <div class="name">{{product.name}}</div>
-                <div class="price">${{product.price}}</div>
+                <div class="price">{{price}}</div>
               </div>
               <div class="product-options">
                 <template is="dom-repeat" items="{{computeAttributes(product,materials)}}" as="attribute">
@@ -392,6 +392,11 @@
             
             notify: true
           },
+          price: {
+            type: Number,
+            notify: true,
+            value: null
+          },
           materials: {
             type: Array,
             value: function(){
@@ -418,7 +423,7 @@
         observers: ['productChanged(product)'],
         productChanged: function(product){
           console.log('productChanged', product);
-          
+          this.set('price',EDB.Checkout.getPrice( product.id, this.get('attributes')));
         },
         getVariationAttributeValue: function( v, attr, idx, prop ){
           return v.attributes[idx][prop];
