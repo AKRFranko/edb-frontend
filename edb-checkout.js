@@ -252,6 +252,7 @@
     app = polymerApp;
 
     products.forEach(function(product, productIndex) {
+      
       if (product.meta.edb_is_bucket == '1') {
         Buckets[product.meta.edb_bucket_slug] = {};
         product.variations.forEach(function(variation, variationIndex) {
