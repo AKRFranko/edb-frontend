@@ -510,8 +510,8 @@
           // return [];
           return (item.images).map( function( i ){ return { image: i }; });
         },
-        formatMoney: function( amount , p){
-          console.log('formatMoney', p)
+        formatMoney: function( amount ){
+          console.log('formatMoney', this.get('product'))
           return EDB.format.money( amount );
         },
         updateAttributesFromQueryString: function(){
