@@ -324,8 +324,9 @@
           return 0;
         },
         logSlides: function(){
-          console.log('.$.repeater.notifyPath', this.slides);
-          this.$.repeater.notifyPath('items', this.slides );
+          // console.log('.$.repeater.notifyPath', this.slides);
+          // this.$.repeater.notifyPath('items', this.slides );
+          this.$.repeater.render();
         },
         __proxyPrev: function(){
           this.$.swiper._swiper.slidePrev();
