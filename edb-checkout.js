@@ -261,6 +261,7 @@
         });
       } else {
         if (product.variations.length == 0) {
+          console.log(product.meta_box)
           // console.log(product.name, 'has no variations but has attributes: ', product.attributes);
         }
         Products[product.id] = product;
@@ -317,6 +318,7 @@
 
       }
     });
+    
 
 
 
