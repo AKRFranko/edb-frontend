@@ -427,6 +427,7 @@
   }
 
 Checkout.getPrice = function(productId, attributes) {
+  console.log('getPrice', productId, attributes)
   if (!attributes) {
     // console.log('not attributes', productId, attributes);
   } else {
