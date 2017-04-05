@@ -261,7 +261,15 @@
         });
       } else {
         if (product.variations.length == 0) {
-          console.log(product);
+          if(product.meta.edb_group_ids){
+            var gids = product.meta.edb_group_ids.trim().split(',').map( function( id ){ return id.trim()});
+            Object.defineProperty(product, 'group', {
+              enumerable: true,
+              get: function(){
+                return gids.map( function( i ){ return Products[i] });
+              }
+            })
+          }
           // console.log(product.name, 'has no variations but has attributes: ', product.attributes);
         }
         Products[product.id] = product;
@@ -319,7 +327,7 @@
       }
     });
     
-
+    
 
 
     loadSessionCart();
