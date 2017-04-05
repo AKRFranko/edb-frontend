@@ -427,12 +427,13 @@
   }
 
 Checkout.getPrice = function(productId, attributes) {
-  console.log('getPrice', productId, attributes)
+  
   if (!attributes) {
     // console.log('not attributes', productId, attributes);
   } else {
 
     var uuid = tokenizeAttr(productId, attributes);
+    console.log('getPrice', uuid)
     var entry = Blackboard[uuid];
     var cartItem = Cart[uuid];
     // console.log('getSTock', cartItem);
