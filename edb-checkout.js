@@ -443,7 +443,7 @@ Checkout.getPrice = function(productId, attributes) {
     console.log('price', price );
     var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
     if (!hasBuckets) {
-      // console.log('returning basic price');
+      console.log('returning basic price');
       return price;
     }
     
@@ -456,7 +456,7 @@ Checkout.getPrice = function(productId, attributes) {
       return mods;
     }, 0 );
     
-    // console.log('returning basic price+bucket modifiers');
+    console.log('returning basic price+bucket modifiers');
     return Number(price) + Number(bucketModifiers);
     
   }
