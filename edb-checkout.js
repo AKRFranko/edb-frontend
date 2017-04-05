@@ -440,6 +440,7 @@ Checkout.getPrice = function(productId, attributes) {
       return null;
     }
     var price = entry.product.price || entry.variation.price;
+    console.log('price', price );
     var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
     if (!hasBuckets) {
       // console.log('returning basic price');
