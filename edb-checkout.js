@@ -463,7 +463,7 @@ Checkout.getPrice = function(productId, attributes) {
     
     var entry = Blackboard[uuid];
     var cartItem = Cart[uuid];
-    console.log('getPrice', uuid, entry)
+    console.log('getPrice', uuid, entry, Blackboard)
     // console.log('getSTock', cartItem);
     if (!entry) {
       // console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
