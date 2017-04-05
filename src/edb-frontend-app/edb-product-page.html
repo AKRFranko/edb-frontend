@@ -310,7 +310,7 @@
             <div id="productMenu">
               <div class="group">
                 <div class="name">{{product.name}}</div>
-                <div class="price">{{formatMoney(product.price,product)}}</div>
+                <div class="price">{{formatMoney(product.price)}}</div>
               </div>
               <div class="product-options">
                 <template is="dom-repeat" items="{{computeAttributes(product,materials)}}" as="attribute">
@@ -511,7 +511,7 @@
           return (item.images).map( function( i ){ return { image: i }; });
         },
         formatMoney: function( amount ){
-          console.log('formatMoney', this.get('product'))
+          // console.log('formatMoney', this.get('product'))
           return EDB.format.money( amount );
         },
         updateAttributesFromQueryString: function(){
