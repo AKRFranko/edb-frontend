@@ -308,11 +308,12 @@
               return [];
             },
             notify: true,
-            observer: 'logSlides'
+          
             
           } 
         
         },
+        observers: [ 'logSlides(slides,slides.length)'],
         sortByOrder: function( a, b){
           if (a.sortOrder < b.sortOrder) {
             return -1;
