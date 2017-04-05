@@ -279,6 +279,7 @@
 
     Object.keys(Products).forEach(function(productId) {
       var product = Products[productId];
+      console.log('group',product.group);
       var hasBucketAttributes = Checkout.productHasBucketAttributes(product);
       if (!hasBucketAttributes) {
         console.error(new Error('Unhanded: NOT productHasBucketAttributes'));
