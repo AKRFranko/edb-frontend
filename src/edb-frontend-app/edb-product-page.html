@@ -422,8 +422,10 @@
         },
         observers: ['productChanged(product)'],
         productChanged: function(product){
-          console.log('productChanged', product);
-          this.set('price',EDB.Checkout.getPrice( product.id, this.get('attributes')));
+          
+          var price = EDB.Checkout.getPrice( product.id, this.get('attributes'));
+          console.log('productChanged', product, price);
+          this.set('price', price );
         },
         getVariationAttributeValue: function( v, attr, idx, prop ){
           return v.attributes[idx][prop];

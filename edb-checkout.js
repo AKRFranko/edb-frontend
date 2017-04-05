@@ -428,7 +428,7 @@
 
 Checkout.getPrice = function(productId, attributes) {
   if (!attributes) {
-    console.log('not attributes', productId, attributes);
+    // console.log('not attributes', productId, attributes);
   } else {
 
     var uuid = tokenizeAttr(productId, attributes);
@@ -440,10 +440,10 @@ Checkout.getPrice = function(productId, attributes) {
       return null;
     }
     var price = entry.product.price || entry.variation.price;
-    console.log('price', price );
+    // console.log('price', price );
     var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
     if (!hasBuckets) {
-      console.log('returning basic price');
+      // console.log('returning basic price');
       return price;
     }
     
@@ -456,7 +456,7 @@ Checkout.getPrice = function(productId, attributes) {
       return mods;
     }, 0 );
     
-    console.log('returning basic price+bucket modifiers');
+    // console.log('returning basic price+bucket modifiers');
     return Number(price) + Number(bucketModifiers);
     
   }
