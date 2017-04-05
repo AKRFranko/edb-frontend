@@ -280,7 +280,8 @@
     Object.keys(Products).forEach(function(productId) {
       var product = Products[productId];
       if(product.group){
-        console.log('group',product);  
+        console.log('group',product);
+        
       }
       
       var hasBucketAttributes = Checkout.productHasBucketAttributes(product);
