@@ -188,7 +188,7 @@ var ResourceReference = function ResourceReference(options) {
     params = params || { };
     // params.context = 'view';
     params.per_page=params.per_page||100;
-    params.post_status='publish';
+    params.status='publish';
     var request = api.__request('GET', path, null, params);
     return request.then(function(items) {
       var results = loadCollection(items, converters);
