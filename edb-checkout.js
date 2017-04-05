@@ -283,7 +283,15 @@
         console.log('group',product);
         var attr = {};
         product.group.forEach( function( g ){
-          console.log(g.attributes);
+          g.attributes.forEach( function( a){
+            if(!attr[a.name]){
+              attr[a.name] = Object.assign( {}, a );
+            }
+          })
+          
+        });
+        product.attributes= Object.keys(attr).map( function(k){
+          return attr[k];
         });
       }
       
