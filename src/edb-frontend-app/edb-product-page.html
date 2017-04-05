@@ -310,7 +310,7 @@
             <div id="productMenu">
               <div class="group">
                 <div class="name">{{product.name}}</div>
-                <div class="price">{{price}}</div>
+                <div class="price">{{formatMoney(product.price)}}</div>
               </div>
               <div class="product-options">
                 <template is="dom-repeat" items="{{computeAttributes(product,materials)}}" as="attribute">
