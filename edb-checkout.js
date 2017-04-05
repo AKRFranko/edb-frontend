@@ -281,7 +281,10 @@
       var product = Products[productId];
       if(product.group){
         console.log('group',product);
-        
+        var attr = {};
+        product.group.forEach( function( g ){
+          console.log(g.attributes);
+        });
       }
       
       var hasBucketAttributes = Checkout.productHasBucketAttributes(product);
