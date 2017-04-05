@@ -290,7 +290,7 @@
           })
           
         });
-        product.attributes= Object.keys(attr).map( function(k){
+        Products[productId].attributes= Object.keys(attr).map( function(k){
           return attr[k];
         });
       }
