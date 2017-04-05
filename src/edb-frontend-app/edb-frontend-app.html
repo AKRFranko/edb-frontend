@@ -431,7 +431,7 @@
                       <edb-grid layout="[[layout]]" loading="[[product.loading]]">
                         <template is="dom-repeat" items="{{catalog}}" as="entry" filter="[[_filterCatalog(filter)]]">
                           <a href="[[computeCatalogItemUrl(entry)]]" tabindex="-1">
-                          <edb-card image="[[entry.product.images.0.src]]" title="[[entry.name]]" subtitle="[[formatMoney(entry.product.price)]]">
+                          <edb-card image="[[entry.product.images.0.src]]" title="[[entry.name]]" subtitle="[[formatProductPrice(entry.product.price,entry)]]">
                             <p>[[limitText(entry.product.description.en,120)]]</p>
                           </edb-card>
                           </a>
@@ -668,6 +668,7 @@
               return {};
             }
           },
+          
           inspiration:{
             type: Object,
             notify: true,
@@ -719,6 +720,10 @@
           e.preventDefault();
           this.set('authMode', 'register');
           console.log(this.get('authMode'))
+        },
+        formatProductPrice: function( p, a ){
+          console.log('formatProductPrice', a)
+          return this.formatMoney(p );
         },
         setAuthModeLogin: function( e ){
           e.preventDefault();
