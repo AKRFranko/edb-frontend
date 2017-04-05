@@ -477,6 +477,9 @@
           
           var attrKeys = Object.keys(attributes);
           if(!~attrKeys.indexOf(attribute.name)){
+            if(attribute.name == 'slipcover'){
+              return 0;
+            }
             return null
           }
           
