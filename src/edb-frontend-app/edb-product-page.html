@@ -306,7 +306,10 @@
           
          <div class="header-split">
            <!--<div class="cart-item-total">${{product.price}}</div>-->
-            <edb-slider id="slider" layout="[[layout]]" loading="false" slides="{{slides}}"></edb-slider>
+           <div id="slideWrapper">
+              <edb-slider id="slider" layout="[[layout]]" loading="false" slides="{{slides}}"></edb-slider> 
+           </div>
+            
             <div id="productMenu">
               <div class="group">
                 <div class="name">{{product.name}}</div>
@@ -433,7 +436,11 @@
           var price = EDB.Checkout.getPrice( product.id, this.get('attributes'));
           console.log('productChanged', product, price);
           this.set('price', price );
-          this.set('slides', this.createProductSlides(product,this.get('materials')) );
+          // this.set('slides', this.createProductSlides(product,this.get('materials')) );
+          this.$.slideWrapper.innerHTML='';
+          var slider = document.createElement('edb-slider');
+          slider.slides = this.createProductSlides(product,this.get('materials'));
+          this.$.slideWrapper.appendChild( slider );
           // this.$.slider.set('slides', );
           
         },
