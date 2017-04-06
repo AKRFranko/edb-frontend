@@ -269,7 +269,7 @@
               get: function(){
                 return gids.map( function( i ){ 
                   var prod = Products[i];
-                  allAttr= allAttr.concat( prod.attributes );
+                  allAttr= allAttr.concat( prod.product.attributes );
                   return Products[i];
                 });
               }
