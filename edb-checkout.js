@@ -263,13 +263,20 @@
         if (product.variations.length == 0) {
           if(product.meta.edb_group_ids){
             var gids = product.meta.edb_group_ids.trim().split(',').map( function( id ){ return id.trim()});
+            var allAttr = [];
             Object.defineProperty(product, 'group', {
               enumerable: true,
               get: function(){
-                return gids.map( function( i ){ return Products[i] });
+                return gids.map( function( i ){ 
+                  var prod = Products[i];
+                  allAttr= allAttr.concat( prod.attributes );
+                  return Products[i];
+                });
               }
-            })
-          }
+            });
+            console.log('allAttr');
+          };
+          
           // console.log(product.name, 'has no variations but has attributes: ', product.attributes);
         }
         Products[product.id] = product;
