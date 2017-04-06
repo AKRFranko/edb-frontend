@@ -312,7 +312,7 @@
           });
         });
         var newAttr = Object.keys( allAttr ).reduce( function( attrs, name ){
-          var options = Object.keys(optMap[name]).filter( function(){ return optMap[name].length == product.group.length } );
+          var options = Object.keys(optMap[name]).filter( function( k ){ return optMap[name][k].length == product.group.length } );
           var orig = allAttr[name][0];
           console.log( 'compare', orig.options, options);
           orig.options = orig.options.filter( function( o ){ return ~options.indexOf(o)});
