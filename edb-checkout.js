@@ -349,7 +349,7 @@
 
 
   Checkout.enhanceGroupAttributes = function( product ){
-    if(!product.group && !!product.meta.edb_group_ids){
+    if(!product.group && (product.meta && product.meta.edb_group_ids)){
       var gids = product.meta.edb_group_ids.trim().split(',').map( function( id ){ return id.trim()});
       Object.defineProperty(product, 'group', {
         enumerable: true,
