@@ -463,13 +463,13 @@ Checkout.getPrice = function(productId, attributes) {
     
     var entry = Blackboard[uuid];
     var cartItem = Cart[uuid];
-    console.log('getPrice', uuid, entry, Blackboard)
+    // console.log('getPrice', uuid, entry, Blackboard)
     // console.log('getSTock', cartItem);
     if (!entry) {
       // console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
       return null;
     }
-    var price = entry.product.price || entry.variation.price;
+    var price = entry.variation ? entry.variation.price || entry.product.price : entry.product.price ;
     // console.log('price', price );
     var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
     if (!hasBuckets) {
