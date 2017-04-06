@@ -298,9 +298,19 @@
             allAttr[a.name].push( a );
           })
         });
-        console.log('IAKARU', allAttr )
-        
-        
+        var optMap = {};
+        Object.keys( allAttr ).forEach( function( name ){
+          optMap[name] = {};
+          allAttr[name].forEach( function( attr, idx ){
+            var opts = attr.options;
+            opts.forEach( function( o ){
+              if(!optMap[name][o]){
+                optMap[name][o].push(idx);
+              }
+            });
+          });
+        });
+        console.log('IAKARU', optMap )
       }
       
       var hasBucketAttributes = Checkout.productHasBucketAttributes(product);
