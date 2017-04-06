@@ -275,6 +275,7 @@
               }
             });
             console.log('allAttr',allAttr);
+            
           };
           
           // console.log(product.name, 'has no variations but has attributes: ', product.attributes);
