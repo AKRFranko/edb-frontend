@@ -269,12 +269,13 @@
               get: function(){
                 return gids.map( function( i ){ 
                   var prod = Products[i];
-                  allAttr = allAttr.concat( prod.product.attributes );
+                  console.log('allAttr',prod);
+                  // allAttr = allAttr.concat( prod.product.attributes );
                   return Products[i];
                 });
               }
             });
-            console.log('allAttr',allAttr);
+            
           };
           
           // console.log(product.name, 'has no variations but has attributes: ', product.attributes);
