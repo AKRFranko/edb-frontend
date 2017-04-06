@@ -81,7 +81,7 @@
 
   // remove 99x99 from variation name;
   function removeDim(str) {
-    return (str||'').replace(/\d+x\d+/, '');
+    return (str || '').replace(/\d+x\d+/, '');
   }
   // create variation name
   function fullName(product, option) {
@@ -95,7 +95,7 @@
     var h48 = 60 * 60 * 48 * 1000;
     var sessionItems = sessionCartKeys.map(function(key) {
       return JSON.parse(localStorage.getItem(key));
-    }).filter( function( item ){
+    }).filter(function(item) {
       return (Date.now() - item.stored < h48)
     });
     sessionItems.forEach(function(item) {
@@ -106,29 +106,29 @@
 
 
   function updateApp() {
-    if(!app) return;
+    if (!app) return;
     app.debounce('updateApp', function() {
-      
-      
+
+
       EDB.Checkout.setCustomer(window.CurrentUser);
-      
-      app.set('customer',Customer);
-      
+
+      app.set('customer', Customer);
+
       // app.set('cart', [] );
       // app.set('catalog', []);
-      
+
       app.set('cart', Object.keys(Cart).map(function(uuid) {
         return Cart[uuid];
       }));
-      
-      if(!app.catalog){
+
+      if (!app.catalog) {
         app.set('catalog', Object.keys(Catalog).map(function(uuid) {
           return Catalog[uuid];
-        }));    
+        }));
       }
-      
-      
-      
+
+
+
 
       app.get('cart').forEach(function(item, index) {
         Object.keys(item).forEach(function(k) {
@@ -141,7 +141,7 @@
           app.notifyPath('catalog.' + index + '.' + k, item[k]);
         });
       });
-      
+
       // console.log('updateApp', app.get('cart'));
 
     })
@@ -198,22 +198,37 @@
     return proxy;
   }
 
-  Checkout.computeCartTotals = function(){
-    var subTotal=0;
+  Checkout.computeCartTotals = function() {
+    var subTotal = 0;
     var lines = [];
-    Object.keys(Cart).forEach( function( uuid ){
-      var total = Cart[uuid].quantity * Checkout.getPrice( Cart[uuid].product.id, Cart[uuid].variation.attributes );
+    Object.keys(Cart).forEach(function(uuid) {
+      var total = Cart[uuid].quantity * Checkout.getPrice(Cart[uuid].product.id, Cart[uuid].variation.attributes);
       subTotal += total;
-      return lines.push({ label: Cart[uuid].name + ' x' + Cart[uuid].quantity, value: total });
+      return lines.push({
+        label: Cart[uuid].name + ' x' + Cart[uuid].quantity,
+        value: total
+      });
     });
-    
-    lines.unshift( { label: 'subtotal', value: subTotal });
-    lines.unshift( { label: 'tax', value: (0.15 * subTotal) });
-    lines.unshift( { label: 'shipping', value: 0 });
-    lines.unshift( { label: 'total', value: subTotal + (0.15 * subTotal) });
-    
-    return lines;    
-    
+
+    lines.unshift({
+      label: 'subtotal',
+      value: subTotal
+    });
+    lines.unshift({
+      label: 'tax',
+      value: (0.15 * subTotal)
+    });
+    lines.unshift({
+      label: 'shipping',
+      value: 0
+    });
+    lines.unshift({
+      label: 'total',
+      value: subTotal + (0.15 * subTotal)
+    });
+
+    return lines;
+
   }
 
   Checkout.productHasBucketAttributes = function productHasBucketAttributes(product) {
@@ -239,20 +254,22 @@
   Checkout.setCustomer = function setCustomer(user) {
     user = user;
     // console.log('setCustomer', user );
-    
+
     if (!user) {
       Customer = Guest;
     } else {
-      Customer = Object.assign(Guest, user.customer_meta, {name: user.name });
+      Customer = Object.assign(Guest, user.customer_meta, {
+        name: user.name
+      });
     }
-    
+
   }
 
   Checkout.init = function loadProducts(polymerApp, products) {
     app = polymerApp;
 
     products.forEach(function(product, productIndex) {
-      
+
       if (product.meta.edb_is_bucket == '1') {
         Buckets[product.meta.edb_bucket_slug] = {};
         product.variations.forEach(function(variation, variationIndex) {
@@ -261,15 +278,17 @@
         });
       } else {
         if (product.variations.length == 0) {
-          if(product.meta.edb_group_ids){
-            var gids = product.meta.edb_group_ids.trim().split(',').map( function( id ){ return id.trim()});
-            
+          if (product.meta.edb_group_ids) {
+            var gids = product.meta.edb_group_ids.trim().split(',').map(function(id) {
+              return id.trim()
+            });
+
             Object.defineProperty(product, 'group', {
               enumerable: true,
-              get: function(){
-                return gids.map( function( i ){ 
+              get: function() {
+                return gids.map(function(i) {
                   var prod = Products[i];
-                  
+
                   return Products[i];
                 });
               }
@@ -283,11 +302,11 @@
 
     Object.keys(Products).forEach(function(productId) {
       var product = Products[productId];
-      if(product.group){
-          Checkout.enhanceGroupAttributes(product);
-        
+      if (product.group) {
+        Checkout.enhanceGroupAttributes(product);
+
       }
-      
+
       var hasBucketAttributes = Checkout.productHasBucketAttributes(product);
       if (!hasBucketAttributes) {
         console.error(new Error('Unhanded: NOT productHasBucketAttributes'));
@@ -335,74 +354,82 @@
 
       }
     });
-    
-    
+
+
 
 
     loadSessionCart();
-    
+
     updateApp();
-    
-    
+
+
 
   }
 
 
-  Checkout.enhanceGroupAttributes = function( product ){
-    if(!product.group && (product.meta && product.meta.edb_group_ids)){
-      var gids = product.meta.edb_group_ids.trim().split(',').map( function( id ){ return id.trim()});
+  Checkout.enhanceGroupAttributes = function(product) {
+    if (!product.group && (product.meta && product.meta.edb_group_ids)) {
+      var gids = product.meta.edb_group_ids.trim().split(',').map(function(id) {
+        return id.trim()
+      });
       Object.defineProperty(product, 'group', {
         enumerable: true,
-        get: function(){
-          return gids.map( function( i ){ 
+        get: function() {
+          return gids.map(function(i) {
             var prod = Products[i];
-            
+
             return Products[i];
           });
         }
       });
     }
     var allAttr = {};
-    product.group.forEach( function( g ){
-      g.attributes.forEach( function( a ){
-        if(!allAttr[a.name]){
-          allAttr[a.name] = [];
-        } 
-        allAttr[a.name].push( a );
-      })
-    });
-    var optMap = {};
-    Object.keys( allAttr ).forEach( function( name ){
-      optMap[name] = {};
-      allAttr[name].forEach( function( attr, idx ){
-        var opts = attr.options;
-        opts.forEach( function( o ){
-          if(!optMap[name][o]){
-            optMap[name][o] = [];
+    if (product.group) {
+      product.group.forEach(function(g) {
+        g.attributes.forEach(function(a) {
+          if (!allAttr[a.name]) {
+            allAttr[a.name] = [];
           }
-          optMap[name][o].push(idx);
+          allAttr[a.name].push(a);
+        })
+      });
+      var optMap = {};
+      Object.keys(allAttr).forEach(function(name) {
+        optMap[name] = {};
+        allAttr[name].forEach(function(attr, idx) {
+          var opts = attr.options;
+          opts.forEach(function(o) {
+            if (!optMap[name][o]) {
+              optMap[name][o] = [];
+            }
+            optMap[name][o].push(idx);
+          });
         });
       });
-    });
-    var newAttr = Object.keys( allAttr ).reduce( function( attrs, name ){
-      var options = Object.keys(optMap[name]).filter( function( k ){ return optMap[name][k].length == product.group.length } );
-      var orig = allAttr[name][0];
-      orig.options = orig.options.filter( function( o ){ return ~options.indexOf(o)});
-      orig.isFake = true;
-      attrs.push( orig );
-      return attrs;
-    }, [] );
-    product.attributes = newAttr;
+      var newAttr = Object.keys(allAttr).reduce(function(attrs, name) {
+        var options = Object.keys(optMap[name]).filter(function(k) {
+          return optMap[name][k].length == product.group.length
+        });
+        var orig = allAttr[name][0];
+        orig.options = orig.options.filter(function(o) {
+          return~options.indexOf(o)
+        });
+        orig.isFake = true;
+        attrs.push(orig);
+        return attrs;
+      }, []);
+      product.attributes = newAttr;
+    }
     return product;
   }
 
 
 
-  Checkout.updateCartItemQuantity = function( productId, attributes, qty ){
+  Checkout.updateCartItemQuantity = function(productId, attributes, qty) {
     // console.log('updateCartItemQuantity')
     var uuid = tokenizeAttr(productId, attributes)
     var cartItem = Cart[uuid];
-    if(cartItem){
+    if (cartItem) {
       cartItem.quantity = qty;
     }
     updateApp();
@@ -420,7 +447,7 @@
         cartItem.quantity = cartItem.quantity + qty;
         localStorage.setItem('EDB_CART|' + uuid, JSON.stringify({
           pid: productId,
-          
+
           stored: Date.now(),
           attributes: attributes,
           quantity: cartItem.quantity
@@ -436,10 +463,10 @@
             Checkout.removeFromCart(uuid);
           }
         }, entry);
-        
+
         localStorage.setItem('EDB_CART|' + uuid, JSON.stringify({
           pid: productId,
-          
+
           stored: Date.now(),
           attributes: attributes,
           quantity: qty
@@ -493,45 +520,45 @@
     }
   }
 
-Checkout.getPrice = function(productId, attributes) {
-  
-  if (!attributes) {
-    // console.log('not attributes', productId, attributes);
-  } else {
+  Checkout.getPrice = function(productId, attributes) {
 
-    var uuid = tokenizeAttr(productId, attributes);
-    
-    
-    var entry = Blackboard[uuid];
-    var cartItem = Cart[uuid];
-    // console.log('getPrice', uuid, entry, Blackboard)
-    // console.log('getSTock', cartItem);
-    if (!entry) {
-      // console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
-      return null;
-    }
-    var price = entry.variation ? entry.variation.price || entry.product.price : entry.product.price ;
-    // console.log('price', price );
-    var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
-    if (!hasBuckets) {
-      // console.log('returning basic price');
-      return price;
-    }
-    
-    var bucketModifiers = entry.variation.attributes.reduce(function( mods, attr) {
-      if (!attr.bucket) return mods;
-      var mod = attr.bucket[attr.option].variation.price;
-      if(!isNaN(mod)){
-        return Number(mods)+Number(mod);
+    if (!attributes) {
+      // console.log('not attributes', productId, attributes);
+    } else {
+
+      var uuid = tokenizeAttr(productId, attributes);
+
+
+      var entry = Blackboard[uuid];
+      var cartItem = Cart[uuid];
+      // console.log('getPrice', uuid, entry, Blackboard)
+      // console.log('getSTock', cartItem);
+      if (!entry) {
+        // console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
+        return null;
       }
-      return mods;
-    }, 0 );
-    
-    // console.log('returning basic price+bucket modifiers');
-    return Number(price) + Number(bucketModifiers);
-    
+      var price = entry.variation ? entry.variation.price || entry.product.price : entry.product.price;
+      // console.log('price', price );
+      var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
+      if (!hasBuckets) {
+        // console.log('returning basic price');
+        return price;
+      }
+
+      var bucketModifiers = entry.variation.attributes.reduce(function(mods, attr) {
+        if (!attr.bucket) return mods;
+        var mod = attr.bucket[attr.option].variation.price;
+        if (!isNaN(mod)) {
+          return Number(mods) + Number(mod);
+        }
+        return mods;
+      }, 0);
+
+      // console.log('returning basic price+bucket modifiers');
+      return Number(price) + Number(bucketModifiers);
+
+    }
   }
-}
 
 
   function runTest(entries) {
