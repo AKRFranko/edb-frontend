@@ -308,6 +308,7 @@
                 optMap[name][o] = [];
               }
               optMap[name][o].push(idx);
+              
             });
           });
         });
