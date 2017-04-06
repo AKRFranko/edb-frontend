@@ -305,8 +305,9 @@
             var opts = attr.options;
             opts.forEach( function( o ){
               if(!optMap[name][o]){
-                optMap[name][o].push(idx);
+                optMap[name][o] = [];
               }
+              optMap[name][o].push(idx);
             });
           });
         });
