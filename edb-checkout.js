@@ -296,6 +296,7 @@
         });
         console.log('IAKARU', allAttr )
         
+        
       }
       
       var hasBucketAttributes = Checkout.productHasBucketAttributes(product);
