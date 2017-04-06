@@ -263,14 +263,13 @@
         if (product.variations.length == 0) {
           if(product.meta.edb_group_ids){
             var gids = product.meta.edb_group_ids.trim().split(',').map( function( id ){ return id.trim()});
-            var allAttr = [];
+            
             Object.defineProperty(product, 'group', {
               enumerable: true,
               get: function(){
                 return gids.map( function( i ){ 
                   var prod = Products[i];
-                  console.log('IAKARU', prod.attributes)
-                  // allAttr = allAttr.concat( prod.attributes||[] );
+                  
                   return Products[i];
                 });
               }
@@ -290,18 +289,18 @@
       var product = Products[productId];
       if(product.group){
         console.log('group',product);
-        var attr = {};
+        var allAttr = [];
+        
         product.group.forEach( function( g ){
-          g.attributes.forEach( function( a){
-            if(!attr[a.name]){
-              attr[a.name] = Object.assign( {}, a );
-            }
-          })
+          
+          
+              console.log('IAKARU', g.attributes)
+              // allAttr = allAttr.concat( g.attributes||[] );
+          
+          
           
         });
-        Products[productId].attributes= Object.keys(attr).map( function(k){
-          return attr[k];
-        });
+        
       }
       
       var hasBucketAttributes = Checkout.productHasBucketAttributes(product);
