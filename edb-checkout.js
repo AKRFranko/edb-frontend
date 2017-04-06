@@ -292,14 +292,9 @@
         var allAttr = [];
         
         product.group.forEach( function( g ){
-          
-          
-              console.log('IAKARU', g.attributes)
-              // allAttr = allAttr.concat( g.attributes||[] );
-          
-          
-          
+              allAttr = allAttr.concat( g.attributes||[] );
         });
+        console.log('IAKARU', allAttr )
         
       }
       
