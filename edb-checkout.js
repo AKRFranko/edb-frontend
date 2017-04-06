@@ -308,11 +308,18 @@
                 optMap[name][o] = [];
               }
               optMap[name][o].push(idx);
-              
             });
           });
         });
-        console.log('IAKARU', optMap )
+        var newAttr = Object.keys( allAttr ).reduce( function( attrs, name ){
+          var options = Object.keys(optMap[name]).filter( function(){ return optMap[name].length == product.group.length } );
+          var orig = allAttr[name][0];
+          orig.options = orig.options.filter( function( o ){ return ~options.indexOf(o)});
+          orig.isFake = true;
+          attrs.push( orig );
+        }, [] );
+        console.log('IAKARU', newAttr )
+        product.attributes = newAttr;
       }
       
       var hasBucketAttributes = Checkout.productHasBucketAttributes(product);
