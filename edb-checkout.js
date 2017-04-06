@@ -317,9 +317,11 @@
           orig.options = orig.options.filter( function( o ){ return ~options.indexOf(o)});
           orig.isFake = true;
           attrs.push( orig );
+          return attrs;
         }, [] );
         console.log('IAKARU', newAttr )
         product.attributes = newAttr;
+        
       }
       
       var hasBucketAttributes = Checkout.productHasBucketAttributes(product);
