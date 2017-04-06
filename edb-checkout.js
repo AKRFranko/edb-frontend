@@ -151,7 +151,7 @@
 
   function addCatalogEntry(product, option, variations) {
     var token = tokenizeAttr(product.id, option);
-
+    console.log('addCatalogEntry', product.group );
     var catalogEntry = {
       token: token,
       product: product,
