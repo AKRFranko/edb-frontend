@@ -541,6 +541,7 @@
         },
         handleSelectedAttributeChanged: function( event ){
           this.set('attributes.'+event.model.attribute.name, event.model.attribute.options[event.detail.value]);
+          this.notifyPath('attributes', this.get('attributes'));
         },
         handleAddToCart: function( event ){
           EDB.Checkout.addToCart( this.get('product').id, this.get('attributes'),this.get('wantedQty') );
