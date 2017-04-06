@@ -439,7 +439,8 @@
     var entry = Blackboard[uuid];
     var cartItem = Cart[uuid];
     if (!entry) {
-      console.error('NOT ENTRY', uuid);
+      console.error('NOT ENTRY', uuid,Object.keys(Blackboard));
+      
       return null;
     } else {
       // if already in cart, update quantity;
