@@ -289,10 +289,14 @@
       var product = Products[productId];
       if(product.group){
         console.log('group',product);
-        var allAttr = [];
-        
+        var allAttr = {};
         product.group.forEach( function( g ){
-              allAttr = allAttr.concat( g.attributes||[] );
+          g.attributes.forEach( function( a ){
+            if(!allAttr[a.name]){
+              allAttr[a.name] = [];
+            } 
+            allAttr[a.name].push( a );
+          })
         });
         console.log('IAKARU', allAttr )
         
