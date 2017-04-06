@@ -495,7 +495,7 @@
           
         },
         computeAttributes: function( product,materials ){
-          
+          EDB.Checkout.enhanceGroupAttributes(product);
           return (product.attributes || []).map( function( attr ){
             var foundMaterials = materials.filter( function( m ){
               return m.meta.edb_material_attribute == 'edb_'+attr.name;

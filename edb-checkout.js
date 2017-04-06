@@ -274,11 +274,7 @@
                 });
               }
             });
-            // console.log('allAttr',allAttr);
-            
           };
-          
-          // console.log(product.name, 'has no variations but has attributes: ', product.attributes);
         }
         Products[product.id] = product;
 
@@ -288,40 +284,7 @@
     Object.keys(Products).forEach(function(productId) {
       var product = Products[productId];
       if(product.group){
-        console.log('group',product);
-        var allAttr = {};
-        product.group.forEach( function( g ){
-          g.attributes.forEach( function( a ){
-            if(!allAttr[a.name]){
-              allAttr[a.name] = [];
-            } 
-            allAttr[a.name].push( a );
-          })
-        });
-        var optMap = {};
-        Object.keys( allAttr ).forEach( function( name ){
-          optMap[name] = {};
-          allAttr[name].forEach( function( attr, idx ){
-            var opts = attr.options;
-            opts.forEach( function( o ){
-              if(!optMap[name][o]){
-                optMap[name][o] = [];
-              }
-              optMap[name][o].push(idx);
-            });
-          });
-        });
-        var newAttr = Object.keys( allAttr ).reduce( function( attrs, name ){
-          var options = Object.keys(optMap[name]).filter( function( k ){ return optMap[name][k].length == product.group.length } );
-          var orig = allAttr[name][0];
-          console.log( 'compare', orig.options, options);
-          orig.options = orig.options.filter( function( o ){ return ~options.indexOf(o)});
-          orig.isFake = true;
-          attrs.push( orig );
-          return attrs;
-        }, [] );
-        console.log('IAKARU', newAttr )
-        product.attributes = newAttr;
+          Checkout.enhanceGroupAttributes(product);
         
       }
       
@@ -384,6 +347,54 @@
 
   }
 
+
+  Checkout.enhanceGroupAttributes = function( product ){
+    if(!product.group && !!product.meta.edb_group_ids){
+      var gids = product.meta.edb_group_ids.trim().split(',').map( function( id ){ return id.trim()});
+      Object.defineProperty(product, 'group', {
+        enumerable: true,
+        get: function(){
+          return gids.map( function( i ){ 
+            var prod = Products[i];
+            
+            return Products[i];
+          });
+        }
+      });
+    }
+    var allAttr = {};
+    product.group.forEach( function( g ){
+      g.attributes.forEach( function( a ){
+        if(!allAttr[a.name]){
+          allAttr[a.name] = [];
+        } 
+        allAttr[a.name].push( a );
+      })
+    });
+    var optMap = {};
+    Object.keys( allAttr ).forEach( function( name ){
+      optMap[name] = {};
+      allAttr[name].forEach( function( attr, idx ){
+        var opts = attr.options;
+        opts.forEach( function( o ){
+          if(!optMap[name][o]){
+            optMap[name][o] = [];
+          }
+          optMap[name][o].push(idx);
+        });
+      });
+    });
+    var newAttr = Object.keys( allAttr ).reduce( function( attrs, name ){
+      var options = Object.keys(optMap[name]).filter( function( k ){ return optMap[name][k].length == product.group.length } );
+      var orig = allAttr[name][0];
+      orig.options = orig.options.filter( function( o ){ return ~options.indexOf(o)});
+      orig.isFake = true;
+      attrs.push( orig );
+      return attrs;
+    }, [] );
+    product.attributes = newAttr;
+    return product;
+  }
 
 
 
