@@ -269,12 +269,13 @@
               get: function(){
                 return gids.map( function( i ){ 
                   var prod = Products[i];
-                  allAttr = allAttr.concat( prod.attributes||[] );
+                  console.log('IAKARU', prod.attributes)
+                  // allAttr = allAttr.concat( prod.attributes||[] );
                   return Products[i];
                 });
               }
             });
-            console.log('allAttr',allAttr);
+            // console.log('allAttr',allAttr);
             
           };
           
