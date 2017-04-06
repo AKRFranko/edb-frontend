@@ -384,7 +384,7 @@
       });
     }
     var allAttr = {};
-    if (product.group) {
+    if (product.group && product.group.length) {
       product.group.forEach(function(g) {
         g.attributes.forEach(function(a) {
           if (!allAttr[a.name]) {
