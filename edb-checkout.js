@@ -151,9 +151,7 @@
 
   function addCatalogEntry(product, option, variations) {
     var token = tokenizeAttr(product.id, option);
-    if(product.group){
-      console.log('addCatalogEntry', product.attributes );  
-    }
+    
     
     var catalogEntry = {
       token: token,
@@ -166,8 +164,10 @@
 
     var pid = product.id;
     // Blackboard[pid]=Blackboard[pid]||{};
+    console.log('variations',variations);
     variations.forEach(function(v) {
       var uuid = tokenizeAttr(pid, v.attributes);
+      
       Blackboard[uuid] = Object.assign({
         variation: v
       }, catalogEntry);
