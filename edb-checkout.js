@@ -164,14 +164,20 @@
 
     var pid = product.id;
     // Blackboard[pid]=Blackboard[pid]||{};
-    console.log('variations',variations, pid);
+    
     variations.forEach(function(v) {
       var uuid = tokenizeAttr(pid, v.attributes);
-      
       Blackboard[uuid] = Object.assign({
         variation: v
       }, catalogEntry);
     });
+    if(product.group){
+      var uuid = tokenizeAttr(pid, product.attributes);
+      Blackboard[uuid] = Object.assign({
+        group: product.group
+      }, catalogEntry);
+      // console.log('variations',variations, pid);
+    }
     Catalog[token] = catalogEntry;
 
   }
