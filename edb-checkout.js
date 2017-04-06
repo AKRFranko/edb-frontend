@@ -164,7 +164,7 @@
 
     var pid = product.id;
     // Blackboard[pid]=Blackboard[pid]||{};
-    console.log('variations',variations);
+    console.log('variations',variations, pid);
     variations.forEach(function(v) {
       var uuid = tokenizeAttr(pid, v.attributes);
       
