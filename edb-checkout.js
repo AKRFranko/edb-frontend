@@ -331,7 +331,9 @@
           // expand variations to include bucket attributes.
           Object.keys(bucket).forEach(function(bucketOption) {
             var newVariations = [];
-            
+            if(!product.group){
+              console.log('GRP', bucketOption, product.group );
+            }
             product.variations.forEach(function(variation) {
               var copy = Object.assign({}, variation);
               var copyAttributes = [].concat(variation.attributes);
