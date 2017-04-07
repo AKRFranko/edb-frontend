@@ -563,17 +563,22 @@
         // console.log('returning variation stock, cartItem:', cartItem);
         return entry.variation.stock_quantity;
       }
-      var minBucketCount = entry.variation.attributes.reduce(function(min, attr) {
-        if (!attr.bucket) return min;
-        var qty = attr.bucket[attr.option].variation.stock_quantity - cartItemQty;
-        if (qty === null) return min;
-        if (min === null) return qty;
-        if (qty < min) return qty;
-        return min;
-      }, null);
-      var variationQty = entry.variation.stock_quantity === null ? 0 : entry.variation.stock_quantity;
-      // console.log('returning min stock, cartITem', cartItem );
-      return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) - cartItemQty;
+      if(entry.variation){
+        var minBucketCount = entry.variation.attributes.reduce(function(min, attr) {
+          if (!attr.bucket) return min;
+          var qty = attr.bucket[attr.option].variation.stock_quantity - cartItemQty;
+          if (qty === null) return min;
+          if (min === null) return qty;
+          if (qty < min) return qty;
+          return min;
+        }, null);
+        var variationQty = entry.variation.stock_quantity === null ? 0 : entry.variation.stock_quantity;
+        // console.log('returning min stock, cartITem', cartItem );
+        return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) - cartItemQty;  
+      }else{
+        return 999;
+      }
+      
     }
   }
 
