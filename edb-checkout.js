@@ -47,17 +47,14 @@
   }
 
 
-  function tokenizeAttr(pid, attributes, group) {
+  function tokenizeAttr(pid, attributes) {
     
     if (!Array.isArray(attributes)) {
       attributes = Object.keys(attributes).map(function(k) {
         var opt = attributes[k];
-        if(group){ 
-          opt = '*';
-        }
         return {
           name: k,
-          option: opt
+          option: opt||'*'
         };
       })
     }
