@@ -348,29 +348,33 @@
             var newVariations = [];
             
             product.variations.forEach(function(variation) {
-              console.log('variation', variation );
-              var copy = Object.assign({}, variation);
-              var copyAttributes = [].concat(variation.attributes);
-              var newAttribute = {};
-              Object.defineProperties(newAttribute, {
-                name: {
-                  enumerable: true,
-                  value: bucketSlug
-                },
-                option: {
-                  enumerable: true,
-                  value: bucketOption
-                },
-                bucket: {
-                  enumerable: true,
-                  get: function() {
-                    return buckets[bucketSlug];
+              if(Array.isArray(variation)){
+                console.log('what to do with', variation );
+              }else{
+                var copy = Object.assign({}, variation);
+                var copyAttributes = [].concat(variation.attributes);
+                var newAttribute = {};
+                Object.defineProperties(newAttribute, {
+                  name: {
+                    enumerable: true,
+                    value: bucketSlug
+                  },
+                  option: {
+                    enumerable: true,
+                    value: bucketOption
+                  },
+                  bucket: {
+                    enumerable: true,
+                    get: function() {
+                      return buckets[bucketSlug];
+                    }
                   }
-                }
-              });
-              copyAttributes.push(newAttribute);
-              copy.attributes = copyAttributes;
-              newVariations.push(copy);
+                });
+                copyAttributes.push(newAttribute);
+                copy.attributes = copyAttributes;
+                newVariations.push(copy);  
+              }
+              
             });
             var attr = {};
             attr[bucketSlug] = bucketOption;
