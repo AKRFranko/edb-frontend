@@ -473,7 +473,7 @@
     if(!entry){
       uuid = tokenizeAttr(productId, {});
       entry = Blackboard[uuid];
-      return entry.group ? entry : null;
+      return entry && entry.group ? entry : null;
     }
     return entry;
   }
