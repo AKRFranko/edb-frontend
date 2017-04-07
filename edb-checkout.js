@@ -496,7 +496,7 @@
           return attr.concat(one.attributes);
         }, [] );
       }});
-      proxy.attributes = proxy.attributes;
+      console.log('proxy.attributes', proxy.attributes);
       return proxy;
     });
     return product;
