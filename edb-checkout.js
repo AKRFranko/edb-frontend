@@ -466,13 +466,24 @@
     }
     updateApp();
   }
-  Checkout.addToCart = function(productId, attributes, qty) {
+  
+  function findBoardEntry(productId, attributes){
     var uuid = tokenizeAttr(productId, attributes);
     var entry = Blackboard[uuid];
+    if(!entry){
+      uuid = tokenizeAttr(productId, {});
+      entry = Blackboard[uuid];
+      return entry.group ? entry : null;
+    }
+    return entry;
+  }
+  
+  Checkout.addToCart = function(productId, attributes, qty) {
+    
+    var entry = findBoardEntry(productId, attributes);
     var cartItem = Cart[uuid];
     if (!entry) {
       console.error('NOT ENTRY', uuid,Object.keys(Blackboard));
-      
       return null;
     } else {
       // if already in cart, update quantity;
@@ -522,8 +533,8 @@
       console.log('not attributes', productId, attributes);
     } else {
 
-      var uuid = tokenizeAttr(productId, attributes);
-      var entry = Blackboard[uuid];
+      
+      var entry = findBoardEntry(productId, attributes);
       var cartItem = Cart[uuid];
       // console.log('getSTock', cartItem);
       var cartItemQty = (cartItem ? cartItem.quantity : 0);
@@ -559,10 +570,7 @@
       // console.log('not attributes', productId, attributes);
     } else {
 
-      var uuid = tokenizeAttr(productId, attributes);
-
-
-      var entry = Blackboard[uuid];
+      var entry = findBoardEntry(productId, attributes);
       var cartItem = Cart[uuid];
       // console.log('getPrice', uuid, entry, Blackboard)
       // console.log('getSTock', cartItem);
