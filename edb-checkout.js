@@ -475,6 +475,7 @@
       entry = Blackboard[uuid];
       return entry && entry.group ? entry : null;
     }
+    
     return entry;
   }
   
