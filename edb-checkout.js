@@ -479,8 +479,20 @@
         all[i].push(v);
       })
     });
-    console.log('ALL', all );
-    product.variations =[];
+    
+    product.variations =Object.keys(all).map( function(i ){
+      var proxy = {};
+      Object.defineProperty(proxy, 'name', { enumerable:true, get: function(){
+        return all[i].reduce( function(a,b){ return a ? a.name + b.name : b.name; });
+      }})
+      Object.defineProperty(proxy, 'price', { enumerable:true, get: function(){
+        return all[i].reduce( function(a,b){ return a ? a.price + b.price : b.price; });
+      }})
+      Object.defineProperty(proxy, 'stockQuantity', { enumerable:true, get: function(){
+        all[i].reduce( function(a,b){ return a ? a.stockQuantity + b.stockQuantity : b.stockQuantity; });
+      }})
+      return proxy;
+    });
     return product;
   }
 
