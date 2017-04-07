@@ -460,11 +460,13 @@
   }
   function createGroupProductVariations( product ){
     var group = product.group;
-    var all = [];
-    group.forEach( function( g ){
-      all = all.concat( g.variations );
+    var all = {};
+    group.forEach( function( g, i ){
+      all[i]=g.variations;
+      
     });
-    product.variations =all;
+    console.log('createGroupProductVariations', all );
+    // product.variations =all;
     return product;
   }
 
