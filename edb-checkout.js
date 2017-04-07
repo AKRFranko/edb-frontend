@@ -492,7 +492,7 @@
         all[i].reduce( function(a,b){ return a ? a.stockQuantity + b.stockQuantity : b.stockQuantity; });
       }})
       Object.defineProperty(proxy, 'attributes', { enumerable:true, get: function(){
-        return product.attributes;
+        all[i].reduce( function(a,b){ return a ? Object.assign(a,b): b; });
       }})
       return proxy;
     });
