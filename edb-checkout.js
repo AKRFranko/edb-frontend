@@ -474,6 +474,7 @@
     var entry = Blackboard[uuid];
     if(!entry){
       uuid = tokenizeAttr(productId, {});
+      console.log('uuid???', uuid);
       entry = Blackboard[uuid];
       return entry && entry.group ? entry : null;
     }
