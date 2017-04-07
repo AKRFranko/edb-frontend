@@ -492,7 +492,10 @@
         all[i].reduce( function(a,b){ return a ? a.stockQuantity + b.stockQuantity : b.stockQuantity; });
       }})
       Object.defineProperty(proxy, 'attributes', { enumerable:true, get: function(){
-        all[i].reduce( function(a,b){ return a ? Object.assign(a,b): b; });
+        all[i].reduce( function(attr,one){ 
+          console.log('all[i]', attr, one);
+          return attr;
+        }, {} );
       }})
       return proxy;
     });
@@ -515,7 +518,7 @@
     var uuid = tokenizeAttr(productId, attributes);
     var entry = Blackboard[uuid];
     if(!entry){
-      console.log('!attributes',uuid);
+      // console.log('!attributes',uuid);
       uuid = tokenizeAttr( productId, Object.keys(attributes).reduce( function( no, name ){
         no[name]=no[name];
         return no;
