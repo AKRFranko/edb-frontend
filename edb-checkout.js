@@ -179,7 +179,7 @@
     
     if(product.group){
       
-      var uuid = tokenizeAttr(pid, product.attributes);
+      var uuid = tokenizeAttr(pid, product.attributes, group);
       Blackboard[uuid] = Object.assign({
         group: product.group
       }, catalogEntry);
