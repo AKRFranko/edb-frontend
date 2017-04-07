@@ -472,14 +472,15 @@
   }
   function createGroupProductVariations( product ){
     var group = product.group;
-    var all = [];
-    group.forEach( function( g, i ){
-      if(g.variations){
-        all.push(g.variations);  
-      }
-      
+    var all = {};
+    group.forEach( function( g ){
+      g.variations.forEach( function( v, i){
+        all[i] = all[i] || [];
+        all[i].push(v);
+      })
     });
-    product.variations =all;
+    console.log('ALL', all );
+    product.variations =[];
     return product;
   }
 
@@ -617,7 +618,7 @@
       // console.log('getPrice', uuid, entry, Blackboard)
       // console.log('getSTock', cartItem);
       if (!entry) {
-        console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
+        // console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
         return null;
       }
       var cartItem = Cart[entry.uuid];
