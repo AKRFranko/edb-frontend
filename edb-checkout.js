@@ -474,6 +474,8 @@
     var uuid = tokenizeAttr(productId, attributes);
     var entry = Blackboard[uuid];
     if(!entry){
+      console.log('attributes',attributes);
+      
       uuid = tokenizeAttr( productId, attributes.map( function( a ){
         return { name: a.name };
       }));
