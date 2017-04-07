@@ -54,12 +54,12 @@
         var opt = attributes[k];
         return {
           name: k,
-          option: opt||'*'
+          option: opt
         };
       })
     }
     return pid + ';' + sortAlpha(attributes, 'name').reduce(function(s, a) {
-      return s + stripEDB(a.name) + ':' + a.option + ';';
+      return s + stripEDB(a.name) + ':' + (a.option||'*') + ';';
     }, '');
 
   }
