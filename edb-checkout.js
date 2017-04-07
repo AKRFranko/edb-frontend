@@ -171,13 +171,14 @@
         variation: v
       }, catalogEntry);
     });
-    if(product.group){
-      var uuid = tokenizeAttr(pid, product.attributes);
-      Blackboard[uuid] = Object.assign({
-        group: product.group
-      }, catalogEntry);
-      // console.log('variations',variations, pid);
-    }
+    // if(product.group){
+      
+    //   var uuid = tokenizeAttr(pid, product.attributes);
+    //   Blackboard[uuid] = Object.assign({
+    //     group: product.group
+    //   }, catalogEntry);
+    //   // console.log('variations',variations, pid);
+    // }
     Catalog[token] = catalogEntry;
 
   }
@@ -330,6 +331,7 @@
           // expand variations to include bucket attributes.
           Object.keys(bucket).forEach(function(bucketOption) {
             var newVariations = [];
+            
             product.variations.forEach(function(variation) {
               var copy = Object.assign({}, variation);
               var copyAttributes = [].concat(variation.attributes);
@@ -427,6 +429,7 @@
         attrs.push(orig);
         return attrs;
       }, []);
+      console.log('newAttr', optMap);
       product.attributes = newAttr;
     }
     return product;
