@@ -454,7 +454,17 @@
       }, []);
       // console.log('newVar', newVar, varMap );
       product.attributes = newAttr;
+      createGroupProductVariations(product);
     }
+    return product;
+  }
+  function createGroupProductVariations( product ){
+    var group = product.group;
+    var all = [];
+    group.forEach( function( g ){
+      all = all.concat( g.variations );
+    });
+    product.variations =all;
     return product;
   }
 
