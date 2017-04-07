@@ -598,15 +598,18 @@
         // console.log('returning basic price');
         return price;
       }
-
-      var bucketModifiers = entry.variation.attributes.reduce(function(mods, attr) {
-        if (!attr.bucket) return mods;
-        var mod = attr.bucket[attr.option].variation.price;
-        if (!isNaN(mod)) {
-          return Number(mods) + Number(mod);
-        }
-        return mods;
-      }, 0);
+      var bucketModifiers = 0;
+      if(entry.variation){
+       bucketModifiers = entry.variation.attributes.reduce(function(mods, attr) {
+          if (!attr.bucket) return mods;
+          var mod = attr.bucket[attr.option].variation.price;
+          if (!isNaN(mod)) {
+            return Number(mods) + Number(mod);
+          }
+          return mods;
+        }, 0);  
+      }
+      
 
       // console.log('returning basic price+bucket modifiers');
       return Number(price) + Number(bucketModifiers);
