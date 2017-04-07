@@ -176,14 +176,15 @@
         variation: v
       }, catalogEntry);
     });
-    // if(product.group){
+    
+    if(product.group){
       
-    //   var uuid = tokenizeAttr(pid, product.attributes);
-    //   Blackboard[uuid] = Object.assign({
-    //     group: product.group
-    //   }, catalogEntry);
+      var uuid = tokenizeAttr(pid, product.attributes);
+      Blackboard[uuid] = Object.assign({
+        group: product.group
+      }, catalogEntry);
     //   // console.log('variations',variations, pid);
-    // }
+    }
     Catalog[token] = catalogEntry;
 
   }
