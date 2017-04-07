@@ -574,7 +574,6 @@
     } else {
 
       var entry = findBoardEntry(productId, attributes);
-      
       // console.log('getPrice', uuid, entry, Blackboard)
       // console.log('getSTock', cartItem);
       if (!entry) {
