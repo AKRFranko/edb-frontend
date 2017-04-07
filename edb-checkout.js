@@ -328,7 +328,7 @@
       var product = Products[productId];
       if (product.group) {
         Checkout.enhanceGroupAttributes(product);
-        addCatalogEntry(product, {}, [], product.group ) ;
+        // addCatalogEntry(product, {}, [], product.group ) ;
       }
 
       var hasBucketAttributes = Checkout.productHasBucketAttributes(product);
