@@ -492,7 +492,7 @@
         return all[i].reduce( function(a,b){ return a ? a.stockQuantity + b.stockQuantity : b.stockQuantity; });
       }})
       Object.defineProperty(proxy, 'attributes', { enumerable:true, get: function(){
-          return group[0][0].variations[i].attributes;
+          return group[0].variations[i].attributes;
       }});
       console.log('proxy.attributes', proxy.attributes);
       return proxy;
