@@ -172,7 +172,8 @@
     
     variations.forEach(function(v) {
       if(Array.isArray(v)){
-        consolel.log('ISARRAY', v );
+        console.log('ISARRAY', v );
+        
       }else{
         var uuid = tokenizeAttr(pid, v.attributes, product.group);
         Blackboard[uuid] = Object.assign({
