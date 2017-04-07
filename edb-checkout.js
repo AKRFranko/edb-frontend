@@ -58,8 +58,8 @@
         };
       })
     }
+    attributes = attributes.filter( function( a ){ return !!a });
     
-    console.log(attributes);
     return pid + ';' + sortAlpha(attributes, 'name').reduce(function(s, a) {
       return s + stripEDB(a.name) + ':' + a.option + ';';
     }, '');
