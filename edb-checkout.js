@@ -54,11 +54,10 @@
         var opt = attributes[k];
         return {
           name: k,
-          option: opt
+          option: Array.isArray(opt) ? '*' : opt
         };
       })
     }
-    attributes = attributes.filter( function( a ){ return !!a });
     
     return pid + ';' + sortAlpha(attributes, 'name').reduce(function(s, a) {
       return s + stripEDB(a.name) + ':' + a.option + ';';
@@ -463,10 +462,11 @@
     var group = product.group;
     var all = [];
     group.forEach( function( g, i ){
-      all.push(g.variations);
+      if(g.variations){
+        all.push(g.variations);  
+      }
+      
     });
-    
-    
     product.variations =all;
     return product;
   }
