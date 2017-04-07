@@ -54,11 +54,12 @@
         var opt = attributes[k];
         return {
           name: k,
-          option: Array.isArray(opt) ? '*' : opt
+          option: opt
         };
       })
     }
     
+    console.log(attributes);
     return pid + ';' + sortAlpha(attributes, 'name').reduce(function(s, a) {
       return s + stripEDB(a.name) + ':' + a.option + ';';
     }, '');
