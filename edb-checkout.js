@@ -49,7 +49,7 @@
 
   function tokenizeAttr(pid, attributes) {
     
-    if (!Array.isArray(attributes)) {
+    if (attributes && !Array.isArray(attributes)) {
       attributes = Object.keys(attributes).map(function(k) {
         var opt = attributes[k];
         return {
@@ -57,6 +57,8 @@
           option: opt
         };
       })
+    }else{
+      attributes = [];
     }
     return pid + ';' + sortAlpha(attributes, 'name').reduce(function(s, a) {
       return s + stripEDB(a.name) + ':' + (a.option||'*') + ';';
