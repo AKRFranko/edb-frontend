@@ -406,7 +406,7 @@
             allVar[a.name] = [];
           }
           allAttr[a.name].push(a);
-          allVar[a.name] = allVar[a.name].concat( g.variations.filter( function( v ){
+          allVar[a.name] = (allVar[a.name]||[]).concat( g.variations.filter( function( v ){
             return v.attributes.some( function( va){ return va.name = a.name});
           }));
         })
