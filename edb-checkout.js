@@ -171,16 +171,13 @@
     // Blackboard[pid]=Blackboard[pid]||{};
     
     variations.forEach(function(v) {
-      if(Array.isArray(v)){
-        console.log('ISARRAY', v );
-        
-      }else{
+      
         var uuid = tokenizeAttr(pid, v.attributes, product.group);
         Blackboard[uuid] = Object.assign({
           uuid: uuid,
           variation: v
         }, catalogEntry);  
-      }
+      
       
     });
     
@@ -494,7 +491,7 @@
       Object.defineProperty(proxy, 'attributes', { enumerable:true, get: function(){
           return group[0].variations[i].attributes;
       }});
-      console.log('proxy.attributes', proxy.attributes);
+      // console.log('proxy.attributes', proxy.attributes);
       return proxy;
     });
     return product;
@@ -523,7 +520,7 @@
       },{}));
       
       entry = Blackboard[uuid];
-      console.log('uuid???', uuid, Object.keys(Blackboard));
+      // console.log('uuid???', uuid, Object.keys(Blackboard));
       return entry && entry.group ? entry : null;
     }
     return entry;
