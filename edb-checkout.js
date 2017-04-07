@@ -172,6 +172,7 @@
     variations.forEach(function(v) {
       var uuid = tokenizeAttr(pid, v.attributes, product.group);
       Blackboard[uuid] = Object.assign({
+        uuid: uuid,
         variation: v
       }, catalogEntry);
     });
@@ -180,6 +181,7 @@
       
       var uuid = tokenizeAttr(pid, product.attributes, product.group);
       Blackboard[uuid] = Object.assign({
+        uuid: uuid,
         group: product.group
       }, catalogEntry);
     //   // console.log('variations',variations, pid);
@@ -473,16 +475,15 @@
     if(!entry){
       uuid = tokenizeAttr(productId, {});
       entry = Blackboard[uuid];
-      entry.uuid = uuid;
       return entry && entry.group ? entry : null;
     }
-    entry.uuid=uuid;
     return entry;
   }
   
   Checkout.addToCart = function(productId, attributes, qty) {
     
     var entry = findBoardEntry(productId, attributes);
+    var uuid = entry ? entry.uuid : null;
     var cartItem = Cart[uuid];
     if (!entry) {
       console.error('NOT ENTRY', uuid,Object.keys(Blackboard));
@@ -537,7 +538,7 @@
 
       
       var entry = findBoardEntry(productId, attributes);
-      var cartItem = Cart[uuid];
+      var cartItem = Cart[entry.uuid];
       // console.log('getSTock', cartItem);
       var cartItemQty = (cartItem ? cartItem.quantity : 0);
       if (typeof cartItemQty == 'undefined') {
@@ -573,7 +574,7 @@
     } else {
 
       var entry = findBoardEntry(productId, attributes);
-      var cartItem = Cart[uuid];
+      var cartItem = Cart[entry.uuid];
       // console.log('getPrice', uuid, entry, Blackboard)
       // console.log('getSTock', cartItem);
       if (!entry) {
