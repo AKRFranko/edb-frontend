@@ -493,9 +493,8 @@
       }})
       Object.defineProperty(proxy, 'attributes', { enumerable:true, get: function(){
         all[i].reduce( function(attr,one){ 
-          console.log('all[i]', attr, one);
-          return one;
-        }, {} );
+          return attr.concat(one.attributes);
+        }, [] );
       }});
       return proxy;
     });
