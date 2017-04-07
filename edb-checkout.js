@@ -484,16 +484,16 @@
       var proxy = {};
       Object.defineProperty(proxy, 'name', { enumerable:true, get: function(){
         return all[i].reduce( function(a,b){ return a ? a.name + b.name : b.name; });
-      }});
+      }})
       Object.defineProperty(proxy, 'price', { enumerable:true, get: function(){
         return all[i].reduce( function(a,b){ return a ? a.price + b.price : b.price; });
-      }});
+      }})
       Object.defineProperty(proxy, 'stockQuantity', { enumerable:true, get: function(){
         all[i].reduce( function(a,b){ return a ? a.stockQuantity + b.stockQuantity : b.stockQuantity; });
-      }});
+      }})
       Object.defineProperty(proxy, 'attributes', { enumerable:true, get: function(){
-        all[i].reduce( function(a,b){ return a ? Object.assign({}, a,b): b; });
-      }});
+        all[i].reduce( function(a,b){ return a ? Object.assign(a,b): b; });
+      }})
       return proxy;
     });
     return product;
@@ -515,7 +515,7 @@
     var uuid = tokenizeAttr(productId, attributes);
     var entry = Blackboard[uuid];
     if(!entry){
-      console.log('attributes',attributes);
+      console.log('!attributes',uuid);
       uuid = tokenizeAttr( productId, Object.keys(attributes).reduce( function( no, name ){
         no[name]=no[name];
         return no;
