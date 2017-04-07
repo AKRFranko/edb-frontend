@@ -440,7 +440,7 @@
 
         return attrs;
       }, []);
-      console.log('newVar', newVar, varMap);
+      console.log('newVar', newVar, varMap );
       product.attributes = newAttr;
     }
     return product;
