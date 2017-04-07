@@ -478,7 +478,7 @@
         },
         setSelectedAttribute: function(attribute){
           var attributes = this.get('attributes')||{};
-          
+          console.log('setSelectedAttribute',attribute);
           var attrKeys = Object.keys(attributes);
           if(!~attrKeys.indexOf(attribute.name)){
             if(attribute.name == 'slipcover'){
