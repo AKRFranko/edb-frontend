@@ -483,12 +483,13 @@
   Checkout.addToCart = function(productId, attributes, qty) {
     
     var entry = findBoardEntry(productId, attributes);
-    var uuid = entry ? entry.uuid : null;
-    var cartItem = Cart[uuid];
+    
     if (!entry) {
-      console.error('NOT ENTRY', uuid,Object.keys(Blackboard));
+      console.error('NOT ENTRY', productId, attributes);
       return null;
     } else {
+      var uuid = entry ? entry.uuid : null;
+      var cartItem = Cart[uuid];
       // if already in cart, update quantity;
       if (cartItem) {
         cartItem.quantity = cartItem.quantity + qty;
