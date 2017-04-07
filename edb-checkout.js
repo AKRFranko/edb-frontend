@@ -58,7 +58,7 @@
         };
       })
     }
-    console.log('attributes',attributes);
+    attributes = attributes.filter( function(a){ return a});
     return pid + ';' + sortAlpha(attributes, 'name').reduce(function(s, a) {
       return s + stripEDB(a.name) + ':' + a.option + ';';
     }, '');
