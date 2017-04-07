@@ -489,10 +489,10 @@
         return all[i].reduce( function(a,b){ return a ? a.price + b.price : b.price; });
       }})
       Object.defineProperty(proxy, 'stockQuantity', { enumerable:true, get: function(){
-        all[i].reduce( function(a,b){ return a ? a.stockQuantity + b.stockQuantity : b.stockQuantity; });
+        return all[i].reduce( function(a,b){ return a ? a.stockQuantity + b.stockQuantity : b.stockQuantity; });
       }})
       Object.defineProperty(proxy, 'attributes', { enumerable:true, get: function(){
-        all[i].reduce( function(attr,one){ 
+        return all[i].reduce( function(attr,one){ 
           return attr.concat(one.attributes);
         }, [] );
       }});
