@@ -538,15 +538,16 @@
 
       
       var entry = findBoardEntry(productId, attributes);
+      
+      if (!entry) {
+        // console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
+        return null;
+      }
       var cartItem = Cart[entry.uuid];
       // console.log('getSTock', cartItem);
       var cartItemQty = (cartItem ? cartItem.quantity : 0);
       if (typeof cartItemQty == 'undefined') {
         cartItemQty = 0;
-      }
-      if (!entry) {
-        // console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
-        return null;
       }
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
       if (!hasBuckets) {
