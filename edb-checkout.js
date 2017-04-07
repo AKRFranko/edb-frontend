@@ -47,12 +47,17 @@
   }
 
 
-  function tokenizeAttr(pid, attributes) {
+  function tokenizeAttr(pid, attributes, group) {
+    
     if (!Array.isArray(attributes)) {
       attributes = Object.keys(attributes).map(function(k) {
+        var opt = attributes[k];
+        if(group){ 
+          opt = '*';
+        }
         return {
           name: k,
-          option: attributes[k]
+          option: opt
         };
       })
     }
@@ -149,8 +154,8 @@
 
   }
 
-  function addCatalogEntry(product, option, variations) {
-    var token = tokenizeAttr(product.id, option);
+  function addCatalogEntry(product, option, variations, group) {
+    var token = tokenizeAttr(product.id, option, group);
     
     
     var catalogEntry = {
@@ -314,7 +319,7 @@
       var product = Products[productId];
       if (product.group) {
         Checkout.enhanceGroupAttributes(product);
-
+        addCatalogEntry(product, {}, [], product.group ) ;
       }
 
       var hasBucketAttributes = Checkout.productHasBucketAttributes(product);
@@ -395,52 +400,56 @@
       });
     }
     var allAttr = {};
-    var allVar = {};
+    // var allVar = {};
     if (product.group && product.group.length) {
       product.group.forEach(function(g) {
         g.attributes.forEach(function(a) {
           if (!allAttr[a.name]) {
             allAttr[a.name] = [];
-            allVar[a.name] = [];
+            // allVar[a.name] = [];
           }
           allAttr[a.name].push(a);
-          allVar[a.name] = (allVar[a.name]||[]).concat( g.variations.filter( function( v ){
-            return v.attributes.some( function( va){ return va.name = a.name});
-          }));
+          // allVar[a.name] = (allVar[a.name]||[]).concat( g.variations.filter( function( v ){
+            // return v.attributes.some( function( va){ return va.name = a.name});
+          // }));
         })
       });
       var optMap = {};
-      var varMap = {};
+      // var varMap = {};
       Object.keys(allAttr).forEach(function(name) {
         optMap[name] = {};
-        varMap[name] = {};
+        // varMap[name] = {};
         allAttr[name].forEach(function(attr, idx) {
           var opts = attr.options;
           opts.forEach(function(o) {
             if (!optMap[name][o]) {
               optMap[name][o] = [];
-              varMap[name][o] = [];
+              // varMap[name][o] = [];
             }
             optMap[name][o].push(idx);
-            varMap[name][o].push(idx);
+            // varMap[name][o].push(idx);
           });
         });
       });
-      var newVar = [];
+      // var newVar = [];
       var newAttr = Object.keys(allAttr).reduce(function(attrs, name) {
         var options = Object.keys(optMap[name]).filter(function(k) {
           return optMap[name][k].length == product.group.length
         });
         var orig = allAttr[name][0];
+        // var origV = allVar[name][0];
         orig.options = orig.options.filter(function(o) {
           return~options.indexOf(o)
         });
+        // orig.options.forEach( function(){
+          
+        // });
         orig.isFake = true;
         attrs.push(orig);
 
         return attrs;
       }, []);
-      console.log('newVar', newVar, varMap );
+      // console.log('newVar', newVar, varMap );
       product.attributes = newAttr;
     }
     return product;
