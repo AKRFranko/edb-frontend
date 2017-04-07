@@ -514,17 +514,17 @@
   function findBoardEntry(productId, attributes){
     var uuid = tokenizeAttr(productId, attributes);
     var entry = Blackboard[uuid];
-    if(!entry){
-      console.log('attributes',attributes);
-      uuid = tokenizeAttr( productId, Object.keys(attributes).reduce( function( no, name ){
-        no[name]=no[name];
-        return no;
-      },{}));
+    // if(!entry){
+    //   console.log('attributes',attributes);
+    //   uuid = tokenizeAttr( productId, Object.keys(attributes).reduce( function( no, name ){
+    //     no[name]=no[name];
+    //     return no;
+    //   },{}));
       
-      entry = Blackboard[uuid];
-      console.log('uuid???', uuid, Object.keys(Blackboard));
-      return entry && entry.group ? entry : null;
-    }
+    //   entry = Blackboard[uuid];
+    //   console.log('uuid???', uuid, Object.keys(Blackboard));
+    //   return entry && entry.group ? entry : null;
+    // }
     return entry;
   }
   
