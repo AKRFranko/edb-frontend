@@ -171,11 +171,16 @@
     // Blackboard[pid]=Blackboard[pid]||{};
     
     variations.forEach(function(v) {
-      var uuid = tokenizeAttr(pid, v.attributes, product.group);
-      Blackboard[uuid] = Object.assign({
-        uuid: uuid,
-        variation: v
-      }, catalogEntry);
+      if(Array.isArray(v)){
+        consolel.log('ISARRAY', v );
+      }else{
+        var uuid = tokenizeAttr(pid, v.attributes, product.group);
+        Blackboard[uuid] = Object.assign({
+          uuid: uuid,
+          variation: v
+        }, catalogEntry);  
+      }
+      
     });
     
     if(product.group){
