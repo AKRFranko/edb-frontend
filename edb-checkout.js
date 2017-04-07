@@ -330,10 +330,10 @@
           var bucket = buckets[bucketSlug];
           // expand variations to include bucket attributes.
           Object.keys(bucket).forEach(function(bucketOption) {
-            var newVariations = [];
-            if(product.group){
-              console.log('GRP', bucketOption, product.group );
-            }
+            // var newVariations = [];
+            // if(product.group){
+            //   console.log('GRP', bucketOption, product.group );
+            // }
             product.variations.forEach(function(variation) {
               var copy = Object.assign({}, variation);
               var copyAttributes = [].concat(variation.attributes);
@@ -397,28 +397,38 @@
       });
     }
     var allAttr = {};
+    var allVar = {};
     if (product.group && product.group.length) {
       product.group.forEach(function(g) {
         g.attributes.forEach(function(a) {
           if (!allAttr[a.name]) {
             allAttr[a.name] = [];
+            allVar[a.name] = {};
           }
           allAttr[a.name].push(a);
+          allVar[a.name] = allVar[a.name].concat( g.variations.filter( function( v ){
+            return v.attributes.some( function( va){ return va.name = a.name});
+          }));
         })
       });
       var optMap = {};
+      var varMap = {};
       Object.keys(allAttr).forEach(function(name) {
         optMap[name] = {};
+        varMap[name] = {};
         allAttr[name].forEach(function(attr, idx) {
           var opts = attr.options;
           opts.forEach(function(o) {
             if (!optMap[name][o]) {
               optMap[name][o] = [];
+              varMap[name][o] = [];
             }
             optMap[name][o].push(idx);
+            varMap[name][o].push(idx);
           });
         });
       });
+      var newVar = [];
       var newAttr = Object.keys(allAttr).reduce(function(attrs, name) {
         var options = Object.keys(optMap[name]).filter(function(k) {
           return optMap[name][k].length == product.group.length
@@ -429,9 +439,10 @@
         });
         orig.isFake = true;
         attrs.push(orig);
+
         return attrs;
       }, []);
-      console.log('newAttr', optMap);
+      console.log('newVar', newVar, varMap);
       product.attributes = newAttr;
     }
     return product;
