@@ -329,6 +329,7 @@
       if (product.group) {
         Checkout.enhanceGroupAttributes(product);
         // addCatalogEntry(product, {}, [], product.group ) ;
+        
       }
 
       var hasBucketAttributes = Checkout.productHasBucketAttributes(product);
@@ -347,6 +348,7 @@
             var newVariations = [];
             
             product.variations.forEach(function(variation) {
+              console.log('variation', variation );
               var copy = Object.assign({}, variation);
               var copyAttributes = [].concat(variation.attributes);
               var newAttribute = {};
