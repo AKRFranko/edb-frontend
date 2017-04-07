@@ -491,6 +491,10 @@
       Object.defineProperty(proxy, 'attributes', { enumerable:true, get: function(){
           return group[0].variations[i].attributes;
       }});
+      Object.defineProperty(proxy, 'image', { enumerable:true, get: function(){
+          return {id: null, src: null};
+      }});
+      
       // console.log('proxy.attributes', proxy.attributes);
       return proxy;
     });
