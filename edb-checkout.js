@@ -403,7 +403,7 @@
         g.attributes.forEach(function(a) {
           if (!allAttr[a.name]) {
             allAttr[a.name] = [];
-            allVar[a.name] = {};
+            allVar[a.name] = [];
           }
           allAttr[a.name].push(a);
           allVar[a.name] = allVar[a.name].concat( g.variations.filter( function( v ){
