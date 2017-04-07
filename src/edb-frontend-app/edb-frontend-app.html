@@ -763,7 +763,7 @@
             var product = entry.product;
             var id = product.id;
             var bucketAttributes = product.attributes.filter( function( attr ){
-            return product.isBucketOption;
+            return attr.isBucketOption;
             } ).map( function( attr ){ return attr.name + '=' + attr.option; });
             // console.log('computeCatalogItemUrl',entry)
             return '/#/product/'+id+'/?'+QSJS().encode(entry.option);
