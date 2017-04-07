@@ -494,9 +494,9 @@
       Object.defineProperty(proxy, 'attributes', { enumerable:true, get: function(){
         all[i].reduce( function(attr,one){ 
           console.log('all[i]', attr, one);
-          return attr;
+          return one;
         }, {} );
-      }})
+      }});
       return proxy;
     });
     return product;
