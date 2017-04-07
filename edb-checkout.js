@@ -574,13 +574,14 @@
     } else {
 
       var entry = findBoardEntry(productId, attributes);
-      var cartItem = Cart[entry.uuid];
+      
       // console.log('getPrice', uuid, entry, Blackboard)
       // console.log('getSTock', cartItem);
       if (!entry) {
         // console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
         return null;
       }
+      var cartItem = Cart[entry.uuid];
       var price = entry.variation ? entry.variation.price || entry.product.price : entry.product.price;
       // console.log('price', price );
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
