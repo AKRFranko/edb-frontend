@@ -440,11 +440,12 @@
          
         
         },
-        observers: ['productChanged(product,attributes.*)','computePrice(product,attributes.*)'],
+        observers: ['productChanged(product)','computePrice(product,attributes.*)'],
         computePrice: function(product){
           // console.log('computePrice', profu)
           var price = EDB.Checkout.getPrice( product.id, this.get('attributes'));
           console.log('productChanged', product, price);
+          this.updateAttributesFromQueryString();
           this.set('price', price||product.price );
         },
         productChanged: function(product){
@@ -455,8 +456,8 @@
           var slider = document.createElement('edb-slider');
           slider.slides = this.createProductSlides(product,this.get('materials'));
           this.$.slideWrapper.appendChild( slider );
-          console.log('updateAttributesFromQueryString')
-          this.updateAttributesFromQueryString();
+          
+          
           // this.$.slider.set('slides', );
           
         },
