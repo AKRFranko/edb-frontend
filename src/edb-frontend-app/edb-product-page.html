@@ -446,7 +446,7 @@
           var attributes = this.get('attributes');
           var price = EDB.Checkout.getPrice( product.id, attributes);
           console.log('productChanged', product, price, attributes);
-          
+          this.setSelectedAttributes( attributes );
           this.set('price', price||product.price );
         },
         productChanged: function(product){
@@ -457,7 +457,7 @@
           var slider = document.createElement('edb-slider');
           slider.slides = this.createProductSlides(product,this.get('materials'));
           this.$.slideWrapper.appendChild( slider );
-          this.setSelectedAttributes( attributes );
+          
           
           // this.$.slider.set('slides', );
           
