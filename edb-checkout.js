@@ -235,7 +235,7 @@
         value: total
       });
     });
-
+    console.log(Customer);
     lines.unshift({
       label: 'subtotal',
       value: subTotal
