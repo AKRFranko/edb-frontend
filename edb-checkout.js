@@ -265,7 +265,7 @@
       var total = Cart[uuid].quantity * Checkout.getPrice(Cart[uuid].product.id, Cart[uuid].variation.attributes);
       subTotal += total;
       return lines.push({
-        label: Cart[uuid].name + ' x' + Cart[uuid].quantity,
+        label: (Cart[uuid].name + ' x' + Cart[uuid].quantity).toLowerCase(),
         value: total
       });
     });
@@ -278,7 +278,7 @@
       note: shippingZone
     });
     lines.push({
-      label: 'subtotal',
+      label: 'SUBTOTAL',
       value: subTotal
     });
     lines.push({
