@@ -223,6 +223,8 @@
 
   Checkout.computeCartTotals = function() {
     var subTotal = 0;
+    var shippingClass= getShippingClassForCart();
+    var shippingzone = Checkout.getZone();
     var lines = [];
     Object.keys(Cart).forEach(function(uuid) {
       var total = Cart[uuid].quantity * Checkout.getPrice(Cart[uuid].product.id, Cart[uuid].variation.attributes);
@@ -243,8 +245,9 @@
     });
     lines.unshift({
       label: 'shipping',
-      value: Checkout.getShippingClassForCart()
+      value: Checkout.getShippingRate( shippingClass,shippingZone, subTotal )
     });
+    
     lines.unshift({
       label: 'total',
       value: subTotal + (0.15 * subTotal)
@@ -668,7 +671,7 @@
     }, zone);
   }
 
-  Checkout.getShippingClassForCart = function(){
+   function getShippingClassForCart(){
     var items = Object.keys(Cart).map( function(k){ return Cart[k]; } );
     if (items && items.length) {
       if (items.some(function(item) {
