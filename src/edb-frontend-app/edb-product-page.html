@@ -456,12 +456,13 @@
           var slider = document.createElement('edb-slider');
           slider.slides = this.createProductSlides(product,this.get('materials'));
           this.$.slideWrapper.appendChild( slider );
-          
+          this.updateAttributesFromQueryString();
           
           // this.$.slider.set('slides', );
           
         },
         attributesChanged: function(){
+          
           var attibutes = this.get('attributes');
           Object.keys(attributes).forEach( function( name ){
             this.setSelectedAttribute( attributes[name] );
