@@ -36,7 +36,41 @@
   Customer = Guest,
     Products = {},
     Buckets = {}, Catalog = {}, Cart = {}, Blackboard = {};
-
+  
+  var taxes = {
+    AB: [0, 0.05],
+    BC: [0.07,0.05],
+    MB: [0.08,0.05],
+    NB:[0.10,0.05],
+    NL:[0.10,0.05],
+    NS:[0.10,0.05],
+    NT:[0,0.05],
+    NU:[0,0.05],
+    ON:[0.08,0.05],
+    PE:[0.10,0.05],
+    QC:[0.09975,0.05],
+    SK:[0.06,0.05],
+    YT:[0.00,0.05]
+  }
+  
+  function calcTax( province, amount, tax){
+    var t = 0;
+    if(tax === 0){
+     t = taxes[province][0];
+    }else if( tax === 1){
+     t = taxes[province][1];
+    }else{
+      t = taxes[province][0] + taxes[province][1];
+    }
+    return amount*t;
+    
+  }
+  
+   
+  
+  
+  
+  
 
   function sortAlpha(array, key) {
     return array.sort(function(a, b) {
@@ -241,9 +275,18 @@
       value: subTotal
     });
     lines.unshift({
-      label: 'tax',
-      value: (0.15 * subTotal)
+      label: 'tax ',
+      value: calcTax( 'QC', subTotal) ;
     });
+    lines.unshift({
+      label: 'tax (federal)',
+      value: calcTax( 'QC', subTotal, 1 ) 
+    });
+    lines.unshift({
+      label: 'tax (provincial)',
+      value: calcTax( 'QC', subTotal, 0 ) 
+    });
+    
     lines.unshift({
       label: 'shipping',
       value: Checkout.getShippingRate( shippingClass,shippingZone, subTotal ),
