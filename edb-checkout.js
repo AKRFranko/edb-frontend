@@ -282,27 +282,24 @@
       value: subTotal
     });
     lines.push({
-      label: 'tax ',
-    });
-    lines.push({
-      label: ' - provincial',
+      label: 'tax',
       value: calcTax( 'QC', subTotal, 0 ) ,
-      
+      note: 'provincial'
     });
     lines.push({
-      label: ' - federal',
+      label: 'tax',
       value: calcTax( 'QC', subTotal, 1 ) ,
-      
+      note: 'federal'
     });
     
     lines.push({
-      label: 'tax total ',
+      label: 'tax total',
       value: calcTax( 'QC', subTotal ) 
     });
 
 
     lines.push({
-      label: 'total',
+      label: 'TOTAL',
       value: subTotal +  calcTax( 'QC', subTotal ) 
     });
     
