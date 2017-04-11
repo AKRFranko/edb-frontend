@@ -48,7 +48,7 @@
 
 
   function tokenizeAttr(pid, attributes) {
-    
+
     if (!Array.isArray(attributes)) {
       attributes = Object.keys(attributes).map(function(k) {
         var opt = attributes[k];
@@ -58,7 +58,9 @@
         };
       })
     }
-    attributes = attributes.filter( function(a){ return a});
+    attributes = attributes.filter(function(a) {
+      return a
+    });
     return pid + ';' + sortAlpha(attributes, 'name').reduce(function(s, a) {
       return s + stripEDB(a.name) + ':' + a.option + ';';
     }, '');
@@ -154,9 +156,9 @@
 
   function addCatalogEntry(product, option, variations) {
     var token = tokenizeAttr(product.id, option, product.group);
-    
-    if(product.id == 198){
-      console.log('token', token );
+
+    if (product.id == 198) {
+      console.log('token', token);
     }
     var catalogEntry = {
       token: token,
@@ -169,26 +171,26 @@
 
     var pid = product.id;
     // Blackboard[pid]=Blackboard[pid]||{};
-    
+
     variations.forEach(function(v) {
-      
-        var uuid = tokenizeAttr(pid, v.attributes, product.group);
-        Blackboard[uuid] = Object.assign({
-          uuid: uuid,
-          variation: v
-        }, catalogEntry);  
-      
-      
+
+      var uuid = tokenizeAttr(pid, v.attributes, product.group);
+      Blackboard[uuid] = Object.assign({
+        uuid: uuid,
+        variation: v
+      }, catalogEntry);
+
+
     });
-    
-    if(product.group){
-      
+
+    if (product.group) {
+
       var uuid = tokenizeAttr(pid, product.attributes, product.group);
       Blackboard[uuid] = Object.assign({
         uuid: uuid,
         group: product.group
       }, catalogEntry);
-    //   // console.log('variations',variations, pid);
+      //   // console.log('variations',variations, pid);
     }
     Catalog[token] = catalogEntry;
 
@@ -326,7 +328,7 @@
       if (product.group) {
         Checkout.enhanceGroupAttributes(product);
         // addCatalogEntry(product, {}, [], product.group ) ;
-        
+
       }
 
       var hasBucketAttributes = Checkout.productHasBucketAttributes(product);
@@ -343,11 +345,11 @@
           // expand variations to include bucket attributes.
           Object.keys(bucket).forEach(function(bucketOption) {
             var newVariations = [];
-            
+
             product.variations.forEach(function(variation) {
-              if(Array.isArray(variation)){
-                console.log('what to do with', variation );
-              }else{
+              if (Array.isArray(variation)) {
+                console.log('what to do with', variation);
+              } else {
                 var copy = Object.assign({}, variation);
                 var copyAttributes = [].concat(variation.attributes);
                 var newAttribute = {};
@@ -369,9 +371,9 @@
                 });
                 copyAttributes.push(newAttribute);
                 copy.attributes = copyAttributes;
-                newVariations.push(copy);  
+                newVariations.push(copy);
               }
-              
+
             });
             var attr = {};
             attr[bucketSlug] = bucketOption;
@@ -422,7 +424,7 @@
           }
           allAttr[a.name].push(a);
           // allVar[a.name] = (allVar[a.name]||[]).concat( g.variations.filter( function( v ){
-            // return v.attributes.some( function( va){ return va.name = a.name});
+          // return v.attributes.some( function( va){ return va.name = a.name});
           // }));
         })
       });
@@ -454,7 +456,7 @@
           return~options.indexOf(o)
         });
         // orig.options.forEach( function(){
-          
+
         // });
         orig.isFake = true;
         attrs.push(orig);
@@ -467,34 +469,59 @@
     }
     return product;
   }
-  function createGroupProductVariations( product ){
+
+  function createGroupProductVariations(product) {
     var group = product.group;
     var all = {};
-    group.forEach( function( g ){
-      g.variations.forEach( function( v, i){
+    group.forEach(function(g) {
+      g.variations.forEach(function(v, i) {
         all[i] = all[i] || [];
         all[i].push(v);
       })
     });
-    
-    product.variations =Object.keys(all).map( function(i ){
+
+    product.variations = Object.keys(all).map(function(i) {
       var proxy = {};
-      Object.defineProperty(proxy, 'name', { enumerable:true, get: function(){
-        return all[i].reduce( function(a,b){ return a ? a.name + b.name : b.name; });
-      }})
-      Object.defineProperty(proxy, 'price', { enumerable:true, get: function(){
-        return all[i].reduce( function(a,b){ return a ? a.price + b.price : b.price; });
-      }})
-      Object.defineProperty(proxy, 'stockQuantity', { enumerable:true, get: function(){
-        return all[i].reduce( function(a,b){ return a ? a.stockQuantity + b.stockQuantity : b.stockQuantity; });
-      }})
-      Object.defineProperty(proxy, 'attributes', { enumerable:true, get: function(){
+      Object.defineProperty(proxy, 'name', {
+        enumerable: true,
+        get: function() {
+          return all[i].reduce(function(a, b) {
+            return a ? a.name + b.name : b.name;
+          });
+        }
+      })
+      Object.defineProperty(proxy, 'price', {
+        enumerable: true,
+        get: function() {
+          return all[i].reduce(function(a, b) {
+            return a ? a.price + b.price : b.price;
+          });
+        }
+      })
+      Object.defineProperty(proxy, 'stockQuantity', {
+        enumerable: true,
+        get: function() {
+          return all[i].reduce(function(a, b) {
+            return a ? a.stockQuantity + b.stockQuantity : b.stockQuantity;
+          });
+        }
+      })
+      Object.defineProperty(proxy, 'attributes', {
+        enumerable: true,
+        get: function() {
           return group[0].variations[i].attributes;
-      }});
-      Object.defineProperty(proxy, 'image', { enumerable:true, get: function(){
-          return {id: null, src: null};
-      }});
-      
+        }
+      });
+      Object.defineProperty(proxy, 'image', {
+        enumerable: true,
+        get: function() {
+          return {
+            id: null,
+            src: null
+          };
+        }
+      });
+
       // console.log('proxy.attributes', proxy.attributes);
       return proxy;
     });
@@ -512,28 +539,28 @@
     }
     updateApp();
   }
-  
-  function findBoardEntry(productId, attributes){
+
+  function findBoardEntry(productId, attributes) {
     var uuid = tokenizeAttr(productId, attributes);
     var entry = Blackboard[uuid];
-    if(!entry){
+    if (!entry) {
       // console.log('!attributes',uuid);
-      uuid = tokenizeAttr( productId, Object.keys(attributes).reduce( function( no, name ){
-        no[name]=no[name];
+      uuid = tokenizeAttr(productId, Object.keys(attributes).reduce(function(no, name) {
+        no[name] = no[name];
         return no;
-      },{}));
-      
+      }, {}));
+
       entry = Blackboard[uuid];
       // console.log('uuid???', uuid, Object.keys(Blackboard));
       return entry && entry.group ? entry : null;
     }
     return entry;
   }
-  
+
   Checkout.addToCart = function(productId, attributes, qty) {
-    
+
     var entry = findBoardEntry(productId, attributes);
-    
+
     if (!entry) {
       console.error('NOT ENTRY', productId, attributes);
       return null;
@@ -587,9 +614,9 @@
       console.log('not attributes', productId, attributes);
     } else {
 
-      
+
       var entry = findBoardEntry(productId, attributes);
-      
+
       if (!entry) {
         // console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
         return null;
@@ -600,13 +627,13 @@
       if (typeof cartItemQty == 'undefined') {
         cartItemQty = 0;
       }
-      
+
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
       if (!hasBuckets) {
         // console.log('returning variation stock, cartItem:', cartItem);
         return entry.variation.stock_quantity;
       }
-      if(entry.variation){
+      if (entry.variation) {
         var minBucketCount = entry.variation.attributes.reduce(function(min, attr) {
           if (!attr.bucket) return min;
           var qty = attr.bucket[attr.option].variation.stock_quantity - cartItemQty;
@@ -617,32 +644,78 @@
         }, null);
         var variationQty = entry.variation.stock_quantity === null ? 0 : entry.variation.stock_quantity;
         // console.log('returning min stock, cartITem', cartItem );
-        return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) - cartItemQty;  
-      }else{
+        return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) - cartItemQty;
+      } else {
         return 999;
       }
-      
+
     }
   }
-  
-  Checkout.getZone = function( postcode ){
-    var code = postcode||Customer.shipping_postcode;
+
+  Checkout.getZone = function(postcode) {
+    var code = postcode || Customer.shipping_postcode;
     var zone = 'zone-2';
-    if(!code) return 'zone-3';
-    if(!/^([a-zA-Z]\d[a-zA-Z]\s?\d[a-zA-Z]\d)$/.test(code)) return 'zone-3';
+    if (!code) return 'zone-3';
+    if (!/^([a-zA-Z]\d[a-zA-Z]\s?\d[a-zA-Z]\d)$/.test(code)) return 'zone-3';
     code = code.toUpperCase().trim();
     var matchtable = {
-      'zone-1' :/^(H..|G1.|M..|K1.|T2.|T3.|T5.|T6.|V5.|V6.|C1A|R2.|R3.|E2.|E1.|E3.|B3.|S7.|S4.|A1.|J4.).+$/,
-      'zone-3' :/^(J|G|K|L|N|P|T|V|C|R|E|B|S|A|Y|X)0.+$/
+      'zone-1': /^(H..|G1.|M..|K1.|T2.|T3.|T5.|T6.|V5.|V6.|C1A|R2.|R3.|E2.|E1.|E3.|B3.|S7.|S4.|A1.|J4.).+$/,
+      'zone-3': /^(J|G|K|L|N|P|T|V|C|R|E|B|S|A|Y|X)0.+$/
     }
-    return Object.keys(matchtable).reduce( function( z, k ){
-      if( matchtable[k].test(code) ) return k;
+    return Object.keys(matchtable).reduce(function(z, k) {
+      if (matchtable[k].test(code)) return k;
       return z;
-    }, zone );
-    
+    }, zone);
   }
-  
-  
+
+  Checkout.getShippingRate = function(shippingClass, shippingZone, total) {
+    var ratesTable = {
+      'furniture': {
+        'min': 500,
+        'below': {
+          'zone-1': 65,
+          'zone-2': 150,
+          'zone-3': 250
+        },
+        'above': {
+          'zone-1': 0,
+          'zone-2': 85,
+          'zone-3': 150
+        }
+      },
+      'small-furniture': {
+        'min': 500,
+        'below': {
+          'zone-1': 18,
+          'zone-2': 25,
+          'zone-3': 28
+        },
+        'above': {
+          'zone-1': 0,
+          'zone-2': 10,
+          'zone-3': 15
+        }
+      },
+      'accessories': {
+        'min': 50,
+        'below': {
+          'zone-1': 15,
+          'zone-2': 15,
+          'zone-3': 15
+        },
+        'above': {
+          'zone-1': 0,
+          'zone-2': 0,
+          'zone-3': 0
+        }
+      }
+    };
+    var rates = total < ratesTable[shippingClass].min ? ratesTable[shippingClass].below : ratesTable[shippingClass].above;
+    return rates[shippingZone];
+
+  }
+
+
 
   Checkout.getPrice = function(productId, attributes) {
 
@@ -666,17 +739,17 @@
         return price;
       }
       var bucketModifiers = 0;
-      if(entry.variation){
-       bucketModifiers = entry.variation.attributes.reduce(function(mods, attr) {
+      if (entry.variation) {
+        bucketModifiers = entry.variation.attributes.reduce(function(mods, attr) {
           if (!attr.bucket) return mods;
           var mod = attr.bucket[attr.option].variation.price;
           if (!isNaN(mod)) {
             return Number(mods) + Number(mod);
           }
           return mods;
-        }, 0);  
+        }, 0);
       }
-      
+
 
       // console.log('returning basic price+bucket modifiers');
       return Number(price) + Number(bucketModifiers);
