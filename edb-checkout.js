@@ -275,12 +275,14 @@
       value: subTotal
     });
     lines.unshift({
-      label: 'tax (provincial)',
-      value: calcTax( 'QC', subTotal, 0 ) 
+      label: 'tax',
+      value: calcTax( 'QC', subTotal, 0 ) ,
+      note: 'provincial'
     });
     lines.unshift({
-      label: 'tax (federal)',
+      label: 'tax',
       value: calcTax( 'QC', subTotal, 1 ) 
+      note: 'federal'
     });
     lines.unshift({
       label: 'tax ',
