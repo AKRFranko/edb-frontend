@@ -62,7 +62,7 @@
     }else{
       t = taxes[province][0] + taxes[province][1];
     }
-    return Math.round((amount*t)*1000)/1000;
+    return Math.round((amount*t)*100)/100;
     
   }
   
