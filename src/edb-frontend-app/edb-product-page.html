@@ -321,7 +321,7 @@
                 <div class="price">{{formatMoney(price)}}</div>
               </div>
               <div class="product-options">
-                <template is="dom-repeat" items="{{computeAttributes(product,materials,attributes)}}" as="attribute">
+                <template is="dom-repeat" items="{{computeAttributes(product,materials)}}" as="attribute">
                   <div class="group">
                     <div class="attribute-label">{{attribute.name}}</div>
                       <iron-selector class$="{{attribute.name}}" on-selected-changed="handleSelectedAttributeChanged" selected="{{setSelectedAttribute(attribute)}}">
@@ -480,21 +480,24 @@
           return null;
         },
         setSelectedAttribute: function(attribute){
-          var attributes = this.get('attributes')||{};
-          // console.log('setSelectedAttribute',attribute);
-          var attrKeys = Object.keys(attributes);
-          if(!~attrKeys.indexOf(attribute.name)){
-            if(attribute.name == 'slipcover'){
-              return 0;
+          return function(){
+            var attributes = this.get('attributes')||{};
+            // console.log('setSelectedAttribute',attribute);
+            var attrKeys = Object.keys(attributes);
+            if(!~attrKeys.indexOf(attribute.name)){
+              if(attribute.name == 'slipcover'){
+                return 0;
+              }
+              return null
             }
-            return null
-          }
+            
+            var key = attrKeys[attrKeys.indexOf(attribute.name)];
+            var value =attributes[attribute.name];
+            var index = attribute.options.indexOf(value);
+            console.log('setSelectedAttribute',key,index)
+            return index;  
+          }.bind(this);
           
-          var key = attrKeys[attrKeys.indexOf(attribute.name)];
-          var value =attributes[attribute.name];
-          var index = attribute.options.indexOf(value);
-          console.log('setSelectedAttribute',key,index)
-          return index;
           
         },
         computeAttributes: function( product,materials ){
