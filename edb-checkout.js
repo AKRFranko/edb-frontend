@@ -281,7 +281,7 @@
     });
     lines.unshift({
       label: 'tax',
-      value: calcTax( 'QC', subTotal, 1 ) 
+      value: calcTax( 'QC', subTotal, 1 ),
       note: 'federal'
     });
     lines.unshift({
