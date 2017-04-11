@@ -502,7 +502,12 @@
           var index = attribute.options.indexOf(value);
           
           var selector = document.querySelector('iron-selector.'+attribute.name);
-          selector.selected = index;
+          if(selector){
+            selector.selected = index;  
+          }else{
+            console.log('no slector', attribute.name);
+          }
+          
           // console.log('setSelectedAttribute',key,index,selector,'iron-selector.'+attribute.name );
           
           return index;
