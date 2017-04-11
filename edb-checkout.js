@@ -274,12 +274,10 @@
       label: 'subtotal',
       value: subTotal
     });
-    
     lines.unshift({
       label: 'tax ',
       value: calcTax( 'QC', subTotal ) 
     });
-    
     lines.unshift({
       label: 'tax (federal)',
       value: calcTax( 'QC', subTotal, 1 ) 
