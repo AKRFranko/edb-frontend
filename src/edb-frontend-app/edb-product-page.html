@@ -440,11 +440,12 @@
          
         
         },
-        observers: ['productChanged(product)','computePrice(product,attributes.*),attributesChanged(attributes,product)'],
+        observers: ['productChanged(product)','computePrice(product,attributes.*)'],
         computePrice: function(product){
           // console.log('computePrice', profu)
-          var price = EDB.Checkout.getPrice( product.id, this.get('attributes'));
-          console.log('productChanged', product, price);
+          var attributes = this.get('attributes');
+          var price = EDB.Checkout.getPrice( product.id, attributes);
+          console.log('productChanged', product, price, attributes);
           
           this.set('price', price||product.price );
         },
@@ -456,18 +457,10 @@
           var slider = document.createElement('edb-slider');
           slider.slides = this.createProductSlides(product,this.get('materials'));
           this.$.slideWrapper.appendChild( slider );
-          this.attributesChanged( this.get('attributes'));
+          
           
           // this.$.slider.set('slides', );
           
-        },
-        attributesChanged: function(attribues){
-          console.log('attributesChanged',attributes);
-          // var attibutes = this.get('attributes');
-          if(!attributes) return;
-          Object.keys(attributes).forEach( function( name ){
-            this.setSelectedAttribute( name, attributes[name] );
-          }, this )
         },
         getVariationAttributeValue: function( v, attr, idx, prop ){
           return v.attributes[idx][prop];
@@ -504,13 +497,7 @@
           var index = attribute.options.indexOf(value);
           
           var selector = document.querySelector('iron-selector.'+attribute.name);
-          
-          if(selector){
-            selector.selected = index;  
-          }else{
-            console.log('no slector', attribute.name);
-          }
-          
+          selector.selected = index;
           console.log('setSelectedAttribute',key,index,selector,'iron-selector.'+attribute.name );
           
           return index;
