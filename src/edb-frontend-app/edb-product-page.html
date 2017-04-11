@@ -451,13 +451,13 @@
         },
         productChanged: function(product){
           
-          
+          var attributes = this.get('attributes');
           // this.set('slides', this.createProductSlides(product,this.get('materials')) );
           this.$.slideWrapper.innerHTML='';
           var slider = document.createElement('edb-slider');
           slider.slides = this.createProductSlides(product,this.get('materials'));
           this.$.slideWrapper.appendChild( slider );
-          
+          this.setSelectedAttributes( attributes );
           
           // this.$.slider.set('slides', );
           
@@ -480,27 +480,35 @@
           }
           return null;
         },
-        setSelectedAttribute: function(attribute){
+        setSelectedAttribute: function(attributes){
+          var product = this.get('product');
+          Object.keys(attributes).forEach( function( name ){
+            var selector = document.querySelector('iron-selector.'+name);
+            var attribute =product.attributes.filter( function( a ){
+              return a.name == name;
+            });
+            var values = attribute[0].options;
+            selector.selected = values.indexOf( attributes[name] );
+          });
+          // var attributes = this.get('attributes')||{};
+          // // console.log('setSelectedAttribute',attribute);
+          // var attrKeys = Object.keys(attributes);
+          // if(!~attrKeys.indexOf(attribute.name)){
+          //   if(attribute.name == 'slipcover'){
+          //     return 0;
+          //   }
+          //   return null
+          // }
           
-          var attributes = this.get('attributes')||{};
-          // console.log('setSelectedAttribute',attribute);
-          var attrKeys = Object.keys(attributes);
-          if(!~attrKeys.indexOf(attribute.name)){
-            if(attribute.name == 'slipcover'){
-              return 0;
-            }
-            return null
-          }
+          // var key = attrKeys[attrKeys.indexOf(attribute.name)];
+          // var value =attributes[attribute.name];
+          // var index = attribute.options.indexOf(value);
           
-          var key = attrKeys[attrKeys.indexOf(attribute.name)];
-          var value =attributes[attribute.name];
-          var index = attribute.options.indexOf(value);
+          // var selector = document.querySelector('iron-selector.'+attribute.name);
+          // selector.selected = index;
+          // console.log('setSelectedAttribute',key,index,selector,'iron-selector.'+attribute.name );
           
-          var selector = document.querySelector('iron-selector.'+attribute.name);
-          selector.selected = index;
-          console.log('setSelectedAttribute',key,index,selector,'iron-selector.'+attribute.name );
-          
-          return index;
+          // return index;
           
         },
         computeAttributes: function( product,materials ){
