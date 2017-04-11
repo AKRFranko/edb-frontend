@@ -480,24 +480,24 @@
           return null;
         },
         setSelectedAttribute: function(attribute){
-          return function(){
-            var attributes = this.get('attributes')||{};
-            // console.log('setSelectedAttribute',attribute);
-            var attrKeys = Object.keys(attributes);
-            if(!~attrKeys.indexOf(attribute.name)){
-              if(attribute.name == 'slipcover'){
-                return 0;
-              }
-              return null
-            }
-            
-            var key = attrKeys[attrKeys.indexOf(attribute.name)];
-            var value =attributes[attribute.name];
-            var index = attribute.options.indexOf(value);
-            console.log('setSelectedAttribute',key,index)
-            return index;  
-          }.bind(this);
           
+          var attributes = this.get('attributes')||{};
+          // console.log('setSelectedAttribute',attribute);
+          var attrKeys = Object.keys(attributes);
+          if(!~attrKeys.indexOf(attribute.name)){
+            if(attribute.name == 'slipcover'){
+              return 0;
+            }
+            return null
+          }
+          
+          var key = attrKeys[attrKeys.indexOf(attribute.name)];
+          var value =attributes[attribute.name];
+          var index = attribute.options.indexOf(value);
+          
+          var selector = Polymer.dom(this).querySelector('iron-selector.'+attribute.name);
+          console.log('setSelectedAttribute',key,index,selector);
+          return index;
           
         },
         computeAttributes: function( product,materials ){
