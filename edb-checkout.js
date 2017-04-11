@@ -297,14 +297,12 @@
       value: calcTax( 'QC', subTotal ) 
     });
 
-    
-    
-  
-    
+
     lines.unshift({
       label: 'total',
-      value: subTotal + (0.15 * subTotal)
+      value: subTotal +  calcTax( 'QC', subTotal ) 
     });
+    
 
     return lines;
 
