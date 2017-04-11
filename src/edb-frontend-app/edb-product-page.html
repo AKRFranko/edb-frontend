@@ -445,7 +445,6 @@
           // console.log('computePrice', profu)
           var price = EDB.Checkout.getPrice( product.id, this.get('attributes'));
           console.log('productChanged', product, price);
-          this.updateAttributesFromQueryString();
           
           this.set('price', price||product.price );
         },
@@ -528,7 +527,7 @@
           return img ? img.full_url ? img.full_url : img.src ? img.src : null : null;
         },
         computeAttributeChoices: function( attr, variations ){
-          this.updateAttributesFromQueryString();
+          // this.updateAttributesFromQueryString();
           var attributes = this.get('attributes');
           
           return attr.options.map( function( option ){
@@ -561,6 +560,7 @@
           return EDB.format.money( amount );
         },
         updateAttributesFromQueryString: function(){
+          
           var queryString = window.location.href.indexOf('?') > -1 ? window.location.href.slice(window.location.href.indexOf('?')+1) : '';
           
           var query = queryString ? QSJS().decode(queryString) : {};
