@@ -461,11 +461,12 @@
           // this.$.slider.set('slides', );
           
         },
-        attributesChanged: function(){
+        attributesChanged: function(attribues){
           
-          var attibutes = this.get('attributes');
+          // var attibutes = this.get('attributes');
+          if(!attributes) return;
           Object.keys(attributes).forEach( function( name ){
-            this.setSelectedAttribute( attributes[name] );
+            this.setSelectedAttribute( name, attributes[name] );
           }, this )
         },
         getVariationAttributeValue: function( v, attr, idx, prop ){
