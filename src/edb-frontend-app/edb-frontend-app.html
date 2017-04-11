@@ -760,6 +760,7 @@
           var el = Polymer.dom(event).localTarget;
           console.log('handleAddressToggleChanged', el.checked );
           this.set('customer.useBillingAddressForShipping', el.checked);
+          EDB.Checkout.useBillingAddressForShipping = el.checked;
         }, 
         computeCartTotals: function(){
           return EDB.Checkout.computeCartTotals();
