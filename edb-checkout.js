@@ -637,12 +637,12 @@
     }
     return Object.keys(matchtable).reduce( function( z, k ){
       if( matchtable[k].test(code) ) return k;
+      return z;
     }, zone );
     
   }
   
-  console.log(Checkout.getZone('h2a 2a2'));
-  console.log(Checkout.getZone('j0x 1m3'));
+  
 
   Checkout.getPrice = function(productId, attributes) {
 
