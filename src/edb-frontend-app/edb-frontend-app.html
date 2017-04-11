@@ -382,7 +382,7 @@
                 <div class="twinfields">
                   <paper-input label="country" value="{{customer.billing_country}}"></paper-input>
                   <paper-input label="postal_code" value="{{customer.billing_postcode}}">
-                    <div suffix hidden$="{{!customer.useBillingAddressForShipping}}" class="zone-suffix">{{computeShippingZone(customer.billing_postcode)}}</div>
+                    <div suffix hidden$="{{!customer.useBillingAddressForShipping}}" class="zone-suffix">{{computeShippingZone(customer.billing_postcode,customer.useBillingAddressForShipping)}}</div>
                   </paper-input>
                   
                 </div>
@@ -406,7 +406,7 @@
                 <div class="twinfields">
                   <paper-input label="country" value="{{customer.shipping_country}}"></paper-input>
                   <paper-input label="postal_code" value="{{customer.shipping_postcode}}">
-                    <div suffix class="zone-suffix">{{computeShippingZone(customer.shipping_postcode)}}</div>
+                    <div suffix class="zone-suffix">{{computeShippingZone(customer.shipping_postcode,customer.useBillingAddressForShipping)}}</div>
                   </paper-input>
                 </div>
               </form>  
