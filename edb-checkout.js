@@ -224,7 +224,8 @@
   Checkout.computeCartTotals = function() {
     var subTotal = 0;
     var shippingClass= getShippingClassForCart();
-    var shippingZzone = Checkout.getZone();
+    var shippingZone = Checkout.getZone();
+    
     var lines = [];
     Object.keys(Cart).forEach(function(uuid) {
       var total = Cart[uuid].quantity * Checkout.getPrice(Cart[uuid].product.id, Cart[uuid].variation.attributes);
