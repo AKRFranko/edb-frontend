@@ -850,7 +850,7 @@
           return t.slice(0,n)+'...';
         },
         formatMoney: function( amount ){
-          return EDB.format.money( amount.tofixed(2) );
+          return EDB.format.money( amount.toFixed(2) );
         },
         ready: function(){
           
