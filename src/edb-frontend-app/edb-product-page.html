@@ -495,8 +495,8 @@
           var value =attributes[attribute.name];
           var index = attribute.options.indexOf(value);
           
-          var selector = Polymer.dom(this).querySelector('iron-selector.'+attribute.name);
-          console.log('setSelectedAttribute',key,index,selector);
+          var selector = this.querySelector('iron-selector.'+attribute.name);
+          console.log('setSelectedAttribute',key,index,selector,'iron-selector.'+attribute.name );
           return index;
           
         },
