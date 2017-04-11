@@ -243,7 +243,7 @@
     });
     lines.unshift({
       label: 'shipping',
-      value: 0
+      value: Checkout.getShippingClassForCart()
     });
     lines.unshift({
       label: 'total',
@@ -667,6 +667,24 @@
       return z;
     }, zone);
   }
+
+  Checkout.getShippingClassForCart = function(){
+    var items = Object.keys(Cart).map( function(k){ return Cart[k]; } );
+    if (items && items.length) {
+      if (items.some(function(item) {
+        return item.shippingClass = 'furniture';
+      })) {
+        return 'furniture';
+      } else if (items.some(function(item) {
+        return item.shippingClass = 'small-furniture';
+      })) {
+        return 'small-furniture';
+      }
+      return 'accessories';
+    }
+    return null;
+  }
+
 
   Checkout.getShippingRate = function(shippingClass, shippingZone, total) {
     var ratesTable = {
