@@ -440,7 +440,7 @@
          
         
         },
-        observers: ['productChanged(product)','computePrice(product,attributes.*),attributesChanged(attributes,attributes.*)'],
+        observers: ['productChanged(product)','computePrice(product,attributes.*),attributesChanged(attributes,product)'],
         computePrice: function(product){
           // console.log('computePrice', profu)
           var price = EDB.Checkout.getPrice( product.id, this.get('attributes'));
