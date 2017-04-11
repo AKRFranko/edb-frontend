@@ -462,7 +462,7 @@
           
         },
         attributesChanged: function(attribues){
-          
+          console.log('attributesChanged',attributes);
           // var attibutes = this.get('attributes');
           if(!attributes) return;
           Object.keys(attributes).forEach( function( name ){
@@ -511,7 +511,7 @@
             console.log('no slector', attribute.name);
           }
           
-          // console.log('setSelectedAttribute',key,index,selector,'iron-selector.'+attribute.name );
+          console.log('setSelectedAttribute',key,index,selector,'iron-selector.'+attribute.name );
           
           return index;
           
