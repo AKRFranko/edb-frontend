@@ -456,7 +456,7 @@
           var slider = document.createElement('edb-slider');
           slider.slides = this.createProductSlides(product,this.get('materials'));
           this.$.slideWrapper.appendChild( slider );
-          this.updateAttributesFromQueryString();
+          this.attributesChanged( this.get('attributes'));
           
           // this.$.slider.set('slides', );
           
