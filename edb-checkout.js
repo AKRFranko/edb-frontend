@@ -284,6 +284,7 @@
       value: calcTax( 'QC', subTotal, 1 ),
       note: 'federal'
     });
+    
     lines.unshift({
       label: 'tax ',
       value: calcTax( 'QC', subTotal ) 
