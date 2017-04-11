@@ -382,7 +382,7 @@
                 <div class="twinfields">
                   <paper-input label="country" value="{{customer.billing_country}}"></paper-input>
                   <paper-input label="postal_code" value="{{customer.billing_postcode}}">
-                    <div suffix hidden$="{{!customer.useBillingAddressForShipping}}" class="zone-suffix">{{computeShippingZone(customer.billing_postcode,customer.useBillingAddressForShipping)}}</div>
+                    <div suffix hidden$="{{!customer.useBillingAddressForShipping}}" class="zone-suffix">{{computeShippingZone(customer.billing_postcode)}}</div>
                   </paper-input>
                   
                 </div>
@@ -406,7 +406,7 @@
                 <div class="twinfields">
                   <paper-input label="country" value="{{customer.shipping_country}}"></paper-input>
                   <paper-input label="postal_code" value="{{customer.shipping_postcode}}">
-                    <div suffix class="zone-suffix">{{computeShippingZone(customer.shipping_postcode,customer.useBillingAddressForShipping)}}</div>
+                    <div suffix class="zone-suffix">{{computeShippingZone(customer.shipping_postcode)}}</div>
                   </paper-input>
                 </div>
               </form>  
@@ -430,7 +430,7 @@
             
             <div id="totals" hidden$="{{!cart.length}}">
               <div class="title">Totals</div>
-              <template is="dom-repeat" items="{{computeCartTotals(cart,customer,cart.*,customer.*)}}" as="line">
+              <template is="dom-repeat" items="{{cartTotals}}" as="line">
                 <div class="line">
                   <div class="line-label">{{line.label}} <span class="line-note">{{line.note}}</span></div>
                   <div class="line-value">${{line.value}}</div>
@@ -723,10 +723,17 @@
             value: function(){
               return {};
             }
+          },
+          cartTotals: {
+            type: Array,
+            notify: true,
+            valud: function(){
+              return [];
+            }
           }
           
         },
-        observers: ['routePage(route,routeData)','closeAuthDialog(user)','setSelectedProductId(singleProductData.id)'],
+        observers: ['routePage(route,routeData)','closeAuthDialog(user)','setSelectedProductId(singleProductData.id)','computeCartTotals(cart,customer,cart.*,customer.*)'],
         closeAuthDialog: function( user ){
           this.$.authDialog.close();
         },
@@ -763,7 +770,11 @@
           EDB.Checkout.useBillingAddressForShipping = el.checked;
         }, 
         computeCartTotals: function(){
-          return EDB.Checkout.computeCartTotals();
+          this.set('cartTotals', []);
+          this.async( function(){
+            this.set('cartTotals', EDB.Checkout.computeCartTotals());
+          })
+          
         },
         _filterCatalog: function( filterVal ){
           var days30  =1000 * 60 * 60  * 24  * 30;
