@@ -446,6 +446,7 @@
           var price = EDB.Checkout.getPrice( product.id, this.get('attributes'));
           console.log('productChanged', product, price);
           this.updateAttributesFromQueryString();
+          
           this.set('price', price||product.price );
         },
         productChanged: function(product){
