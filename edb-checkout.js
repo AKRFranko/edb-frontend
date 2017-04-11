@@ -270,9 +270,16 @@
       });
     });
     
+    
+    
     lines.unshift({
       label: 'subtotal',
       value: subTotal
+    });
+    lines.unshift({
+      label: 'shipping',
+      value: Checkout.getShippingRate( shippingClass,shippingZone, subTotal ),
+      note: shippingZone
     });
     lines.unshift({
       label: 'tax',
@@ -292,11 +299,7 @@
 
     
     
-    lines.unshift({
-      label: 'shipping',
-      value: Checkout.getShippingRate( shippingClass,shippingZone, subTotal ),
-      note: shippingZone
-    });
+  
     
     lines.unshift({
       label: 'total',
