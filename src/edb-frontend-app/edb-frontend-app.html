@@ -369,7 +369,10 @@
                 </div>
                 <div class="twinfields">
                   <paper-input label="country" value="{{customer.billing_country}}"></paper-input>
-                  <paper-input label="postal_code" value="{{customer.billing_postcode}}"></paper-input>
+                  <paper-input label="postal_code" value="{{customer.billing_postcode}}">
+                    
+                  </paper-input>
+                  
                 </div>
               </form>
               <form id="shipping" hidden$="{{customer.useBillingAddressForShipping}}">
@@ -390,7 +393,9 @@
                 </div>
                 <div class="twinfields">
                   <paper-input label="country" value="{{customer.shipping_country}}"></paper-input>
-                  <paper-input label="postal_code" value="{{customer.shipping_postcode}}"></paper-input>
+                  <paper-input label="postal_code" value="{{customer.shipping_postcode}}">
+                    <div suffix>{{computeShippingZone(customer.shipping_postcode)}}</div>
+                  </paper-input>
                 </div>
               </form>  
               <form id="payment" class="todo">
@@ -720,6 +725,9 @@
           }
           
           // console.log('product.selectedId',id);
+        },
+        computeShippingZone: function( code ){
+          return EDB.Checkout.getZone( code );
         },
         setAuthModeRegister: function( e )
         {
