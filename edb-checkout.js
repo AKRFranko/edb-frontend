@@ -272,33 +272,34 @@
     var shippingCost = Checkout.getShippingRate( shippingClass,shippingZone, subTotal );
     
     subTotal += shippingCost;
-    lines.unshift({
-      label: 'subtotal',
-      value: subTotal
-    });
-    lines.unshift({
+    lines.push({
       label: 'shipping',
       value:shippingCost,
       note: shippingZone
     });
-    lines.unshift({
+    lines.push({
+      label: 'subtotal',
+      value: subTotal
+    });
+    
+    lines.push({
       label: 'tax',
       value: calcTax( 'QC', subTotal, 0 ) ,
       note: 'provincial'
     });
-    lines.unshift({
+    lines.push({
       label: 'tax',
       value: calcTax( 'QC', subTotal, 1 ) ,
       note: 'federal'
     });
     
-    lines.unshift({
+    lines.push({
       label: 'tax ',
       value: calcTax( 'QC', subTotal ) 
     });
 
 
-    lines.unshift({
+    lines.push({
       label: 'total',
       value: subTotal +  calcTax( 'QC', subTotal ) 
     });
