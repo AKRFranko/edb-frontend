@@ -246,7 +246,8 @@
     });
     lines.unshift({
       label: 'shipping',
-      value: Checkout.getShippingRate( shippingClass,shippingZone, subTotal )
+      value: Checkout.getShippingRate( shippingClass,shippingZone, subTotal ),
+      note: shippingZone
     });
     
     lines.unshift({

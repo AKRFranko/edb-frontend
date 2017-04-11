@@ -411,7 +411,8 @@
               <template is="dom-repeat" items="{{computeCartTotals(cart,customer,cart.*,customer.*)}}" as="line">
                 <div class="line">
                   <div class="line-label">{{line.label}}</div>
-                  <div class="line-value">${{line.value}}</div>
+                  <div class="line-value">${{line.value}} <span class="line-note">{{line.note}}</span></div>
+                  
                 </div>
               </template>
             </div>
@@ -849,7 +850,7 @@
           return t.slice(0,n)+'...';
         },
         formatMoney: function( amount ){
-          return EDB.format.money( amount );
+          return EDB.format.money( amount.tofixed(2) );
         },
         ready: function(){
           
