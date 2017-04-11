@@ -624,6 +624,25 @@
       
     }
   }
+  
+  Checkout.getZone = function( postcode ){
+    var code = postcode||Customer.shipping_postcode;
+    var zone = 'zone-2';
+    if(!code) return 'zone-3';
+    if(!/^([a-zA-Z]\d[a-zA-Z]\s?\d[a-zA-Z]\d)$/.test(code)) return 'zone-3';
+    code = code.toUpperCase().trim();
+    var matchtable = {
+      'zone-1' :/^(H..|G1.|M..|K1.|T2.|T3.|T5.|T6.|V5.|V6.|C1A|R2.|R3.|E2.|E1.|E3.|B3.|S7.|S4.|A1.|J4.).+$/,
+      'zone-3' :/^(J|G|K|L|N|P|T|V|C|R|E|B|S|A|Y|X)0.+$/
+    }
+    return Object.keys(matchtable).reduce( function( z, k ){
+      if( matchtable[k].test(code) ) return k;
+    }, zone );
+    
+  }
+  
+  console.log(Checkout.getZone('h2a 2a2'));
+  console.log(Checkout.getZone('j0x 1m3'));
 
   Checkout.getPrice = function(productId, attributes) {
 
