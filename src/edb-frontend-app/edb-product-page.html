@@ -455,6 +455,7 @@
           var slider = document.createElement('edb-slider');
           slider.slides = this.createProductSlides(product,this.get('materials'));
           this.$.slideWrapper.appendChild( slider );
+          console.log('updateAttributesFromQueryString')
           this.updateAttributesFromQueryString();
           // this.$.slider.set('slides', );
           
@@ -561,10 +562,13 @@
           var queryString = window.location.href.indexOf('?') > -1 ? window.location.href.slice(window.location.href.indexOf('?')+1) : '';
           
           var query = queryString ? QSJS().decode(queryString) : {};
-          this.set('attributes', Object.keys(query).reduce( function( o, k){
-            o[k.replace(/^edb_/,'')]=query[k];
-            return o;
-          }, {}));
+          Object.keys(query).forEach( function( k){
+            var name = k.replace(/^edb_/,'');
+            var value = query[k];
+            this.set('attributes.'+name, value);
+          }, this)
+          
+          
         },
         attached: function(){
           this.updateAttributesFromQueryString();
