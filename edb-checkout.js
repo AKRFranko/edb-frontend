@@ -269,16 +269,16 @@
         value: total
       });
     });
+    var shippingCost = Checkout.getShippingRate( shippingClass,shippingZone, subTotal );
     
-    
-    
+    subTotal += shippingCost;
     lines.unshift({
       label: 'subtotal',
       value: subTotal
     });
     lines.unshift({
       label: 'shipping',
-      value: Checkout.getShippingRate( shippingClass,shippingZone, subTotal ),
+      value:shippingCost,
       note: shippingZone
     });
     lines.unshift({
