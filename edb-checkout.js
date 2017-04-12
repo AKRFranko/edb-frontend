@@ -297,6 +297,7 @@
       value: calcTax( 'QC', subTotal ) 
     });
 
+
     lines.push({
       label: 'TOTAL',
       value: subTotal +  calcTax( 'QC', subTotal ) 
@@ -539,24 +540,24 @@
         enumerable: true,
         get: function() {
           return all[i].reduce(function(a, b) {
-            return a !==null ? a.name + b.name : b.name;
-          }, null );
+            return a ? a.name + b.name : b.name;
+          });
         }
       })
       Object.defineProperty(proxy, 'price', {
         enumerable: true,
         get: function() {
           return all[i].reduce(function(a, b) {
-            return a !==null ? a.price + b.price : b.price;
-          }, null);
+            return a ? a.price + b.price : b.price;
+          });
         }
       })
       Object.defineProperty(proxy, 'stockQuantity', {
         enumerable: true,
         get: function() {
           return all[i].reduce(function(a, b) {
-            return a !== null ? a.stockQuantity + b.stockQuantity : b.stockQuantity;
-          }, null);
+            return a ? a.stockQuantity + b.stockQuantity : b.stockQuantity;
+          });
         }
       })
       Object.defineProperty(proxy, 'attributes', {
@@ -644,6 +645,7 @@
 
         localStorage.setItem('EDB_CART|' + uuid, JSON.stringify({
           pid: productId,
+
           stored: Date.now(),
           attributes: attributes,
           quantity: qty
@@ -797,14 +799,14 @@
   Checkout.getPrice = function(productId, attributes) {
 
     if (!attributes) {
-      // console.log('not attributes', productId, attributes);
+      console.log('not attributes', productId, attributes);
     } else {
 
       var entry = findBoardEntry(productId, attributes);
       // console.log('getPrice', uuid, entry, Blackboard)
       // console.log('getSTock', cartItem);
       if (!entry) {
-        console.log('NOT ENTRY',productId);
+        console.error('NOT ENTRY',productId);
         return null;
       }
       var cartItem = Cart[entry.uuid];
