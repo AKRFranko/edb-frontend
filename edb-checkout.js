@@ -822,7 +822,7 @@
         bucketModifiers = entry.variation.attributes.reduce(function(mods, attr) {
           if (!attr.bucket) return mods;
           var mod = attr.bucket[attr.option].variation.price;
-          console.log(attr.option, attr.bucket[attr.option].variation);
+          // .log(attr.option, attr.bucket[attr.option].variation);
           if (!isNaN(mod)) {
             return Number(mods) + Number(mod);
           }
@@ -831,7 +831,7 @@
       }
 
 
-      console.log('returning basic price+bucket modifiers',price,bucketModifiers);
+      // console.log('returning basic price+bucket modifiers',price,bucketModifiers);
       return Number(price) + Number(bucketModifiers);
 
     }
