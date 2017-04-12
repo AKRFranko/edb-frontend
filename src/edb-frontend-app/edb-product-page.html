@@ -491,8 +491,9 @@
             });
             var values = attribute[0].options;
             if(selector){
-              console.log('Set index', name, values.indexOf( attributes[name] ) )
+              
               this.async( function(){
+                console.log('Set index', selector, values.indexOf( attributes[name] ) )
                 selector.selectIndex(values.indexOf( attributes[name] )+1);  
               })
               
