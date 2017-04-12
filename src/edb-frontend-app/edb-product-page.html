@@ -493,7 +493,7 @@
             if(selector){
               console.log('Set index', name, values.indexOf( attributes[name] ) )
               this.async( function(){
-                selector.selectIndex(values.indexOf( attributes[name] ));  
+                selector.selectIndex(values.indexOf( attributes[name] )+1);  
               })
               
             }
