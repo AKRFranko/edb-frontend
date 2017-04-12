@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<script src="../../konami.js"></script>
 <script src="../../creds.js"></script>
 <script src="../../edb.js"></script>
 <script src="../../edb-checkout.js"></script>
@@ -628,6 +629,7 @@
         </iron-pages>
       </form>
     </paper-dialog>
+    
   </template>
   <script>
     function isDescendant(parent, child) {
@@ -910,6 +912,10 @@
           
           var material = new EDB.PolymerResource('material', this);
               material.refreshItems();
+          new Konami(function() { 
+            
+            alert('Godmode ACtivated!');
+          });
           // this.set('slides', slides.items );
           // console.log()
         }
