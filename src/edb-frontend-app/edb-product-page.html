@@ -446,7 +446,7 @@
           var attributes = this.get('attributes');
           var price = EDB.Checkout.getPrice( product.id, attributes);
           console.log('productChanged', product, price, attributes);
-          this.setSelectedAttributes( attributes );
+          
           this.set('price', price||product.price );
         },
         productChanged: function(product){
@@ -457,7 +457,7 @@
           var slider = document.createElement('edb-slider');
           slider.slides = this.createProductSlides(product,this.get('materials'));
           this.$.slideWrapper.appendChild( slider );
-          
+          this.setSelectedAttributes( attributes );
           
           // this.$.slider.set('slides', );
           
@@ -491,16 +491,11 @@
             });
             var values = attribute[0].options;
             if(selector){
-              
-              this.async( function(){
-                console.log('Set index', selector, values.indexOf( attributes[name] ) )
-                selector.selectIndex(values.indexOf( attributes[name] )+1);  
-              })
-              
+                selector.selectIndex(values.indexOf( attributes[name] ));
             }
             // console.log('setSelectedAttributes', name, values.indexOf( attributes[name] ));
             // selector.selected = values.indexOf( attributes[name] );
-          },this);
+          });
           // var attributes = this.get('attributes')||{};
           // // console.log('setSelectedAttribute',attribute);
           // var attrKeys = Object.keys(attributes);
