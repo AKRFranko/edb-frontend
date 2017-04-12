@@ -782,8 +782,8 @@
         }
       }
     };
-    var rates = total < ratesTable[shippingClass].min ? ratesTable[shippingClass].below : ratesTable[shippingClass].above;
-    return rates[shippingZone];
+    var rates = ratesTable[shippingClass] && total < ratesTable[shippingClass].min ? ratesTable[shippingClass].below : ratesTable[shippingClass].above;
+    return (rates||{})[shippingZone];
 
   }
 
