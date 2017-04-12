@@ -490,7 +490,10 @@
               return a.name == name;
             });
             var values = attribute[0].options;
-            console.log('setSelectedAttributes', name, values.indexOf( attributes[name] ));
+            if(selector){
+              selector.selectIndex(values.indexOf( attributes[name] ));
+            }
+            // console.log('setSelectedAttributes', name, values.indexOf( attributes[name] ));
             // selector.selected = values.indexOf( attributes[name] );
           });
           // var attributes = this.get('attributes')||{};
