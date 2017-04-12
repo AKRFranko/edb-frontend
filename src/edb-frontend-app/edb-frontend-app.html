@@ -736,10 +736,7 @@
           shippingZone: {
             type: String,
             notify: true,
-            value: function(){
-              return [];
-            }
-            
+            value: 'zone-3'
           }
           
         },
@@ -759,7 +756,7 @@
           if(useBilling){
             this.set('shippingZone', EDB.Checkout.getZone( billing ) );
           }else{
-            this.set('shippingZone', EDB.Checkout.getZone( shipping ) );
+            this.set('shippingZone', EDB.Checkout.getZone( shipping )  );
           }
           
           // return EDB.Checkout.getZone( code );
