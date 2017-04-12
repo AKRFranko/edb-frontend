@@ -485,12 +485,12 @@
           var product = this.get('product');
           Object.keys(attributes).forEach( function( name ){
             var selector = document.querySelector('iron-selector.'+name);
-            // console.dir(selector)
-            // var attribute =product.attributes.filter( function( a ){
-            //   return a.name == name;
-            // });
-            // var values = attribute[0].options;
-            // console.log('setSelectedAttributes', name, values.indexOf( attributes[name] ));
+            
+            var attribute =product.attributes.filter( function( a ){
+              return a.name == name;
+            });
+            var values = attribute[0].options;
+            console.log('setSelectedAttributes', name, values.indexOf( attributes[name] ));
             // selector.selected = values.indexOf( attributes[name] );
           });
           // var attributes = this.get('attributes')||{};
