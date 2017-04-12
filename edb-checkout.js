@@ -782,8 +782,15 @@
         }
       }
     };
-    var rates = ratesTable[shippingClass] && total < ratesTable[shippingClass].min ? ratesTable[shippingClass].below : ratesTable[shippingClass].above;
-    return (rates||{})[shippingZone];
+    var classRates = ratesTable[shippingClass];
+    if(!classRates) return 0;
+    var min = classRates.min;
+    if(total < min){
+      return classRates.below[shippingZone];
+    }else{
+      return classRates.above[shippingZone];
+    }
+    return 0;
 
   }
 
