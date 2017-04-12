@@ -393,7 +393,9 @@ EDB.autoLogin = function( polyAuth ){
       }else{
         console.log('HUH? at autoLogin()', valid);
       }
-  } )
+  } ).catch(function( E ){
+    console.log(E);
+  });
 };
 
 
