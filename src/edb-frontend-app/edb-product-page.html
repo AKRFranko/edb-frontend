@@ -445,8 +445,6 @@
           // console.log('computePrice', profu)
           var attributes = this.get('attributes');
           var price = EDB.Checkout.getPrice( product.id, attributes);
-          console.log('productChanged', product, price, attributes);
-          
           this.set('price', price||product.price );
         },
         productChanged: function(product){
@@ -481,7 +479,7 @@
           return null;
         },
         setSelectedAttributes: function(attributes){
-          
+          console.log('setSelectedAttributes',attributes);
           var product = this.get('product');
           Object.keys(attributes).forEach( function( name ){
             var selector = document.querySelector('iron-selector.'+name);
