@@ -440,7 +440,7 @@
          
         
         },
-        observers: ['productChanged(product,product.*)','computePrice(product,attributes.*)','setSelectedAttributes(attributes)'],
+        observers: ['productChanged(product,product.*)','computePrice(product,attributes.*)','setSelectedAttributes(attributes,product)'],
         computePrice: function(product){
           // console.log('computePrice', profu)
           var attributes = this.get('attributes');
