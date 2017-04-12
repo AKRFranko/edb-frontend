@@ -297,7 +297,6 @@
       value: calcTax( 'QC', subTotal ) 
     });
 
-
     lines.push({
       label: 'TOTAL',
       value: subTotal +  calcTax( 'QC', subTotal ) 
@@ -540,24 +539,24 @@
         enumerable: true,
         get: function() {
           return all[i].reduce(function(a, b) {
-            return a ? a.name + b.name : b.name;
-          });
+            return a !==null ? a.name + b.name : b.name;
+          }, null );
         }
       })
       Object.defineProperty(proxy, 'price', {
         enumerable: true,
         get: function() {
           return all[i].reduce(function(a, b) {
-            return a ? a.price + b.price : b.price;
-          });
+            return a !==null ? a.price + b.price : b.price;
+          }, null);
         }
       })
       Object.defineProperty(proxy, 'stockQuantity', {
         enumerable: true,
         get: function() {
           return all[i].reduce(function(a, b) {
-            return a ? a.stockQuantity + b.stockQuantity : b.stockQuantity;
-          });
+            return a !== null ? a.stockQuantity + b.stockQuantity : b.stockQuantity;
+          }, null);
         }
       })
       Object.defineProperty(proxy, 'attributes', {
@@ -645,7 +644,6 @@
 
         localStorage.setItem('EDB_CART|' + uuid, JSON.stringify({
           pid: productId,
-
           stored: Date.now(),
           attributes: attributes,
           quantity: qty
@@ -806,7 +804,7 @@
       // console.log('getPrice', uuid, entry, Blackboard)
       // console.log('getSTock', cartItem);
       if (!entry) {
-        // console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
+        console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
         return null;
       }
       var cartItem = Cart[entry.uuid];
@@ -814,7 +812,7 @@
       // console.log('price', price );
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
       if (!hasBuckets) {
-        // console.log('returning basic price');
+        console.log('returning basic price');
         return price;
       }
       var bucketModifiers = 0;
@@ -830,7 +828,7 @@
       }
 
 
-      // console.log('returning basic price+bucket modifiers');
+      console.log('returning basic price+bucket modifiers');
       return Number(price) + Number(bucketModifiers);
 
     }
