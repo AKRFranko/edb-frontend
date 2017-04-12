@@ -383,7 +383,7 @@
                 <div class="twinfields">
                   <paper-input label="country" value="{{customer.billing_country}}"></paper-input>
                   <paper-input label="postal_code" value="{{customer.billing_postcode}}">
-                    <div suffix hidden$="{{!customer.useBillingAddressForShipping}}" class="zone-suffix">{{computeShippingZone(customer.billing_postcode,customer)}}</div>
+                    <div suffix hidden$="{{!customer.useBillingAddressForShipping}}" class="zone-suffix">{{shippingZone}}</div>
                   </paper-input>
                   
                 </div>
@@ -407,7 +407,7 @@
                 <div class="twinfields">
                   <paper-input label="country" value="{{customer.shipping_country}}"></paper-input>
                   <paper-input label="postal_code" value="{{customer.shipping_postcode}}">
-                    <div suffix class="zone-suffix">{{computeShippingZone(customer.shipping_postcode,customer)}}</div>
+                    <div suffix class="zone-suffix">{{shippingZone}}</div>
                   </paper-input>
                 </div>
               </form>  
@@ -729,13 +729,21 @@
           cartTotals: {
             type: Array,
             notify: true,
-            valud: function(){
+            value: function(){
               return [];
             }
+          },
+          shippingZone: {
+            type: String,
+            notify: true,
+            value: function(){
+              return [];
+            }
+            
           }
           
         },
-        observers: ['routePage(route,routeData)','closeAuthDialog(user)','setSelectedProductId(singleProductData.id)','computeCartTotals(cart,customer,cart.*,customer.*)'],
+        observers: ['routePage(route,routeData)','closeAuthDialog(user)','setSelectedProductId(singleProductData.id)','computeCartTotals(cart,customer,cart.*,customer.*)','computeShippingZone(customer.billing_postcode,customer.shipping_postcode,customer.useBillingAddressForShipping)'],
         closeAuthDialog: function( user ){
           this.$.authDialog.close();
         },
@@ -747,9 +755,14 @@
           
           // console.log('product.selectedId',id);
         },
-        computeShippingZone: function( code ){
-          console.log('computeShippingZone', code );
-          return EDB.Checkout.getZone( code );
+        computeShippingZone: function( billing,shipping, useBilling ){
+          if(useBilling){
+            this.set('shippingZone', EDB.Checkout.getZone( billing ) );
+          }else{
+            this.set('shippingZone', EDB.Checkout.getZone( shipping ) );
+          }
+          
+          // return EDB.Checkout.getZone( code );
         },
         setAuthModeRegister: function( e )
         {
