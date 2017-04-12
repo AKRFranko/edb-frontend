@@ -804,7 +804,7 @@
       // console.log('getPrice', uuid, entry, Blackboard)
       // console.log('getSTock', cartItem);
       if (!entry) {
-        console.error('NOT ENTRY',productId);
+        console.log('NOT ENTRY',productId);
         return null;
       }
       var cartItem = Cart[entry.uuid];
