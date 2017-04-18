@@ -695,14 +695,13 @@
       var cartItem = Cart[entry.uuid];
       var cartItems = getCartItemsByProductId( entry.uuid.slice(0,entry.uuid.indexOf(';')));
       var output = {};
-      console.log('attributes',attributes);
       
-      var attrNames = attributes.map( function( a ){ return a.name });
+      
       var qtys = cartItems.filter( function( c ){
         // keep if it has any matching attribute;
         
         return c.variation.attributes.some( function( vattr ){
-          return ~attrNames.indexOf(vattr.name);
+          return attributes[vattr.name] && attributes[vattr.name] == vattr.option;
         })
       }).map( function( itm){
         return itm.quantity;
