@@ -328,6 +328,7 @@
     <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subRoute}}"></app-route>
     <app-route route="{{route}}" pattern="/products/:filter" data="{{filterData}}"></app-route>
     <app-route route="{{route}}" pattern="/product/:id" data="{{singleProductData}}"></app-route>
+    <app-route route="{{route}}" pattern="/order/:id" data="{{orderData}}"></app-route>
     
     <edb-layout-query layout="{{layout}}" is-mini-layout="{{isMiniLayout}}"></edb-layout-query>
     <app-scrollpos-control selected="{{page}}"></app-scrollpos-control>
@@ -668,6 +669,10 @@
             type: Object,
             notify: true
           },
+          orderData: {
+                     type: Object,
+                     notify: true
+                   },
           page: {
             type: String,
             value: 'home',
@@ -904,7 +909,7 @@
             }else{
               this.set('page',data.page);
               if(data.page == 'order'){
-                console.log('ORDER PAGE', route);
+                console.log('ORDER PAGE', this.get('orderData').id);
               }
             }  
           });
