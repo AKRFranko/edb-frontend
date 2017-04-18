@@ -326,7 +326,7 @@
     EDB.apis.wc.__request( 'POST', '/orders', order,null ).then( function(out){
       Checkout.clearCart();
       app.set('cart', [] );
-      window.location.href = "/#/order/"+487;
+      window.location.href = "/#/order/"+out.id;
       // window.location.reload(true);
       
       // console.log('then', out);
