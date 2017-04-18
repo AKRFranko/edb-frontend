@@ -293,7 +293,7 @@
         lineItem.variation_id = cartItem.variation.id;
       }
       lineItems.push(lineItem);
-      console.log('cartItem',cartItem);
+      console.log('cartItem',cartItem, Buckets);
       // lineItem.meta_data = { option: cartItem.option };
       lineItem.quantity = cartItem.quantity;
       
