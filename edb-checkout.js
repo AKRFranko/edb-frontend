@@ -237,16 +237,19 @@
       attr.options.forEach( function( o ){
         var attrCopy = Object.assign( {}, attr, { option: o } );
         var uuid = tokenizeAttr(pid, [attr], product.group);
-        Object.defineProperty( Stocks, uuid, {
-          enumerable: true,
-          get: function(){
-           var found =  variations.filter( function( v ){
-                    return v.attributes.some( function(vattr){ return vattr.name == attr.name && vattr.option == o;});
-           });
-           console.log('found',found);
-           return Math.min.apply( Math, found.map( function( f ){ return 0 ; }));
-          }
-        });
+        if(!Stocks[uuid]){
+          Object.defineProperty( Stocks, uuid, {
+            enumerable: true,
+            get: function(){
+             var found =  variations.filter( function( v ){
+                      return v.attributes.some( function(vattr){ return vattr.name == attr.name && vattr.option == o;});
+             });
+             console.log('found',found);
+             return Math.min.apply( Math, found.map( function( f ){ return 0 ; }));
+            }
+          });  
+        }
+        
       })
       
     });
