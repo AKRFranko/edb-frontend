@@ -738,6 +738,7 @@
         var variationQty = entry.variation.stock_quantity === null ? 0 : entry.variation.stock_quantity;
         // console.log('returning min stock, cartITem', minBucketCount, variationQty, entry.uuid );
         return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) - cartItemQty;
+        
       } else {
         return Infinity;
       }
