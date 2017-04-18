@@ -684,7 +684,7 @@
 
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
       if (!hasBuckets) {
-        // console.log('returning variation stock, cartItem:', cartItem);
+        console.log('returning variation stock, cartItem:', cartItem);
         return entry.variation.stock_quantity;
       }
       if (entry.variation) {
@@ -697,7 +697,7 @@
           return min;
         }, null);
         var variationQty = entry.variation.stock_quantity === null ? 0 : entry.variation.stock_quantity;
-        // console.log('returning min stock, cartITem', cartItem );
+        console.log('returning min stock, cartITem', cartItem );
         return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) - cartItemQty;
       } else {
         return 999;
