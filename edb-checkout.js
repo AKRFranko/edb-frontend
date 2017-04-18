@@ -35,7 +35,7 @@
   },
   Customer = Guest,
     Products = {},
-    Buckets = {}, Catalog = {}, Cart = {}, Blackboard = {};
+    Buckets = {}, Catalog = {}, Cart = {}, Blackboard = {},Stocks = {};
   
   var taxes = {
     AB: [0, 0.05],
@@ -225,18 +225,28 @@
         uuid: uuid,
         variation: v
       }, catalogEntry);
-
+      Object.defineProperty( Stocks, uuid, {
+        enumerable: true,
+        get: function(){
+         return v.stock_quantity; 
+        }
+      });
     });
+    
     product.attributes.forEach( function( attr ){
       attr.options.forEach( function( o ){
         var attrCopy = Object.assign( {}, attr, { option: o } );
-        var uuid = tokenizeAttr(pid, [attrCopy], product.group);
-        Blackboard[uuid] = Object.assign({
-          uuid: uuid,
-          variation: variations.filter( function( v ){
-            return v.attributes.some( function(vattr){ return vattr.name == attr.name ;});
-          })
-        }, catalogEntry);  
+        var uuid = tokenizeAttr(pid, [attr], product.group);
+        Object.defineProperty( Stocks, uuid, {
+          enumerable: true,
+          get: function(){
+           var found =  variations.filter( function( v ){
+                    return v.attributes.some( function(vattr){ return vattr.name == attr.name && vattr.option == o;});
+           });
+           console.log('found',found);
+           return Math.min.apply( Math, found.map( function( f ){ return 0 ; }));
+          }
+        });
       })
       
     });
@@ -470,7 +480,7 @@
 
     updateApp();
 
-    console.log(Object.keys(Blackboard))
+    console.log(Object.keys(Stocks))
     
 
   }
@@ -727,7 +737,6 @@
         return entry.variation.stock_quantity;
       }
       if (entry.variation) {
-        console.log('entry',entry)
         var minBucketCount = entry.variation.attributes.reduce(function(min, attr) {
           if (!attr.bucket) return min;
           var qty = attr.bucket[attr.option].variation.stock_quantity;
