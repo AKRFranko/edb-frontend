@@ -707,7 +707,7 @@
         return itm.quantity;
       });
       var cartItemQty = Math.max.apply( Math, qtys.concat(0) );
-      console.log('qtys',cartItemQty);
+      
       
       // console.log('cartItems',output)
       // var cartItemData = expandToken(entry.uuid);
@@ -737,7 +737,7 @@
         }, null);
         var variationQty = entry.variation.stock_quantity === null ? 0 : entry.variation.stock_quantity;
         // console.log('returning min stock, cartITem', minBucketCount, variationQty, entry.uuid );
-        return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) ;
+        return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) - cartItemQty;
       } else {
         return Infinity;
       }
