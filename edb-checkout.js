@@ -705,6 +705,7 @@
       if (typeof cartItemQty == 'undefined') {
         cartItemQty = 0;
       }
+      
 
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
       if (!hasBuckets) {
