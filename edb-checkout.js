@@ -740,6 +740,7 @@
         return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) - cartItemQty;
         
       } else {
+        console.error('RETURNING INFINITY');
         return Infinity;
       }
 
