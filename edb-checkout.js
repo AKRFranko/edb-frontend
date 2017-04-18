@@ -276,7 +276,7 @@
         shipping[k.replace('shipping_', '')] = Customer[k];
       }
       if(/^billing_/.test(k)){
-        bulling[k.replace('billing_', '')] = Customer[k];
+        billing[k.replace('billing_', '')] = Customer[k];
       }
     });
     if(EDB.Checkout.useBillingAddressForShipping){
