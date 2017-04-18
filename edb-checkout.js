@@ -225,7 +225,7 @@
         uuid: uuid,
         variation: v
       }, catalogEntry);
-
+      console.log(uuid);
 
     });
 
