@@ -695,7 +695,7 @@
       var cartItems = getCartItemsByProductId( entry.uuid.slice(0,entry.uuid.indexOf(';')));
       var output = {};
       cartItems.forEach( function( itm){
-        output[itm.name] = Checkout.getStock( itm.id, itm.attributes );
+        output[itm.name] = itm.stock_quantity;
       })
       console.log('cartItems',output)
       // var cartItemData = expandToken(entry.uuid);
