@@ -695,10 +695,18 @@
       var cartItem = Cart[entry.uuid];
       var cartItems = getCartItemsByProductId( entry.uuid.slice(0,entry.uuid.indexOf(';')));
       var output = {};
-      var qtys = cartItems.map( function( itm){
+      var attrNames = attributes.map( function( a ){ return a.name });
+      var qtys = cartItems.filter( function( c ){
+        // keep if it has any matching attribute;
+        
+        return c.variation.attributes.some( function( vattr ){
+          return ~attrNames.indexOf(vattr.name);
+        })
+      }).map( function( itm){
         return itm.quantity;
       });
-      console.log(qtys);
+      console.log('qtys',qtys);
+      
       // console.log('cartItems',output)
       // var cartItemData = expandToken(entry.uuid);
       // console.log('getSTock', cartItem);
@@ -717,7 +725,8 @@
       if (entry.variation) {
         var minBucketCount = entry.variation.attributes.reduce(function(min, attr) {
           if (!attr.bucket) return min;
-          console.log('minBucketCountLoop', cartItems, attr);
+          
+          // console.log('minBucketCountLoop', , attr);
           var qty = attr.bucket[attr.option].variation.stock_quantity;
           if (qty === null) return min;
           if (min === null) return qty;
