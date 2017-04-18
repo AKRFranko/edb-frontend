@@ -237,7 +237,7 @@
       attr.options.forEach( function( o ){
         var attrCopy = Object.assign( {}, attr, { option: o } );
         var uuid = tokenizeAttr(pid, [attr], product.group);
-        if(!Stocks[uuid]){
+        if(!Stocks.hasOwnProperty(uuid)){
           Object.defineProperty( Stocks, uuid, {
             enumerable: true,
             get: function(){
