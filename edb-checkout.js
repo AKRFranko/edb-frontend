@@ -228,13 +228,17 @@
 
     });
     product.attributes.forEach( function( attr ){
-      var uuid = tokenizeAttr(pid, [attr], product.group);
-      Blackboard[uuid] = Object.assign({
-        uuid: uuid,
-        variations: variations.filter( function( v ){
-          return v.attributes.some( function(vattr){ return vattr.name == attr.name ;});
-        })
-      }, catalogEntry);
+      attr.options.forEach( function( o ){
+        var attrCopy = Object.assign( {}, attr, { option: o } );
+        var uuid = tokenizeAttr(pid, [attrCopy], product.group);
+        Blackboard[uuid] = Object.assign({
+          uuid: uuid,
+          variation: variations.filter( function( v ){
+            return v.attributes.some( function(vattr){ return vattr.name == attr.name ;});
+          })
+        }, catalogEntry);  
+      })
+      
     });
 
     if (product.group) {
