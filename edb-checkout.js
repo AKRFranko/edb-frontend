@@ -225,7 +225,14 @@
         uuid: uuid,
         variation: v
       }, catalogEntry);
-      console.log(uuid);
+      v.attributes.forEach( function( attr ){
+        var uuid = tokenizeAttr(pid, attr, product.group);
+        var copy = Object.assign( {}, v, {attributes: [ attr ]} );
+        Blackboard[uuid] = Object.assign({
+                             uuid: uuid,
+                             variation: v
+                           }, catalogEntry);
+      });
 
     });
 
