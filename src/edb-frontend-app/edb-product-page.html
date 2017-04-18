@@ -328,7 +328,7 @@
                         <template is="dom-repeat" items="[[computeAttributeChoices(attribute,product.variations)]]" as="choice">
                           <paper-button class$="[[choice.classnames]]" data-value$="[[choice.option]]">
                             <iron-image preload fade sizing="cover" class="choice-icon" hidden$="[[!choice.icon]]" src="[[choice.icon]]"></iron-image>
-                            <div class="choice-label" hidden$="[[!choice.label]]">[[choice.label]]</div>
+                            <div class="choice-label" hidden$="[[!choice.label]]">[[choice.label]] {{computeStock(product.id,attribute,choice,attributes,attributes.*,cart.*)}}</div>
                             <iron-icon class="availability-icon" icon$="{{computeStockIcon(product.id,attribute,choice,attributes,attributes.*,cart.*)}}"></iron-icon>
                           </paper-button>
                         </template>
@@ -464,7 +464,12 @@
         getVariationAttributeValue: function( v, attr, idx, prop ){
           return v.attributes[idx][prop];
         },
-        
+        computeStock: function( pid, attr, choice, attributes ){
+          var attrs = {};
+          attrs[attr.name]=choice.value;
+          var stockQty = EDB.Checkout.getStock(pid, Object.assign( {}, attributes, attrs) );
+          return stockQty;
+        },
         computeStockIcon: function( pid, attr, choice, attributes ){
           
           var attrs = {};
