@@ -898,15 +898,17 @@
           
         },
         routePage: function( route,data ){
+          this.debounce('routePAge', function(){
+            if(!data || ( data && !data.page)){
+              this.set('page', 'home');
+            }else{
+              this.set('page',data.page);
+              if(data.page == 'order'){
+                console.log('ORDER PAGE')
+              }
+            }  
+          })
           
-          if(!data || ( data && !data.page)){
-            this.set('page', 'home');
-          }else{
-            this.set('page',data.page);
-            if(data.page == 'order'){
-              console.log('ORDER PAGE')
-            }
-          }
         },
        
         limitText: function( t,n ){
