@@ -694,18 +694,18 @@
       var cartItem = Cart[entry.uuid];
       var cartItems = getCartItemsByProductId( entry.uuid.slice(0,entry.uuid.indexOf(';')));
       var output = {};
-      cartItems.forEach( function( itm){
-        output[itm.name] = itm.quantity;
+      var qtys = cartItems.map( function( itm){
+        return itm.quantity;
       })
-      console.log('cartItems',output)
+      // console.log('cartItems',output)
       // var cartItemData = expandToken(entry.uuid);
       // console.log('getSTock', cartItem);
       
-      var cartItemQty = (cartItem ? cartItem.quantity : 0);
-      if (typeof cartItemQty == 'undefined') {
-        cartItemQty = 0;
-      }
-      
+      // var cartItemQty = (cartItem ? cartItem.quantity : 0);
+      // if (typeof cartItemQty == 'undefined') {
+      //   cartItemQty = 0;
+      // }
+      cartItemQty = Math.max.apply(Math, qtys);
 
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
       if (!hasBuckets) {
