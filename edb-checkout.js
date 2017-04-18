@@ -701,10 +701,10 @@
       // var cartItemData = expandToken(entry.uuid);
       // console.log('getSTock', cartItem);
       
-      // var cartItemQty = (cartItem ? cartItem.quantity : 0);
-      // if (typeof cartItemQty == 'undefined') {
-      //   cartItemQty = 0;
-      // }
+      var cartItemQty = (cartItem ? cartItem.quantity : 0);
+      if (typeof cartItemQty == 'undefined') {
+        cartItemQty = 0;
+      }
 
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
       if (!hasBuckets) {
