@@ -35,7 +35,7 @@
   },
   Customer = Guest,
     Products = {},
-    Buckets = {}, Catalog = {}, Cart = {}, Blackboard = {},Stocks = {};
+    Buckets = {}, Catalog = {}, Cart = {}, Blackboard = {};
   
   var taxes = {
     AB: [0, 0.05],
@@ -225,33 +225,8 @@
         uuid: uuid,
         variation: v
       }, catalogEntry);
-      Object.defineProperty( Stocks, uuid, {
-        enumerable: true,
-        get: function(){
-         return v.stock_quantity; 
-        }
-      });
-    });
-    
-    product.attributes.forEach( function( attr ){
-      attr.options.forEach( function( o ){
-        var attrCopy = Object.assign( {}, attr, { option: o } );
-        var uuid = tokenizeAttr(pid, [attr], product.group);
-        if(!Stocks.hasOwnProperty(uuid)){
-          Object.defineProperty( Stocks, uuid, {
-            enumerable: true,
-            get: function(){
-             var found =  variations.filter( function( v ){
-                      return v.attributes.some( function(vattr){ return vattr.name == attr.name && vattr.option == o;});
-             });
-             console.log('found',found);
-             return Math.min.apply( Math, found.map( function( f ){ return 0 ; }));
-            }
-          });  
-        }
-        
-      })
-      
+
+
     });
 
     if (product.group) {
@@ -483,8 +458,7 @@
 
     updateApp();
 
-    console.log(Object.keys(Stocks))
-    
+
 
   }
 
