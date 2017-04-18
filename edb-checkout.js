@@ -696,6 +696,7 @@
       var cartItems = getCartItemsByProductId( entry.uuid.slice(0,entry.uuid.indexOf(';')));
       var output = {};
       console.log('attributes',attributes);
+      
       var attrNames = attributes.map( function( a ){ return a.name });
       var qtys = cartItems.filter( function( c ){
         // keep if it has any matching attribute;
