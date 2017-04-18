@@ -626,7 +626,7 @@
   Checkout.addToCart = function(productId, attributes, qty) {
 
     var entry = findBoardEntry(productId, attributes);
-
+    
     if (!entry) {
       console.error('NOT ENTRY', productId, attributes);
       return null;
@@ -647,12 +647,13 @@
           Checkout.removeFromCart(uuid);
         }
       } else {
+        
         // add to cart.
         Cart[uuid] = Object.assign({
           quantity: qty,
           remove: function() {
             Checkout.removeFromCart(uuid);
-          }
+          },
         }, entry);
 
         localStorage.setItem('EDB_CART|' + uuid, JSON.stringify({
@@ -705,7 +706,7 @@
       // if (typeof cartItemQty == 'undefined') {
       //   cartItemQty = 0;
       // }
-      cartItemQty = Math.max.apply(Math, qtys);
+      // cartItemQty = Math.max.apply(qtys);
 
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
       if (!hasBuckets) {
@@ -715,15 +716,15 @@
       if (entry.variation) {
         var minBucketCount = entry.variation.attributes.reduce(function(min, attr) {
           if (!attr.bucket) return min;
-          var qty = attr.bucket[attr.option].variation.stock_quantity - cartItemQty;
+          var qty = attr.bucket[attr.option].variation.stock_quantity;
           if (qty === null) return min;
           if (min === null) return qty;
           if (qty < min) return qty;
           return min;
         }, null);
         var variationQty = entry.variation.stock_quantity === null ? 0 : entry.variation.stock_quantity;
-        console.log('returning min stock, cartITem', minBucketCount, variationQty ,cartItemQty, entry.uuid );
-        return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) - cartItemQty;
+        console.log('returning min stock, cartITem', minBucketCount, variationQty, entry.uuid );
+        return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) ;
       } else {
         return 999;
       }
