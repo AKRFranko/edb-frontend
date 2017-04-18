@@ -466,6 +466,7 @@
     updateApp();
 
     console.log(Object.keys(Blackboard))
+    
 
   }
 
