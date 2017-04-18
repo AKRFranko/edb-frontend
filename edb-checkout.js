@@ -266,6 +266,46 @@
     });
     return proxy;
   }
+  
+  
+  Checkout.createOrder = function(){
+    var billing = {};
+    var shipping = {};
+    Object.keys( Customer ).forEach( function(k){
+      if(/^shipping_/.test(k)){
+        shipping[k.replace('shipping_', '')] = Customer[k];
+      }
+      if(/^billing_/.test(k)){
+        bulling[k.replace('billing_', '')] = Customer[k];
+      }
+    });
+    if(EDB.Checkout.useBillingAddressForShipping){
+      Object.keys(billing).forEach( function( k ){
+        shipping[k] = billing[k];
+      });
+    }
+    var lineItems = [];
+    Object.keys(Cart).forEach( function( uuid ){
+      var cartItem = Cart[uuid];
+      var lineItem = {};
+      lineItem.product_id = cartItem.product.id;
+      if(cartItem.variation){
+        lineItem.variation_id = cartItem.variation.id;
+      }
+      lineItem.quantity = cartItem.quantity;
+      lineItems.push(lineItem);
+    });
+    
+    var shippingLines = [{"method_id": "flat_rate", "method_title": "Flat Rate", "total": 0 }];
+    var order = {
+      "payment_method": "bacs",
+      "payment_method_title": "Direct Bank Transfer",
+      "set_paid": true,
+      "line_items": lineItems,
+      "shipping_lines":shippingLines,
+    }
+    console.log('order',order);
+  }
 
   Checkout.computeCartTotals = function() {
     var subTotal = 0;
@@ -746,6 +786,9 @@
 
     }
   }
+
+
+  
 
   Checkout.getZone = function(postcode) {
     var code = postcode || EDB.Checkout.useBillingAddressForShipping ?  Customer.billing_postcode : Customer.shipping_postcode;
