@@ -304,6 +304,8 @@
       "set_paid": true,
       "line_items": lineItems,
       "shipping_lines":shippingLines,
+      "shipping": shipping,
+      "billing":billing
     }
     console.log('order',order);
     EDB.apis.wc.__request( 'POST', '/orders', order,null ).then( function(out){
