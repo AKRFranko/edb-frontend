@@ -739,7 +739,7 @@
         // console.log('returning min stock, cartITem', minBucketCount, variationQty, entry.uuid );
         return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) ;
       } else {
-        return Infinity;
+        return null;
       }
 
     }
