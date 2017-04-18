@@ -225,15 +225,16 @@
         uuid: uuid,
         variation: v
       }, catalogEntry);
-      v.attributes.forEach( function( attr ){
-        var uuid = tokenizeAttr(pid, attr, product.group);
-        var copy = Object.assign( {}, v, {attributes: [ attr ]} );
-        Blackboard[uuid] = Object.assign({
-                             uuid: uuid,
-                             variation: v
-                           }, catalogEntry);
-      });
 
+    });
+    product.attributes.forEach( function( attr ){
+      var uuid = tokenizeAttr(pid, [attr], product.group);
+      Blackboard[uuid] = Object.assign({
+        uuid: uuid,
+        variations: variations.filter( function( v ){
+          return v.attributes.some( function(vattr){ return vattr.name == attr.name ;});
+        })
+      }, catalogEntry);
     });
 
     if (product.group) {
