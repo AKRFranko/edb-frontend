@@ -292,7 +292,7 @@
       if(cartItem.variation){
         lineItem.variation_id = cartItem.variation.id;
       }
-      console.log('makeLineItem', cartItem);
+      lineItem.meta_data = { option: cartItem.option };
       lineItem.quantity = cartItem.quantity;
       lineItems.push(lineItem);
     });
