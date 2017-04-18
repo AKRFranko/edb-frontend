@@ -706,7 +706,8 @@
       }).map( function( itm){
         return itm.quantity;
       });
-      console.log('qtys',qtys);
+      var cartItemQty = Math.max.apply( Math, qtys );
+      console.log('qtys',cartItemQty);
       
       // console.log('cartItems',output)
       // var cartItemData = expandToken(entry.uuid);
