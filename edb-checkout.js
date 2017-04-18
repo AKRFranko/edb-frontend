@@ -727,6 +727,7 @@
         return entry.variation.stock_quantity;
       }
       if (entry.variation) {
+        console.log('entry',entry)
         var minBucketCount = entry.variation.attributes.reduce(function(min, attr) {
           if (!attr.bucket) return min;
           var qty = attr.bucket[attr.option].variation.stock_quantity;
