@@ -306,7 +306,7 @@
       "shipping_lines":shippingLines,
     }
     console.log('order',order);
-    EDB.apis.wcRest.__request( 'POST', '/orders', null, order ).then( function(out){
+    EDB.apis.wc.__request( 'POST', '/orders', null, order ).then( function(out){
       console.log('then', out);
     })
   }
