@@ -327,7 +327,7 @@
       Checkout.clearCart();
       app.set('cart', [] );
       window.location.href = "/#/order/"+487;
-      window.location.reload(true);
+      // window.location.reload(true);
       
       // console.log('then', out);
     })

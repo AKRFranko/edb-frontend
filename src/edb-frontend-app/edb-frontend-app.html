@@ -446,6 +446,7 @@
                   
                 </div>
               </template>
+              <paper-button on-tap="createOrder">complete order</paper-button>
             </div>
             
             
@@ -752,7 +753,9 @@
         closeAuthDialog: function( user ){
           this.$.authDialog.close();
         },
-        
+        createOrder: function(){
+          EDB.Checkout.createOrder();
+        },
         setSelectedProductId: function( id ){
           if(this.get('product')){
             this.set('product.selectedId',id);  
