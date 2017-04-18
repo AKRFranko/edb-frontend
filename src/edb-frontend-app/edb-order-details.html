@@ -1,0 +1,47 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="edb-order-details">
+  <template>
+    <style>
+      :host{
+        display:block;
+        width:100%;
+        height:100%;
+        
+      }
+      *{
+        box-sizing:border-box;
+      }
+      
+    </style>
+    
+  </template>
+  <script>
+     
+      Polymer({
+  
+        is: 'edb-order-details',
+  
+        properties: {
+          
+          layout: {
+            type: String,
+            value: null,
+            notify: true
+          },
+          order: {
+            type: Object,
+            value: function(){
+              return {};
+            },
+            notify: true
+          },
+           
+         
+        
+        },
+        observers: [],
+  
+      });
+  </script>
+</dom-module>

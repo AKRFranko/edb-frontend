@@ -350,13 +350,16 @@
             </edb-grid>
           </section>
           
+          <section id="order">
+            <div class="title">Order</div>
+            <edb-order-details order="{{order}}"></edb-order-details>
+          </section>
           <section id="cart">
             <div class="title">Cart</div>
             <template is="dom-repeat" items="{{cart}}" as="cartItem">
               <div class="cart-item">
                 <edb-cart-item item="[[cartItem]]" materials="[[material.items]]">
-                    
-                    <paper-button on-tap="handleRemoveCartItem">remove</paper-button>  
+                    <paper-button on-tap="handleRemoveCartItem">remove</paper-button>
                 </edb-cart-item>
                 
                 

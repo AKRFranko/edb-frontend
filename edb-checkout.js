@@ -294,6 +294,7 @@
       }
       lineItem.quantity = cartItem.quantity;
       lineItems.push(lineItem);
+      
       if(cartItem.option){
         Object.keys(cartItem.option).forEach(function( name ){
           if(Buckets[name]){
@@ -323,7 +324,12 @@
     };
     console.log('order',order);
     EDB.apis.wc.__request( 'POST', '/orders', order,null ).then( function(out){
-      console.log('then', out);
+      Checkout.clearCart();
+      app.set('cart', [] );
+      window.location.href = "/#/order/"+487;
+      window.location.reload(true);
+      
+      // console.log('then', out);
     })
   }
 
@@ -729,7 +735,9 @@
     }
   };
 
-
+  Checkout.clearCart = function(){
+    Object.keys(Cart).forEach( Checkout.removeFromCart );
+  }
   Checkout.removeFromCart = function(uuid) {
     delete Cart[uuid];
     localStorage.removeItem('EDB_CART|' + uuid);

@@ -127,6 +127,26 @@
   });
   
   
+  EDB.createResourceReference({
+    api: 'wc',
+    name: 'order',
+    path:'orders',
+    convert: [
+      { read: 'id', write:'id'},
+      { read: 'billing', write:'billing'},
+      { read: 'shipping', write:'shipping'},
+      { read: 'coupon_lines', write:'couponLines'},
+      { read: 'shipping_lines', write:'shippingLines'},
+      { read: 'total', write:'total'},
+      { read: 'total_tax', write:'taxTotal'},
+      { read: 'shipping_total', write:'shipppingTotal'},
+      { read: 'shipping_tax', write:'shippingTax'},
+      { read: 'discount_tax', write:'discountTax'},
+      { read: 'discount_total', write:'discountTotal'},
+    ]
+  });
+  
+  
  
   
 
