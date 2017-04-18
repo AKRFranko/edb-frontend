@@ -692,7 +692,7 @@
         return null;
       }
       var cartItem = Cart[entry.uuid];
-      var cartItems = getCartItemsByProductId( entry.uuid.slice(entry.uuid.indexOf(';')));
+      var cartItems = getCartItemsByProductId( entry.uuid.slice(0,entry.uuid.indexOf(';')));
       console.log('cartItems',cartItems)
       // var cartItemData = expandToken(entry.uuid);
       // console.log('getSTock', cartItem);
