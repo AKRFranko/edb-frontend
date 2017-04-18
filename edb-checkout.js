@@ -292,9 +292,11 @@
       if(cartItem.variation){
         lineItem.variation_id = cartItem.variation.id;
       }
-      lineItem.meta_data = { option: cartItem.option };
-      lineItem.quantity = cartItem.quantity;
       lineItems.push(lineItem);
+      console.log('cartItem',cartItem);
+      // lineItem.meta_data = { option: cartItem.option };
+      lineItem.quantity = cartItem.quantity;
+      
     });
     
     var shippingLines = [{"method_id": "flat_rate", "method_title": "Flat Rate", "total": 0 }];
@@ -306,7 +308,7 @@
       "shipping_lines":shippingLines,
       "shipping": shipping,
       "billing":billing
-    }
+    };
     console.log('order',order);
     EDB.apis.wc.__request( 'POST', '/orders', order,null ).then( function(out){
       console.log('then', out);
