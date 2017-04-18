@@ -100,6 +100,18 @@
     }, '');
 
   }
+  
+  function expandToken( uuid ){
+    var parts = uuid.split(';');
+    var pid = parts.shift();
+    var obj = parts.reduce( function(o,p){
+      var ab = p.split(':');
+      o[ab[0]]=ab[1];
+      return o;
+    }, {});
+    return [ pid, obj ];
+  }
+  
 
   function bucketSlugIt(string) {
     return 'edb_' + stripEDB(string);
@@ -663,6 +675,10 @@
     updateApp()
   };
 
+  function getCartItemsByProductId( pid ){
+    return Object.keys(Cart).filter(function( k ){ return new RegExp('^'+pid+';').test(k) }).map( function( k ){ return Cart[k]; });
+  }
+  
   Checkout.getStock = function(productId, attributes) {
     if (!attributes) {
       console.log('not attributes', productId, attributes);
@@ -676,7 +692,11 @@
         return null;
       }
       var cartItem = Cart[entry.uuid];
+      var cartItems = getCartItemsByProductId( entry.uuid.slice(entry.uuid.indexOf(';')));
+      console.log('cartItems',cartItems)
+      // var cartItemData = expandToken(entry.uuid);
       // console.log('getSTock', cartItem);
+      
       var cartItemQty = (cartItem ? cartItem.quantity : 0);
       if (typeof cartItemQty == 'undefined') {
         cartItemQty = 0;
@@ -697,7 +717,7 @@
           return min;
         }, null);
         var variationQty = entry.variation.stock_quantity === null ? 0 : entry.variation.stock_quantity;
-        console.log('returning min stock, cartITem', minBucketCount, variationQty ,cartItemQty, entry.uuid);
+        console.log('returning min stock, cartITem', minBucketCount, variationQty ,cartItemQty, entry.uuid );
         return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) - cartItemQty;
       } else {
         return 999;
