@@ -292,10 +292,22 @@
       if(cartItem.variation){
         lineItem.variation_id = cartItem.variation.id;
       }
+      lineItem.quantity = cartItem.quantity;
       lineItems.push(lineItem);
+      if(cartItem.option){
+        Object.keys(cartItem.option).forEach(function( name ){
+          if(Buckets[name]){
+            lineItems.push({
+              product_id: Buckets[name][cartItem.option[name]].product.id,
+              variation_id: Buckets[name][cartItem.option[name]].variation.id,
+              quantity: lineItem.quantity
+            })  
+          }
+        });
+      }
       console.log('cartItem',cartItem, Buckets);
       // lineItem.meta_data = { option: cartItem.option };
-      lineItem.quantity = cartItem.quantity;
+      
       
     });
     
