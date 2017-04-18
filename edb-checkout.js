@@ -706,7 +706,7 @@
       }).map( function( itm){
         return itm.quantity;
       });
-      var cartItemQty = Math.max.apply( Math, qtys );
+      var cartItemQty = Math.max.apply( Math, qtys.concat(0) );
       console.log('qtys',cartItemQty);
       
       // console.log('cartItems',output)
@@ -739,7 +739,7 @@
         // console.log('returning min stock, cartITem', minBucketCount, variationQty, entry.uuid );
         return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) ;
       } else {
-        return null;
+        return Infinity;
       }
 
     }
