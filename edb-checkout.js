@@ -697,7 +697,8 @@
       var output = {};
       var qtys = cartItems.map( function( itm){
         return itm.quantity;
-      })
+      });
+      console.log(qtys);
       // console.log('cartItems',output)
       // var cartItemData = expandToken(entry.uuid);
       // console.log('getSTock', cartItem);
@@ -716,6 +717,7 @@
       if (entry.variation) {
         var minBucketCount = entry.variation.attributes.reduce(function(min, attr) {
           if (!attr.bucket) return min;
+          console.log('minBucketCountLoop', cartItems, attr);
           var qty = attr.bucket[attr.option].variation.stock_quantity;
           if (qty === null) return min;
           if (min === null) return qty;
@@ -723,7 +725,7 @@
           return min;
         }, null);
         var variationQty = entry.variation.stock_quantity === null ? 0 : entry.variation.stock_quantity;
-        console.log('returning min stock, cartITem', minBucketCount, variationQty, entry.uuid );
+        // console.log('returning min stock, cartITem', minBucketCount, variationQty, entry.uuid );
         return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) ;
       } else {
         return Infinity;
