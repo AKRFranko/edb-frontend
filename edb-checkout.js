@@ -695,7 +695,7 @@
       var cartItems = getCartItemsByProductId( entry.uuid.slice(0,entry.uuid.indexOf(';')));
       var output = {};
       cartItems.forEach( function( itm){
-        output[itm.name] = itm.stock_quantity;
+        output[itm.name] = itm;
       })
       console.log('cartItems',output)
       // var cartItemData = expandToken(entry.uuid);
@@ -831,7 +831,7 @@
       // console.log('getPrice', uuid, entry, Blackboard)
       // console.log('getSTock', cartItem);
       if (!entry) {
-        console.error('NOT ENTRY',productId);
+        // console.error('NOT ENTRY',productId);
         return null;
       }
       var cartItem = Cart[entry.uuid];
