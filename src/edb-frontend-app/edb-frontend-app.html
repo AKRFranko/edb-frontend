@@ -325,6 +325,12 @@
       #order .title{
         margin:40px;
       }
+      #reset{
+        margin-top:100px;
+        width:100%;
+        background:red;
+        color:#fff;
+      }
     </style>
     <!-- app-location binds to the app's URL -->
     <app-location route="{{route}}" use-hash-as-path></app-location>
@@ -602,7 +608,7 @@
           </section>
           <!--<edb-slider layout="{{layout}}"></edb-slider>-->
         </iron-pages>
-        <paper-button on-tap="resetStocks">RESET STOCKS</paper-button>
+        <paper-button id="reset" on-tap="resetStocks">RESET STOCKS</paper-button>
         </div>
     </app-header-layout>
     <paper-dialog modal id="authDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">

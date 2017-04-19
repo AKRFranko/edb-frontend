@@ -316,7 +316,7 @@ var EDB = {
 };
 
 EDB.resetStocks = function(){
-  EDB.apis.wc.__request('POST','/reset', null, null).then( function(){
+  EDB.apis.wp.__request('POST','/reset', null, null).then( function(){
     window.location.reload(true);
   });
 }
