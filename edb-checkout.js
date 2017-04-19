@@ -329,6 +329,12 @@
       window.location.href = "/#/order/"+out.id;
     });
   }
+  
+  Checkout.loadOrder = function(id){
+    EDB.apis.wc.__request( 'GET', '/orders/'+id ).then( function(order){
+      app.set('order',order);
+    });
+  }
 
   Checkout.computeCartTotals = function() {
     var subTotal = 0;

@@ -909,7 +909,8 @@
             }else{
               this.set('page',data.page);
               if(data.page == 'order'){
-                console.log('ORDER PAGE', this.get('orderData').id);
+                EDB.Checkout.loadOrder(this.get('orderData').id);
+                console.log('ORDER PAGE' );
               }
             }  
           });
