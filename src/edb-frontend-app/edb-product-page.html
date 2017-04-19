@@ -476,7 +476,7 @@
           attrs[attr.name]=choice.value;
           var stockQty = EDB.Checkout.getStock(pid, Object.assign( {}, attributes, attrs) );
           // console.log('stockQty',stockQty)
-          if(stockQty >= 0){
+          if(stockQty > 0){
             return 'edb:in-stock';
           }else{
             // TODOD COMPUTE RESTOCK
