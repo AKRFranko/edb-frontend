@@ -818,7 +818,9 @@
         return Infinity;
       }
 
-    }
+     }else{
+       console.log('!Entry.variation', entry);
+     }
   }
 
 
