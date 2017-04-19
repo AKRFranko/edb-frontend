@@ -802,7 +802,10 @@
       // }
       // cartItemQty = Math.max.apply(qtys);
       if(entry.product && entry.product.group && entry.product.group.length){
-        console.log('group',entry.product.group);
+        var pstocks = entry.product.group.map( function( g ){
+          return Checkout.getStock( g.id, attributes );
+        })
+        console.log('group',pstocks);
       }
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
       if (!hasBuckets) {
