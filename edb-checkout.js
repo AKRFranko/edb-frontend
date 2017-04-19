@@ -313,15 +313,7 @@
     });
 
    
-    var order = {
-      "payment_method": "bacs",
-      "payment_method_title": "Direct Bank Transfer",
-      "set_paid": true,
-      "line_items": lineItems,
-      "shipping_lines": shippingLines,
-      "shipping": shipping,
-      "billing": billing
-    };
+    
     
     var shippingClass = getShippingClassForCart();
     var shippingZone = Checkout.getZone();
@@ -339,6 +331,16 @@
       "method_title": "Flat Rate",
       "total": shippingCost
     }];
+    
+    var order = {
+      "payment_method": "bacs",
+      "payment_method_title": "Direct Bank Transfer",
+      "set_paid": true,
+      "line_items": lineItems,
+      "shipping_lines": shippingLines,
+      "shipping": shipping,
+      "billing": billing
+    };
     // console.log('order',order);
     EDB.apis.wc.__request('POST', '/orders', order, null).then(function(out) {
       Checkout.clearCart();
