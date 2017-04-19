@@ -12,31 +12,34 @@
       *{
         box-sizing:border-box;
       }
+      .title{
+        
+      }
       
     </style>
     
     <div id="billing">
       <div class="title">Billing Address</div>
       <div class="address">
-        <p>[[order.billing.first_name]] [[order.billing.last_name]]</p>
-        <p>[[order.billing.email]]</p>
-        <p>[[order.billing.phone]]</p>
-        <p>[[order.billing.address_1]]</p>
-        <p>[[order.billing.address_2]]</p>
-        <p>[[order.billing.city]]</p>
-        <p>[[order.billing.state]]</p>
-        <p>[[order.billing.country]],[[order.billing.postcode]]</p>
+        <p hidden$="[[!order.billing.first_name]]">[[order.billing.first_name]] [[order.billing.last_name]]</p>
+        <p hidden$="[[!order.billing.email]]">[[order.billing.email]]</p>
+        <p hidden$="[[!order.billing.phone]]">[[order.billing.phone]]</p>
+        <p hidden$="[[!order.billing.address_1]]">[[order.billing.address_1]]</p>
+        <p hidden$="[[!order.billing.address_2]]">[[order.billing.address_2]]</p>
+        <p hidden$="[[!order.billing.city]]">[[order.billing.city]]</p>
+        <p hidden$="[[!order.billing.state]]">[[order.billing.state]]</p>
+        <p hidden$="[[!order.billing.postcode]]">[[order.billing.country]],[[order.billing.postcode]]</p>
       </div>
       <div class="title">Shipping Address</div>
       <div class="address">
-        <p>[[order.shipping.first_name]] [[order.shipping.last_name]]</p>
-        <p>[[order.shipping.email]]</p>
-        <p>[[order.shipping.phone]]</p>
-        <p>[[order.shipping.address_1]]</p>
-        <p>[[order.shipping.address_2]]</p>
-        <p>[[order.shipping.city]]</p>
-        <p>[[order.shipping.state]]</p>
-        <p>[[order.shipping.country]],[[order.shipping.postcode]]</p>
+        <p hidden$="[[!order.shipping.first_name]]">[[order.shipping.first_name]] [[order.shipping.last_name]]</p>
+        <p hidden$="[[!order.shipping.email]]">[[order.shipping.email]]</p>
+        <p hidden$="[[!order.shipping.phone]]">[[order.shipping.phone]]</p>
+        <p hidden$="[[!order.shipping.address_1]]">[[order.shipping.address_1]]</p>
+        <p hidden$="[[!order.shipping.address_2]]">[[order.shipping.address_2]]</p>
+        <p hidden$="[[!order.shipping.city]]">[[order.shipping.city]]</p>
+        <p hidden$="[[!order.shipping.state]]">[[order.shipping.state]]</p>
+        <p hidden$="[[!order.shipping.postcode]]">[[order.shipping.country]],[[order.shipping.postcode]]</p>
       </div>
       
       
