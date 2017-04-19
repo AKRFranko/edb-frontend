@@ -7,11 +7,12 @@
         display:block;
         width:100%;
         height:100%;
-        
+        @apply(--edb-font-body);
       }
       *{
         box-sizing:border-box;
       }
+      
       .title{
         @apply(--edb-font-subtitle);
       }
@@ -25,6 +26,22 @@
       }
       #billing{
         margin-right:40px;
+      }
+      #lineItems{
+        padding:0 40px 20px;
+        @apply(--layout-vertical);
+      }
+      .line-item{
+        @apply(--layout-vertical);
+      }
+      .line{
+        @apply(--layout-horizontal);
+      }
+      .line.underline{
+        text-decoration:underline;
+      }
+      .line.last{
+        font-weight:bold;
       }
     </style>
     
@@ -62,7 +79,7 @@
     <div id="lineItems">
       <template is="dom-repeat" items="[[order.line_items]]" as="line">
         <div class="line-item">
-          <div class="line">[[computelineItemName(line, lines, index )]]</div>
+          <div class="line">[[computeLineItemName(line)]]</div>
           <div class="line underline">[[line.quantity]]&times;<span>$[[line.price]]</span></div>
           <div class="line last">$[[line.subtotal]]</div>
         </div>
@@ -96,7 +113,7 @@
         
         },
         observers: [],
-        computelineItemName: function( n ){
+        computeLineItemName: function( n ){
           if( n ){
             return n.replace(/bucket/i, '' );
           }
