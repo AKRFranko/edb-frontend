@@ -315,6 +315,12 @@ var EDB = {
 
 };
 
+EDB.resetStocks = function(){
+  EDB.apis.wc.__request('POST','/reset', null, null).then( function(){
+    window.location.reload(true);
+  });
+}
+
 EDB.createResourceReference = function(options) {
   var name = options.name;
   if (!EDB._refs[name]) {

@@ -602,6 +602,7 @@
           </section>
           <!--<edb-slider layout="{{layout}}"></edb-slider>-->
         </iron-pages>
+        <paper-button on-tap="resetStocks">RESET STOCKS</paper-button>
         </div>
     </app-header-layout>
     <paper-dialog modal id="authDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
@@ -761,6 +762,9 @@
           
         },
         observers: ['routePage(route,routeData)','closeAuthDialog(user)','setSelectedProductId(singleProductData.id)','computeCartTotals(cart,customer,cart.*,customer.*)','computeShippingZone(customer.billing_postcode,customer.shipping_postcode,customer.useBillingAddressForShipping)'],
+        resetStocks: function(){
+          EDB.resetStocks();
+        },
         closeAuthDialog: function( user ){
           this.$.authDialog.close();
         },
