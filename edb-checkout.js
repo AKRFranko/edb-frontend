@@ -805,7 +805,7 @@
         var pstocks = entry.product.group.map( function( g ){
           return Checkout.getStock( g.id, attributes );
         })
-        console.log('group',pstocks);
+        return Math.min.apply(Math, pstocks) - cartItemQty;
       }
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
       if (!hasBuckets) {
