@@ -333,6 +333,7 @@
       subtotal += total;
     });
     var shippingCost = Checkout.getShippingRate(shippingClass, shippingZone, subtotal);
+    
     var shippingLines = [{
       "method_id": "flat_rate",
       "method_title": "Flat Rate",
