@@ -327,6 +327,7 @@
       Checkout.clearCart();
       app.set('cart', [] );
       window.location.href = "/#/order/"+out.id;
+      window.location.reload(true);
     });
   }
   
