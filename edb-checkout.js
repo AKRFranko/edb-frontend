@@ -312,11 +312,7 @@
 
     });
 
-    var shippingLines = [{
-      "method_id": "flat_rate",
-      "method_title": "Flat Rate",
-      "total": 0
-    }];
+   
     var order = {
       "payment_method": "bacs",
       "payment_method_title": "Direct Bank Transfer",
@@ -326,6 +322,22 @@
       "shipping": shipping,
       "billing": billing
     };
+    
+    var shippingClass = getShippingClassForCart();
+    var shippingZone = Checkout.getZone();
+
+    var lines = [];
+    var subtotal = 0;
+    Object.keys(Cart).forEach(function(uuid) {
+      var total = Cart[uuid].quantity * Checkout.getPrice(Cart[uuid].product.id, Cart[uuid].variation.attributes);
+      subTotal += total;
+    });
+    var shippingCost = Checkout.getShippingRate(shippingClass, shippingZone, subTotal);
+    var shippingLines = [{
+      "method_id": "flat_rate",
+      "method_title": "Flat Rate",
+      "total": shippingCost
+    }];
     // console.log('order',order);
     EDB.apis.wc.__request('POST', '/orders', order, null).then(function(out) {
       Checkout.clearCart();
