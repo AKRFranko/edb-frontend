@@ -36,94 +36,94 @@
   Customer = Guest,
     Products = {},
     Buckets = {}, Catalog = {}, Cart = {}, Blackboard = {};
-  
+
   var taxes = {
     AB: [0, 0.05],
-    BC: [0.07,0.05],
-    MB: [0.08,0.05],
-    NB:[0.10,0.05],
-    NL:[0.10,0.05],
-    NS:[0.10,0.05],
-    NT:[0,0.05],
-    NU:[0,0.05],
-    ON:[0.08,0.05],
-    PE:[0.10,0.05],
-    QC:[0.09975,0.05],
-    SK:[0.06,0.05],
-    YT:[0.00,0.05]
+    BC: [0.07, 0.05],
+    MB: [0.08, 0.05],
+    NB: [0.10, 0.05],
+    NL: [0.10, 0.05],
+    NS: [0.10, 0.05],
+    NT: [0, 0.05],
+    NU: [0, 0.05],
+    ON: [0.08, 0.05],
+    PE: [0.10, 0.05],
+    QC: [0.09975, 0.05],
+    SK: [0.06, 0.05],
+    YT: [0.00, 0.05]
   }
-  
-  function calcTax( province, amount, tax){
-    var t = 0;
-    if(tax === 0){
-     t = taxes[province][0];
-    }else if( tax === 1){
-     t = taxes[province][1];
-    }else{
-      t = taxes[province][0] + taxes[province][1];
+
+    function calcTax(province, amount, tax) {
+      var t = 0;
+      if (tax === 0) {
+        t = taxes[province][0];
+      } else if (tax === 1) {
+        t = taxes[province][1];
+      } else {
+        t = taxes[province][0] + taxes[province][1];
+      }
+      return Number((amount * t).toFixed(2));
+
     }
-    return Number((amount*t).toFixed(2));
-    
-  }
-  
-   
-  
-  
-  
-  
-
-  function sortAlpha(array, key) {
-    return array.sort(function(a, b) {
-      var textA = a[key];
-      var textB = b[key];
-      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-    });
-  }
 
 
-  function tokenizeAttr(pid, attributes) {
 
-    if (!Array.isArray(attributes)) {
-      attributes = Object.keys(attributes).map(function(k) {
-        var opt = attributes[k];
-        return {
-          name: k,
-          option: Array.isArray(opt) ? '*' : opt
-        };
-      })
+
+
+
+
+    function sortAlpha(array, key) {
+      return array.sort(function(a, b) {
+        var textA = a[key];
+        var textB = b[key];
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+      });
     }
-    attributes = attributes.filter(function(a) {
-      return a
-    });
-    return pid + ';' + sortAlpha(attributes, 'name').reduce(function(s, a) {
-      return s + stripEDB(a.name) + ':' + a.option + ';';
-    }, '');
 
-  }
-  
-  function expandToken( uuid ){
-    var parts = uuid.split(';');
-    var pid = parts.shift();
-    var obj = parts.reduce( function(o,p){
-      var ab = p.split(':');
-      o[ab[0]]=ab[1];
-      return o;
-    }, {});
-    return [ pid, obj ];
-  }
-  
 
-  function bucketSlugIt(string) {
-    return 'edb_' + stripEDB(string);
-  }
+    function tokenizeAttr(pid, attributes) {
 
-  function stripEDB(string) {
-    return string.replace(/edb_/, '');
-  }
+      if (!Array.isArray(attributes)) {
+        attributes = Object.keys(attributes).map(function(k) {
+          var opt = attributes[k];
+          return {
+            name: k,
+            option: Array.isArray(opt) ? '*' : opt
+          };
+        })
+      }
+      attributes = attributes.filter(function(a) {
+        return a
+      });
+      return pid + ';' + sortAlpha(attributes, 'name').reduce(function(s, a) {
+        return s + stripEDB(a.name) + ':' + a.option + ';';
+      }, '');
 
-  function genSlug(p, v) {
-    return p.id + '-' + v;
-  };
+    }
+
+    function expandToken(uuid) {
+      var parts = uuid.split(';');
+      var pid = parts.shift();
+      var obj = parts.reduce(function(o, p) {
+        var ab = p.split(':');
+        o[ab[0]] = ab[1];
+        return o;
+      }, {});
+      return [pid, obj];
+    }
+
+
+    function bucketSlugIt(string) {
+      return 'edb_' + stripEDB(string);
+    }
+
+    function stripEDB(string) {
+      return string.replace(/edb_/, '');
+    }
+
+    function genSlug(p, v) {
+      return p.id + '-' + v;
+    };
 
   function genToken() {
     return Number(Date.now() + '' + Math.floor(Math.random() * Date.now())).toString(24);
@@ -266,84 +266,88 @@
     });
     return proxy;
   }
-  
-  
-  Checkout.createOrder = function(){
+
+
+  Checkout.createOrder = function() {
     var billing = {};
     var shipping = {};
-    Object.keys( Customer ).forEach( function(k){
-      if(/^shipping_/.test(k)){
+    Object.keys(Customer).forEach(function(k) {
+      if (/^shipping_/.test(k)) {
         shipping[k.replace('shipping_', '')] = Customer[k];
       }
-      if(/^billing_/.test(k)){
+      if (/^billing_/.test(k)) {
         billing[k.replace('billing_', '')] = Customer[k];
       }
     });
-    if(EDB.Checkout.useBillingAddressForShipping){
-      Object.keys(billing).forEach( function( k ){
+    if (EDB.Checkout.useBillingAddressForShipping) {
+      Object.keys(billing).forEach(function(k) {
         shipping[k] = billing[k];
       });
     }
     var lineItems = [];
-    Object.keys(Cart).forEach( function( uuid ){
+    Object.keys(Cart).forEach(function(uuid) {
       var cartItem = Cart[uuid];
       var lineItem = {};
       lineItem.product_id = cartItem.product.id;
-      if(cartItem.variation){
+      if (cartItem.variation) {
         lineItem.variation_id = cartItem.variation.id;
       }
       lineItem.quantity = cartItem.quantity;
       lineItems.push(lineItem);
-      
-      if(cartItem.option){
-        Object.keys(cartItem.option).forEach(function( name ){
-          if(Buckets[name]){
+
+      if (cartItem.option) {
+        Object.keys(cartItem.option).forEach(function(name) {
+          if (Buckets[name]) {
             lineItems.push({
               product_id: Buckets[name][cartItem.option[name]].product.id,
               variation_id: Buckets[name][cartItem.option[name]].variation.id,
               quantity: lineItem.quantity
-            })  
+            })
           }
         });
       }
-      console.log('cartItem',cartItem, Buckets);
+      console.log('cartItem', cartItem, Buckets);
       // lineItem.meta_data = { option: cartItem.option };
-      
-      
+
+
     });
-    
-    var shippingLines = [{"method_id": "flat_rate", "method_title": "Flat Rate", "total": 0 }];
+
+    var shippingLines = [{
+      "method_id": "flat_rate",
+      "method_title": "Flat Rate",
+      "total": 0
+    }];
     var order = {
       "payment_method": "bacs",
       "payment_method_title": "Direct Bank Transfer",
       "set_paid": true,
       "line_items": lineItems,
-      "shipping_lines":shippingLines,
+      "shipping_lines": shippingLines,
       "shipping": shipping,
-      "billing":billing
+      "billing": billing
     };
     // console.log('order',order);
-    EDB.apis.wc.__request( 'POST', '/orders', order,null ).then( function(out){
+    EDB.apis.wc.__request('POST', '/orders', order, null).then(function(out) {
       Checkout.clearCart();
-      app.set('cart', [] );
-      window.location.href = "/#/order/"+out.id+'?_t='+Date.now();
+      app.set('cart', []);
+      window.location.href = "/#/order/" + out.id + '?_t=' + Date.now();
       // window.location.reload(true);
     });
   }
-  
-  Checkout.loadOrder = function(id, app){
-    
-    EDB.apis.wc.__request( 'GET', '/orders/'+id ).then( function( order ){
-      app.set('order',order);
-      
+
+  Checkout.loadOrder = function(id, app) {
+
+    EDB.apis.wc.__request('GET', '/orders/' + id).then(function(order) {
+      app.set('order', order);
+
     });
   }
 
   Checkout.computeCartTotals = function() {
     var subTotal = 0;
-    var shippingClass= getShippingClassForCart();
+    var shippingClass = getShippingClassForCart();
     var shippingZone = Checkout.getZone();
-    
+
     var lines = [];
     Object.keys(Cart).forEach(function(uuid) {
       var total = Cart[uuid].quantity * Checkout.getPrice(Cart[uuid].product.id, Cart[uuid].variation.attributes);
@@ -353,12 +357,12 @@
         value: total
       });
     });
-    var shippingCost = Checkout.getShippingRate( shippingClass,shippingZone, subTotal );
-    
+    var shippingCost = Checkout.getShippingRate(shippingClass, shippingZone, subTotal);
+
     subTotal += shippingCost;
     lines.push({
       label: 'shipping',
-      value:shippingCost,
+      value: shippingCost,
       note: shippingZone
     });
     lines.push({
@@ -367,26 +371,26 @@
     });
     lines.push({
       label: 'tax',
-      value: calcTax( 'QC', subTotal, 0 ) ,
+      value: calcTax('QC', subTotal, 0),
       note: 'provincial'
     });
     lines.push({
       label: 'tax',
-      value: calcTax( 'QC', subTotal, 1 ) ,
+      value: calcTax('QC', subTotal, 1),
       note: 'federal'
     });
-    
+
     lines.push({
       label: 'tax total',
-      value: calcTax( 'QC', subTotal ) 
+      value: calcTax('QC', subTotal)
     });
 
 
     lines.push({
       label: 'TOTAL',
-      value: subTotal +  calcTax( 'QC', subTotal ) 
+      value: subTotal + calcTax('QC', subTotal)
     });
-    
+
 
     return lines;
 
@@ -698,7 +702,7 @@
   Checkout.addToCart = function(productId, attributes, qty) {
 
     var entry = findBoardEntry(productId, attributes);
-    
+
     if (!entry) {
       console.error('NOT ENTRY', productId, attributes);
       return null;
@@ -719,7 +723,7 @@
           Checkout.removeFromCart(uuid);
         }
       } else {
-        
+
         // add to cart.
         Cart[uuid] = Object.assign({
           quantity: qty,
@@ -741,8 +745,8 @@
     }
   };
 
-  Checkout.clearCart = function(){
-    Object.keys(Cart).forEach( Checkout.removeFromCart );
+  Checkout.clearCart = function() {
+    Object.keys(Cart).forEach(Checkout.removeFromCart);
   }
   Checkout.removeFromCart = function(uuid) {
     delete Cart[uuid];
@@ -750,10 +754,14 @@
     updateApp()
   };
 
-  function getCartItemsByProductId( pid ){
-    return Object.keys(Cart).filter(function( k ){ return new RegExp('^'+pid+';').test(k) }).map( function( k ){ return Cart[k]; });
+  function getCartItemsByProductId(pid) {
+    return Object.keys(Cart).filter(function(k) {
+      return new RegExp('^' + pid + ';').test(k)
+    }).map(function(k) {
+      return Cart[k];
+    });
   }
-  
+
   Checkout.getStock = function(productId, attributes) {
     if (!attributes) {
       console.log('not attributes', productId, attributes);
@@ -767,26 +775,26 @@
         return null;
       }
       var cartItem = Cart[entry.uuid];
-      var cartItems = getCartItemsByProductId( entry.uuid.slice(0,entry.uuid.indexOf(';')));
+      var cartItems = getCartItemsByProductId(entry.uuid.slice(0, entry.uuid.indexOf(';')));
       var output = {};
-      
-      
-      var qtys = cartItems.filter( function( c ){
+
+
+      var qtys = cartItems.filter(function(c) {
         // keep if it has any matching attribute;
-        
-        return c.variation.attributes.some( function( vattr ){
+
+        return c.variation.attributes.some(function(vattr) {
           return attributes[vattr.name] && attributes[vattr.name] == vattr.option;
         })
-      }).map( function( itm){
+      }).map(function(itm) {
         return itm.quantity;
       });
-      var cartItemQty = Math.max.apply( Math, qtys.concat(0) );
-      
-      
+      var cartItemQty = Math.max.apply(Math, qtys.concat(0));
+
+
       // console.log('cartItems',output)
       // var cartItemData = expandToken(entry.uuid);
       // console.log('getSTock', cartItem);
-      
+
       // var cartItemQty = (cartItem ? cartItem.quantity : 0);
       // if (typeof cartItemQty == 'undefined') {
       //   cartItemQty = 0;
@@ -798,10 +806,13 @@
         // console.log('returning variation stock, cartItem:', cartItem);
         return entry.variation.stock_quantity;
       }
+    
+        console.log('!Entry', entry);
+    
       if (entry.variation) {
         var minBucketCount = entry.variation.attributes.reduce(function(min, attr) {
           if (!attr.bucket) return min;
-          
+
           // console.log('minBucketCountLoop', , attr);
           var qty = attr.bucket[attr.option].variation.stock_quantity;
           if (qty === null) return min;
@@ -812,170 +823,170 @@
         var variationQty = entry.variation.stock_quantity === null ? 0 : entry.variation.stock_quantity;
         // console.log('returning min stock, cartITem', minBucketCount, variationQty, entry.uuid );
         return Math.min(minBucketCount === null ? 0 : minBucketCount, variationQty) - cartItemQty;
-        
+
       } else {
         console.error('RETURNING INFINITY');
         return Infinity;
       }
 
-     }else{
-       console.log('!Entry.variation', entry);
-     }
-  }
 
-
-  
-
-  Checkout.getZone = function(postcode) {
-    var code = postcode || EDB.Checkout.useBillingAddressForShipping ?  Customer.billing_postcode : Customer.shipping_postcode;
-    var zone = 'zone-2';
-    if (!code) return 'zone-3';
-    if (!/^([a-zA-Z]\d[a-zA-Z]\s?\d[a-zA-Z]\d)$/.test(code)) return 'zone-3';
-    code = code.toUpperCase().trim();
-    var matchtable = {
-      'zone-1': /^(H..|G1.|M..|K1.|T2.|T3.|T5.|T6.|V5.|V6.|C1A|R2.|R3.|E2.|E1.|E3.|B3.|S7.|S4.|A1.|J4.).+$/,
-      'zone-3': /^(J|G|K|L|N|P|T|V|C|R|E|B|S|A|Y|X)0.+$/
     }
-    return Object.keys(matchtable).reduce(function(z, k) {
-      if (matchtable[k].test(code)) return k;
-      return z;
-    }, zone);
-  }
 
-   function getShippingClassForCart(){
-    var items = Object.keys(Cart).map( function(k){ return Cart[k]; } );
-    if (items && items.length) {
-      if (items.some(function(item) {
-        return item.shippingClass = 'furniture';
-      })) {
-        return 'furniture';
-      } else if (items.some(function(item) {
-        return item.shippingClass = 'small-furniture';
-      })) {
-        return 'small-furniture';
+
+
+
+    Checkout.getZone = function(postcode) {
+      var code = postcode || EDB.Checkout.useBillingAddressForShipping ? Customer.billing_postcode : Customer.shipping_postcode;
+      var zone = 'zone-2';
+      if (!code) return 'zone-3';
+      if (!/^([a-zA-Z]\d[a-zA-Z]\s?\d[a-zA-Z]\d)$/.test(code)) return 'zone-3';
+      code = code.toUpperCase().trim();
+      var matchtable = {
+        'zone-1': /^(H..|G1.|M..|K1.|T2.|T3.|T5.|T6.|V5.|V6.|C1A|R2.|R3.|E2.|E1.|E3.|B3.|S7.|S4.|A1.|J4.).+$/,
+        'zone-3': /^(J|G|K|L|N|P|T|V|C|R|E|B|S|A|Y|X)0.+$/
       }
-      return 'accessories';
+      return Object.keys(matchtable).reduce(function(z, k) {
+        if (matchtable[k].test(code)) return k;
+        return z;
+      }, zone);
     }
-    return null;
-  }
 
-
-  Checkout.getShippingRate = function(shippingClass, shippingZone, total) {
-    var ratesTable = {
-      'furniture': {
-        'min': 500,
-        'below': {
-          'zone-1': 65,
-          'zone-2': 150,
-          'zone-3': 250
-        },
-        'above': {
-          'zone-1': 0,
-          'zone-2': 85,
-          'zone-3': 150
+    function getShippingClassForCart() {
+      var items = Object.keys(Cart).map(function(k) {
+        return Cart[k];
+      });
+      if (items && items.length) {
+        if (items.some(function(item) {
+          return item.shippingClass = 'furniture';
+        })) {
+          return 'furniture';
+        } else if (items.some(function(item) {
+          return item.shippingClass = 'small-furniture';
+        })) {
+          return 'small-furniture';
         }
-      },
-      'small-furniture': {
-        'min': 500,
-        'below': {
-          'zone-1': 18,
-          'zone-2': 25,
-          'zone-3': 28
-        },
-        'above': {
-          'zone-1': 0,
-          'zone-2': 10,
-          'zone-3': 15
-        }
-      },
-      'accessories': {
-        'min': 50,
-        'below': {
-          'zone-1': 15,
-          'zone-2': 15,
-          'zone-3': 15
-        },
-        'above': {
-          'zone-1': 0,
-          'zone-2': 0,
-          'zone-3': 0
-        }
+        return 'accessories';
       }
-    };
-    var classRates = ratesTable[shippingClass];
-    if(!classRates) return 0;
-    var min = classRates.min;
-    if(total < min){
-      return classRates.below[shippingZone];
-    }else{
-      return classRates.above[shippingZone];
+      return null;
     }
-    return 0;
-
-  }
 
 
-
-  Checkout.getPrice = function(productId, attributes) {
-
-    if (!attributes) {
-      console.log('not attributes', productId, attributes);
-    } else {
-
-      var entry = findBoardEntry(productId, attributes);
-      // console.log('getPrice', uuid, entry, Blackboard)
-      // console.log('getSTock', cartItem);
-      if (!entry) {
-        // console.error('NOT ENTRY',productId);
-        return null;
-      }
-      var cartItem = Cart[entry.uuid];
-      var price = entry.variation ? entry.variation.price || entry.product.price : entry.product.price;
-      // console.log('price', price );
-      var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
-      if (!hasBuckets) {
-        console.log('returning basic price');
-        return price;
-      }
-      var bucketModifiers = 0;
-      if (entry.variation) {
-        bucketModifiers = entry.variation.attributes.reduce(function(mods, attr) {
-          if (!attr.bucket) return mods;
-          var mod = attr.bucket[attr.option].variation.price;
-          // .log(attr.option, attr.bucket[attr.option].variation);
-          if (!isNaN(mod)) {
-            return Number(mods) + Number(mod);
+    Checkout.getShippingRate = function(shippingClass, shippingZone, total) {
+      var ratesTable = {
+        'furniture': {
+          'min': 500,
+          'below': {
+            'zone-1': 65,
+            'zone-2': 150,
+            'zone-3': 250
+          },
+          'above': {
+            'zone-1': 0,
+            'zone-2': 85,
+            'zone-3': 150
           }
-          return mods;
-        }, 0);
+        },
+        'small-furniture': {
+          'min': 500,
+          'below': {
+            'zone-1': 18,
+            'zone-2': 25,
+            'zone-3': 28
+          },
+          'above': {
+            'zone-1': 0,
+            'zone-2': 10,
+            'zone-3': 15
+          }
+        },
+        'accessories': {
+          'min': 50,
+          'below': {
+            'zone-1': 15,
+            'zone-2': 15,
+            'zone-3': 15
+          },
+          'above': {
+            'zone-1': 0,
+            'zone-2': 0,
+            'zone-3': 0
+          }
+        }
+      };
+      var classRates = ratesTable[shippingClass];
+      if (!classRates) return 0;
+      var min = classRates.min;
+      if (total < min) {
+        return classRates.below[shippingZone];
+      } else {
+        return classRates.above[shippingZone];
       }
-
-
-      // console.log('returning basic price+bucket modifiers',price,bucketModifiers);
-      return Number(price) + Number(bucketModifiers);
+      return 0;
 
     }
-  }
 
 
-  function runTest(entries) {
+
+    Checkout.getPrice = function(productId, attributes) {
+
+      if (!attributes) {
+        console.log('not attributes', productId, attributes);
+      } else {
+
+        var entry = findBoardEntry(productId, attributes);
+        // console.log('getPrice', uuid, entry, Blackboard)
+        // console.log('getSTock', cartItem);
+        if (!entry) {
+          // console.error('NOT ENTRY',productId);
+          return null;
+        }
+        var cartItem = Cart[entry.uuid];
+        var price = entry.variation ? entry.variation.price || entry.product.price : entry.product.price;
+        // console.log('price', price );
+        var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
+        if (!hasBuckets) {
+          console.log('returning basic price');
+          return price;
+        }
+        var bucketModifiers = 0;
+        if (entry.variation) {
+          bucketModifiers = entry.variation.attributes.reduce(function(mods, attr) {
+            if (!attr.bucket) return mods;
+            var mod = attr.bucket[attr.option].variation.price;
+            // .log(attr.option, attr.bucket[attr.option].variation);
+            if (!isNaN(mod)) {
+              return Number(mods) + Number(mod);
+            }
+            return mods;
+          }, 0);
+        }
 
 
-    entries.forEach(function(e) {
-      var pid = e.product.id;
+        // console.log('returning basic price+bucket modifiers',price,bucketModifiers);
+        return Number(price) + Number(bucketModifiers);
 
-      e.variations.forEach(function(v) {
-        var attrs = v.attributes.reduce(function(o, a) {
-          o[a.name] = a.option;
-          return o;
-        }, {});
-        // console.log(e.name, 'Stock', Checkout.getStock(pid, attrs));
+      }
+    }
 
+
+    function runTest(entries) {
+
+
+      entries.forEach(function(e) {
+        var pid = e.product.id;
+
+        e.variations.forEach(function(v) {
+          var attrs = v.attributes.reduce(function(o, a) {
+            o[a.name] = a.option;
+            return o;
+          }, {});
+          // console.log(e.name, 'Stock', Checkout.getStock(pid, attrs));
+
+
+        });
 
       });
+    }
+    EDB.Checkout = Checkout;
 
-    });
-  }
-  EDB.Checkout = Checkout;
-
-})()
+  })()
