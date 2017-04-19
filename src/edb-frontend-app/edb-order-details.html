@@ -62,9 +62,9 @@
     <div id="lineItems">
       <template is="dom-repeat" items="[[order.line_items]]" as="line">
         <div class="line-item">
-          <div class="line">{{computelineItemName(line, lines, index )}}</div>
-          <div class="line underline">{{line.quantity}}&times;<span>${{line.price}}</span></div>
-          <div class="line last">${{line.subtotal}}</div>
+          <div class="line">[[computelineItemName(line, lines, index )]]</div>
+          <div class="line underline">[[line.quantity]]&times;<span>$[[line.price]]</span></div>
+          <div class="line last">$[[line.subtotal]]</div>
         </div>
         
       </template>
@@ -96,7 +96,12 @@
         
         },
         observers: [],
-  
+        computelineItemName: function( n ){
+          if( n ){
+            return n.replace(/bucket/i, '' );
+          }
+          return n;
+        }
       });
   </script>
 </dom-module>
