@@ -774,6 +774,7 @@
         // console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
         return null;
       }
+      console.log('Entry,', entry)
       var cartItem = Cart[entry.uuid];
       var cartItems = getCartItemsByProductId(entry.uuid.slice(0, entry.uuid.indexOf(';')));
       var output = {};
@@ -806,10 +807,7 @@
         // console.log('returning variation stock, cartItem:', cartItem);
         return entry.variation.stock_quantity;
       }
-    
-        console.log('!Entry', entry);
-        
-    
+      
       if (entry.variation) {
         var minBucketCount = entry.variation.attributes.reduce(function(min, attr) {
           if (!attr.bucket) return min;
@@ -830,164 +828,164 @@
         return Infinity;
       }
 
-
     }
+  }
 
 
 
 
-    Checkout.getZone = function(postcode) {
-      var code = postcode || EDB.Checkout.useBillingAddressForShipping ? Customer.billing_postcode : Customer.shipping_postcode;
-      var zone = 'zone-2';
-      if (!code) return 'zone-3';
-      if (!/^([a-zA-Z]\d[a-zA-Z]\s?\d[a-zA-Z]\d)$/.test(code)) return 'zone-3';
-      code = code.toUpperCase().trim();
-      var matchtable = {
-        'zone-1': /^(H..|G1.|M..|K1.|T2.|T3.|T5.|T6.|V5.|V6.|C1A|R2.|R3.|E2.|E1.|E3.|B3.|S7.|S4.|A1.|J4.).+$/,
-        'zone-3': /^(J|G|K|L|N|P|T|V|C|R|E|B|S|A|Y|X)0.+$/
+  Checkout.getZone = function(postcode) {
+    var code = postcode || EDB.Checkout.useBillingAddressForShipping ? Customer.billing_postcode : Customer.shipping_postcode;
+    var zone = 'zone-2';
+    if (!code) return 'zone-3';
+    if (!/^([a-zA-Z]\d[a-zA-Z]\s?\d[a-zA-Z]\d)$/.test(code)) return 'zone-3';
+    code = code.toUpperCase().trim();
+    var matchtable = {
+      'zone-1': /^(H..|G1.|M..|K1.|T2.|T3.|T5.|T6.|V5.|V6.|C1A|R2.|R3.|E2.|E1.|E3.|B3.|S7.|S4.|A1.|J4.).+$/,
+      'zone-3': /^(J|G|K|L|N|P|T|V|C|R|E|B|S|A|Y|X)0.+$/
+    }
+    return Object.keys(matchtable).reduce(function(z, k) {
+      if (matchtable[k].test(code)) return k;
+      return z;
+    }, zone);
+  }
+
+  function getShippingClassForCart() {
+    var items = Object.keys(Cart).map(function(k) {
+      return Cart[k];
+    });
+    if (items && items.length) {
+      if (items.some(function(item) {
+        return item.shippingClass = 'furniture';
+      })) {
+        return 'furniture';
+      } else if (items.some(function(item) {
+        return item.shippingClass = 'small-furniture';
+      })) {
+        return 'small-furniture';
       }
-      return Object.keys(matchtable).reduce(function(z, k) {
-        if (matchtable[k].test(code)) return k;
-        return z;
-      }, zone);
+      return 'accessories';
     }
-
-    function getShippingClassForCart() {
-      var items = Object.keys(Cart).map(function(k) {
-        return Cart[k];
-      });
-      if (items && items.length) {
-        if (items.some(function(item) {
-          return item.shippingClass = 'furniture';
-        })) {
-          return 'furniture';
-        } else if (items.some(function(item) {
-          return item.shippingClass = 'small-furniture';
-        })) {
-          return 'small-furniture';
-        }
-        return 'accessories';
-      }
-      return null;
-    }
+    return null;
+  }
 
 
-    Checkout.getShippingRate = function(shippingClass, shippingZone, total) {
-      var ratesTable = {
-        'furniture': {
-          'min': 500,
-          'below': {
-            'zone-1': 65,
-            'zone-2': 150,
-            'zone-3': 250
-          },
-          'above': {
-            'zone-1': 0,
-            'zone-2': 85,
-            'zone-3': 150
-          }
+  Checkout.getShippingRate = function(shippingClass, shippingZone, total) {
+    var ratesTable = {
+      'furniture': {
+        'min': 500,
+        'below': {
+          'zone-1': 65,
+          'zone-2': 150,
+          'zone-3': 250
         },
-        'small-furniture': {
-          'min': 500,
-          'below': {
-            'zone-1': 18,
-            'zone-2': 25,
-            'zone-3': 28
-          },
-          'above': {
-            'zone-1': 0,
-            'zone-2': 10,
-            'zone-3': 15
-          }
+        'above': {
+          'zone-1': 0,
+          'zone-2': 85,
+          'zone-3': 150
+        }
+      },
+      'small-furniture': {
+        'min': 500,
+        'below': {
+          'zone-1': 18,
+          'zone-2': 25,
+          'zone-3': 28
         },
-        'accessories': {
-          'min': 50,
-          'below': {
-            'zone-1': 15,
-            'zone-2': 15,
-            'zone-3': 15
-          },
-          'above': {
-            'zone-1': 0,
-            'zone-2': 0,
-            'zone-3': 0
+        'above': {
+          'zone-1': 0,
+          'zone-2': 10,
+          'zone-3': 15
+        }
+      },
+      'accessories': {
+        'min': 50,
+        'below': {
+          'zone-1': 15,
+          'zone-2': 15,
+          'zone-3': 15
+        },
+        'above': {
+          'zone-1': 0,
+          'zone-2': 0,
+          'zone-3': 0
+        }
+      }
+    };
+    var classRates = ratesTable[shippingClass];
+    if (!classRates) return 0;
+    var min = classRates.min;
+    if (total < min) {
+      return classRates.below[shippingZone];
+    } else {
+      return classRates.above[shippingZone];
+    }
+    return 0;
+
+  }
+
+
+
+  Checkout.getPrice = function(productId, attributes) {
+
+    if (!attributes) {
+      console.log('not attributes', productId, attributes);
+    } else {
+
+      var entry = findBoardEntry(productId, attributes);
+      // console.log('getPrice', uuid, entry, Blackboard)
+      // console.log('getSTock', cartItem);
+      if (!entry) {
+        // console.error('NOT ENTRY',productId);
+        return null;
+      }
+      var cartItem = Cart[entry.uuid];
+      var price = entry.variation ? entry.variation.price || entry.product.price : entry.product.price;
+      // console.log('price', price );
+      var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
+      if (!hasBuckets) {
+        console.log('returning basic price');
+        return price;
+      }
+      var bucketModifiers = 0;
+      if (entry.variation) {
+        bucketModifiers = entry.variation.attributes.reduce(function(mods, attr) {
+          if (!attr.bucket) return mods;
+          var mod = attr.bucket[attr.option].variation.price;
+          // .log(attr.option, attr.bucket[attr.option].variation);
+          if (!isNaN(mod)) {
+            return Number(mods) + Number(mod);
           }
-        }
-      };
-      var classRates = ratesTable[shippingClass];
-      if (!classRates) return 0;
-      var min = classRates.min;
-      if (total < min) {
-        return classRates.below[shippingZone];
-      } else {
-        return classRates.above[shippingZone];
+          return mods;
+        }, 0);
       }
-      return 0;
+
+
+      // console.log('returning basic price+bucket modifiers',price,bucketModifiers);
+      return Number(price) + Number(bucketModifiers);
 
     }
+  }
 
 
-
-    Checkout.getPrice = function(productId, attributes) {
-
-      if (!attributes) {
-        console.log('not attributes', productId, attributes);
-      } else {
-
-        var entry = findBoardEntry(productId, attributes);
-        // console.log('getPrice', uuid, entry, Blackboard)
-        // console.log('getSTock', cartItem);
-        if (!entry) {
-          // console.error('NOT ENTRY',productId);
-          return null;
-        }
-        var cartItem = Cart[entry.uuid];
-        var price = entry.variation ? entry.variation.price || entry.product.price : entry.product.price;
-        // console.log('price', price );
-        var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
-        if (!hasBuckets) {
-          console.log('returning basic price');
-          return price;
-        }
-        var bucketModifiers = 0;
-        if (entry.variation) {
-          bucketModifiers = entry.variation.attributes.reduce(function(mods, attr) {
-            if (!attr.bucket) return mods;
-            var mod = attr.bucket[attr.option].variation.price;
-            // .log(attr.option, attr.bucket[attr.option].variation);
-            if (!isNaN(mod)) {
-              return Number(mods) + Number(mod);
-            }
-            return mods;
-          }, 0);
-        }
+  function runTest(entries) {
 
 
-        // console.log('returning basic price+bucket modifiers',price,bucketModifiers);
-        return Number(price) + Number(bucketModifiers);
+    entries.forEach(function(e) {
+      var pid = e.product.id;
 
-      }
-    }
+      e.variations.forEach(function(v) {
+        var attrs = v.attributes.reduce(function(o, a) {
+          o[a.name] = a.option;
+          return o;
+        }, {});
+        // console.log(e.name, 'Stock', Checkout.getStock(pid, attrs));
 
-
-    function runTest(entries) {
-
-
-      entries.forEach(function(e) {
-        var pid = e.product.id;
-
-        e.variations.forEach(function(v) {
-          var attrs = v.attributes.reduce(function(o, a) {
-            o[a.name] = a.option;
-            return o;
-          }, {});
-          // console.log(e.name, 'Stock', Checkout.getStock(pid, attrs));
-
-
-        });
 
       });
-    }
-    EDB.Checkout = Checkout;
 
-  })()
+    });
+  }
+  EDB.Checkout = Checkout;
+
+})()
