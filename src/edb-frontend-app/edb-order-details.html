@@ -57,6 +57,9 @@
         font-weight:bold;
         text-align:right;
       }
+      .totals .line.name{
+        font-weight:bold;
+      }
     </style>
     
     <div id="addresses">
@@ -91,18 +94,56 @@
       </div>
     </div>
     <div id="lineItems">
-      <div class="title">Items</div>
+      <div class="title">Order Details</div>
       <template is="dom-repeat" items="[[order.line_items]]" as="line">
         <div class="line-item">
-          
           <div class="line name">[[computeLineItemName(line.name)]]</div>
           <div class="math">
             <div class="line underline">[[line.quantity]]&times;<span>$[[line.price]]</span></div>
             <div class="line last">$[[line.subtotal]]</div>
           </div>
         </div>
-        
       </template>
+      <template is="dom-repeat" items="[[order.shipping_lines]]" as="line">
+        <div class="line-item">
+          <div class="line name">[[line.method_title]]</div>
+          <div class="math">
+            <div class="line last">$[[line.total]]</div>
+          </div>
+        </div>
+      </template>
+      <template is="dom-repeat" items="[[order.tax_lines]]" as="line">
+        <div class="line-item">
+          <div class="line name">[[line.label]]</div>
+          <div class="math">
+            <div class="line last">$[[line.tax_total]]</div>
+          </div>
+        </div>
+      </template>
+      <div class="line-item totals">
+        <div class="line name">Shipping Total</div>
+        <div class="math">
+          <div class="line last">$[[order.shipping_total]]</div>
+        </div>
+      </div>
+      <div class="line-item totals">
+        <div class="line name">Shipping Total</div>
+        <div class="math">
+          <div class="line last">$[[order.shipping_total]]</div>
+        </div>
+      </div>
+      <div class="line-item totals">
+        <div class="line name">Tax Total</div>
+        <div class="math">
+          <div class="line last">$[[order.total_tax]]</div>
+        </div>
+      </div>
+      <div class="line-item total">
+        <div class="line name">Total</div>
+        <div class="math">
+          <div class="line last">$[[order.total]]</div>
+        </div>
+      </div>
     </div>
     
   </template>
