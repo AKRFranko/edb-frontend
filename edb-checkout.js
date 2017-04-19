@@ -330,9 +330,9 @@
     var subtotal = 0;
     Object.keys(Cart).forEach(function(uuid) {
       var total = Cart[uuid].quantity * Checkout.getPrice(Cart[uuid].product.id, Cart[uuid].variation.attributes);
-      subTotal += total;
+      subtotal += total;
     });
-    var shippingCost = Checkout.getShippingRate(shippingClass, shippingZone, subTotal);
+    var shippingCost = Checkout.getShippingRate(shippingClass, shippingZone, subtotal);
     var shippingLines = [{
       "method_id": "flat_rate",
       "method_title": "Flat Rate",
