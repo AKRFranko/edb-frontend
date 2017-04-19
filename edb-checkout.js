@@ -331,7 +331,7 @@
   }
   
   Checkout.loadOrder = function(id){
-    EDB.apis.wc.__request( 'GET', '/orders/'+id ).then( function(order){
+    EDB.apis.wc.__request( 'GET', '/orders/'+id ).then( function( order ){
       app.set('order',order);
     });
   }
