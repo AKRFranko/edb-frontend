@@ -341,7 +341,8 @@
       "shipping": shipping,
       "billing": billing
     };
-    // console.log('order',order);
+    
+    console.log('shippingCost',shippingCost);
     EDB.apis.wc.__request('POST', '/orders', order, null).then(function(out) {
       Checkout.clearCart();
       app.set('cart', []);
