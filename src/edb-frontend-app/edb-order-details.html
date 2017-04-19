@@ -79,7 +79,7 @@
     <div id="lineItems">
       <template is="dom-repeat" items="[[order.line_items]]" as="line">
         <div class="line-item">
-          <div class="line">[[computeLineItemName(line)]]</div>
+          <div class="line">[[computeLineItemName(line.name)]]</div>
           <div class="line underline">[[line.quantity]]&times;<span>$[[line.price]]</span></div>
           <div class="line last">$[[line.subtotal]]</div>
         </div>
