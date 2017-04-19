@@ -808,6 +808,7 @@
       }
     
         console.log('!Entry', entry);
+        
     
       if (entry.variation) {
         var minBucketCount = entry.variation.attributes.reduce(function(min, attr) {
