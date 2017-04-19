@@ -487,18 +487,17 @@
         setSelectedAttributes: function(attributes){
           console.log('setSelectedAttributes',attributes);
           var product = this.get('product');
+          if(!product) return;
           Object.keys(attributes).forEach( function( name ){
             var selector = document.querySelector('iron-selector.'+name);
-            if(product && product.attributes){
-              var attribute =product.attributes.filter( function( a ){
-                return a.name == name;
-              });
-              var values = attribute[0].options;
-              if(selector){
-                  selector.selectIndex(values.indexOf( attributes[name] ));
-              }  
-            }
             
+            var attribute =product.attributes.filter( function( a ){
+              return a.name == name;
+            });
+            var values = attribute[0].options;
+            if(selector){
+                selector.selectIndex(values.indexOf( attributes[name] ));
+            }
             // console.log('setSelectedAttributes', name, values.indexOf( attributes[name] ));
             // selector.selected = values.indexOf( attributes[name] );
           });
