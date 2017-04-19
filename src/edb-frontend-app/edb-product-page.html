@@ -488,6 +488,7 @@
           console.log('setSelectedAttributes',attributes);
           var product = this.get('product');
           if(!product) return;
+          if(!product.attributes) return;
           Object.keys(attributes).forEach( function( name ){
             var selector = document.querySelector('iron-selector.'+name);
             
