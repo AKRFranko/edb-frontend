@@ -910,7 +910,7 @@
             }else{
               this.set('page',data.page);
               if(data.page == 'order'){
-                EDB.Checkout.loadOrder(this.get('orderData').id);
+                EDB.Checkout.loadOrder(this.get('orderData').id, this );
                 console.log('ORDER PAGE' );
               }
             }  

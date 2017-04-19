@@ -330,7 +330,7 @@
     });
   }
   
-  Checkout.loadOrder = function(id){
+  Checkout.loadOrder = function(id, app){
     EDB.apis.wc.__request( 'GET', '/orders/'+id ).then( function( order ){
       app.set('order',order);
     });
