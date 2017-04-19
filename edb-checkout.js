@@ -330,8 +330,8 @@
     EDB.apis.wc.__request('POST', '/orders', order, null).then(function(out) {
       Checkout.clearCart();
       app.set('cart', []);
-      window.location.href = "/#/order/" + out.id + '?_t=' + Date.now();
-      // window.location.reload(true);
+      window.location.hash = "#/order/" + out.id + '?_t=' + Date.now();
+      window.location.reload(true);
     });
   }
 
