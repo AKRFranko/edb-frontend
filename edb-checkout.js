@@ -326,14 +326,16 @@
     EDB.apis.wc.__request( 'POST', '/orders', order,null ).then( function(out){
       Checkout.clearCart();
       app.set('cart', [] );
-      window.location.href = "/#/order/"+out.id;
-      window.location.reload(true);
+      window.location.href = "/#/order/"+out.id+'?_t='+Date.now();
+      // window.location.reload(true);
     });
   }
   
   Checkout.loadOrder = function(id, app){
+    
     EDB.apis.wc.__request( 'GET', '/orders/'+id ).then( function( order ){
       app.set('order',order);
+      
     });
   }
 
