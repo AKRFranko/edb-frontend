@@ -774,7 +774,7 @@
         // console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
         return null;
       }
-      console.log('Entry,', entry.product.group)
+      
       var cartItem = Cart[entry.uuid];
       var cartItems = getCartItemsByProductId(entry.uuid.slice(0, entry.uuid.indexOf(';')));
       var output = {};
@@ -801,7 +801,9 @@
       //   cartItemQty = 0;
       // }
       // cartItemQty = Math.max.apply(qtys);
-
+      if(entry.product && entry.product.group && entry.product.group.length){
+        console.log('group',entry.product.group);
+      }
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
       if (!hasBuckets) {
         // console.log('returning variation stock, cartItem:', cartItem);
