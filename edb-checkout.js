@@ -774,7 +774,7 @@
         // console.error('NOT ENTRY',productId,attrToken, Object.keys(Blackboard[productId]));
         return null;
       }
-      console.log('Entry,', entry)
+      console.log('Entry,', entry.product.group)
       var cartItem = Cart[entry.uuid];
       var cartItems = getCartItemsByProductId(entry.uuid.slice(0, entry.uuid.indexOf(';')));
       var output = {};
