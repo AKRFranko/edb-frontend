@@ -431,16 +431,18 @@
       value: shippingCost,
       note: shippingZone
     });
-
-    lines.push({
-      label: 'SUBTOTAL (before discounts)',
-      value: subTotal 
-    });
-    lines.push({
-      label: 'discount',
-      value: '-' + couponDiscount,
-      note: 'coupon code'
-    });
+    if(couponDiscount > 0){
+      lines.push({
+        label: 'SUBTOTAL (before discounts)',
+        value: subTotal 
+      });
+      
+      lines.push({
+        label: 'discount',
+        value: '-' + couponDiscount,
+        note: 'coupon code'
+      });  
+    }
     lines.push({
       label: 'SUBTOTAL',
       value: subTotal - couponDiscount
