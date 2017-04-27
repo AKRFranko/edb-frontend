@@ -407,23 +407,23 @@
                   <paper-toggle-button on-change="handleAddressToggleChanged" checked$="{{customer.useBillingAddressForShipping}}">use for shipping</paper-toggle-button>
                 </div>
                 <div class="twinfields">
-                  <paper-input label="first name" value="{{customer.billing_first_name}}"></paper-input>
+                  <paper-input label="first name" value="{{customer.billing_first_name}}" required></paper-input>
                   <paper-input label="last name" value="{{customer.billing_last_name}}"></paper-input>
                 </div>
                 <paper-input label="company" value="{{customer.billing_company}}"></paper-input>
                 <div class="twinfields">
-                  <paper-input label="telephone" value="{{customer.billing_phone}}"></paper-input>
-                  <paper-input label="email" value="{{customer.billing_email}}"></paper-input>
+                  <paper-input label="telephone" value="{{customer.billing_phone}}" required></paper-input>
+                  <paper-input label="email" value="{{customer.billing_email}}" required></paper-input>
                 </div>
                 
-                <paper-input label="address" value="{{customer.billing_address_1}}"></paper-input>
+                <paper-input label="address" value="{{customer.billing_address_1}}" required></paper-input>
                 <div class="twinfields">
-                  <paper-input label="city" value="{{customer.billing_city}}"></paper-input>
-                  <paper-input label="state" value="{{customer.billing_state}}"></paper-input>
+                  <paper-input label="city" value="{{customer.billing_city}}" required></paper-input>
+                  <paper-input label="state" value="{{customer.billing_state}}" required></paper-input>
                 </div>
                 <div class="twinfields">
-                  <paper-input label="country" value="{{customer.billing_country}}"></paper-input>
-                  <paper-input label="postal_code" value="{{customer.billing_postcode}}">
+                  <paper-input label="country" value="{{customer.billing_country}}" required></paper-input>
+                  <paper-input label="postal_code" value="{{customer.billing_postcode}}" required$="{{customer.useBillingAddressForShipping}}">
                     <div suffix hidden$="{{!customer.useBillingAddressForShipping}}" class="zone-suffix">{{shippingZone}}</div>
                   </paper-input>
                   
@@ -432,22 +432,22 @@
               <form id="shipping" hidden$="{{customer.useBillingAddressForShipping}}">
                 <div class="title">Shipping Address</div>
                 <div class="twinfields">
-                  <paper-input label="first name" value="{{customer.shipping_first_name}}"></paper-input>
+                  <paper-input label="first name" value="{{customer.shipping_first_name}}" required></paper-input>
                   <paper-input label="last name" value="{{customer.shipping_last_name}}"></paper-input>
                 </div>
                 <paper-input label="company" value="{{customer.shipping_company}}"></paper-input>
                 <div class="twinfields">
-                  <paper-input label="telephone" value="{{customer.shipping_phone}}"></paper-input>
-                  <paper-input label="email" value="{{customer.shipping_email}}"></paper-input>
+                  <paper-input label="telephone" value="{{customer.shipping_phone}}" required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
+                  <paper-input label="email" value="{{customer.shipping_email}}" required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
                 </div>
-                <paper-input label="address" value="{{customer.shipping_address_1}}"></paper-input>
+                <paper-input label="address" value="{{customer.shipping_address_1}}" required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
                 <div class="twinfields">
-                  <paper-input label="city" value="{{customer.shipping_city}}"></paper-input>
-                  <paper-input label="state" value="{{customer.shipping_state}}"></paper-input>
+                  <paper-input label="city" value="{{customer.shipping_city}}" required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
+                  <paper-input label="state" value="{{customer.shipping_state}}" required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
                 </div>
                 <div class="twinfields">
-                  <paper-input label="country" value="{{customer.shipping_country}}"></paper-input>
-                  <paper-input label="postal_code" value="{{customer.shipping_postcode}}">
+                  <paper-input label="country" value="{{customer.shipping_country}}" required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
+                  <paper-input label="postal_code" value="{{customer.shipping_postcode}}" required$="{{!customer.useBillingAddressForShipping}}">
                     <div suffix class="zone-suffix">{{shippingZone}}</div>
                     
                   </paper-input>
