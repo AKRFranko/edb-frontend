@@ -354,6 +354,8 @@ EDB.login = function( userLogin, userPass){
     if(user){
       window.CurrentUser = user;
       if(EDB.polymerAuth){
+        console.log('window.CurrentUser',window.CurrentUser);
+        
         EDB.polymerAuth.set('user', window.CurrentUser);
       }
       
