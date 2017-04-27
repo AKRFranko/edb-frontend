@@ -321,7 +321,10 @@
         
         
       }
-      
+      .grey-box{
+        background:#ccc;
+        border-radius:3px;
+      }
       #order .title{
         margin:40px;
       }
@@ -448,8 +451,13 @@
                 </div>
               </form>
               <form id="payment" class="todo">
-                <div class="title">Coupon</div>
-                <div>...</div>
+                
+                <div class="grey-box">
+                  <div class="title">Coupon</div>
+                  <p>Have a coupon?</p>
+                  <paper-input class="coupon-code" label="Coupon Code"><div prefix>CODE</div></paper-input>
+                </div>
+                
               </form>
             </div>
             
@@ -468,7 +476,7 @@
             </template><!-- dom if logged in -->
             
             <div id="checkoutAs" hidden$="{{user}}">
-              <paper-button on-tap="openAuthDialog">please login</paper-button>
+              <paper-button on-tap="openAuthDialog">please login to checkout</paper-button>
             </div>
             
           </section>
