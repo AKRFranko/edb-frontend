@@ -355,7 +355,7 @@
             <!--<a href="/#" tabindex="-1">-->
           <!--</a>-->
           <a href="/#/" tabindex="-1">
-            <paper-item hidden$="{{!user}}">sign out</paper-item>
+            <paper-item hidden$="{{!user}}" on-tap="signOut">sign out</paper-item>
           </a>
           <a href="/#/cart" tabindex="-1" hidden$="{{!cart.length}}">
             <paper-item>
@@ -383,7 +383,7 @@
             <!--  <paper-item hidden$="{{user}}">sign in</paper-item>-->
             <!--</a>-->
             <a href="/#/" tabindex="-1">
-              <paper-item hidden$="{{!user}}">sign out</paper-item>
+              <paper-item hidden$="{{!user}}" on-tap="signOut">sign out</paper-item>
             </a>
             
             <a href="/#/cart" tabindex="-1" hidden$="{{!cart.length}}">
@@ -662,6 +662,10 @@
           if(this.dialog){
             this.dialog.open();
           }
+        },
+        signOut: function(){
+          EDB.logout();
+          
         },
         isLang: function(current, expected){
           return current == expected;
