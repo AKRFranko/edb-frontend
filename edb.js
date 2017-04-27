@@ -354,8 +354,8 @@ EDB.login = function( userLogin, userPass){
     if(user){
       window.CurrentUser = user;
       if(EDB.polymerAuth){
-        // console.log('window.CurrentUser',window.CurrentUser);
-        EDB.getAuthUser();
+        console.log('window.CurrentUser',window.CurrentUser);
+        
         // EDB.polymerAuth.set('user', window.CurrentUser);
       }
       
@@ -363,6 +363,7 @@ EDB.login = function( userLogin, userPass){
         console.log('token response', auth )
         localStorage.setItem('EDB_JWT', auth.token );
         localStorage.setItem('EDB_LASTUSERID', auth.user_id );    
+        return EDB.getAuthUser();
       });
     }
     // console,lig
