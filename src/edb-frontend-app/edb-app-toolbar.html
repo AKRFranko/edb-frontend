@@ -357,8 +357,8 @@
           <a href="/#/" tabindex="-1">
             <paper-item hidden$="{{!user}}">sign out</paper-item>
           </a>
-          <a href="/#/cart" tabindex="-1" hidden$="{{!user}}">
-            <paper-item hidden$="{{!cart.length}}" >
+          <a href="/#/cart" tabindex="-1" hidden$="{{!cart.length}}">
+            <paper-item>
               <div id="cartWidget">cart</div>
               <paper-badge for="cartWidget" label="{{cart.length}}"></paper-badge>
             </paper-item>
@@ -386,8 +386,8 @@
               <paper-item hidden$="{{!user}}">sign out</paper-item>
             </a>
             
-            <a href="/#/cart" tabindex="-1" hidden$="{{!user}}">
-              <paper-item hidden$="{{!cart.length}}">
+            <a href="/#/cart" tabindex="-1" hidden$="{{!cart.length}}">
+              <paper-item>
                 <div id="cartWidgetII">cart</div>
                 <paper-badge for="cartWidgetII" label="{{cart.length}}"></paper-badge>
               </paper-item>
