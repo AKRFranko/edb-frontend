@@ -466,11 +466,11 @@
             </div>
             
             </template><!-- dom if logged in -->
-            <template is="dom-if" if="{{!user}}">
-              <div id="checkoutAs">
+            
+              <div id="checkoutAs" hidden$="{{user}}">
                 <paper-button on-tap="openAuthDialog">please login</paper-button>
               </div>
-            </template><!-- dom if not logged in -->
+            
           </section>
           <section id="product">
             
