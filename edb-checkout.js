@@ -467,7 +467,7 @@
 
     lines.push({
       label: 'TOTAL',
-      value: ( subTotal - couponDiscount) + calcTax('QC', (subTotal-couponDiscount))
+      value: ( subTotal - couponDiscount) + calcTax('QC', (subTotal-couponDiscount)).toFixed(2)
     });
 
     return lines;
