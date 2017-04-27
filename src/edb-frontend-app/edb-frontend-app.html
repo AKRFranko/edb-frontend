@@ -465,12 +465,12 @@
               <paper-button on-tap="createOrder">complete order</paper-button>
             </div>
             
-            </template><!-- dom if not logged in -->
+            </template><!-- dom if logged in -->
             <template is="dom-if" if="{{!user}}">
               <div id="checkoutAs">
                 <paper-button on-tap="openAuthDialog">please login</paper-button>
               </div>
-            </template>
+            </template><!-- dom if not logged in -->
           </section>
           <section id="product">
             
