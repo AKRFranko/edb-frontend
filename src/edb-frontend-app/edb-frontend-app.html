@@ -322,7 +322,8 @@
         
       }
       .grey-box{
-        background:#ccc;
+        /*background:#ccc;*/
+        border:3px solid #ccc;
         border-radius:3px;
         padding:12px;
       }
@@ -451,12 +452,12 @@
                   <gold-cc-expiration-input label="Expiration"></gold-cc-expiration-input>
                 </div>
               </form>
-              <form id="payment" class="todo">
+              <form id="coupon">
                 
                 <div class="grey-box">
                   <div class="title">Coupon</div>
                   <p>Have a coupon?</p>
-                  <paper-input always-float-label class="coupon-code" label="Coupon Code"></paper-input>
+                  <paper-input always-float-label class="coupon-code" value="{{couponCode}}" label="Coupon Code" on-change="applyCoupon"></paper-input>
                 </div>
               </form>
             </div>
@@ -707,6 +708,11 @@
             value: 'home',
             notify: true
           },
+          couponCode: {
+                      type: String,
+                      value: 'home',
+                      notify: true
+                    },
           slide:{
             type: Object,
             notify: true,
@@ -811,6 +817,12 @@
           }
           
           // return EDB.Checkout.getZone( code );
+        },
+        applyCoupon: function(){
+          EDB.Checkout.applyCoupon( this.get('couponCode'))
+        },
+        removeCoupon: function( name ){
+          EDB.Checkout.removeCoupon( name );
         },
         setAuthModeRegister: function( e )
         {

@@ -2,6 +2,21 @@
 
 
   var app;
+  var Coupons = {
+    EDB15: {
+      code: 'EDB15',
+      sale: 0,
+      regular: 15/100,
+      apply: false
+    },
+    edb15: {
+      code: 'EDB15',
+           sale: 0,
+           regular: 15/100,
+           apply: false
+         }
+  };
+  
   var Checkout = {}, Guest = {
     name: 'guest',
     billing_first_name: '',
@@ -69,7 +84,7 @@
 
 
 
-
+  
 
 
     function sortAlpha(array, key) {
@@ -268,6 +283,17 @@
   }
 
 
+  Checkout.applyCoupon = function( code ){
+    if(!Coupons[code]) return;
+    Coupons[code].apply = true;
+    updateApp()
+  }
+  Checkout.removeCoupon = function( code ){
+    if(!Coupons[code]) return;
+    Coupons[code].apply = false;
+    updateApp()
+  }
+
   Checkout.createOrder = function() {
     var billing = {};
     var shipping = {};
@@ -365,6 +391,7 @@
     var shippingZone = Checkout.getZone();
 
     var lines = [];
+    
     Object.keys(Cart).forEach(function(uuid) {
       var total = Cart[uuid].quantity * Checkout.getPrice(Cart[uuid].product.id, Cart[uuid].variation.attributes);
       subTotal += total;
@@ -374,39 +401,67 @@
       });
     });
     var shippingCost = Checkout.getShippingRate(shippingClass, shippingZone, subTotal);
-
     subTotal += shippingCost;
+    var couponDiscount = 0;
+    var appliedCoupons = Object.keys(Coupons).filter( function( k ){
+                          return Coupons[k].apply;
+                        }).map( function( k ){ return Coupons[k] });
+    appliedCoupons.forEach( function( coupon){
+      Object.keys(Cart).forEach(function(uuid) {
+        var total = Cart[uuid].quantity * Checkout.getPrice(Cart[uuid].product.id, Cart[uuid].variation.attributes);
+        var discount = total*coupon.regular;
+        couponDiscount+=discount;
+        
+      });
+    })
+    
+    // var couponLines = [];
+    // var appliedCoupons = Object.keys(Coupons).filter( function( k ){
+    //                       return Coupons[k].apply;
+    //                     }).map( function( k ){ return Coupons[k] });
+    // appliedCoupons.forEach( function( coupon){
+    //   Object.keys(Cart).forEach(function(uuid) {
+    //     var total = Cart[uuid].quantity * Checkout.getPrice(Cart[uuid].product.id, Cart[uuid].variation.attributes);
+    //     couponLines.push( { code: coupon.code, discount: total * coupon.regular  });
+    //   });
+    // })
+    
     lines.push({
       label: 'shipping',
       value: shippingCost,
       note: shippingZone
     });
     lines.push({
-      label: 'SUBTOTAL',
-      value: subTotal
+      label: 'discount',
+      value: '-' + couponDiscount,
+      note: 'coupon code'
     });
     lines.push({
+      label: 'SUBTOTAL',
+      value: subTotal - couponDiscount
+    });
+    
+    lines.push({
       label: 'tax',
-      value: calcTax('QC', subTotal, 0),
+      value: calcTax('QC', subTotal - couponDiscount, 0),
       note: 'provincial'
     });
     lines.push({
       label: 'tax',
-      value: calcTax('QC', subTotal, 1),
+      value: calcTax('QC', subTotal - couponDiscount, 1),
       note: 'federal'
     });
 
     lines.push({
       label: 'tax total',
-      value: calcTax('QC', subTotal)
+      value: calcTax('QC', subTotal - couponDiscount)
     });
 
 
     lines.push({
       label: 'TOTAL',
-      value: subTotal + calcTax('QC', subTotal)
+      value: ( subTotal - couponDiscount) + calcTax('QC', (subTotal-couponDiscount))
     });
-
 
     return lines;
 
