@@ -504,8 +504,9 @@
       Customer = Object.assign(Guest, user.customer_meta, {
         name: user.name
       });
+      
     }
-
+    console.log( user, Customer );
   }
 
   Checkout.init = function loadProducts(polymerApp, products) {
