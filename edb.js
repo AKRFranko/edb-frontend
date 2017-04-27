@@ -354,9 +354,9 @@ EDB.login = function( userLogin, userPass){
     if(user){
       window.CurrentUser = user;
       if(EDB.polymerAuth){
-        console.log('window.CurrentUser',window.CurrentUser);
-        
-        EDB.polymerAuth.set('user', window.CurrentUser);
+        // console.log('window.CurrentUser',window.CurrentUser);
+        EDB.getAuthUser();
+        // EDB.polymerAuth.set('user', window.CurrentUser);
       }
       
       return jwtRest.__request('POST','/token', {username: userLogin, password: userPass }, {} ).then(  function( auth ){
