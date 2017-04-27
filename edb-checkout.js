@@ -410,7 +410,7 @@
       Object.keys(Cart).forEach(function(uuid) {
         var total = Cart[uuid].quantity * Checkout.getPrice(Cart[uuid].product.id, Cart[uuid].variation.attributes);
         var discount = total*coupon.regular;
-        couponDiscount+=discount;
+        couponDiscount+=parseFloat(discount);
         
       });
     })
@@ -467,7 +467,7 @@
 
     lines.push({
       label: 'TOTAL',
-      value: ( subTotal - couponDiscount) + calcTax('QC', (subTotal-couponDiscount)).toFixed(2)
+      value: ( subTotal - couponDiscount) + calcTax('QC', ( subTotal - couponDiscount ))
     });
 
     return lines;
