@@ -380,6 +380,9 @@
               
             </template>
             <div hidden$="{{cart.length}}"><p style="padding:40px;">Your cart is empty.</p></div>
+            
+            <template is="dom-if" if="{{user}}">
+            
             <div id="addressForms" hidden$="{{!cart.length}}">
               <form id="billing">
                 <div class="title">Billing Address
@@ -462,7 +465,12 @@
               <paper-button on-tap="createOrder">complete order</paper-button>
             </div>
             
-            
+            </template><!-- dom if not logged in -->
+            <template is="dom-if" if="{{!user}}">
+              <div id="checkoutAs">
+                <paper-button on-tap="openAuthDialog">please login</paper-button>
+              </div>
+            </template>
           </section>
           <section id="product">
             
@@ -773,6 +781,9 @@
         },
         closeAuthDialog: function( user ){
           this.$.authDialog.close();
+        },
+        openAuthDialog: function( user ){
+          this.$.authDialog.open();
         },
         createOrder: function(){
           EDB.Checkout.createOrder();
