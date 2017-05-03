@@ -473,6 +473,12 @@
                   <p>Have a coupon?</p>
                   <paper-input always-float-label class="coupon-code" value="{{couponCode}}" label="Coupon Code" on-change="applyCoupon"></paper-input>
                 </div>
+                
+                
+                <div class="grey-box" hidden$="{{!isUserDesigner(user.designer_meta)}}">
+                  <div class="title">You're a designer!</div>
+                  <p>You get 5% off regular priced items!</p>
+                </div>
               </form>
             </div>
             
@@ -822,6 +828,9 @@
           }
           
           // console.log('product.selectedId',id);
+        },
+        isUserDesigner: function( meta ){
+          console.log('designer_meta', meta );
         },
         computeShippingZone: function( billing,shipping, useBilling ){
           
