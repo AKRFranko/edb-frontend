@@ -448,7 +448,7 @@
                 </div>
                 <div class="twinfields">
                   <paper-input label="country" value="{{customer.shipping_country}}" auto-validate required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
-                  <paper-input label="postal_code" value="{{customer.shipping_postcode}}" auto-validate required$="{{!customer.useBillingAddressForShipping}}">
+                  <paper-input label="postal_code" value="{{customer.shipping_postcode}}" auto-validate on-change="__updateShippingZone" required$="{{!customer.useBillingAddressForShipping}}">
                     <div suffix class="zone-suffix">{{shippingZone}}</div>
                     
                   </paper-input>
@@ -865,6 +865,9 @@
             this.set('cartTotals', EDB.Checkout.computeCartTotals());
           })
         },
+        __updateShippingZone: function(){
+          console.log(this.get('customer'));
+        },
         _filterCatalog: function( filterVal ){
           var days30  =1000 * 60 * 60  * 24  * 30;
           return function( entry ) {
@@ -1012,7 +1015,7 @@
             
             alert('Godmode ACtivated!');
           });
-          this.set('customer.useBillingAddressForShipping', false);
+          
           // this.set('slides', slides.items );
           // console.log()
         }
