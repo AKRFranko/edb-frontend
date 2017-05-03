@@ -919,7 +919,7 @@
 
 
   Checkout.getZone = function(postcode) {
-    var code = postcode || EDB.Checkout.useBillingAddressForShipping ? Customer.billing_postcode : Customer.shipping_postcode;
+    var code = postcode ? postcode : Customer.useBillingAddressForShipping ? Customer.billing_postcode : Customer.shipping_postcode;
     var zone = 'zone-2';
     if (!code) return 'zone-3';
     if (!/^([a-zA-Z]\d[a-zA-Z]\s?\d[a-zA-Z]\d)$/.test(code)) return 'zone-3';
