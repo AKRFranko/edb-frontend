@@ -824,12 +824,14 @@
           // console.log('product.selectedId',id);
         },
         computeShippingZone: function( billing,shipping, useBilling ){
-          console.log('computeShippingZone','"' + billing + '"',shipping, useBilling );
+          
           
           if(useBilling === true){
             this.set('shippingZone', EDB.Checkout.getZone( billing ) );
+            console.log('computeShippingZone',EDB.Checkout.getZone( billing ) , billing);
           }else{
             this.set('shippingZone', EDB.Checkout.getZone( shipping )  );
+            console.log('computeShippingZone',EDB.Checkout.getZone( shipping ) , shipping);
           }
           
           // return EDB.Checkout.getZone( code );
