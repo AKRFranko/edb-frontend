@@ -358,12 +358,28 @@
       "total": shippingCost
     }];
     
+    var couponDiscount = 0;
+    var appliedCoupons = Object.keys(Coupons).filter( function( k ){
+                          return Coupons[k].apply;
+                        }).map( function( k ){ return Coupons[k] });
+    appliedCoupons.forEach( function( coupon){
+      Object.keys(Cart).forEach(function(uuid) {
+        var total = Cart[uuid].quantity * Checkout.getPrice(Cart[uuid].product.id, Cart[uuid].variation.attributes);
+        var discount = total*coupon.regular;
+        couponDiscount+=parseFloat(discount);
+        
+      });
+    }) 
+    
+    
+    
     var order = {
       "payment_method": "bacs",
       "payment_method_title": "Direct Bank Transfer",
       "set_paid": true,
       "line_items": lineItems,
       "shipping_lines": shippingLines,
+      "coupon_lines": [ { code: 'edb15', discount: couponDiscount, discount_tax: 0 } ],
       "shipping": shipping,
       "billing": billing
     };
