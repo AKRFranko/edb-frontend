@@ -379,7 +379,7 @@
       "set_paid": true,
       "line_items": lineItems,
       "shipping_lines": shippingLines,
-      "coupon_lines": [ { code: 'edb15', discount: couponDiscount, discount_tax: 0 } ],
+      "coupon_lines": [ { code: 'edb15', amount: couponDiscount, discount: couponDiscount, discount_tax: 0 } ],
       "shipping": shipping,
       "billing": billing
     };
