@@ -392,8 +392,14 @@
 
     var lines = [];
     
+    
     Object.keys(Cart).forEach(function(uuid) {
+      
       var total = Cart[uuid].quantity * Checkout.getPrice(Cart[uuid].product.id, Cart[uuid].variation.attributes);
+      var isDesigner = app.get('user').designer_meta && app.get('user').designer_meta.designer_level && app.get('user').designer_meta.designer_level !== 'none';
+      if(isDesigner){
+        total -= total*0.05;
+      }
       subTotal += total;
       return lines.push({
         label: (Cart[uuid].name + ' x' + Cart[uuid].quantity).toLowerCase(),
@@ -1008,7 +1014,23 @@
 
   }
 
+  Checkout.isOnSale = function( productId, attributes ){
+    var entry = findBoardEntry(productId, attributes);
+    // console.log('getPrice', uuid, entry, Blackboard)
+    // console.log('getSTock', cartItem);
+    if (!entry) {
+      // console.error('NOT ENTRY',productId);
+      return null;
+    }
+    
+    var salePrice = entry.variation ? entry.variation.sale_price || entry.product.sale_price : entry.product.sale_price;
+    if(isNaN(salePrice)){
+      return false;        
+    }else{
+      return true;
+    }
 
+  }
 
   Checkout.getPrice = function(productId, attributes) {
 
