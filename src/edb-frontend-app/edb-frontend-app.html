@@ -824,7 +824,7 @@
           // console.log('product.selectedId',id);
         },
         computeShippingZone: function( billing,shipping, useBilling ){
-          console.log('computeShippingZone','|',billing,'|',shipping, '|',useBilling );
+          console.log('computeShippingZone',!!billing,!!shipping, !!useBilling );
           if(useBilling === true){
             this.set('shippingZone', EDB.Checkout.getZone( billing ) );
           }else{
