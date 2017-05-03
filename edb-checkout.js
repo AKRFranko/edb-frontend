@@ -391,14 +391,14 @@
     var shippingZone = Checkout.getZone();
 
     var lines = [];
-    
+    var designerDiscount = 0;
     
     Object.keys(Cart).forEach(function(uuid) {
       
       var total = Cart[uuid].quantity * Checkout.getPrice(Cart[uuid].product.id, Cart[uuid].variation.attributes);
       var isDesigner = app.get('user').designer_meta && app.get('user').designer_meta.designer_level && app.get('user').designer_meta.designer_level !== 'none';
       if(isDesigner){
-        total -= total*0.05;
+        designerDiscount += total*0.05;
       }
       subTotal += total;
       return lines.push({
@@ -438,10 +438,10 @@
       note: shippingZone
     });
     if(couponDiscount > 0){
-      lines.push({
-        label: 'SUBTOTAL (before discounts)',
-        value: subTotal 
-      });
+      // lines.push({
+      //   label: 'SUBTOTAL (before discounts)',
+      //   value: subTotal 
+      // });
       
       lines.push({
         label: 'discount',
@@ -449,31 +449,38 @@
         note: 'coupon code'
       });  
     }
+    if(designerDiscount > 0){
+      lines.push({
+        label: 'designer discount',
+        value: '-' + designerDiscount,
+        note: '5% on all regular priced items.'
+      });  
+    }
     lines.push({
       label: 'SUBTOTAL',
-      value: subTotal - couponDiscount
+      value: subTotal - couponDiscount - designerDiscount
     });
     
     lines.push({
       label: 'tax',
-      value: calcTax('QC', subTotal - couponDiscount, 0),
+      value: calcTax('QC', subTotal - couponDiscount - designerDiscount, 0),
       note: 'provincial'
     });
     lines.push({
       label: 'tax',
-      value: calcTax('QC', subTotal - couponDiscount, 1),
+      value: calcTax('QC', subTotal - couponDiscount - designerDiscount, 1),
       note: 'federal'
     });
 
     lines.push({
       label: 'tax total',
-      value: calcTax('QC', subTotal - couponDiscount)
+      value: calcTax('QC', subTotal - couponDiscount - designerDiscount)
     });
 
 
     lines.push({
       label: 'TOTAL',
-      value: ( subTotal - couponDiscount) + calcTax('QC', ( subTotal - couponDiscount ))
+      value: ( subTotal - couponDiscount - designerDiscount ) + calcTax('QC', ( subTotal - couponDiscount  - designerDiscount))
     });
 
     return lines;
