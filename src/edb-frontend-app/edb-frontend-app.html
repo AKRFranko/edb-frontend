@@ -803,7 +803,7 @@
           }
           
         },
-        observers: ['routePage(route,routeData)','closeAuthDialog(user)','setSelectedProductId(singleProductData.id)','computeCartTotals(cart,customer,cart.*,customer.*)','computeShippingZone(customer.billing_postcode,customer.shipping_postcode,customer.useBillingAddressForShipping)'],
+        observers: ['routePage(route,routeData)','closeAuthDialog(user)','setSelectedProductId(singleProductData.id)','computeCartTotals(cart,customer,cart.*,customer.*)','computeShippingZone(customer.billing_postcode,customer.shipping_postcode,customer.useBillingAddressForShipping,customer.*)'],
         resetStocks: function(){
           EDB.resetStocks();
         },
@@ -855,7 +855,7 @@
         },
         handleAddressToggleChanged: function( event ){
           var el = Polymer.dom(event).localTarget;
-          console.log('handleAddressToggleChanged', el.checked );
+          // console.log('handleAddressToggleChanged', el.checked );
           this.set('customer.useBillingAddressForShipping', el.checked);
           EDB.Checkout.useBillingAddressForShipping = el.checked;
         }, 
