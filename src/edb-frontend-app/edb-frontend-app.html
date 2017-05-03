@@ -425,7 +425,7 @@
                 <div class="twinfields">
                   <paper-input label="country" value="{{customer.billing_country}}" auto-validate required></paper-input>
                   <paper-input label="postal_code" value="{{customer.billing_postcode}}" required$="{{customer.useBillingAddressForShipping}}">
-                    <div suffix hidden$="{{!customer.useBillingAddressForShipping}}" auto-validate on-key-up="__updateShippingZone" class="zone-suffix">{{shippingZone}}</div>
+                    <div suffix hidden$="{{!customer.useBillingAddressForShipping}}" auto-validate on-keyup="__updateShippingZone" class="zone-suffix">{{shippingZone}}</div>
                   </paper-input>
                   
                 </div>
@@ -448,7 +448,7 @@
                 </div>
                 <div class="twinfields">
                   <paper-input label="country" value="{{customer.shipping_country}}" auto-validate required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
-                  <paper-input label="postal_code" value="{{customer.shipping_postcode}}" auto-validate on-key-up="__updateShippingZone" required$="{{!customer.useBillingAddressForShipping}}">
+                  <paper-input label="postal_code" value="{{customer.shipping_postcode}}" auto-validate on-keyup="__updateShippingZone" required$="{{!customer.useBillingAddressForShipping}}">
                     <div suffix class="zone-suffix">{{shippingZone}}</div>
                     
                   </paper-input>
