@@ -817,7 +817,9 @@
           
         },
         handleAuthFormSubmit: function( e ){
-          e.preventDefault();
+          if(e){
+            e.preventDefault();  
+          }
           if(this.authMode =='login'){
             this.handleLogin();  
           }else{
