@@ -380,14 +380,14 @@
             }, [])
             // console.log('comboPrices', comboPrices);
             return comboPrices.reduce(function(s, p) {
-              return s + p;
+              return parseFloat(s) + parseFloat(p);
             });
 
           } else {
             return item.product.group.reduce(function(sum, p) {
               var id = p.id;
               var k = id + '?' + key.replace(/^.+\?/, '');
-              return sum + refMap[k].price;
+              return sum + parseFloat(refMap[k].price);
             }, 0);
           }
           return;
@@ -411,14 +411,14 @@
             }, [])
             console.log('comboPrices', comboPrices);
             return comboPrices.reduce(function(s, p) {
-              return s + p;
+              return parseFloat(s) + parseFloat(p);
             });
 
           } else {
             return item.product.group.reduce(function(sum, p) {
               var id = p.id;
               var k = id + '?' + key.replace(/^.+\?/, '');
-              return sum + refMap[k].sale_price;
+              return sum + parseFloat(refMap[k].sale_price);
             }, 0);
           }
           return;
