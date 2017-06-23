@@ -1070,7 +1070,7 @@
         return null;
       }
       var cartItem = Cart[entry.uuid];
-      var price = entry.variation ? entry.variation.price || entry.product.price : entry.product.price;
+      var price = entry.variation ? entry.variation.price + entry.product.price : entry.product.price;
       
       
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
