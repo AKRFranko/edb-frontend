@@ -745,7 +745,7 @@
         enumerable: true,
         get: function() {
           return all[i].reduce(function(a, b) {
-            return a ? a.price + b.price : b.price;
+            return a ? parseFloat(a.price) + parseFloat(b.price) : parseFloat(b.price);
           });
         }
       })
