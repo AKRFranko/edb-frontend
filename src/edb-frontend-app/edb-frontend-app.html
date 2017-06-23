@@ -649,7 +649,7 @@
         </div>
     </app-header-layout>
     <paper-dialog modal id="authDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-      <form id="authForm">
+      <form id="authForm" on-submit="handleAuthFormSubmit" on-keydown="submitOnEnterKey">
         <div class="edb-title">Welcome</div>
         <iron-pages attr-for-selected="id" selected="{{authMode}}" fallback-selection="authModeSelect">
           <div id="authModeSelect">
@@ -810,6 +810,20 @@
           
         },
         observers: ['routePage(route,routeData)','closeAuthDialog(user)','setSelectedProductId(singleProductData.id)','computeCartTotals(cart,customer,cart.*,customer.*)','computeShippingZone(customer.billing_postcode,customer.shipping_postcode,customer.useBillingAddressForShipping)'],
+        submitOnEnterKey: function(e){
+          if(e.which == 13){
+            this.handleAuthFormSubmit();    
+          }
+          
+        },
+        handleAuthFormSubmit: function( e ){
+          e.preventDefault();
+          if(this.authMode =='login'){
+            this.handleLogin();  
+          }else{
+            this.handleRegister();  
+          }
+        },
         resetStocks: function(){
           EDB.resetStocks();
         },
