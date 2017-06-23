@@ -1071,7 +1071,7 @@
       }
       var cartItem = Cart[entry.uuid];
       var price = entry.variation ? entry.variation.price || entry.product.price : entry.product.price;
-      console.log('price', entry);
+      console.log('price', entry, attributes);
       
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
       if (!hasBuckets) {
