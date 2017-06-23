@@ -1072,6 +1072,7 @@
       var cartItem = Cart[entry.uuid];
       var price = entry.variation ? entry.variation.price || entry.product.price : entry.product.price;
       console.log('price', entry);
+      
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
       if (!hasBuckets) {
         console.log('returning basic price');
