@@ -1084,7 +1084,7 @@
           var mod = attr.bucket[attr.option].variation.price;
           // .log(attr.option, attr.bucket[attr.option].variation);
           if (!isNaN(mod)) {
-            return Number(mods) + Number(mod);
+            return parseFloat(mods) + parseFloat(mod);
           }
           return mods;
         }, 0);
@@ -1092,7 +1092,7 @@
 
 
       // console.log('returning basic price+bucket modifiers',price,bucketModifiers);
-      return Number(price) + Number(bucketModifiers);
+      return parseFloat(price) + parseFloat(bucketModifiers);
 
     }
   }
