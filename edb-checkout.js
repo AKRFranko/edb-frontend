@@ -1075,7 +1075,7 @@
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
       if (!hasBuckets) {
         console.log('returning basic price');
-        return price;
+        return parseFloat(price);
       }
       var bucketModifiers = 0;
       if (entry.variation) {
