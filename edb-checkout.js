@@ -1083,7 +1083,7 @@
         bucketModifiers = entry.variation.attributes.reduce(function(mods, attr) {
           if (!attr.bucket) return mods;
           var mod = attr.bucket[attr.option].variation.price;
-          console.log(attr, mod);
+          console.log(attr, mod, price);
           if (!isNaN(mod)) {
             return parseFloat(mods) + parseFloat(mod);
           }
