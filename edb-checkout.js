@@ -1071,7 +1071,7 @@
       }
       var cartItem = Cart[entry.uuid];
       var price = entry.variation ? entry.variation.price || entry.product.price : entry.product.price;
-      console.log('price', entry, attributes);
+      
       
       var hasBuckets = Checkout.productHasBucketAttributes(entry.product);
       if (!hasBuckets) {
@@ -1083,7 +1083,7 @@
         bucketModifiers = entry.variation.attributes.reduce(function(mods, attr) {
           if (!attr.bucket) return mods;
           var mod = attr.bucket[attr.option].variation.price;
-          // .log(attr.option, attr.bucket[attr.option].variation);
+          console.log(attr, mod);
           if (!isNaN(mod)) {
             return parseFloat(mods) + parseFloat(mod);
           }
