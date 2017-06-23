@@ -508,7 +508,7 @@
       priceMap[ key ] = combinations[key].price;
     });
     var priceValues = Object.keys(priceMap).map( function( key ){
-      return priceMap[ key ];
+      return parseFloat(priceMap[ key ]);
     })
     var minPrice = Math.min.apply(Math, priceValues );
     var maxPrice = Math.max.apply(Math, priceValues );
