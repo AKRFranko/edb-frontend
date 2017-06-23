@@ -1091,7 +1091,7 @@
       }
 
 
-      // console.log('returning basic price+bucket modifiers',price,bucketModifiers);
+      console.log('returning basic price+bucket modifiers',price,bucketModifiers);
       return parseFloat(price) + parseFloat(bucketModifiers);
 
     }
