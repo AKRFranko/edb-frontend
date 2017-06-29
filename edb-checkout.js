@@ -456,7 +456,7 @@
                          warning: 'no'
                        };
     var postCode = app.get('customer.shipping_postcode');
-
+    window.EDBApp = app;
     if(!postCode){
       shippingLine.note = shippingZone;
       shippingLine.warning = 'yes';
@@ -465,7 +465,7 @@
       shippingLine.warning = 'no';
     }
     
-    console.log('shippingLine',shippingLine, postCode)
+    console.log('shippingLine for %s:',postCode, shippingLine );
     
     lines.push(shippingLine);
     if(couponDiscount > 0){
