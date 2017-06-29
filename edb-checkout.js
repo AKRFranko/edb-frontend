@@ -463,6 +463,7 @@
     }else{
       shippingLine.warning = 'no';
     }
+    console.log('shippingLine',shippingLine)
     lines.push(shippingLine);
     if(couponDiscount > 0){
       // lines.push({
