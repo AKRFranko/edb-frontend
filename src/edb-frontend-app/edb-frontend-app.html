@@ -520,7 +520,7 @@
             <div id="totals" hidden$="{{!cart.length}}">
               <div class="title">Totals</div>
               <template is="dom-repeat" items="{{cartTotals}}" as="line">
-                <div class$="{{computeLineClass(line)}}">
+                <div class="line" data-line-warn$="{{line.warning}}">
                   <div class="line-label">{{line.label}} <span class="line-note">{{line.note}}</span></div>
                   <div class="line-value">{{formatMoney(line.value)}}</div>
                   
