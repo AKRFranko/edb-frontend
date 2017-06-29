@@ -462,8 +462,19 @@
                 </div>
                 <paper-input label="address" value="{{customer.shipping_address_1}}" auto-validate required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
                 <div class="twinfields">
-                  <paper-input label="country" value="{{customer.shipping_country}}" auto-validate required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
-                  <paper-input label="state" value="{{customer.shipping_state}}" auto-validate required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
+                  <paper-dropdown-menu id="selectBillingCountry" label="country">
+                    <paper-listbox class="dropdown-content" attr-for-selected="data-country" selected="{{customer.shipping_country}}" fallback-selection="CA">
+                        <paper-item data-country="CA">Canada</paper-item>  
+                    </paper-listbox>
+                  </paper-dropdown-menu>
+                  <!--<paper-input label="state" value="{{customer.shipping_state}}" auto-validate required$="{{!customer.useBillingAddressForShipping}}"></paper-input>-->
+                  <paper-dropdown-menu id="selectShippingProvince" label="state">
+                    <paper-listbox class="dropdown-content" attr-for-selected="data-province" selected="{{shippingStateSelection}}" fallback-selection="QC">
+                      <template is="dom-repeat" items="[[listOfProvinces]]" as="province">
+                        <paper-item data-province="[[province.code]]">[[province.name.en]]</paper-item>  
+                      </template>
+                    </paper-listbox>
+                  </paper-dropdown-menu>
                 </div>
                 <div class="twinfields">
                   <paper-input label="city" value="{{customer.shipping_city}}" auto-validate required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
