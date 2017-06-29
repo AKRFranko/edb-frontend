@@ -452,7 +452,8 @@
     var shippingLine = {
                          label: 'shipping',
                          value: shippingCost,
-                         note: shippingZone
+                         note: shippingZone,
+                         warning: 'no'
                        };
     var postCode = app.get('user.customer_meta.shipping_postcode');
 
@@ -463,7 +464,7 @@
     }else{
       shippingLine.warning = 'no';
     }
-    console.log('shippingLine',shippingLine)
+    console.log('shippingLine',shippingLine, postCode)
     lines.push(shippingLine);
     if(couponDiscount > 0){
       // lines.push({
