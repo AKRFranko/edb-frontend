@@ -455,12 +455,10 @@
                          note: shippingZone
                        };
     var postCode = app.get('user.customer_meta.shipping_postcode');
-    console.log('POSTCODE','"' + postCode + '"');
-    
-    
+
     if(!postCode){
-      shipping.note = 'Please fill out your shipping postal code to update this figure.';
-      shipping.warning = true;
+      shippingLine.note = 'Please fill out your shipping postal code to update this figure.';
+      shippingLine.warning = true;
     }
     lines.push(shippingLine);
     if(couponDiscount > 0){
