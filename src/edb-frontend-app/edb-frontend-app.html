@@ -350,6 +350,9 @@
         box-sizing:border-box;
         
       }
+      #selectBillingCountry paper-listbox paper-item:nth-of-type(3){
+        border-bottom:3px solid #999;
+      }
     </style>
     <!-- app-location binds to the app's URL -->
     <app-location route="{{route}}" use-hash-as-path></app-location>
@@ -421,7 +424,7 @@
                 
                 <paper-input label="address" value="{{customer.billing_address_1}}" auto-validate required></paper-input>
                 <div class="twinfields">
-                  <paper-dropdown-menu label="country">
+                  <paper-dropdown-menu id="selectBillingCountry" label="country">
                     <paper-listbox class="dropdown-content" attr-for-selected="data-country" selected="{{billingCountrySelection}}">
                       <template is="dom-repeat" items="[[listOfCountries]]" as="country">
                         <paper-item data-country="[[country.code]]">[[country.name.en]]</paper-item>  
