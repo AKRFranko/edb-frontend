@@ -1802,7 +1802,8 @@
      
      app.set('listOfProvinces', Object.keys( provinces ).map( function( k ){
        var province = provinces[k];
-      return province.code=k;
+        province.code=k;
+        return province;
      }));
      console.log('listOfProvinces', app.get('listOfProvinces') );
      
