@@ -422,9 +422,9 @@
                 <paper-input label="address" value="{{customer.billing_address_1}}" auto-validate required></paper-input>
                 <div class="twinfields">
                   <paper-dropdown-menu label="country">
-                    <paper-listbox slot="dropdown-content" attr-for-selected="data-country" selected="{{billingCountrySelection}}">
-                      <template is="dom-repeat" items="{{listOfCountries}}" as="country">
-                        <paper-item data-country="{{country.code}}">{{country.name.en}}</paper-item>  
+                    <paper-listbox class="dropdown-content" attr-for-selected="data-country" selected="{{billingCountrySelection}}">
+                      <template is="dom-repeat" items="[[listOfCountries]]" as="country">
+                        <paper-item data-country="[[country.code]]">[[country.name.en]]</paper-item>  
                       </template>
                     </paper-listbox>
                   </paper-dropdown-menu>
