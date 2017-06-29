@@ -241,6 +241,8 @@
         padding: 10px 20px;
         @apply(--layout-wrap);
         border-radius:3px;
+        margin-top:10px;
+        margin-bottom:10px;
       }
       
       #totals .line:first-of-type{
@@ -263,10 +265,13 @@
         display:inline;
         
       }
-      #totals .line-message{
-        background:#fff;
-        color:#ff0000;
-        border-radius:0 0 3px 3px;
+      #totals .line-warning{
+        background: #fff;
+        color: #ff0000;
+        border-radius: 0 0 3px 3px;
+        padding: 5px;
+        width: 60%;
+        text-align:center;
       }
       #totals .line-value{
         @apply(--layout-flex);
