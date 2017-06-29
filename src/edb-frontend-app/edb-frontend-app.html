@@ -522,11 +522,12 @@
             <div id="totals" hidden$="{{!cart.length}}">
               <div class="title">Totals</div>
               <template is="dom-repeat" items="{{cartTotals}}" as="line">
-                <div class="line">
+                <div class="line" data-warning="{{line.warning}}">
                   <div class="line-label">{{line.label}} <span class="line-note">{{line.note}}</span></div>
                   <div class="line-value">{{formatMoney(line.value)}}</div>
+                  <div class="line-warning" hidden$="{{!line.warning}}">{{line.message}}</div>
                 </div>
-                <div class="line-warning" hidden$="{{!line.warning}}">{{line.message}}</div>
+                
               </template>
               <paper-button on-tap="createOrder">complete order</paper-button>
             </div>
