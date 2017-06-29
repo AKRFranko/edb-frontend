@@ -455,7 +455,7 @@
                          note: shippingZone,
                          warning: 'no'
                        };
-    var postCode = app.get('user.customer_meta.shipping_postcode');
+    var postCode = app.get('customer.shipping_postcode');
 
     if(!postCode){
       shippingLine.note = shippingZone;
