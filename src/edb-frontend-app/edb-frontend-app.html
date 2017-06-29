@@ -228,13 +228,7 @@
         @apply(--layout-horizontal);
         
       }
-      #totals .line-warning{
-        /*position:Absolute;*/
-        /*width:100%;*/
-        /*padding:5px;*/
-        /*background:#ff0000;*/
-        /*color:#ffffff;*/
-      }
+      
       #totals .line[data-warning="yes"]{
         background:#ffa726;
         color:#fff;
@@ -265,10 +259,11 @@
         display:inline;
         
       }
-      #totals .line-warning{
+      #totals .line .line-warning{
         display:none;
       }
       #totals .line[data-warning="yes"] .line-warning{
+        display:block;
         background: #fff;
         color: #ef6c00;
         border-radius: 0 0 3px 3px;
