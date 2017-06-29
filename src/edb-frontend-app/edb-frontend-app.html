@@ -873,10 +873,12 @@
         observers: ['routePage(route,routeData)','closeAuthDialog(user)','setSelectedProductId(singleProductData.id)','computeCartTotals(cart,customer,cart.*,customer.*)','computeShippingZone(customer.billing_postcode,customer.shipping_postcode,customer.useBillingAddressForShipping)'],
         _billingCountrySelectionChanged: function( value ){
           this.set('customer.billing_country', value );
+          this.set('customer.billing_state', null );
           if(value == 'CA'){
             this.set('showListOfProvinces', true );
           }else{
             this.set('showListOfProvinces', false );
+            
           }
         },
         _billingStateSelectionChanged: function( value ){
