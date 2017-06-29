@@ -235,7 +235,7 @@
         /*background:#ff0000;*/
         /*color:#ffffff;*/
       }
-      #totals .line[data-warning]{
+      #totals .line[data-warning="yes"]{
         background:#ffa726;
         color:#fff;
         padding: 10px 20px;
@@ -257,7 +257,7 @@
         border-bottom: 1px dashed #ccc;
 
       }
-      #totals .line[data-warning] .line-label{
+      #totals .line[data-warning="yes"] .line-label{
        border-bottom:0; 
       }
       #totals .line-note{
@@ -266,6 +266,9 @@
         
       }
       #totals .line-warning{
+        display:none;
+      }
+      #totals .line[data-warning="yes"] .line-warning{
         background: #fff;
         color: #ef6c00;
         border-radius: 0 0 3px 3px;
