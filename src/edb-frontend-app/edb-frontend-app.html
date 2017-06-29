@@ -229,11 +229,15 @@
         
       }
       #totals .line-warning{
-        position:Absolute;
-        width:100%;
-        padding:5px;
-        background:#ff0000;
-        color:#ffffff;
+        /*position:Absolute;*/
+        /*width:100%;*/
+        /*padding:5px;*/
+        /*background:#ff0000;*/
+        /*color:#ffffff;*/
+      }
+      #totals .line[data-warning]{
+        
+        @apply(--layout-wrap);
       }
       #totals .line:first-of-type{
         @apply(--paper-font-title);
@@ -522,7 +526,7 @@
             <div id="totals" hidden$="{{!cart.length}}">
               <div class="title">Totals</div>
               <template is="dom-repeat" items="{{cartTotals}}" as="line">
-                <div class="line" data-warning="{{line.warning}}">
+                <div class="line" data-warning$="{{line.warning}}">
                   <div class="line-label">{{line.label}} <span class="line-note">{{line.note}}</span></div>
                   <div class="line-value">{{formatMoney(line.value)}}</div>
                   <div class="line-warning" hidden$="{{!line.warning}}">{{line.message}}</div>
