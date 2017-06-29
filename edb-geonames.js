@@ -1798,12 +1798,13 @@
      app.set('listOfCountries', Object.keys( countries ).map( function( k ){
        return countries[k];
      }));
-     console.log('listOfCountries', app.get('listOfCountries') );
+     
      
      app.set('listOfProvinces', Object.keys( provinces ).map( function( k ){
        var province = provinces[k];
       return provinec.code=k;
      }));
+     console.log('listOfProvinces', app.get('listOfProvinces') );
      
    },
    
