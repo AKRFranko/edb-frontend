@@ -821,12 +821,12 @@
             notify: true,
             value: 'zone-3'
           },
-          geogratisParams: {
-            type: Object,
+          listOfCountries: {
+            type: Array,
             notify: true
           },
-          geogratisResponse: {
-            type: Object,
+          listOfProvinces: {
+            type: Array,
             notify: true
           }
           
@@ -1073,7 +1073,7 @@
             alert('Godmode ACtivated!');
           });
           
-          // EDB.Geonames.init( this, this.$.geogratis );
+          EDB.Geonames.init( this);
           // this.set('slides', slides.items );
           // console.log()
         }
