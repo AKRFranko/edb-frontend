@@ -351,7 +351,7 @@
         
       }
       #selectBillingCountry paper-listbox paper-item:nth-of-type(3){
-        border-bottom:3px solid #999;
+        border-bottom:3px dashed #ccc;
       }
     </style>
     <!-- app-location binds to the app's URL -->
@@ -425,14 +425,21 @@
                 <paper-input label="address" value="{{customer.billing_address_1}}" auto-validate required></paper-input>
                 <div class="twinfields">
                   <paper-dropdown-menu id="selectBillingCountry" label="country">
-                    <paper-listbox class="dropdown-content" attr-for-selected="data-country" selected="{{billingCountrySelection}}">
+                    <paper-listbox class="dropdown-content" attr-for-selected="data-country" selected="{{billingCountrySelection}}" fallback-selection="CA">
                       <template is="dom-repeat" items="[[listOfCountries]]" as="country">
                         <paper-item data-country="[[country.code]]">[[country.name.en]]</paper-item>  
                       </template>
                     </paper-listbox>
                   </paper-dropdown-menu>
                   <paper-input label="country" value="{{customer.billing_country}}" auto-validate required></paper-input>
-                  <paper-input label="state" value="{{customer.billing_state}}" auto-validate required></paper-input>
+                  <paper-input hidden$="[[!showListOfProvinces]]" label="state" value="{{customer.billing_state}}" auto-validate required></paper-input>
+                  <paper-dropdown-menu hidden$="[[showListOfProvinces]]" id="selectBillingProvince" label="state">
+                    <paper-listbox class="dropdown-content" attr-for-selected="data-province" selected="{{billingStateSelection}}" fallback-selection="QC">
+                      <template is="dom-repeat" items="[[listOfProvinces]]" as="province">
+                        <paper-item data-country="[[province.code]]">[[province.name.en]]</paper-item>  
+                      </template>
+                    </paper-listbox>
+                  </paper-dropdown-menu>
                 </div>
                 <div class="twinfields">
                   <paper-input label="city" value="{{customer.billing_city}}" auto-validate required></paper-input>
@@ -834,10 +841,37 @@
             type: Array,
             notify: true,
             value: function(){ return [];}
+          },
+          billingCountrySelection: {
+            type: String,
+            notify: true,
+            observer: '_billingCountrySelectionChanged'
+          },
+          billingStateSelection: {
+                                   type: String,
+                                   notify: true,
+                                   observer: '_billingStateSelectionChanged'
+                                 },
+          showListOfProvinces: {
+            type: Boolean,
+            notify: true,
+            value: true
           }
           
         },
         observers: ['routePage(route,routeData)','closeAuthDialog(user)','setSelectedProductId(singleProductData.id)','computeCartTotals(cart,customer,cart.*,customer.*)','computeShippingZone(customer.billing_postcode,customer.shipping_postcode,customer.useBillingAddressForShipping)'],
+        _billingCountrySelectionChanged: function( value ){
+          this.set('customer.billing_country', value );
+          if(value == 'CA'){
+            this.set('showListOfProvinces', true );
+          }else{
+            this.set('showListOfProvinces', false );
+          }
+        },
+        _billingStateSelectionChanged: function( value ){
+          this.set('customer.billing_state', value );
+          
+        },
         submitOnEnterKey: function(e){
           if(e.which == 13){
             this.handleAuthFormSubmit(e);    
