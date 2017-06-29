@@ -229,8 +229,7 @@
         
       }
       #totals .line-warning{
-        display:block;
-        clear:both;
+        position:Absolute;
         width:100%;
         padding:5px;
         background:#ff0000;
@@ -526,8 +525,8 @@
                 <div class="line">
                   <div class="line-label">{{line.label}} <span class="line-note">{{line.note}}</span></div>
                   <div class="line-value">{{formatMoney(line.value)}}</div>
-                  <div class="line-warning" hidden$="{{!line.warning}}">{{line.message}}</div>
                 </div>
+                <div class="line-warning" hidden$="{{!line.warning}}">{{line.message}}</div>
               </template>
               <paper-button on-tap="createOrder">complete order</paper-button>
             </div>
