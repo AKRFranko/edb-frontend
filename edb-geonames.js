@@ -1798,7 +1798,7 @@
      app.set('listOfCountries', Object.keys( countries ).map( function( k ){
        return countries[k];
      }));
-     console.log('listOfCountries',app.get('listOfCountries'))
+     console.log('listOfCountries', app.get('listOfCountries') );
      
      app.set('listOfProvinces', Object.keys( provinces ).map( function( k ){
       return provinces[k];
