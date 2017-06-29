@@ -463,7 +463,7 @@
                 <paper-input label="address" value="{{customer.shipping_address_1}}" auto-validate required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
                 <div class="twinfields">
                   <paper-dropdown-menu id="selectShippingCountry" label="country">
-                    <paper-listbox class="dropdown-content" attr-for-selected="data-country" selected="{{customer.shipping_country}}" fallback-selection="CA">
+                    <paper-listbox class="dropdown-content" attr-for-selected="data-country" selected="{{customer.shipping_country}}" fallback-selection="CA" readonly>
                         <paper-item data-country="CA">Canada</paper-item>  
                     </paper-listbox>
                   </paper-dropdown-menu>
