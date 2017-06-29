@@ -457,8 +457,9 @@
     var postCode = app.get('user.customer_meta.shipping_postcode');
 
     if(!postCode){
-      shippingLine.note = 'Please fill out your shipping postal code to update this figure.';
+      shippingLine.note = shippingZone;
       shippingLine.warning = true;
+      shippingLine.message='Please fill out your shipping postal code to update this figure.';
     }
     lines.push(shippingLine);
     if(couponDiscount > 0){
