@@ -31,12 +31,19 @@
     "paper-dialog": "^1.1.0",
     "paper-dialog-lite": "ryanburns23/paper-dialog-lite#^1.0.0",
     "neon-animation": "^1.2.4",
-    "gold-elements": "^1.0.1"
+    "gold-elements": "^1.0.1",
+    "paper-dropdown-menu": "^2.0.0",
+    "paper-listbox": "^2.0.0",
+    "paper-item": "^2.0.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "resolutions": {
+    "paper-listbox": "^1.0.0",
+    "paper-item": "^1.0.0"
   }
 }

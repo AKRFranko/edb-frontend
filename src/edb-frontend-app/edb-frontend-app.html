@@ -359,6 +359,7 @@
     <app-route route="{{route}}" pattern="/product/:id" data="{{singleProductData}}"></app-route>
     <app-route route="{{route}}" pattern="/order/:id" data="{{orderData}}"></app-route>
     
+    
     <edb-layout-query layout="{{layout}}" is-mini-layout="{{isMiniLayout}}"></edb-layout-query>
     <app-scrollpos-control selected="{{page}}"></app-scrollpos-control>
     <app-header-layout fullbleed>
@@ -419,11 +420,18 @@
                 
                 <paper-input label="address" value="{{customer.billing_address_1}}" auto-validate required></paper-input>
                 <div class="twinfields">
-                  <paper-input label="city" value="{{customer.billing_city}}" auto-validate required></paper-input>
+                  <paper-dropdown-menu label="country">
+                    <paper-listbox slot="dropdown-content" attr-for-selected="data-country" selected="{{billingCountrySelection}}">
+                      <template is="dom-repeat" items="{{listOfCountries}}" as="country">
+                        <paper-item data-country="{{country.code}}">{{country.name.en}}</paper-item>  
+                      </template>
+                    </paper-listbox>
+                  </paper-dropdown-menu>
+                  <paper-input label="country" value="{{customer.billing_country}}" auto-validate required></paper-input>
                   <paper-input label="state" value="{{customer.billing_state}}" auto-validate required></paper-input>
                 </div>
                 <div class="twinfields">
-                  <paper-input label="country" value="{{customer.billing_country}}" auto-validate required></paper-input>
+                  <paper-input label="city" value="{{customer.billing_city}}" auto-validate required></paper-input>
                   <paper-input label="postal_code" value="{{customer.billing_postcode}}" required$="{{customer.useBillingAddressForShipping}}">
                     <div suffix hidden$="{{!customer.useBillingAddressForShipping}}" auto-validate on-keyup="__updateShippingZone" class="zone-suffix">{{shippingZone}}</div>
                   </paper-input>
@@ -443,11 +451,11 @@
                 </div>
                 <paper-input label="address" value="{{customer.shipping_address_1}}" auto-validate required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
                 <div class="twinfields">
-                  <paper-input label="city" value="{{customer.shipping_city}}" auto-validate required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
+                  <paper-input label="country" value="{{customer.shipping_country}}" auto-validate required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
                   <paper-input label="state" value="{{customer.shipping_state}}" auto-validate required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
                 </div>
                 <div class="twinfields">
-                  <paper-input label="country" value="{{customer.shipping_country}}" auto-validate required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
+                  <paper-input label="city" value="{{customer.shipping_city}}" auto-validate required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
                   <paper-input label="postal_code" value="{{customer.shipping_postcode}}" auto-validate on-keyup="__updateShippingZone" required$="{{!customer.useBillingAddressForShipping}}">
                     <div suffix class="zone-suffix">{{shippingZone}}</div>
                     
@@ -689,7 +697,13 @@
         </iron-pages>
       </form>
     </paper-dialog>
-    
+    <iron-ajax id="geogratis"
+      auto
+      url="http://geogratis.gc.ca/services/geoname/en/geonames.json"
+      params='{{geogratisParams}}'
+      handle-as="json"
+      last-response="{{geogratisResponse}}"
+      debounce-duration="300"></iron-ajax>
   </template>
   <script>
     function isDescendant(parent, child) {
@@ -806,6 +820,14 @@
             type: String,
             notify: true,
             value: 'zone-3'
+          },
+          geogratisParams: {
+            type: Object,
+            notify: true
+          },
+          geogratisResponse: {
+            type: Object,
+            notify: true
           }
           
         },
@@ -1051,6 +1073,7 @@
             alert('Godmode ACtivated!');
           });
           
+          // EDB.Geonames.init( this, this.$.geogratis );
           // this.set('slides', slides.items );
           // console.log()
         }
