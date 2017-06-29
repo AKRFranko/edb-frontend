@@ -433,8 +433,8 @@
                   </paper-dropdown-menu>
                   <!--<paper-input label="country" value="{{customer.billing_country}}" auto-validate required></paper-input>-->
                   <paper-input hidden$="[[showListOfProvinces]]" label="state" value="{{customer.billing_state}}" auto-validate required></paper-input>
-                  <paper-dropdown-menu hidden$="[[!showListOfProvinces]]" id="selectBillingProvince" label="state">
-                    <paper-listbox class="dropdown-content" attr-for-selected="data-province" selected="{{billingStateSelection}}" fallback-selection="QC">
+                  <paper-dropdown-menu hidden$="[[!showListOfProvinces]]" id="selectBillingProvince" label="state" >
+                    <paper-listbox class="dropdown-content" attr-for-selected="data-province" selected="{{billingStateSelection}}" fallback-selection="QC" auto-validate required>
                       <template is="dom-repeat" items="[[listOfProvinces]]" as="province">
                         <paper-item data-province="[[province.code]]">[[province.name.en]]</paper-item>  
                       </template>
@@ -462,14 +462,14 @@
                 </div>
                 <paper-input label="address" value="{{customer.shipping_address_1}}" auto-validate required$="{{!customer.useBillingAddressForShipping}}"></paper-input>
                 <div class="twinfields">
-                  <paper-dropdown-menu id="selectBillingCountry" label="country">
+                  <paper-dropdown-menu id="selectShippingCountry" label="country">
                     <paper-listbox class="dropdown-content" attr-for-selected="data-country" selected="{{customer.shipping_country}}" fallback-selection="CA">
                         <paper-item data-country="CA">Canada</paper-item>  
                     </paper-listbox>
                   </paper-dropdown-menu>
                   <!--<paper-input label="state" value="{{customer.shipping_state}}" auto-validate required$="{{!customer.useBillingAddressForShipping}}"></paper-input>-->
                   <paper-dropdown-menu id="selectShippingProvince" label="state">
-                    <paper-listbox class="dropdown-content" attr-for-selected="data-province" selected="{{shippingStateSelection}}" fallback-selection="QC">
+                    <paper-listbox class="dropdown-content" attr-for-selected="data-province" selected="{{customer.shipping_state}}" fallback-selection="QC" auto-validate required$="{{!customer.useBillingAddressForShipping}}">
                       <template is="dom-repeat" items="[[listOfProvinces]]" as="province">
                         <paper-item data-province="[[province.code]]">[[province.name.en]]</paper-item>  
                       </template>
