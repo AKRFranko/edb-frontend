@@ -436,7 +436,7 @@
                   <paper-dropdown-menu hidden$="[[showListOfProvinces]]" id="selectBillingProvince" label="state">
                     <paper-listbox class="dropdown-content" attr-for-selected="data-province" selected="{{billingStateSelection}}" fallback-selection="QC">
                       <template is="dom-repeat" items="[[listOfProvinces]]" as="province">
-                        <paper-item data-country="[[province.code]]">[[province.name.en]]</paper-item>  
+                        <paper-item data-province="[[province.code]]">[[province.name.en]]</paper-item>  
                       </template>
                     </paper-listbox>
                   </paper-dropdown-menu>
