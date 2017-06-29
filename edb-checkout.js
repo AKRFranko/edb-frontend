@@ -449,11 +449,17 @@
     //   });
     // })
     
-    lines.push({
-      label: 'shipping',
-      value: shippingCost,
-      note: shippingZone
-    });
+    var shippingLine = {
+                         label: 'shipping',
+                         value: shippingCost,
+                         note: shippingZone
+                       };
+    var postCode = app.get('user.customer_meta.shipping_postcode');
+    if(!postCode){
+      shipping.note = 'Please fill out your shipping postal code to update this figure.';
+      shipping.warning = true;
+    }
+    lines.push(shippingLine);
     if(couponDiscount > 0){
       // lines.push({
       //   label: 'SUBTOTAL (before discounts)',
