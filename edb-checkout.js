@@ -456,6 +456,8 @@
                        };
     var postCode = app.get('user.customer_meta.shipping_postcode');
     console.log('POSTCODE','"' + postCode + '"');
+    
+    
     if(!postCode){
       shipping.note = 'Please fill out your shipping postal code to update this figure.';
       shipping.warning = true;
