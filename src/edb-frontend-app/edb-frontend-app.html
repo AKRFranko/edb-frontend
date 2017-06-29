@@ -238,9 +238,11 @@
       #totals .line[data-warning]{
         background:#ff0000;
         color:#fff;
-        padding:5px;
+        padding: 10px 20px;
         @apply(--layout-wrap);
+        border-radius:3px;
       }
+      
       #totals .line:first-of-type{
         @apply(--paper-font-title);
         
@@ -253,10 +255,18 @@
         border-bottom: 1px dashed #ccc;
 
       }
+      #totals .line[data-warning] .line-label{
+       border-bottom:0; 
+      }
       #totals .line-note{
         
         display:inline;
         
+      }
+      #totals .line-message{
+        background:#fff;
+        color:#ff0000;
+        border-radius:0 0 3px 3px;
       }
       #totals .line-value{
         @apply(--layout-flex);
