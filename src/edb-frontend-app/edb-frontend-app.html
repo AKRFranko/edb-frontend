@@ -432,8 +432,8 @@
                     </paper-listbox>
                   </paper-dropdown-menu>
                   <!--<paper-input label="country" value="{{customer.billing_country}}" auto-validate required></paper-input>-->
-                  <paper-input hidden$="[[!showListOfProvinces]]" label="state" value="{{customer.billing_state}}" auto-validate required></paper-input>
-                  <paper-dropdown-menu hidden$="[[showListOfProvinces]]" id="selectBillingProvince" label="state">
+                  <paper-input hidden$="[[showListOfProvinces]]" label="state" value="{{customer.billing_state}}" auto-validate required></paper-input>
+                  <paper-dropdown-menu hidden$="[[!showListOfProvinces]]" id="selectBillingProvince" label="state">
                     <paper-listbox class="dropdown-content" attr-for-selected="data-province" selected="{{billingStateSelection}}" fallback-selection="QC">
                       <template is="dom-repeat" items="[[listOfProvinces]]" as="province">
                         <paper-item data-province="[[province.code]]">[[province.name.en]]</paper-item>  
