@@ -461,8 +461,8 @@
       shippingLine.warning = true;
       shippingLine.message='Please fill out your shipping postal code to update this figure.';
     }else{
-      shippingLine.warning=false;
-      shippingLine.message=null;
+      delete shippingLine.warning;
+      delete shippingLine.message;
     }
     lines.push(shippingLine);
     if(couponDiscount > 0){
