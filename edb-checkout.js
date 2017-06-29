@@ -460,6 +460,9 @@
       shippingLine.note = shippingZone;
       shippingLine.warning = true;
       shippingLine.message='Please fill out your shipping postal code to update this figure.';
+    }else{
+      shippingLine.warning=false;
+      shippingLine.message=null;
     }
     lines.push(shippingLine);
     if(couponDiscount > 0){
