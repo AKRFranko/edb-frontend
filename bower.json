@@ -34,7 +34,8 @@
     "gold-elements": "^1.0.1",
     "paper-dropdown-menu": "^2.0.0",
     "paper-listbox": "^2.0.0",
-    "paper-item": "^2.0.0"
+    "paper-item": "^2.0.0",
+    "vanilla-lazyload": "verlok/lazyload#^8.0.3"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
