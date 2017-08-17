@@ -81,6 +81,7 @@
     path:'materials',
     convert: [
       { read: 'id', write:'id'},
+      { read: 'featured_colors', write:'image.colors'},
       { read: 'featured_image', write:'image.src'},
       { read: 'featured_media', write:'image.id'},
       { read: 'title.rendered', write:'title', process: EDB.processors.translate },
@@ -118,6 +119,7 @@
     path:'inspirations',
     convert: [
       { read: 'id', write:'id'},
+      { read: 'featured_colors', write:'image.colors'},
       { read: 'featured_image', write:'image.src'},
       { read: 'featured_media', write:'image.id'},
       { read: 'title.rendered', write:'title', process: EDB.processors.translate },
