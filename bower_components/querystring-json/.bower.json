@@ -33,6 +33,5 @@
   },
   "_source": "https://github.com/AKhotoolev/QSJS.git",
   "_target": "^0.3.12",
-  "_originalSource": "querystring-json",
-  "_direct": true
+  "_originalSource": "querystring-json"
 }

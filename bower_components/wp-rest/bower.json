@@ -3,12 +3,10 @@
   "main": [
     "wp-rest.html",
     "wp-rest-resource.html",
-    "wp-rest-document.html"
-  ],
+    "wp-rest-document.html"],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
-    "iron-ajax": "^1.4.3",
-    "querystring-json": "^0.3.11"
+    "iron-ajax": "^1.4.3"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
