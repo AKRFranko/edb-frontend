@@ -101,7 +101,7 @@
     
     <div id="card">
       <div class="card-header" style$="background-color:{{bgColor}}" >
-        <iron-image preload sizing="cover" invisible$="{{invisible}}" src="{{image}}"></iron-image>
+        <iron-image id="cardImage" preload sizing="cover" invisible$="{{invisible}}" src="{{image}}"></iron-image>
       </div>
       <div class="card-body">
         <div class="card-content">
@@ -175,7 +175,7 @@
         _isInView: function(){
           
               
-              var rect = this.getBoundingClientRect();
+              var rect = this.$.cardImage.getBoundingClientRect();
           
               return (
                   rect.top >= 0 &&
