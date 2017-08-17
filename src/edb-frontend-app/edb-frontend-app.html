@@ -405,7 +405,7 @@
             <edb-slider layout="{{layout}}" loading="{{slide.loading}}" slides="{{slide.items}}"></edb-slider>
             <edb-grid layout="{{layout}}" loading="{{feature.loading}}">
               <template is="dom-repeat" items="{{feature.items}}" as="feature">
-                <edb-card class$="{{feature.cardType}}" image="{{feature.image.src}}" title="{{feature.title.en}}" subtitle="{{feature.subtitle.en}}">
+                <edb-card class$="{{feature.cardType}}" image="{{feature.image.src}}" colors="{{feature.image.colors}}" title="{{feature.title.en}}" subtitle="{{feature.subtitle.en}}">
                   <p>{{limitText(feature.content.en,120)}}</p>
                 </edb-card>
               </template>

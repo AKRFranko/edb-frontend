@@ -150,9 +150,16 @@
             value: false,
             notify: true
           },
+          colors: {
+            type: Array,
+            notify: true,
+            value: function(){
+              return [];
+            }
+          },
           bgColor: {
             type: String,
-            value: '#ff0000',
+            computed: '_setBgColor(colors)'
             notify: true
           },
           invisible: {
@@ -162,7 +169,9 @@
           }
         
         },
-        
+        _setBgColor: function(colors){
+          return colors[0];
+        },
         
         _scrollCheck: function(){
           
