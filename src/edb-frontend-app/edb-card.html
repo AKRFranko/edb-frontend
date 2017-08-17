@@ -100,8 +100,8 @@
     </style>
     
     <div id="card">
-      <div class="card-header">
-        <iron-image style$="background-color:{{bgColor}}" sizing="cover" invisible$="{{invisible}}" src="{{image}}"></iron-image>
+      <div class="card-header" style$="background-color:{{bgColor}}" >
+        <iron-image preload sizing="cover" invisible$="{{invisible}}" src="{{image}}"></iron-image>
       </div>
       <div class="card-body">
         <div class="card-content">
@@ -180,7 +180,7 @@
               return (
                   rect.top >= 0 &&
                   rect.left >= 0 &&
-                  rect.bottom/2 <= (window.innerHeight || document.documentElement.clientHeight) &&
+                  rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
                   rect.right <= (window.innerWidth || document.documentElement.clientWidth)
               );
           
