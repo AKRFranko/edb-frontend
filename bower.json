@@ -34,7 +34,8 @@
     "gold-elements": "^1.0.1",
     "paper-dropdown-menu": "^2.0.0",
     "paper-listbox": "^2.0.0",
-    "paper-item": "^2.0.0"
+    "paper-item": "^2.0.0",
+    "plastic-image": "mlisook/plastic-image#^1.0.11"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
