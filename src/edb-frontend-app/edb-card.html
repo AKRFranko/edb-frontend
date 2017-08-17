@@ -170,7 +170,7 @@
         
         },
         _setBgColor: function(colors){
-          return colors ? colors[0] : null;
+          return Array.isArray(colors) ? colors[0] : null;
         },
         
         _scrollCheck: function(){
