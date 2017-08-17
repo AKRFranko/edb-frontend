@@ -254,7 +254,7 @@ var EDB = {
   converters: [
     Convert('meta_box.edb_sort_order', 'sortOrder'),
     Convert('featured_image', 'image.src', { noWrite: true }),
-    Convert('featured_colors', 'image.colors', { noWrite: true, process: function(a){ return a[0] }  }),
+    Convert('featured_colors', 'image.colors', { noWrite: true, process: function(a){ return a ? a[0] : [] }  }),
     Convert('featured_media', 'image.id'),
     Convert('id', 'id'),
     Convert('title.rendered', 'title', { writeAs: 'title', process: function(){ return EDB.processors.translate.apply(null,arguments)} }),
