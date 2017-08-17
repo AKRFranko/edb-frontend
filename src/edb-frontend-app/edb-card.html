@@ -162,9 +162,7 @@
           }
         
         },
-        listeners: {
-          scroll: '_scrollCheck'
-        },
+        
         
         _scrollCheck: function(){
           console.log('scrollCheck');
@@ -188,6 +186,9 @@
           
           
         },
+        ready: function(){
+          window.addEventListener('scroll',this._scrollCheck.bind(this));
+        }
         
      
   
