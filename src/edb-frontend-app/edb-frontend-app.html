@@ -1169,12 +1169,15 @@
           // console.log()
         },
         ready: function(){
-          setTimeout( function(){
-            new LazyLoad();  
-            console.log('LazyLoad Initiated!');
-          }, 1000 )
           
+          [].forEach.call(document.querySelectorAll('iron-image[data-src]'), function(img) {
+            img.setAttribute('src', img.getAttribute('data-src'));
+            img.onload = function() {
+              img.removeAttribute('data-src');
+            };
+          });
         }
+
   
       });
   </script>
