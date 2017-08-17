@@ -1169,7 +1169,11 @@
           // console.log()
         },
         ready: function(){
-          var myLazyLoad = new LazyLoad();
+          setTimeout( function(){
+            new LazyLoad();  
+            console.log('LazyLoad Initiated!');
+          }, 1000 )
+          
         }
   
       });
