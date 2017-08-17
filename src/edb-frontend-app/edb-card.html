@@ -40,9 +40,10 @@
        transition: opacity 0.3s;
 
      }
-     .card-header iron-image[data-src] {
+     .card-header iron-image[invisible] {
        opacity: 0;
      }
+     
      .card-title{
        @apply(--edb-font-title);
        line-height:1.2;
@@ -100,8 +101,7 @@
     
     <div id="card">
       <div class="card-header">
-        <iron-image style$="background-color:{{bgColor}}" sizing="cover" data-src$="{{image}}"></iron-image>
-        
+        <iron-image style$="background-color:{{bgColor}}" sizing="cover" invisible$="{{invisible}}" src="{{image}}"></iron-image>
       </div>
       <div class="card-body">
         <div class="card-content">
@@ -155,8 +155,36 @@
             value: '#ff0000',
             notify: true
           }
-         
+          invisible: {
+            type: Boolean,
+            value: true,
+            notify: true
+          }
         
+        },
+        listeners: {
+          scroll: '_scrollCheck'
+        },
+        _scrollCheck: function(){
+          if(this._isInView()){
+            this.set('invisible', false);
+          }else{
+            this.set('invisible', true);
+          }
+        },
+        _isInView: function(){
+          
+              
+              var rect = this.getBoundingClientRect();
+          
+              return (
+                  rect.top >= 0 &&
+                  rect.left >= 0 &&
+                  rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                  rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+              );
+          
+          
         },
         
      
