@@ -172,9 +172,12 @@
         _setBgColor: function(colors){
           if(!Array.isArray(colors)) return null;
           var gradientColors = [];
-          gradientColors.push(colors[0]);
-          gradientColors.push(colors[Math.round(colors.length/2)]);
-          gradientColors.push(colors[colors.length-1]);
+          gradientColors.push(colors.shift());
+          gradientColors.push(colors.shift());
+          gradientColors.push(colors.shift());
+          // gradientColors.push(colors[0]);
+          // gradientColors.push(colors[Math.round(colors.length/2)]);
+          // gradientColors.push(colors[colors.length-1]);
           return 'background-image:linear-gradient(to bottom right, ' +gradientColors.join(',')+');';
           
         },
