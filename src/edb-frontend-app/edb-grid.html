@@ -32,8 +32,13 @@
         @apply(--layout-vertical);
         cursor:pointer;
       }
+      
       #grid .cell{
         margin-bottom:100px;
+        transition:margin-bottom 0.33s ease-in;
+      }
+      #grid .cell.inview{
+        margin-bottom:0;
       }
       
       #grid .cell-inner{
@@ -263,6 +268,9 @@
           // node.parentNode
           // console.log(this.$.grid.querySelector( '.cell:nth-of-type('+index+')' )); 
         },
+        _scrollCheck: function(){
+          console.log('SCROLL',this.querySelectorAll('.cell'));
+        },
         ready: function(){
           
           Polymer.dom(this.$.contentNode).observeNodes(function(info) {
@@ -273,6 +281,10 @@
           //   info.addedNodes.forEach( this.processNewNode, this );
           //   info.removedNodes.forEach( this.processRemovedNode, this );
           // }.bind(this));
+          
+          window.addEventListener('scroll',function(){
+            this.debounce('scrollPadding', this._scrollCheck.bind(this), 100);
+          }.bind(this));
           
           
         }
