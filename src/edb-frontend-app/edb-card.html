@@ -177,8 +177,12 @@
             var sb = (tinycolor(b).toHsl().s - tinycolor(b).toHsl().s);
             return  sa >  sb ? -1 : sb > sa ? 1 : 0;
           } );
-          gradientColors.push(colors.shift());
-          gradientColors.push(colors.shift());
+          var colorA = tinycolor(colors.shift());
+          var colorB = tinycolor(colors.shift());
+          colorA.setAlpha(0.8);
+          colorB.setAlpha(0.8);
+          gradientColors.push(colorA.toString());
+          gradientColors.push(colorB.toString());
           
           
           // gradientColors.push(colors.shift());
