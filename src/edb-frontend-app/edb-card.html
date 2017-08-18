@@ -100,7 +100,7 @@
     </style>
     
     <div id="card">
-      <div class="card-header" style$="background-color:{{bgColor}}" >
+      <div class="card-header" style$="{{bgColor}}">
         <iron-image id="cardImage" preload sizing="cover" invisible$="{{invisible}}" src="{{image}}"></iron-image>
       </div>
       <div class="card-body">
@@ -171,7 +171,7 @@
         },
         _setBgColor: function(colors){
           if(!Array.isArray(colors)) return null;
-          return 'linear-gradient(to right, ' +colors.join(',')+');';
+          return 'background-image:linear-gradient(to right, ' +colors.join(',')+');';
           
         },
         
