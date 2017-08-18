@@ -173,8 +173,8 @@
           if(!Array.isArray(colors)) return null;
           var gradientColors = [];
           colors.sort( function( a, b){
-            var sa = tinycolor(a).toHsl().s;
-            var sb = tinycolor(b).toHsl().s;
+            var sa = (tinycolor(a).toHsl().s + tinycolor(a).toHsl().l);
+            var sb = (tinycolor(b).toHsl().s + tinycolor(b).toHsl().s);
             return  sa >  sb ? -1 : sb > sa ? 1 : 0;
           } );
           gradientColors.push(colors.shift());
