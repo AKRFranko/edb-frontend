@@ -37,7 +37,7 @@
        width:100%;
        height:100%;
        opacity:1;
-       transition: opacity 0.33s;
+       transition: opacity 0.5s;
 
      }
      .card-header iron-image[invisible] {
@@ -171,7 +171,11 @@
         },
         _setBgColor: function(colors){
           if(!Array.isArray(colors)) return null;
-          return 'background-image:linear-gradient(to right, ' +colors.shift()+','+colors.pop()+');';
+          var gradientColors = [];
+          gradientColors.push(colors[0]);
+          gradientColors.push(colors[Math.round(colors.length/2)]);
+          gradientColors.push(colors[colors.length-1]);
+          return 'background-image:linear-gradient(to bottom right, ' +gradientColors.join(',')+');';
           
         },
         
