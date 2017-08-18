@@ -34,7 +34,7 @@
       }
       
       #grid .cell{
-        margin-bottom:100px;
+        margin-bottom:200px;
         transition:margin-bottom 0.33s ease-in;
       }
       #grid .cell.inview{
@@ -272,7 +272,7 @@
              
           var rect = cell.getBoundingClientRect();
       
-          return rect.bottom < 0 ? false :  rect.top < ( (window.innerHeight || document.documentElement.clientHeight)  - 100);
+          return rect.bottom < 0 ? false :  rect.top < ( (window.innerHeight || document.documentElement.clientHeight)  - 200);
 
         },
         _scrollCheck: function(){
