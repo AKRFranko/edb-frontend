@@ -272,7 +272,7 @@
              
           var rect = cell.getBoundingClientRect();
       
-          return (rect.bottom < 0) || rect.top < ( (window.innerHeight || document.documentElement.clientHeight)  - 200);
+          return (rect.bottom < 100) || rect.top < ( (window.innerHeight || document.documentElement.clientHeight)  - 100);
 
         },
         _scrollCheck: function(){
