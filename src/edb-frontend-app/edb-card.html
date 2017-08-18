@@ -171,7 +171,7 @@
         },
         _setBgColor: function(colors){
           if(!Array.isArray(colors)) return null;
-          return 'background-image:linear-gradient(to right, ' +colors.join(',')+');';
+          return 'background-image:linear-gradient(to right, ' +colors.shift()+','+colors.pop()+');';
           
         },
         
