@@ -170,7 +170,9 @@
         
         },
         _setBgColor: function(colors){
-          return Array.isArray(colors) ? colors[0] : null;
+          if(!Array.isArray(colors)) return null;
+          return 'linear-gradient(to right, ' +colors.join(',')+');';
+          
         },
         
         _scrollCheck: function(){
