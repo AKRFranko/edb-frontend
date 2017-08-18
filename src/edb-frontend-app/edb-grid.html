@@ -268,8 +268,22 @@
           // node.parentNode
           // console.log(this.$.grid.querySelector( '.cell:nth-of-type('+index+')' )); 
         },
+        _isCellAboveFold: function(cell){
+             
+          var rect = cell.getBoundingClientRect();
+      
+          return (rect.bottom < 0) || rect.top < (window.innerHeight || document.documentElement.clientHeight) ;
+
+        },
         _scrollCheck: function(){
-          console.log('SCROLL',Polymer.dom(this).querySelectorAll('.cell'));
+          
+          [].forEach.call(document.querySelectorAll('.cell'), function(cell){
+            if(this._isCellAboveFold(cell)){
+              cell.classList.add('inview');
+            }else{
+              cell.classList.remove('inview');
+            }
+          }.bind(this))
           
         },
         ready: function(){
