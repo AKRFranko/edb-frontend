@@ -172,8 +172,14 @@
         _setBgColor: function(colors){
           if(!Array.isArray(colors)) return null;
           var gradientColors = [];
-          gradientColors.push(colors.pop());
-          gradientColors.push(colors.pop());
+          colors.sort( function( a, b){
+            var sa = tinycolor(a).toHsl().s;
+            var sb = tinycolor(b).toHsl().s;
+            return  sa >  sb ? 1 : sb > sa ? -1 : 0;
+          } );
+          gradientColors.push(colors.shift());
+          gradientColors.push(colors.shift());
+          gradientColors.push(colors.shift());
           // gradientColors.push(colors.shift());
           // gradientColors.push(colors[0]);
           // gradientColors.push(colors[Math.round(colors.length/2)]);
