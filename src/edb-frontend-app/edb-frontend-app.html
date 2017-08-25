@@ -406,7 +406,8 @@
             <edb-slider layout="{{layout}}" loading="{{slide.loading}}" slides="{{slide.items}}"></edb-slider>
             <edb-grid layout="{{layout}}" loading="{{feature.loading}}">
               <template is="dom-repeat" items="{{feature.items}}" as="feature">
-                <edb-card class$="{{feature.cardType}}" image="{{feature.image.src}}" colors="{{feature.image.colors}}" title="{{feature.title.en}}" subtitle="{{feature.subtitle.en}}">
+                <!--class$="{{feature.cardType}}"-->
+                <edb-card class$="{{computeOddEvenClass(index)}}" image="{{feature.image.src}}" colors="{{feature.image.colors}}" title="{{feature.title.en}}" subtitle="{{feature.subtitle.en}}">
                   <p>{{limitText(feature.content.en,120)}}</p>
                 </edb-card>
               </template>
@@ -902,6 +903,9 @@
           
         },
         observers: ['routePage(route,routeData)','closeAuthDialog(user)','setSelectedProductId(singleProductData.id)','computeCartTotals(cart,customer,cart.*,customer.*)','computeShippingZone(customer.billing_postcode,customer.shipping_postcode,customer.useBillingAddressForShipping)'],
+        computeOddEvenClass: function( i ){
+          return i%2 ? 'odd' : 'even';
+        },
         computeLineClass: function( line ){
           if(line && line.warning) return 'line warning';
           return 'line';
@@ -1145,8 +1149,8 @@
           var feature = new EDB.PolymerResource('feature', this);
           feature.refreshItems();
           
-          // var inspiration = new EDB.PolymerResource('inspiration', this);
-          // inspiration.refreshItems();
+          var inspiration = new EDB.PolymerResource('inspiration', this);
+          inspiration.refreshItems();
           var it = this;
           this.$.toolbar.dialog = this.$.authDialog;
           this.$.authDialog.noCancelOnEscKey=false;
