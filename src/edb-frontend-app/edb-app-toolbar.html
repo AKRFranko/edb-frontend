@@ -66,6 +66,7 @@
       
       paper-item{
         @apply(--edb-font-body);
+        font-size:12px;
         vertical-align:middle;
         padding:2px 20px;
         font-weight:normal!important;
@@ -90,13 +91,18 @@
       #toolbar paper-contact-phone{
         letter-spacing:0.1em;
         @apply(--edb-font-body);
-        padding:2px 20px;
+        font-size:11px;
+        padding:0 20px;
         
       }
       
       #toolbar paper-contact-phone ::content #contentIcon{
         display:none
         
+      }
+      #toolbar paper-contact-phone ::content .text{
+        font-size:12px;
+        padding-top:2px;
       }
       iron-collapse-button{
         user-select:none;
@@ -237,9 +243,9 @@
       }
       #toolbar .user-menu paper-contact-phone{
         
-          position:absolute;
-          top:10px;
-          left:150px;
+          /*position:absolute;*/
+          /*top:10px;*/
+          /*left:150px;*/
         
       }
       #toolbar .burger-menu paper-contact-phone{
