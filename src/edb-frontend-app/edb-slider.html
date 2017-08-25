@@ -108,12 +108,16 @@
         line-height:1.1;
       }
       .slide-subtitle{
-        @apply(--edb-font-subhead);
+        @apply(--edb-font-body);
+        font-size:17px;
         line-height:1.1;
         text-align:right;
-        background:rgba(0,0,0,0.5);
-        border:1px solid #000;
-        @apply(--layout-self-end)
+        background:rgba(0,0,0,0.6);
+        border:1px solid #fff;
+        /*@apply(--layout-self-end);*/
+        position:absolute;
+        bottom:20px;
+        left:20px;
         
         
       }
@@ -256,16 +260,16 @@
           <div id="overlay"></div>
           <div class="slide-text">
             <a href="/#{{slide.slideUrl}}" hidden$="{{!slide.title.en}}" class="slide-title">{{slide.title.en}}</a>
-            <a href="/#{{slide.slideUrl}}" hidden$="{{!slide.subtitle.en}}" class="slide-subtitle">{{slide.subtitle.en}}</a>
           </div>
+          <a href="/#{{slide.slideUrl}}" hidden$="{{!slide.subtitle.en}}" class="slide-subtitle">{{slide.subtitle.en}}</a>
         </div>
       </template>
     </iron-swiper>
     <div id="pagination">
       <paper-icon-button id="prev" on-tap="__proxyPrev" icon="edb:arrow-left"></paper-icon-button>
-      <div class="current">{{slideIndex}}</div>
-      <div class="split">/</div>
-      <div class="count">{{slideCount}}</div>
+        <div class="current">{{slideIndex}}</div>
+        <div class="split">/</div>
+        <div class="count">{{slideCount}}</div>
       <paper-icon-button id="next" on-tap="__proxyNext" icon="edb:arrow-right"></paper-icon-button>
     
     </div>
@@ -295,12 +299,14 @@
           slideCount: {
             type: Number,
             value: 0,
-            notify: true
+            notify: true,
+            reflectToAttribute: true
           } ,
           slideIndex: {
             type: Number,
             value: 0,
-            notify: true
+            notify: true,
+            reflectToAttribute: true
           } ,
           slides: {
             type: Array,
@@ -323,10 +329,16 @@
           }
           return 0;
         },
-        logSlides: function(){
+        logSlides: function(s, sl){
+          
           // console.log('.$.repeater.notifyPath', this.slides);
           // this.$.repeater.notifyPath('items', this.slides );
-          this.$.repeater.render();
+          if(s && sl){
+            console.log('slides', s, sl);
+            this.set('slideCount', sl );
+            this.$.repeater.render();  
+          }
+          
           
         },
         __proxyPrev: function(){
@@ -344,9 +356,9 @@
         ready: function(){
           this.$.swiper.options.autoplayDisableOnInteraction=false;
           this.$.swiper.options.autoplay=5000;
+          var it = this;
           this.$.swiper.options.onSlideChangeEnd = function( e ){
-            this.set('slideCount', this.slides.length );
-            this.set('slideIndex',  e.realIndex + 1 );
+            it.set('slideIndex',  e.realIndex + 1 );
           }.bind(this)
           
           
