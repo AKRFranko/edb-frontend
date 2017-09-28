@@ -14,11 +14,18 @@
        background:#fff;
        color:#000;
      }
+     #content{
+       height:auto;
+       min-height:0;
+     }
     </style>
     
-    <paper-button id="label">
+    <paper-button id="label" on-tap="_toggleState">
       {{label}} <iron-icon icon="{{icon}}"></iron-icon>
     </paper-button>
+    <div id="content">
+      <content></content>
+    </div>
     
   </template>
   <script>
@@ -45,6 +52,11 @@
           
          
         
+        },
+        _toggleState: function(){
+          var newState = !this.get('opened');
+          this.set('opened',newState);
+          this.$.content.classList.toggle('opened');
         },
         _computeIcon: function( isOpen){
           return isOpen ? 'edb:chevron-down' : 'edb:chevron-up';
