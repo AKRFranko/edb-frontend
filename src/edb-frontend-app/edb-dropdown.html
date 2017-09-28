@@ -91,9 +91,8 @@
           this.set('opened',newState);
           if(this.group){
             window.EDBDrops[this.group].forEach( function( item ){
-                if(item !== this){
+              console.log(item === this);
                   item.opened = false;  
-                }
             }, this );  
           }
           
