@@ -91,7 +91,7 @@
         _toggleState: function(){
           var newState = !this.get('opened');
           this.set('opened',newState);
-          if(this.group){
+          if(this.group && window.EDBDrops[this.group]){
             window.EDBDrops[this.group].forEach( function( item ){
                   item.opened = false;  
             }, this );  
