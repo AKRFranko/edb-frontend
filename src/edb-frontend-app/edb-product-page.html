@@ -190,8 +190,9 @@
       }
       .product-quantity paper-input{
         max-width:3em;
-        margin-left:1em;
-        margin-right:1em;
+        margin-left:0.5em;
+        margin-right:0.5em;
+        font-size:1.7rem;
         text-align:center;
         --paper-input-container-underline: {
           display:none;
@@ -368,6 +369,13 @@
                   <paper-icon-button class="lower" on-tap="decrQty" icon="remove"></paper-icon-button>
                   <paper-input no-label-float label="qty" value="{{wantedQty}}"></paper-input>
                   <paper-icon-button class="increase" on-tap="incrQty" icon="add"></paper-icon-button>
+                </div>
+              </div>
+              
+              <div class="group attribute-group">
+                <div class="attribute-label">Availability</div>
+                <div class="product-availability">
+                    00/00/000
                 </div>
               </div>
             
