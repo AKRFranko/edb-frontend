@@ -457,6 +457,7 @@
           this.set('price', price||product.price );
         },
         productChanged: function(product){
+          console.log('productChanged',product)
           
           var attributes = this.get('attributes');
           // this.set('slides', this.createProductSlides(product,this.get('materials')) );
