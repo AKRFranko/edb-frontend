@@ -31,12 +31,24 @@
          label: {
            type: String,
            value: 'Select one'
+         },
+         opened:{
+           type: Boolean,
+           notify: true,
+           value: false
+         },
+         icon: {
+           type: String,
+           notify: true,
+           computed: '_computeIcon(opened)'
          }
           
          
         
+        },
+        _computeIcon: function( isOpen){
+          return isOpen ? 'edb:chevron-down' : 'edb:chevron-up';
         }
-        
         
      
   
