@@ -666,9 +666,10 @@
         computeAttributeChoices: function( attr, variations ){
           // this.updateAttributesFromQueryString();
           var attributes = this.get('attributes');
-          console.log('IF MATERIAL', attr.materials );
+          
           return attr.options.map( function( option ){
             var material = attr.materials[option];
+            console.log('IF MATERIAL', attr.materials, option );
             var selectedAttr = attr.name.replace(/^edb_/,'');
             if(material){
               
