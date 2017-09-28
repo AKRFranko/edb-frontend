@@ -444,7 +444,7 @@
           </div>
           
           <div class="product-description">
-            <div class="title">MAsterials</div>
+            <div class="title">Materials</div>
             <div class="table">
               <table>
                 <tr><th>Frame</th><td>solid pine wood</td></tr>
@@ -465,17 +465,19 @@
           </div>
           
             
+          <div class="product-description">
+            <iron-image src="http://installatex.ca/wp-content/uploads/2017/03/mnat-ana-1.png" style="width:100%;height:100%;"></iron-image>
+          </div>
           
-          
-          
+          <!--<div class="product-description" hidden$="{{!product.meta.edb_anatomy_en}}">-->
+          <!--  <iron-image src="{{__computeAnatomy(product.meta.edb_anatomy_en)}}" style="width:100%;height:100%;"></iron-image>-->
+          <!--</div>-->
           
           <div class="product-description" hidden$="{{!product.meta.edb_why_we_love_title}}">
             <div class="title">{{product.meta.edb_why_we_love_title}}</div>
             <div class="text">{{product.meta.edb_why_we_love_content}}</div>
           </div>
-          <div class="product-description" hidden$="{{!product.meta.edb_anatomy_en}}">
-            <iron-image src="{{__computeAnatomy(product.meta.edb_anatomy_en)}}" style="width:100%;height:100%;"></iron-image>
-          </div>
+          
         </div>
       </div>
       
