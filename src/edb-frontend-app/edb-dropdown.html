@@ -79,7 +79,7 @@
          
         
         },
-        observers: ['_openChanged(opened)'],
+        observers: ['_openChanged(opened)','_toggleState(opened)'],
         _openChanged: function(){
           if(this.opened){
             this.$.content.classList.remove('opened');  
