@@ -80,6 +80,13 @@
       /*  height:calc(100vh - 140px);*/
         
       /*}*/
+      @media all and (max-width:768px){
+        #grid{
+          @apply(--layout-vertical);
+          /*@apply(--layout-justified);*/
+          
+        }
+      }
       @media all and (min-width:768px){
         #grid{
           @apply(--layout-horizontal);
@@ -253,6 +260,7 @@
           if(isHero){
             wrap.classList.add('hero')
           }
+          node.setAttribute('layout', this.layout);
           node.removeWrapper = function(){
             wrap.parentNode.removeChild( wrap );
           };

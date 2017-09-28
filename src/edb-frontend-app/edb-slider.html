@@ -105,19 +105,20 @@
       .slide-title{
         margin-bottom:20px;
         @apply(--edb-font-headline);
-        line-height:1.1;
+        line-height:0.9;
+        word-break:break-word;
       }
       .slide-subtitle{
         @apply(--edb-font-body);
-        font-size:17px;
-        line-height:1.1;
+        /*font-size:17px;*/
+        /*line-height:1.1;*/
         text-align:right;
         background:rgba(0,0,0,0.6);
-        border:1px solid #fff;
+        border:2px solid #fff;
         /*@apply(--layout-self-end);*/
         position:absolute;
-        bottom:20px;
-        left:20px;
+        bottom:30px;
+        left:30px;
         
         
       }
@@ -174,7 +175,7 @@
         }
         .slide-title{
           margin-top:40px;
-   
+          font-size:3rem;
         }
         .slide-subtitle{
           width:calc(100% - 20px);
