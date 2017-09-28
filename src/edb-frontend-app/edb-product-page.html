@@ -348,7 +348,7 @@
               <div class="product-options">
                 <template is="dom-repeat" items="{{computeAttributes(product,materials)}}" as="attribute">
                   <div class="group">
-                    <edb-dropdown label="{{attribute.name}}">
+                    <edb-dropdown group="product-options" label="{{attribute.name}}">
                       <iron-selector class$="{{attribute.name}}" on-selected-changed="handleSelectedAttributeChanged">
                         <template is="dom-repeat" items="[[computeAttributeChoices(attribute,product.variations)]]" as="choice">
                           <paper-button class$="[[choice.classnames]]" data-value$="[[choice.option]]">
