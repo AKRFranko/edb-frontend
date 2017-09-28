@@ -88,12 +88,14 @@
         },
         _toggleState: function(){
           var newState = !this.get('opened');
+          this.set('opened',newState);
           if(this.group){
             window.EDBDrops[this.group].forEach( function( item ){
-                item.opened = false;
+                if(item !== this){
+                  item.opened = false;  
+                }
             }, this );  
           }
-          this.set('opened',newState);
           
         },
         _computeIcon: function( isOpen){
