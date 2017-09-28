@@ -50,7 +50,9 @@
     
   </template>
   <script>
-     
+     if(!window.EDBDrops){
+       window.EDBDrops = {};
+     }
       Polymer({
   
         is: 'edb-dropdown',
@@ -91,7 +93,6 @@
           this.set('opened',newState);
           if(this.group){
             window.EDBDrops[this.group].forEach( function( item ){
-              console.log(item === this);
                   item.opened = false;  
             }, this );  
           }
@@ -100,11 +101,9 @@
         _computeIcon: function( isOpen){
           return isOpen ? 'edb:chevron-down' : 'edb:chevron-up';
         },
-        attached: function(){
+        created: function(){
           
-          if(!window.EDBDrops){
-            window.EDBDrops = {};
-          }
+          
           if(!this.group) return;
           window.EDBDrops[this.group] = window.EDBDrops[this.group] || [];
           window.EDBDrops[this.group].push(this);
