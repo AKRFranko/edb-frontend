@@ -385,7 +385,7 @@
       "billing": billing
     };
     
-    console.log('shippingCost',shippingCost);
+    // console.log('shippingCost',shippingCost);
     EDB.apis.wc.__request('POST', '/orders', order, null).then(function(out) {
       Checkout.clearCart();
       app.set('cart', []);
@@ -465,7 +465,7 @@
       shippingLine.warning = 'no';
     }
     
-    console.log('shippingLine for %s:',postCode, shippingLine );
+    // console.log('shippingLine for %s:',postCode, shippingLine );
     
     lines.push(shippingLine);
     if(couponDiscount > 0){
@@ -550,7 +550,7 @@
       });
       
     }
-    console.log( user, Customer );
+    // console.log( user, Customer );
   }
 
   Checkout.init = function loadProducts(polymerApp, products) {
