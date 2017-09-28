@@ -333,8 +333,7 @@
               <div class="product-options">
                 <template is="dom-repeat" items="{{computeAttributes(product,materials)}}" as="attribute">
                   <div class="group">
-                    <div class="option-dropdown">
-                    <paper-button class="attribute-label dropdown-label">{{attribute.name}}</paper-button>
+                    <edb-dropdown label="{{attribute.name}}">
                       <iron-selector class$="{{attribute.name}}" on-selected-changed="handleSelectedAttributeChanged">
                         <template is="dom-repeat" items="[[computeAttributeChoices(attribute,product.variations)]]" as="choice">
                           <paper-button class$="[[choice.classnames]]" data-value$="[[choice.option]]">
@@ -343,8 +342,8 @@
                             <iron-icon class="availability-icon" icon$="{{computeStockIcon(product.id,attribute,choice,attributes,attributes.*,cart.*)}}"></iron-icon>
                           </paper-button>
                         </template>
-                      </iron-selector>
-                    </div>
+                      </iron-selector>  
+                    </edb-dropdown>
                   </div>
                   
                 </template>
