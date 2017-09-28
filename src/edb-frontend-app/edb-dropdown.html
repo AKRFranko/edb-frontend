@@ -106,11 +106,14 @@
         },
         attached: function(){
           
+          setTimeout( function(){
+            if(!this.group) return;
+            this.randid = 'dd-' + Date.now() + '-'+Math.floor(Math.random);
+            window.EDBDrops[this.group] = window.EDBDrops[this.group] || [];
+            window.EDBDrops[this.group].push(this);  
+          }.bind(this))
           
-          if(!this.group) return;
-          this.randid = 'dd-' + Date.now() + '-'+Math.floor(Math.random);
-          window.EDBDrops[this.group] = window.EDBDrops[this.group] || [];
-          window.EDBDrops[this.group].push(this);
+          
         }
         
      
