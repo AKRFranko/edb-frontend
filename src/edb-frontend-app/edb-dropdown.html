@@ -74,6 +74,9 @@
          },
          group: {
            type: String
+         },
+         randid: {
+           type: String
          }
           
          
@@ -105,10 +108,9 @@
           return isOpen ? 'edb:chevron-down' : 'edb:chevron-up';
         },
         attached: function(){
-          
+          this.randid = 'dd-' + Date.now() + '-'+Math.floor(Math.random);
           setTimeout( function(){
             if(!this.group) return;
-            this.randid = 'dd-' + Date.now() + '-'+Math.floor(Math.random);
             window.EDBDrops[this.group] = window.EDBDrops[this.group] || [];
             window.EDBDrops[this.group].push(this);  
           }.bind(this))
