@@ -80,11 +80,11 @@
         
         },
         observers: ['_openChanged(opened)'],
-        _openChanged: function(){
-          if(this.opened){
-            this.$.content.classList.remove('opened');  
-          }else{
+        _openChanged: function(opened){
+          if(opened){
             this.$.content.classList.add('opened');  
+          }else{
+            this.$.content.classList.remove('opened');  
           }
           
         },
