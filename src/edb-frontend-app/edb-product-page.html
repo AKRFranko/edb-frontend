@@ -60,6 +60,7 @@
       edb-slider{
         /*background:#000;*/
         
+        
       }
       
       .header-split{
@@ -69,7 +70,7 @@
         height:100%;
         
       }
-      edb-slider{
+      #slideWrapper edb-slider{
         position:absolute;
         /*width:768px;*/
         /*height:calc(0.63 * 768px);*/
@@ -413,10 +414,7 @@
             <div class="title">Description</div>
             <div class="text">{{product.description.en}}</div>
           </div>
-          <div class="product-description" hidden$="{{!product.meta.edb_why_we_love_title}}">
-            <div class="title">{{product.meta.edb_why_we_love_title}}</div>
-            <div class="text">{{product.meta.edb_why_we_love_content}}</div>
-          </div>
+          
           <div class="product-description" hidden$="{{!product.meta.edb_why_we_love_title}}">
             <div class="title">{{product.meta.edb_why_we_love_title}}</div>
             <div class="text">{{product.meta.edb_why_we_love_content}}</div>
