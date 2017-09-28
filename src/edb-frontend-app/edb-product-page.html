@@ -230,10 +230,14 @@
         @apply(--layout-justified);
         border-top:1px solid #000;
       }
+      .availability-group{
+        border-top:1px solid #000;
+      }
       #addToCart{
-        float:right;
+        /*float:right;*/
         margin-right:20px;  
-        @apply(--layout-self-end);
+        margin-top:20px;
+        /*@apply(--layout-self-end);*/
       }
       
       @media all and (max-width:768px){
@@ -373,7 +377,7 @@
                 </div>
               </div>
               
-              <div class="group attribute-group">
+              <div class="group attribute-group availability-group">
                 <div class="attribute-label">Availability</div>
                 <div class="product-availability">
                     00/00/000
