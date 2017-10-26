@@ -9,10 +9,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-
+<link rel="import" href="shared-styles.html">
 <dom-module id="my-about">
   <template>
-    <style>
+    <style include="shared-styles">
       
       *{box-sizing:border-box;}
       :host {
@@ -21,12 +21,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply --layout;
         width:100%;  
       }
+      god-damned-image{
+        min-height:60vh;
+        height:60vh;
+      }
+      
+      article{
+        padding:30px calc(50% - 243px);
+        width:100%;
+        border-top:1px solid #000;
+        margin-bottom:60px;
+      }
       
     </style>
     
-    <page-template title="About">
+    <page-template title="[[renderAsString(page.title)]]">
       <div slot="page-content">
-        About
+        <god-damned-image  src="[[page.featured_image]]" colors="[[page.featured_colors]]"></god-damned-image>
+        <div class="column">
+          <article>
+            <template is="juicy-html" html="[[renderAsString(page.content)]]"></template>
+          </article>  
+        </div>
+        
       </div>
     </page-template>
   </template>
