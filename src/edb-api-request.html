@@ -127,7 +127,7 @@
         
         _updateCache(){
           
-          console.log(this.url,'from remote?',this.lastSource)
+          // console.log(this.url,'from remote?',this.lastSource)
           window.EDBBrowserCache.putRequest( this ).then( ()=>{
             this.lastSource = 'remote';
           })
@@ -137,7 +137,7 @@
           if(this.lastSource === 'remote'){
             return true;
           }
-          console.log(this.url,'from cache?',this.lastSource)
+          // console.log(this.url,'from cache?',this.lastSource)
           this.lastSource = 'cache';
           if(!data){
             this._setLastResponse(null);  

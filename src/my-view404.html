@@ -19,28 +19,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       #monster{
         
-        width:20%;
-        padding:48px;
+        width:320px;
+        margin-left:-160px;
+        
       }
       #message{
-        padding:48px;
-        
+        margin:30px;
       }
-      img{
-        width:100%;
-        
+      iron-icon{
+        width:320px;
+        height:320px;
       }
       #fourOFour{
         @apply --layout-horizontal;
-        
-        
-        @apply(--layout-center-center);
+        @apply --layout-center-center;
+        width:100%;
+        height:calc(100vh - 192px);
       }
       
     </style>
     <div id="fourOFour">
       <div id="monster">
-        <img src="/images/404-errorer.svg"/>
+        <iron-icon id="icon" icon="{{icon}}"></iron-icon>
       </div>
       <div id="message">
         <h1>ZOMG!</h1>
@@ -56,10 +56,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get is() { return 'my-view404'; }
       static get properties() {
         return {
+          icon: String,
           // This shouldn't be neccessary, but the Analyzer isn't picking up
           // Polymer.Element#rootPath
           rootPath: String,
         };
+      }
+      connectedCallback(){
+        super.connectedCallback();
+        this.icon = 'my-icons:monster-' + (Math.floor(Math.random()*6)+1);
+        this.$.icon.style.color = 'hsl('+Math.floor(Math.random()*255)+',60%,40%)';
       }
     }
 

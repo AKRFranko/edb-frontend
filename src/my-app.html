@@ -346,6 +346,10 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         z-index:1;
       }
 
+      .nav-link{
+        position:relative;
+        display:inline-block;
+      }
       my-logo{
         
         
@@ -415,7 +419,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         height:0;
         min-height:0;
         transition:all .2s ease-in;
-        background:rgba(0,0,0,0.8);
+        background:rgba(0,0,0,1);
         color:#fff;
         overflow:hidden;
         margin-top:-48px;
@@ -549,13 +553,13 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
             </div>
             <div id="siteNav" bottom-item>
               <template is="dom-if" if="[[showNavTabs]]">
-                <a href="[[rootPath]]shop/" on-click="toggleCategoriesPanel">Products</a>
-                <a href="[[rootPath]]order-samples/">Order Samples</a>
-                <a href="[[rootPath]]about/">About</a>
-                <a href="[[rootPath]]shipping/">Shipping</a>
-                <a href="[[rootPath]]contact/">Contact</a>
-                <a href="[[rootPath]]lookbook/">Lookbook</a>
-                <a href="[[rootPath]]inspiration/">Inspiration</a>
+                <a class="nav-link" href="[[rootPath]]shop/" on-click="toggleCategoriesPanel">Products<paper-ripple center></paper-ripple></a>
+                <a class="nav-link" href="[[rootPath]]order-samples/">Order Samples<paper-ripple center></paper-ripple></a>
+                <a class="nav-link" href="[[rootPath]]about/">About<paper-ripple center></paper-ripple></a>
+                <a class="nav-link" href="[[rootPath]]shipping/">Shipping<paper-ripple center></paper-ripple></a>
+                <a class="nav-link" href="[[rootPath]]contact/">Contact<paper-ripple center></paper-ripple></a>
+                <a class="nav-link" href="[[rootPath]]lookbook/">Lookbook<paper-ripple center></paper-ripple></a>
+                <a class="nav-link" href="[[rootPath]]inspiration/">Inspiration<paper-ripple center></paper-ripple></a>
                 
               </template>
             </div>
