@@ -1,0 +1,121 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="edb-slider">
+  <template>
+    <style>
+      :host {
+        display: block;
+        width:inherit;
+        height:inherit;
+        
+        position:absolute;
+        padding-top:400px;
+      }
+      #overlayPrev,#overlayNext{
+        position:absolute;
+        color:#000;
+        top:0;
+        height:calc(100% - 60px);
+        background:rgba(0,0,0,0);
+        transition:all 0.2s ease-in;
+        left:0;
+        opacity:0.7;
+        --paper-icon-button-ink-color:transparent;
+      }
+      .flex{
+        @apply --layout-flex;
+      }
+      .separator{
+        font-size:1.5rem;
+        line-height:1rem;
+        margin:0 0.5rem;
+      }
+      #overlayNext{
+        left:auto;
+        right:0;
+        
+      }
+      #overlayPrev:hover,#overlayNext:hover{
+        background:rgba(0,0,0,0.3);
+        color:#fff;
+      }
+      #footControls{
+        height:60px;
+        @apply --layout-horizontal;
+        @apply --layout-justified;
+        @apply --layout-center;
+      }
+      #pager paper-icon-button{
+        margin:0 0.5rem;
+        
+      }
+      #currentPage,#totalPages{
+        width:2em;
+        text-align:center;
+      }
+    </style>
+    <paper-icon-button id="overlayPrev" icon="my-icons:chevron-left"  class="prev-button"></paper-icon-button>
+    <paper-icon-button id="overlayNext" icon="my-icons:chevron-right" class="next-button"></paper-icon-button>
+    <div id="footControls">
+      <div class="flex"></div>
+      <div id="pager">
+        <paper-icon-button id="prev" icon="my-icons:arrow-left"  class="prev-button"></paper-icon-button>
+        <span id="currentPage">{{current}}</span>
+        <span class="separator">|</span>
+        <span id="totalPages">{{total}}</span>
+        <paper-icon-button id="next" icon="my-icons:arrow-right" class="next-button"></paper-icon-button>
+      </div>
+      <div class="flex"></div>
+      <paper-icon-button id="zoom" icon="my-icons:expand"></paper-icon-button>
+    </div>
+  </template>
+
+  <script>
+    class EdbSlider extends Polymer.Element {
+      static get is() { return 'edb-slider'; }
+      static get properties() {
+        return {
+          total: {
+            type: Number,
+            value: 0
+          },
+          current: {
+            type: Number,
+            value: 0
+          },
+          items: {
+            type: Array,
+            value: function(){
+              return [];
+            }
+          }
+          
+        };
+      }
+      static get observers(){
+        return ['_refit(total,current,items)']
+      }
+      connectedCallback(){
+        super.connectedCallback();
+        Polymer.Async.idlePeriod.run( this._refit.bind(this) );
+        
+      }
+      _refit(){
+        console.log('refit',this.parentNode.getBoundingClientRect().height);
+        this.style.paddingTop = (this.parentNode.getBoundingClientRect().height - 60 ) + 'px';
+      }
+    }
+
+    window.customElements.define(EdbSlider.is, EdbSlider);
+  </script>
+</dom-module>

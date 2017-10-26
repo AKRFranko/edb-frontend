@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>god-damned-carousel demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    
+    <link rel="import" href="../god-damned-carousel.html">
+
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+      </style>
+    </custom-style>
+  </head>
+  <body>
+    <div class="vertical-section-container centered">
+      <h3>Basic god-damned-carousel demo</h3>
+      
+      <demo-snippet>
+        <template>
+          
+          <style>
+            god-damned-carousel{
+              width:100%;
+              height:200px;
+            }
+            god-damned-carousel .slide{
+              width:100%;
+              height:100%;
+              background-color:red;
+              text-align:center;
+              
+            }
+            .slide:nth-of-type(even){
+              background-color:blue;
+              color:red;
+            }
+          </style>
+          
+          <god-damned-carousel>
+              <dom-repeat id="repeater">
+                <template>
+                  <p class="slide">{{item}}</p>
+                </template>
+              </dom-repeat>  
+          </god-damned-carousel>
+          
+          <script>
+            var repeater = document.querySelector('#repeater');
+            var timeOut = Polymer.Async.timeOut.after(2000);
+            timeOut.run(function(){
+              repeater.items = ['Slide 1', 'Slide 2', 'Slide 3','Slide 4','Slide 5','Slide 6','Slide 7','Slide 8','Slide 9'];  
+              
+            });
+            
+            
+            
+            
+          </script>
+        </template>
+        
+      </demo-snippet>
+    </div>
+  </body>
+</html>

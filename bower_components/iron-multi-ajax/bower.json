@@ -1,0 +1,26 @@
+{
+  "name": "iron-multi-ajax",
+  "version": "0.1.4",
+  "main": "iron-multi-ajax.html",
+  "description": "Iron-ajax element for multi urls",
+  "authors": [
+    "Julien Rousseau <RoXuS>"
+  ],
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "ajax"
+  ],
+  "ignore": [
+    "/.*",
+    "/test/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "iron-ajax": "PolymerElements/iron-ajax#^2.0.0"
+  },
+  "devDependencies": {
+    "web-component-tester": "6.0.0"
+  }
+}

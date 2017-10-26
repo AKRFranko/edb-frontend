@@ -1,0 +1,86 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+
+<dom-module id="edb-material-button">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        width:48px;
+        height:48px;
+        min-width:48px;
+        min-height:48px;
+        max-width:48px;
+        max-height:48px;
+        border-radius:50%;
+        overflow:hidden;
+        transition:all .1s ease-in;
+        border:2px solid #fff;
+      }
+      :host(.iron-selected){
+        border:2px solid #000;
+        box-shadow: 0 0 1px 0px #000 inset, 0 0 1px 0px #000;
+      }
+      #materialButton{
+        min-width:100%;
+        min-height:100%;
+        /*border-radius:50%;*/
+        background-color:#ccc;
+        background-position:center;
+        background-size:cover;
+        
+        
+      }
+      
+    </style>
+    <div id="materialButton" type="button" style$="{{__computeBgStyle(material)}}">
+      
+    </div>
+  </template>
+
+  <script>
+    (function() {
+
+      
+
+      class EdbMaterialButton extends Polymer.Element {
+        static get is() { return 'edb-material-button'; }
+
+        static get properties() {
+          return {
+            material: {
+              type: Object,
+              notify: true,
+              value: function(){
+                return {};
+              }
+            }
+          }
+        }
+
+        static get observers() {
+          return []
+        }
+
+        __computeBgStyle( material ){
+            if(!material) return;
+            return 'background-image:url("'+material.featured_image+'")';
+        }
+        
+        
+       
+       
+        constructor() {
+          super();
+          
+        }
+
+      
+      }
+
+      window.customElements.define(EdbMaterialButton.is, EdbMaterialButton);
+
+     
+    }());
+  </script>
+</dom-module>

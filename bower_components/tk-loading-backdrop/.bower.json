@@ -1,0 +1,27 @@
+{
+  "name": "tk-loading-backdrop",
+  "version": "0.1.2",
+  "description": "A loading backdrop.",
+  "main": "tk-loading-backdrop.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "paper-spinner": "PolymerElements/paper-spinner#~1.2.1"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "homepage": "https://github.com/butterandfly/tk-loading-backdrop",
+  "_release": "0.1.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.2",
+    "commit": "2a4fff095d3c767984a23fb5ae42c562ea9cf18f"
+  },
+  "_source": "git://github.com/butterandfly/tk-loading-backdrop.git",
+  "_target": "^0.1.2",
+  "_originalSource": "butterandfly/tk-loading-backdrop",
+  "_direct": true
+}

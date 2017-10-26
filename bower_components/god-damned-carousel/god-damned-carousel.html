@@ -1,0 +1,499 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/mixins/gesture-event-listeners.html">
+<dom-module id="god-damned-carousel">
+  <template>
+    <style>
+      :host {
+        display: block;
+        @apply --layout;
+        position:absolute;
+        /*background:orange;*/
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        width:100%;
+        height:100%;
+        max-width:100%;
+        white-space:nowrap;
+        padding:0;
+        margin:0;
+        transition:transform .2s cubic-bezier(.66,0,1,.45);
+        overflow:hidden;
+        /*width:100%;*/
+        /*height:100%;*/
+        /*min-width:100%;*/
+        /*min-height:100%;*/
+        /*overflow:hidden;*/
+        /*position:relative;*/
+        /*--god-damned-carousel-transition:transform .2s cubic-bezier(.66,0,1,.45);*/
+      }
+      #carousel{
+        display:block;
+        /*position:absolute;*/
+        /*background:orange;*/
+        /*top:0;*/
+        /*left:0;*/
+        /*right:0;*/
+        /*bottom:0;*/
+        /*width:300%;*/
+        /*height:100%;*/
+        /*white-space:nowrap;*/
+        /*padding:0;*/
+        /*margin:0;*/
+        /*transition:var(--god-damned-carousel-transition);*/
+      }
+      #hidden ::slotted(.slide){
+        position:relative;
+        display:inline-block;
+        /*width:calc(100% / 3);*/
+        /*height:100%;*/
+        
+      }
+      
+      #hidden{
+        /*display:none;*/
+      }
+    </style>
+    <div id="carousel"></div>
+    <div id="hidden">
+      <slot id="slot"></slot>
+    </div>
+    
+    
+  </template>
+  <script>
+    (function(){
+    if (!Element.prototype.matches) {
+        Element.prototype.matches = 
+            Element.prototype.matchesSelector || 
+            Element.prototype.mozMatchesSelector ||
+            Element.prototype.msMatchesSelector || 
+            Element.prototype.oMatchesSelector || 
+            Element.prototype.webkitMatchesSelector ||
+            function(s) {
+                var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+                    i = matches.length;
+                while (--i >= 0 && matches.item(i) !== this) {}
+                return i > -1;            
+            };
+    }
+    // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+    const guid=()=> {
+      const s4=()=> Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);     
+      return [s4() + s4(), s4(),s4(),s4(),s4() + s4() + s4()].join('');
+    }
+    
+    var CyclerMixin = function(superClass) {
+      return class extends superClass {
+        static get properties(){
+          return {
+            prevIndex: {
+              type: Number,
+              computed: '__computePrevIndex(currentIndex,totalItems)'
+            },
+            nextIndex: {
+              type: Number,
+              computed: '__computeNextIndex(currentIndex,totalItems)'
+            },
+            currentIndex: {
+              type: Number,
+              notify: true,
+              value: 0
+            },
+            totalItems: {
+              type: Number,
+              notify: true,
+              value: 0
+            }
+          }
+        }
+        
+        __computePrevIndex(current,total){
+          var lastIndex = total - 1;
+          if( current - 1 < 0 ){
+            return lastIndex;
+          }else{
+            return current - 1;
+          }
+        }
+        
+        __computeNextIndex(current,total){
+          var lastIndex = total - 1;
+          if( current + 1 > lastIndex ){
+            return 0;
+          }else{
+            return current + 1;
+          }
+        }
+        
+        _increment(){
+          var newValue = this.currentIndex+1;
+          var lastIndex = this.totalItems -1;
+          if(newValue > lastIndex){
+            this.currentIndex = 0;
+          }else{
+            this.currentIndex = newValue;
+          }
+        }
+        
+        _decrement(){
+          var newValue = this.currentIndex-1;
+          var lastIndex = this.totalItems -1;
+          if(newValue < 0){
+            this.currentIndex = lastIndex;
+          }else{
+            this.currentIndex = newValue;
+          }
+        }
+        
+      }
+    };
+    var NodeObserverMixin = function(superClass) {
+      return class extends superClass {
+        
+        static get properties() {
+          return {
+            nodeSelector: {
+              type: String,
+              value: '.slide'
+            },
+            managedNodes:{
+              type: Object
+            },
+            managedNodeCount:{
+              type: Number
+            }
+          };
+        }
+        
+        constructor() {
+          super();
+          this.__managedNode = guid();
+          this.managedNodes ={};
+          this.managedNodeCount = 0;
+        }
+        
+        _getManagedNodes(){
+          return Object.keys( this.managedNodes ).map( ( key )=>{
+            return this.managedNodes[key];
+          });
+        }
+        _getManagedNodeByIndex(index){
+          var found = this.getManagedNodes.filter( ( node )=>{
+            return node[this.managedNode].index==index;
+          });
+          if(found.length) return found[0];
+          return null;
+        }
+        __manageNode( node ){
+          var nodeId = guid();
+          node[this.__managedNode]={
+            nodeId: nodeId,
+            index: this.managedNodeCount
+          };
+          this.managedNodes[nodeId]=node;
+          this.managedNodeCount++;
+          
+          // console.log('append',node)
+          // Polymer.dom(this.$.carousel).appendChild( node );
+        }
+        __unmanageNode( node ){
+          var nodeId = node[this.__managedNode];
+          delete this.managedNodes[nodeId];
+          this.managedNodeCount--;
+          // console.log('unappend',node)
+          // this.$.carousel.removeChild( node );
+        }
+
+        _processAddedNode( node ){
+          if(node.matches(this.nodeSelector)){
+            if(!node[this.__managedNode]){
+              this.__manageNode( node );
+            }
+          }
+        }
+        
+        _processRemovedNode( node ){
+          if(node.parentNode === this.$.carousel ) return;
+          if(node.matches(this.nodeSelector)){
+            if(node[this.__managedNode]){
+              this.__unmanageNode( node );
+            }
+          }
+        }
+    
+        connectedCallback(){
+          super.connectedCallback();
+          this.__nodeObserver = new Polymer.FlattenedNodesObserver(this.$.slot, (info) => {
+            var addedNodes = info.addedNodes.filter((node) =>{
+                               return (node.nodeType === Node.ELEMENT_NODE)
+                             });
+            var removedNodes = info.removedNodes.filter((node)=> {
+                                 return (node.nodeType === Node.ELEMENT_NODE)
+                               });
+            if(addedNodes.length > 0){
+              Array.prototype.forEach.call(addedNodes, this._processAddedNode.bind(this) );
+            }
+            if(removedNodes.length > 0){
+              Array.prototype.forEach.call(removedNodes, this._processRemovedNode.bind(this) );
+            }
+          });
+        }
+      }
+    }
+    /**
+     * `god-damned-carousel`
+     * No god damned carousels seem to work well with Polymer 2.0 and dom-repeat... This works well with both.
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class GodDamnedCarousel extends Polymer.GestureEventListeners(NodeObserverMixin(CyclerMixin(Polymer.Element))) {
+      static get is() { return 'god-damned-carousel'; }
+      static get properties() {
+        return {
+          totalItems: {
+            type: Number,
+            notify: true,
+            computed: '__proxyValue(managedNodeCount)'
+          },
+          direction: {
+            type: Number,
+            value: 0
+          },
+          draggable: {
+            type: Boolean,
+            reflectToAttribute: true,
+            readOnly: true,
+            value: false
+          },
+          autoCycle: {
+            type: Boolean,
+            value: false
+          },
+          autoCycleInterval: {
+            type: Number,
+            value: 3000
+          },
+          trackingThreshold: {
+            type: Number,
+            value: 100
+          },
+          
+          inTransit: {
+            type: Boolean,
+            value: false
+          },
+          
+        };
+      }
+      static get observers(){
+        return ['_restyleNodes(managedNodeCount)']
+      }
+      _restyleNodes(count){
+        if(count){
+          var nodes = this.managedNodes;  
+          var bbox = this.getBoundingClientRect();
+          var w = bbox.width + 'px';
+          var h = bbox.height + 'px';
+          Object.keys(nodes).forEach( (k)=>{
+            nodes[k].style.width=w;
+            nodes[k].style.height=h;
+            nodes[k].style.minWidth=w;
+            nodes[k].style.minHeight=h;
+            nodes[k].style.position='relative';
+            nodes[k].style.display='inline-block';
+          })
+        }
+        
+        
+        
+        
+      }
+      __proxyValue( value ){
+        return value;
+      }
+      
+      constructor(){
+        super();
+        window.tt = this;
+        Polymer.Gestures.setTouchAction(this, 'x');
+        Polymer.Gestures.addListener(this, 'track', e => this._handleTrack(e));
+      }
+      
+      _handleTrack(event){
+          switch(event.detail.state) {
+            case 'start':
+              this._onTrackStart(event.detail);
+              break;
+            case 'track':
+              this._onTrackMove(event.detail);
+              break;
+            case 'end':
+              this._onTrackEnd(event.detail);
+              break;
+          }
+      }
+      
+      _onTrackStart(e){
+        
+        this.direction = 0;
+      }
+      
+      _onTrackMove(e){
+        
+        if(e.dx < 0){
+          this.direction = 1;
+        }else{
+          this.direction = -1;
+        }
+      }
+      
+      _onTrackEnd(e){
+        
+        if(Math.abs(e.dx) >= this.trackingThreshold){
+          if(this.direction < 0){
+            this._cyclePrev();
+          }else if(this.direction > 0){
+            this._cycleNext();
+          }
+        }
+      }
+      
+      __fitNode(node){
+        if(!node) return;
+        var dimensions = this.__getDimensions();
+        node.style.width=dimensions.width+'px';
+        node.style.height=dimensions.height+'px';
+      }
+      
+      __hideNode(node){
+        if(!node) return;
+        node.style.display = 'none';
+      }
+      
+      __showNode(node){
+        if(!node) return;
+        node.style.display = 'inline-block';
+      }
+      __getDimensions(){
+        return this.getBoundingClientRect();
+      }
+      _beforeCycle(){
+        this.style.display = 'none';
+        var nodes = this._getManagedNodes();
+        var prev,current,next,others=[];
+        var width = this.__getDimensions().width;
+        
+        nodes.forEach( ( node )=>{
+          var nodeIndex = node[this.__managedNode].index;
+          this.__fitNode( node );
+          if(nodeIndex == this.currentIndex ){
+            current = node;
+          }else if(nodeIndex == this.prevIndex ){
+            prev = node;
+          }else if(nodeIndex == this.nextIndex ){
+            next = node;
+          }else{
+            others.push( node );
+          }
+        });
+        others.forEach( this.__hideNode );
+        [prev,next,current].forEach( this.__showNode );
+        
+        this.style.transform = 'translateX(-'+width+'px)';
+        this.style.display = 'block';
+        this.insertBefore( current, next );
+        this.insertBefore( prev, current );  
+        
+      }
+      
+      
+      
+     
+      
+      _cycleNext(){
+        console.log('_cycleNext');
+        this._beforeCycle();
+        if( this.inTransit ){
+          return ;
+        }else{
+          this._transitionLeft();  
+        }
+        
+        
+      }
+      _cyclePrev(){
+        console.log('_cyclePrev');
+        this._beforeCycle();
+        if( this.inTransit ){
+          return;
+        }else{
+          this._transitionRight();  
+        }
+        
+      }
+      
+      _transitionLeft(){
+        this.inTransit = true;
+        // this._listenForTransitonStart( this._onTransitionStart.bind(this) );
+        this._listenForTransitonEnd( ()=>{
+          this._increment();
+          this.inTransit = false;
+        });
+        var dimensions = this.__getDimensions();
+        var translate = -2*dimensions.width;
+        Polymer.Async.microTask.run( ()=>{
+          this.$.carousel.style.transform='translate('+translate+'px)';  
+        });
+        
+        
+      }
+      
+      _transitionRight(){
+        this.inTransit = true;
+        // this._listenForTransitonStart( this._onTransitionStart.bind(this) );
+        this._listenForTransitonEnd( ()=>{
+                                       this._decrement();
+                                       this.inTransit = false;
+                                     } );
+        var dimensions = this.__getDimensions();
+        Polymer.Async.microTask.run( ()=>{
+          this.$.carousel.style.transform='translate(0px)';
+        });
+        
+      }
+      
+      
+      
+      _listenForTransitonStart( callback ){
+        this.addEventListener('transitionstart', callback, { once: true } );
+      }
+      
+      _listenForTransitonEnd( callback ){
+        var timeoutFallback = Polymer.Async.timeOut.after(333);
+        this.addEventListener('transitionend', ()=>{
+          timeoutFallback.cancel();
+          callback();
+        }, { once: true });
+        timeoutFallback.run( callback );
+      }
+      
+      next(){
+        return this._cycleNext();
+      }
+      
+      prev(){
+        return this._cyclePrev();
+      }
+      
+
+    }
+
+      window.customElements.define(GodDamnedCarousel.is, GodDamnedCarousel);
+      window.GodDamnedCarousel = GodDamnedCarousel;
+    })()
+  </script>
+</dom-module>

@@ -1,0 +1,84 @@
+<link rel="import" href="/bower_components/polymer/lib/elements/custom-style.html">
+<custom-style>
+  <style is="custom-style">
+    :host {
+      --app-primary-color: #fff;
+      --app-secondary-color: #000;
+
+      --app-sans-serif-font:'pragmatica-web-condensed', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --app-serif-font:'adobe-caslon-pro', Georgia, 'Times New Roman', Times, serif;
+      
+      
+      
+    }
+    paper-checkbox {
+      --paper-checkbox-checked-color: var(--my-color);
+    }
+  </style>
+  <script>
+    (function(){
+      // function renderAsString( text, lang ){
+      //   if(!text) return '';
+        
+      //   text = text.replace('<p>','');
+      //   text = text.replace('</p>','');
+        
+      //   if( typeof text === 'string'){
+      //     if(/\{:\}/.test(text)){
+      //       var enStr = text.replace(/(.+)?\{:en\}([^\{]+)\{:\}(.+)?/, '$2');
+      //       var frStr = text.replace(/(.+)?\{:fr\}([^\{]+)\{:\}(.+)?/, '$2');
+      //       var str = lang === 'fr' ? frStr||enStr : enStr||frStr;
+      //       return str;
+      //     }
+      //     return text;
+      //   }else if(text.en || text.fr){
+      //     var enStr = text.en||text.fr;
+      //     var frStr = text.fr||text.en;
+      //     return lang === 'fr' ? frStr : enStr;
+      //   }else if(text.rendered){
+      //     return renderAsString(text.rendered, lang );
+      //   }
+      //   return text;
+      // }
+      var removeAutoP = function( s ){
+        return s.trim().replace(/^\<p\>/,'').replace(/\<\/p\>$/, '');
+      }
+      
+      var grepLang = function(s,l){
+       var start = s.indexOf('{:'+l+'}');
+       if(start > -1){
+        var remainder = s.slice(start+(3+l.length));  
+        var end = remainder.indexOf('{:}');
+        remainder = remainder.slice(0,end);
+        return remainder;
+       }
+       return s;
+       
+      }
+      
+      var renderAsString = function( text, lang ){
+       if(!text) return '';
+       if(typeof text == 'string'){
+         var en = grepLang(text,'en');
+         var fr = grepLang(text,'fr');
+         return lang == 'fr' ? fr||en : en||fr;
+       }else if(text.en || text.fr){
+         return lang == 'fr' ? text.fr||text.en : text.en||text.fr;
+       }else if(text.rendered){
+         return renderAsString( text.rendered, lang );
+       }
+       return text;
+      }
+      
+      window.EDBHelperMixin = function(superClass) {
+        
+                              return class extends superClass {
+                                renderAsString(text, lang){
+                                  return renderAsString(text, lang);
+                                }
+                              }
+        
+      };
+    })();
+  </script>
+</custom-style>

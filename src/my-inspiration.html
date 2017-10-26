@@ -1,0 +1,271 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="my-inspiration">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        @apply --layout;
+        min-height:calc(100vh - 192px);
+        width:100%;
+      }
+      
+      
+      
+      .article-grid{
+        width:100%;
+      }
+      page-template{
+        --page-title-styles:{
+          white-space:nowrap;
+        }
+      }
+      
+      article-template{
+        /*min-height:100px;*/
+        
+        margin-bottom:256px;
+        /*margin-bottom:96px;*/
+        /*background-color:red;*/
+        transition:all .3s ease-out;
+        /*transition-delay: .2s;*/
+
+      }
+      article-template.partially-above,article-template.above-viewport{
+        transition-delay: .0s;
+        transition:all 0s ease-in;
+        margin-bottom:60px;
+      }
+      article-template.fully-in-viewport{
+        /*background-color:red;*/
+        margin-bottom:60px;
+      }
+      
+      article-template:nth-of-type(odd){
+        --article-header-styles:{
+          @apply --layout-horizontal;
+        }
+        
+      }
+      article-template:nth-of-type(even){
+        --article-header-styles:{
+          @apply --layout-horizontal-reverse;
+        }
+        
+      }
+      /*god-damned-image{*/
+      /*  min-width:100%;*/
+      /*  width:100%;*/
+      /*  height:0;*/
+      /*  padding-top:calc(100% * 0.613);*/
+      /*  margin-bottom:1px;*/
+      /*}*/
+      #inspirationGallery{
+        display:block;
+        width:100%;
+        @apply --layout-vertical;
+        @apply --layout-justified;
+      }
+      #inspirationGallery god-damned-image{
+        /*width:auto;*/
+        /*height:auto;*/
+        margin-bottom:60px;
+      }
+      
+      
+      #inspirationGallery god-damned-image:nth-of-type(3n - 2){
+        width:60%;
+        min-width:60%;
+        max-width:60%;
+        margin-left:40%;
+        /*height:0;*/
+        /*padding-top:60%;*/
+      }
+      #inspirationGallery god-damned-image:nth-of-type(3n - 1){
+        width:60%;
+        min-width:60%;
+        max-width:60%;
+        /*height:0;*/
+        margin-right:40%;
+        /*padding-top:60%;*/
+      }
+      #inspirationGallery god-damned-image:nth-child(3){
+        width:50%;
+        min-width:50%;
+        max-width:60%;
+        /*height:0;*/
+        margin-right:25%;
+        margin-left:25%;
+        /*padding-top:50%;*/
+      }
+      article-template{
+        
+        --article-header-text-styles:{
+          @apply --layout-vertical;      
+          @apply --layout-center-center;
+          
+          
+        }
+        
+        --article-title-styles:{
+          @apply --edb-inspiration-list-title;
+          
+        }
+      }
+     .article-wrap:nth-of-type(odd) article-template{
+       --article-header-styles:{
+         @apply --layout-horizontal;
+       }
+       
+     }
+     .article-wrap:nth-of-type(even) article-template{
+       --article-header-styles:{
+         @apply --layout-horizontal-reverse;
+       }
+       
+     }
+      
+      
+      
+    </style>
+    <app-route route="[[route]]" pattern="/:id" data="{{routeData}}"></app-route>
+    
+      <page-template hidden$="[[isSingle]]" fixed-header title="Elements Of Inspiration" summary="In this section, we present a collection of our favourite snap shots from our photo sessions.
+                                                                           Each week, we select and add images that we like. random angles, interesting details, creative decors,
+                                                                           cosy textures, beautiful colors or dynamic configurations. no specific function other than to inspire
+                                                                           beauty and style around us. these are our feel good pics! happy viewing.">
+        <div slot="page-content">
+          
+          <div class="article-grid">
+            <template is="dom-repeat" items="[[inspirations]]" as="inspiration">
+              <a class="article-wrap" href="/inspiration/[[inspiration.id]]/">
+              <article-template 
+                title='[[renderAsString(inspiration.title)]]' 
+                subtitle="[[renderAsString(inspiration.subtitle)]]" 
+                image="[[_computeImage(inspiration)]]">
+              </article-template>  
+              </a>
+            </template>
+            
+            
+          </div>
+        </div>
+      </page-template>  
+      
+      <page-template hidden$="[[!isSingle]]" fixed-header title="{{renderAsString(currentInspiration.title)}}">
+        <div slot="page-content">
+          
+          <!--<edb-image image="[[_computeImage(currentInspiration)]]" visible></edb-image>-->
+          
+          <god-damned-image appears fullscreen-on-click uses-image-height src="[[_computeFeaturedImageSrc(currentInspiration)]]" colors="[[_computeFeaturedImageColors(currentInspiration)]]"></god-damned-image>
+          
+          <div id="inspirationGallery">
+            <template is="dom-repeat" items="[[formatImages(currentInspiration.meta_box.edb_inspiration_images)]]" as="image">
+              <god-damned-image appears fullscreen-on-click uses-image-height src="[[image.src]]" colors="[[image.colors]]" ></god-damned-image>
+              <!--<edb-image image="[[image]]" use-image-for-size visible></edb-image>-->
+            </template>
+          </div>
+          
+        </div>
+      </page-template>
+    
+    
+  </template>
+
+  <script>
+    class MyInspiration extends EDBHelperMixin(Polymer.Element) {
+      static get is() { return 'my-inspiration'; }
+      static get properties(){
+        return { inspirations: { type: Array },currentInspiration: {type: Object },route: {
+                                                 type: Object
+                                               },
+                                               routeData: {
+                                                 type: Object
+                                                 
+                                               },isSingle: {
+                                                 type: Boolean
+                                               }}
+      }
+      static get observers() {
+        return [
+          '_routeIdChanged(routeData.id,routeData)',
+          
+          '_routeDataChanged(routeData)',
+          '_setCurrent(routeData.id,inspirations)'
+        ];
+      }
+      _routeChanged(r){
+        console.log('_routeChanged', r)
+      }
+      _routeIdChanged(id){
+        console.log('_routeIdChanged',id)
+        if(!id){
+          this.isSingle = false;
+        }else{
+          this.isSingle = true;
+        }
+      }
+      
+      formatImages( images){
+        
+        var images =  images.map( (i)=>{ 
+          return {
+            width:i.width,
+            height:i.height,
+            src:i.full_url, 
+            colors: [] 
+          } 
+        });
+        console.log('new',images);
+        
+        return images;
+      }
+      _routeDataChanged(data){
+        console.log('_routeDataChanged',data)
+      }
+      _setCurrent(id,inspirations){
+        if(id && inspirations){
+          var found = inspirations.filter( ( ins )=>{ return parseInt(ins.id) == parseInt(id); });
+          if(found && found.length) this.currentInspiration = found[0];
+          console.log('found',found)
+        }
+        
+      }
+      _computeFeaturedImageColors( data ){
+        
+        if(!data) return null;
+        return data.featured_colors||[];
+      }
+      _computeFeaturedImageSrc( data ){
+        
+        if(!data) return null;
+        // console.log('_computeSlideImageSrc',data)
+        return data.featured_image;
+        
+      }
+      
+      
+      _computeImage( inspiration ){
+        
+        if(!inspiration) return null;
+        return {
+          colors: inspiration.featured_colors||[],
+          src: inspiration.featured_image
+        };
+      }
+    }
+
+    window.customElements.define(MyInspiration.is, MyInspiration);
+  </script>
+</dom-module>

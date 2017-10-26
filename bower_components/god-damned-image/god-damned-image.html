@@ -1,0 +1,554 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="./tinycolor-import.html">
+
+
+<dom-module id="god-damned-image">
+  <template>
+    <style>
+      :host {
+        display: block;
+        width:100%;
+        height:100%;
+        transition:height 0.2s ease-in;
+        
+        overflow:hidden;
+      }
+      #imageContainer{
+        display:block;
+        position:relative;
+        width:100%;
+        height:100%;
+        min-width:100%;
+        min-height:100%;
+        
+        overflow:hidden;
+        /*background:red;*/
+      }
+      #overlayContent{
+        position:absolute;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        width:100%;
+        height:100%;
+        text-align:center;
+        margin:auto;
+        z-index:0;
+        transition:all 0.2s ease-in;
+        -webkit-backface-visibility: hidden;
+        @apply --gd-image-overlay-content;
+
+      }
+      
+      #overlayContent.hidden{
+        opacity:0;
+      }
+      
+      
+      #imageWrapper{
+        position:relative;
+        width:100%;
+        height:100%;
+        overflow:hidden;
+        background-repeat:no-repeat;
+        background-position:center;
+        transition:all 0.2s ease-in;
+        -webkit-backface-visibility: hidden;
+
+        /*background-size:cover;*/
+      }
+    
+      
+      
+      #imageContainer.zoom-on-hover:hover #imageWrapper{
+        transform:scale(1.05);
+      }
+      /*#imageContainer.zoom-on-hover:hover #overlayContent{*/
+      /*  transform:scale(0.95);*/
+      /*}*/
+      
+      #imagePlaceholder{
+        position:absolute;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        width:100%;
+        height:100%;
+        transition:opacity 0.2s linear;
+        
+      }
+      #imagePlaceholder.hidden{
+        opacity:0;
+      }
+      
+      #imageContainer.use-image-height #imageWrapper{
+        display:block;
+        position:relative;
+      }
+      #imageContainer.use-parent-height #imageWrapper{
+        display:block;
+        position:absolute;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        
+      }
+      
+      img{
+        /*position:absolute;*/
+        opacity:0;
+        min-width:100%;
+        min-height:100%;
+        
+      }
+       
+       .icon {
+         display: inline-block;
+         width: 1em;
+         height: 1em;
+         stroke-width: 0;
+         stroke: currentColor;
+         fill: currentColor;
+       }
+       
+       /*#fullscreenButton{*/
+       /*  position:absolute;*/
+       /*  background:none;*/
+       /*  border:0;*/
+         
+       /*  bottom:5px;*/
+       /*  right:5px;*/
+       /*  padding:0;*/
+       /*  width:1.5rem;*/
+       /*  height:1.5rem;*/
+       /*  line-height:1;*/
+       /*  text-align:center;*/
+       /*  font-size:1.5rem;*/
+       /*}*/
+       
+    </style>
+    <device-orientation orientation="{{orientation}}"></device-orientation>
+    
+    <div id="imageContainer">
+      
+      <div id="imageWrapper">
+        <div id="overlayContent">
+          <slot name="overlay-content"></slot>
+        </div>
+        <img id="image" on-load="_loadEventHandler" src$="{{src}}" srcset$="{{srcset}}"/>
+          
+      </div>
+      
+      <!--<button id="fullscreenButton" on-click="showFullscreen">-->
+      <!--  <slot name="fullscreen-icon">-->
+      <!--    <span>⛞</span>-->
+      <!--  </slot>-->
+      <!--</button>-->
+      <div id="imagePlaceholder">
+        
+      </div>
+        
+    </div>
+    
+    
+    
+    
+  </template>
+
+  <script>
+  
+    function sortByMostSaturated(a,b){
+      var a = tinycolor(a).toHsv();
+      var b = tinycolor(b).toHsv();
+      if(a.s < b.s){
+        return -1;
+      }
+      if(a.s > b.s){
+        return 1;
+      }else{
+        return 0;
+      }
+    }
+    /**
+     * `god-damned-image`
+     * Yet Another Magical Image Element.
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class GodDamnedImage extends Polymer.Element {
+      static get is() { return 'god-damned-image'; }
+      static get properties() {
+        return {
+          src: {
+            type: String,
+            reflectToAttribute: true,
+          },
+          srcset: {
+            type: String,
+            reflectToAttribute: true,
+          },
+          currentSrc:{
+            type: String,
+            observer:'_setBgImageSrc'
+          },
+          alt: {
+            type: String,
+            reflectToAttribute: true
+          },
+          placeholderColors: {
+            type: Array,
+            notify: true,
+            value: function(){
+              return [];
+            }
+          },
+          placeholderGradientDirection: {
+            type: String,
+            value: 'to bottom right'
+          },
+          hideImageOnLoad: {
+            type: Boolean,
+            value: false
+          },
+          imageLoaded: {
+            type: Boolean,
+            notify: true,
+            observer: '_onImageLoadedChanged'
+          },
+          imageIsVisible: {
+            type: Boolean,
+            notify: true,
+            value: false
+          },
+          imageIsFullscreen: {
+            type: Boolean,
+            notify: true,
+            value: false
+          },
+          fullscreenOnClick: {
+            type: Boolean,
+            value: false
+          },
+          // showFullscreenButton: {
+          //   type: Boolean,
+          //   notify: true,
+          //   value: false
+          // },
+          zoomsOnHover:{
+            type: Boolean,
+            value: false,
+            observer: '_setZoomOnHover'
+          },
+          appears: {
+            type: Boolean,
+            value: false
+          },
+          sizing: {
+            type: String,
+            reflectToAttribute: true,
+            value: 'cover',
+            observer: '_setBgImageSizing'
+          },
+          usesImageHeight: {
+            type: Boolean,
+            value: false,
+            observer:'_setContainerHeight'
+          },
+          
+          contentIsClickable:{
+            type: Boolean,
+            value: false,
+            observer:'_makeContentClickable'
+          },
+          processColors: {
+            type: Object,
+            value: function(){
+              return function(colors){
+                var mostSaturated = colors.sort(sortByMostSaturated);
+                return mostSaturated.slice(0,3);
+              }
+            }
+          },
+          filters: {
+            type: Object,
+            value: function(){
+              return {
+                blur: '4px',
+                sepia: 1,
+                invert: .8,
+                brightness: 1.6,
+                contrast: 3,
+                grayscale: 1,
+                saturate: 8
+              };
+            }
+          }
+        };
+      }
+      static get observers(){
+        return [
+          '_setPlaceHolderBg(placeholderGradientDirection,placeholderColors)'
+          
+          ];
+      }
+      
+      
+      _makeContentClickable(clickable){
+          if(clickable){
+            this.$.imageWrapper.insertBefore(this.$.image, this.$.overlayContent);
+          }else{
+            this.$.imageWrapper.insertBefore(this.$.overlayContent,this.$.image );
+          }
+      }
+      
+      _updateFilters(){
+        var filter = Object.keys(this.__currentFilters).map( (k)=>{ return this.__currentFilters[k]}).join(' ');
+        this.$.imageWrapper.style.filter = filter;
+      }
+      
+      addFilter( filter ){
+        if(!this.__currentFilters){
+          this.__currentFilters = {};
+        }
+        this.__currentFilters[filter] = filter +'(' + this.filters[filter] + ')';
+        this._updateFilters();
+        // var uniques = ['grayscale','saturate','sepia','invert','brightness','contrast'];
+        // if((~uniques.indexOf(filter))){
+        //   uniques.forEach((uniq)=>{
+        //     if(this.$.imageWrapper.classList.contains(uniq) && uniq !== filter){
+        //       this.$.imageWrapper.classList.remove(uniq);
+        //     }
+        //   })  
+        // }
+        // this.$.imageWrapper.classList.add(filter);
+      }
+      
+      removeFilter( filter ){
+        if(!this.__currentFilters){
+          return;
+        }
+        delete(this.__currentFilters[filter]);
+        this._updateFilters();
+        // this.$.imageWrapper.classList.remove(filter);
+      }
+      
+      toggleFilter(filter){
+        
+        if(this.__currentFilters && this.__currentFilters[filter]){
+          this.removeFilter(filter);
+        }else{
+          this.addFilter(filter);
+        }
+      }
+      
+      clearFilters(){
+        this.__currentFilters = {};
+        this._updateFilters();
+      }
+      
+      _setZoomOnHover(zoom){
+        if(zoom){
+          this.$.imageContainer.classList.add('zoom-on-hover');
+        }else{
+          this.$.imageContainer.classList.remove('zoom-on-hover');
+        }
+      }
+      
+      _setPlaceHolderBg(direction,colors){
+        // //console.log('_setPlaceHolderBg');
+        var defColors = ['#AAA','#CCC','#EEE']
+        if(!colors) colors = [];
+        while(colors.length < 3){
+          colors.push(defColors.shift());
+        }
+        if(this.processColors){
+          colors = this.processColors(colors);
+        }
+        this.$.imagePlaceholder.style.background = 'linear-gradient('+[direction,colors].join(',')+')';
+      }
+      
+      _setContainerHeight(usesImageHeight){
+        //console.log('_setContainerHeight');
+        if(usesImageHeight === true){
+          this.$.imageContainer.classList.add('use-image-height');
+          this.$.imageContainer.classList.remove('use-parent-height');
+        }else{
+          this.$.imageContainer.classList.add('use-parent-height');
+          this.$.imageContainer.classList.remove('use-image-height');
+          
+        }
+      }
+      
+      _setBgImageSizing(sizing){
+        
+        this.$.imageWrapper.style.backgroundSize = (sizing||'cover');
+      }
+      
+      _setBgImageSrc(src){
+        //console.log('_setBgImageSrc',src)
+        if(src && src !== null){
+          this.$.imageWrapper.style.backgroundImage = 'url('+src+')';  
+        }
+        
+      }
+      
+      
+      showContent(){
+        this.$.overlayContent.classList.remove('hidden');
+      }
+      
+      hideContent(){
+        this.$.overlayContent.classList.add('hidden');
+      }
+      
+      showImage(){
+        if(!this.imageIsVisible){
+          if(this.__timeOut){
+            this.__timeOut.cancel();
+          }
+          this.__timeOut = Polymer.Async.timeOut.after(222);
+          this.__timeOut.run( ()=>{
+            this.$.imagePlaceholder.style.display = 'none';
+            this.imageIsVisible = true;
+            this.__timeOut = null;
+            if(this.appears){
+              this.style.display = 'block';
+            }
+            Polymer.Async.animationFrame.run(()=>{
+                var height = this.__recoredHeight;
+                if(this.usesImageHeight){
+                  height = this.$.image.height;
+                }
+                this.style.height = height + 'px';
+            });
+          });  
+          this.$.imagePlaceholder.classList.add('hidden');
+        }
+        
+      }
+      
+      hideImage(){
+        if(this.imageIsVisible){
+          if(this.__timeOut){
+            this.__timeOut.cancel();
+          }
+          this.__timeOut = Polymer.Async.timeOut.after(222);
+          this.__timeOut.run( ()=>{
+            this.imageIsVisible = false;
+            this.__timeOut = null;
+          }); 
+          this.$.imagePlaceholder.classList.remove('hidden');  
+          this.$.imagePlaceholder.style.display = 'block';
+        }
+        
+      }
+      
+      showFullscreen(){
+        this.fullscreenElement.style.display='block';
+        var clone = this.$.image.cloneNode(false); 
+        clone.style.position='absolute';
+        clone.style.width='100%';
+        clone.style.height='100%';
+        clone.style.opacity=0;
+        this.fullscreenElement.style.backgroundImage = 'url('+this.currentSrc+')';
+        this.fullscreenElement.addEventListener('click', ()=>{
+          this.hideFullscreen();
+        }, {once:true});
+        this.fullscreenElement.appendChild(clone);
+        this.imageIsFullscreen = true;
+      }
+      
+      hideFullscreen(){
+        this.fullscreenElement.style.display='none';
+        this.fullscreenElement.style.backgroundImage = null;
+        var clone = this.fullscreenElement.querySelector('img');
+        if(clone){
+          clone.parentNode.removeChild(clone);
+        }
+        this.imageIsFullscreen = false;
+      }
+    
+      _onImageLoadedChanged(isLoaded){
+        //console.log('_onImageLoadedChanged', isLoaded);
+        if(isLoaded){
+          if(!this.hideImageOnLoad){
+            
+            this.showImage();
+          }
+          
+          
+          this.addEventListener('click', ()=>{
+            if(this.fullscreenOnClick){
+              this.showFullscreen();    
+            }
+          });
+        }
+      }
+      
+      
+      __createFullscreenElement(){
+        
+        var topLevel = this.ownerDocument.documentElement||window.top.document.documentElement;
+        var fullscreenElement = topLevel.querySelector('#godDamnedImageFullScreen');
+        if(fullscreenElement === null){
+          fullscreenElement =document.createElement('div');  
+          fullscreenElement.setAttribute('id','godDamnedImageFullScreen');
+          fullscreenElement.setAttribute('class','god-damned-image-fullscreen');
+          fullscreenElement.style.display='none';
+          fullscreenElement.style.position="fixed";
+          fullscreenElement.style.top="0px";
+          fullscreenElement.style.right="0px";
+          fullscreenElement.style.bottom="0px";
+          fullscreenElement.style.left="0px";
+          fullscreenElement.style.width='100vw';
+          fullscreenElement.style.height='100vh';
+          fullscreenElement.style.backgroundColor="#000";
+          fullscreenElement.style.backgroundRepeat="no-repeat";
+          fullscreenElement.style.backgroundSize="contain";
+          fullscreenElement.style.backgroundPosition="center";
+          topLevel.appendChild(fullscreenElement);
+        }
+        return fullscreenElement;
+      }
+      
+      
+      constructor(){
+        super();
+        this._loadEventHandler = ( event )=>{
+          //console.log('loaded', event)
+          this.imageLoaded = true;
+          this.currentSrc = this.$.image.currentSrc || this.$.image.src;
+        }
+        this.fullscreenElement = this.__createFullscreenElement();
+        
+      }
+      
+      
+      
+      
+      connectedCallback(){
+        super.connectedCallback();
+        if(this.appears){
+          this.__recoredHeight = this.getBoundingClientRect().height;
+          this.style.display = 'none';
+         this.style.height ='0px'; 
+          
+          
+        }
+      }
+      
+      disconnectedCallback(){
+        super.disconnectedCallback();
+        this.imageLoaded = false;
+        this.currentSrc = null;
+      }
+    }
+
+    window.customElements.define(GodDamnedImage.is, GodDamnedImage);
+  </script>
+</dom-module>

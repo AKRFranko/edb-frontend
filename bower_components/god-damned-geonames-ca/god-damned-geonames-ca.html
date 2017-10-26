@@ -1,0 +1,213 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+
+<dom-module id="god-damned-geonames-ca">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <iron-ajax id="geogratis"
+      auto
+      url="//geogratis.gc.ca/services/geoname/en/geonames.json"
+      params='[[geogratisParams]]'
+      handle-as="json"
+      on-iron-ajax-presend="_getFromStorage"
+      last-response="{{geogratisResponse}}"
+      debounce-duration="300"></iron-ajax>
+      
+      <!--<select id="provinceInput" on-change="_onSelectChange">-->
+      <!--  <option id="nullOption">...</option>-->
+      <!--  <template is="dom-repeat" items="[[provinces]]" as="province">-->
+      <!--    <option value="[[province.code]]">[[province.name]]</option>-->
+      <!--  </template>-->
+      <!--</select>-->
+      <!--<input id="cityInput" type="text" list="cityList">-->
+      <!--<datalist id="cityList">-->
+      <!--  <template is="dom-repeat" items="[[cities]]" as="city">-->
+      <!--    <option value="{{city.name}}">-->
+      <!--  </template>-->
+      <!--</datalist>-->
+    
+  </template>
+
+  <script>
+  (function(){
+    var sort_by_relevance = function(a,b){
+      a = a.relevance;
+      b=b.relevance;
+      if(a > b){
+        return -1;
+      }
+      if(a < b){
+        return 1;
+      }
+      return 0;
+    }
+    var provinces = {
+      AB: {
+        geogratis: 48,
+        en: 'Alberta',
+        fr: 'Alberta'
+      },
+      BC: {
+        geogratis: 59,
+        en: 'British Columbia',
+        fr: 'Columbie Britanique'
+      },
+      MB: {
+        geogratis:46,
+        en: 'Manitoba',
+        fr: 'Manitoba'
+      },
+      NB: {
+        geogratis:13,
+        en: 'New Brunswick',
+        fr: 'Nouveau Brunswick'
+      },
+      NL: {
+        geogratis:10,
+        en: 'Newfoundland',
+        fr: 'Terre-Neuve'
+      },
+      NS: {
+        geogratis:12,
+        en: 'Nova Scotia',
+        fr: 'Nouvelle Écosse'
+      },
+      NT: {
+        geogratis: 61,
+        en: 'Northwest Territories',
+        fr: 'Territoires du nord-ouest'
+      },
+      NU: {
+        geogratis: 62,
+        en: 'Nunavut',
+        fr: 'Nunavut'
+      },
+      ON: {
+        geogratis:35,
+        en: 'Ontario',
+        fr: 'Ontario'
+      },
+      PE: {
+        geogratis:11,
+        en: "Prince Edward Island",
+        fr: "Île-du-Prince-Édouard"
+      },
+      QC: {
+        geogratis:24,
+        en: 'Québec',
+        fr: 'Québec'
+      },
+      SK: {
+        geogratis:47,
+        en: 'Saskatchewan',
+        fr: 'Saskatchewan'
+      },
+      YT: {
+        geogratis:60,
+        en: 'Yukon Territory',
+        fr: 'Territoire du Yukon'
+      }
+    }
+      /**
+       * `god-damned-geonames-ca`
+       * Gets geoname data for canadian locations using geogratis.ca&#39;s api
+       *
+       * @customElement
+       * @polymer
+       * @demo demo/index.html
+       */
+      class GodDamnedGeonamesCa extends Polymer.Element {
+        static get is() { return 'god-damned-geonames-ca'; }
+        static get properties() {
+          return {
+            geogratisParams: {
+              type: Object,
+              computed: '_selectedProvinceChanged(selectedProvince)'
+            },
+            geogratisResponse: {
+              type: Object,
+              observer:'_addToStorage'
+            },
+            selectedProvince: {
+              type: String,
+              value: 'QC'
+            },
+            provinces: {
+              type: Array,
+              readOnly: true,
+              value: function(){
+                
+                return Object.keys(provinces).map( function(code){
+                  return { name: provinces[code].en, nameEn: provinces[code].en, nameFr: provinces[code].en, code: code };
+                });
+              }
+            },
+            cities: {
+              type: Array,
+              computed: '_computeCities(selectedProvince,geogratisResponse)'
+            },
+            noCache: {
+              type: Boolean,
+              value: false
+            }
+            
+          };
+        }
+        
+        _onSelectChange(){
+          this.selectedProvince = this.$.provinceInput.value;
+        }
+        
+        _getFromStorage(event){
+          if(!this.noCache){
+            var stored = localStorage.getItem( 'god-damned-geogratis:'+ this.$.geogratis.requestUrl );
+            if(stored){
+              var json = JSON.parse(stored);
+              if(Date.now() - json.stored < 30*24*60*60){ // approx month
+                this.set('geogratisResponse', json.data );
+                event.preventDefault();
+                return false;  
+              }
+            }  
+          }
+          
+        }
+        
+        _addToStorage(){
+          if(this.geogratisResponse && !this.noCache){
+            localStorage.setItem( 'god-damned-geogratis:'+ this.$.geogratis.requestUrl, JSON.stringify( {data:this.geogratisResponse,stored:Date.now()} ) );  
+          }
+        }
+        
+        _computeCities(selectedProvince,geogratisResponse){
+          if(!selectedProvince || !geogratisResponse || !geogratisResponse.items) return [];
+          // if() return [];
+          // if() return [];
+          return geogratisResponse.items.sort(sort_by_relevance).map( function( item ){
+            return { name: item.name, nameEn: item.name, nameFr: item.name, bbox: item.bbox, latitude: item.latitude, longitude: item.longitude, code: item.id };
+          });
+        }
+        
+        _getProvinceNumber(string){
+          var found =  Object.keys(provinces).filter( function( k ){
+            return k == string;
+          });
+          if(found) return provinces[found[0]].geogratis;
+          return null;
+        }
+        _selectedProvinceChanged( selectedProvince ){
+          if(!selectedProvince) return;
+          return { province: this._getProvinceNumber(selectedProvince), concise: 'CITY', num: '1000', category: 'O', 'sort-field':'name' };
+  
+        }
+        
+      }
+  
+      window.customElements.define(GodDamnedGeonamesCa.is, GodDamnedGeonamesCa);
+  })()
+  </script>
+</dom-module>

@@ -1,110 +1,122 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
 <!doctype html>
 <html lang="en">
   <head>
-    
     <meta charset="utf-8">
+    <meta name="generator" content="Polymer Starter Kit">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>edb-frontend</title>
-    <meta name="description" content="edb-frontend description">
+    <title>My App</title>
+    <meta name="description" content="My App description">
 
+    <!--
+      The `<base>` tag below is present to support two advanced deployment options:
+      1) Differential serving. 2) Serving from a non-root path.
+
+      Instead of manually editing the `<base>` tag yourself, you should generally either:
+      a) Add a `basePath` property to the build configuration in your `polymer.json`.
+      b) Use the `--base-path` command-line option for `polymer build`.
+
+      Note: If you intend to serve from a non-root path, see [polymer-root-path] below.
+    -->
+    <base href="/">
+
+    <link rel="icon" href="images/favicon.ico">
 
     <!-- See https://goo.gl/OOhYW5 -->
-    <link rel="manifest" href="./manifest.json">
+    <link rel="manifest" href="manifest.json">
 
-    <script src="./bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="./bower_components/querystring-json/dest/querystring-json.js"></script>
+    <!-- See https://goo.gl/qRE0vM -->
+    <meta name="theme-color" content="#3f51b5">
 
-<link rel="import" href="./bower_components/transburger-icon/transburger-icon.html">
+    <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="My App">
 
-<!--<link rel="import" href="./bower_components/iron-ajax/iron-ajax.html">-->
-<link rel="import" href="./bower_components/wp-rest/wp-rest.html">
-<link rel="import" href="./bower_components/iron-icon/iron-icon.html">
-<link rel="import" href="./bower_components/iron-image/iron-image.html">
-<link rel="import" href="./bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="./bower_components/iron-pages/iron-pages.html">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="My App">
 
-<link rel="import" href="./bower_components/iron-swiper/iron-swiper.html">
-<link rel="import" href="./bower_components/iron-media-query/iron-media-query.html">
-<link rel="import" href="./bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="./bower_components/iron-collapse-button/iron-collapse-button.html">
-<link rel="import" href="./bower_components/app-layout/app-layout.html">
-<link rel="import" href="./bower_components/app-route/app-route.html">
-<link rel="import" href="./bower_components/app-route/app-location.html">
+    <!-- Homescreen icons -->
+    <link rel="apple-touch-icon" href="images/manifest/icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/manifest/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="images/manifest/icon-96x96.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/manifest/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="images/manifest/icon-192x192.png">
 
-<link rel="import" href="./bower_components/neon-animation/animations/scale-up-animation.html">
-<link rel="import" href="./bower_components/neon-animation/animations/fade-out-animation.html">
+    <!-- Tile icon for Windows 8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/manifest/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#3f51b5">
+    <meta name="msapplication-tap-highlight" content="no">
 
+    <script>
+      /**
+      * [polymer-root-path]
+      *
+      * By default, we set `Polymer.rootPath` to the server root path (`/`).
+      * Leave this line unchanged if you intend to serve your app from the root
+      * path (e.g., with URLs like `my.domain/` and `my.domain/view1`).
+      *
+      * If you intend to serve your app from a non-root path (e.g., with URLs
+      * like `my.domain/my-app/` and `my.domain/my-app/view1`), edit this line
+      * to indicate the path from which you'll be serving, including leading
+      * and trailing slashes (e.g., `/my-app/`).
+      */
+      window.Polymer = {rootPath: '/'};
 
-<link rel="import" href="./bower_components/app-menu/app-menu.html">
-<link rel="import" href="./bower_components/granite-spinner/granite-spinner.html">
+      // Load and register pre-caching Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('service-worker.js', {
+            scope: Polymer.rootPath,
+          });
+        });
+      }
+    </script>
 
-<link rel="import" href="./bower_components/iron-iconset-svg/iron-iconset-svg.html">
-<link rel="import" href="./bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="./bower_components/paper-tabs/paper-tabs.html">
-<link rel="import" href="./bower_components/paper-button/paper-button.html">
-<link rel="import" href="./bower_components/paper-toggle-button/paper-toggle-button.html">
-<link rel="import" href="./bower_components/paper-input/paper-input.html">
-<link rel="import" href="./bower_components/paper-input/paper-textarea.html">
-<link rel="import" href="./bower_components/paper-item/paper-item.html">
-<link rel="import" href="./bower_components/paper-dialog/paper-dialog.html">
-<link rel="import" href="./bower_components/paper-ripple/paper-ripple.html">
-<link rel="import" href="./bower_components/paper-contact/paper-contact.html">
-
-<!--<link rel="import" href="./bower_components/plastic-image/plastic-image.html">-->
-<link rel="import" href="./bower_components/paper-badge/paper-badge.html">
-<link rel="import" href="./bower_components/google-map/google-map.html">
-
-<link rel="import" href="./bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="./bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="./bower_components/paper-item/paper-item.html">
-
-
-<link rel="import" href="./bower_components/gold-cc-input/gold-cc-input.html">
-<link rel="import" href="./bower_components/gold-cc-cvc-input/gold-cc-cvc-input.html">
-<link rel="import" href="./bower_components/gold-cc-expiration-input/gold-cc-expiration-input.html">
-
-
-<link rel="import" href="./src/edb-frontend-app/edb-icons.html">
-  <link rel="import" href="./src/edb-frontend-app/edb-layout-query.html">
-<link rel="import" href="./src/edb-frontend-app/edb-app-toolbar.html">
-<link rel="import" href="./src/edb-frontend-app/edb-slider.html">
-<link rel="import" href="./src/edb-frontend-app/edb-grid.html">
-<link rel="import" href="./src/edb-frontend-app/edb-card.html">
-<link rel="import" href="./src/edb-frontend-app/edb-tile.html">
-<link rel="import" href="./src/edb-frontend-app/edb-map.html">
-<link rel="import" href="./src/edb-frontend-app/edb-cart-item.html">
-<link rel="import" href="./src/edb-frontend-app/edb-product-page.html">
-<link rel="import" href="./src/edb-frontend-app/edb-order-details.html">
-<link rel="import" href="./src/edb-frontend-app/edb-catfish.html">
-<link rel="import" href="./src/edb-frontend-app/edb-splash.html">
-<link rel="import" href="./src/edb-frontend-app/edb-page.html">
-<link rel="import" href="./src/edb-frontend-app/edb-dropdown.html">
-
-
-
-
-<!--<link rel="import" href="/src/edb-frontend-app/edb-frontend-app.html">-->
-
-    <link rel="import" href="./src/edb-frontend-app/edb-frontend-app.html">
+    <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
+    <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
     
+    <!-- Tinycolor -->
+    <script src="bower_components/tinycolor/tinycolor.js"></script>
+    <script src="bower_components/dexie/dist/dexie.min.js"></script>
+    <!--<script src="bower_components/lzwCompress.js/lzwCompress.js"></script>-->
+    
+    <!-- Load your application shell -->
+    <link rel="import" href="src/my-app.html">
+
+    <!-- Add any global styles for body, document, etc. -->
     <style>
       html,body{
-        width:100%;
-        height:100%;
         box-sizing:border-box;
-        margin:0;padding:0;
+        margin:0;padding:0;border:0;
+        max-width:100vw;
+        overflow-x:hidden;
       }
-      body{
-        background:#ffffff;
-        
+      body {
+        margin: 0;
+        /*font-family: 'Roboto', 'Noto', sans-serif;*/
+        /*line-height: 1.5;*/
+        min-height: 100vh;
+        background-color: #fff;
       }
-      
-      
     </style>
-    
   </head>
   <body>
-    <edb-frontend-app></edb-frontend-app>
+    <my-app></my-app>
+    <noscript>
+      Please enable JavaScript to view this website.
+    </noscript>
+    <!-- Built with love using Polymer Starter Kit -->
   </body>
 </html>

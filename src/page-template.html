@@ -1,0 +1,203 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="page-template">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        @apply --layout;
+        min-height:100%;
+        overflow:hidden;
+        width:inherit;
+        margin:inherit;
+      }
+      *{
+        box-sizing:border-box;
+      }
+      .page-template{
+        @apply --layout-vertical;
+        clear:both;
+        width:inherit;
+        
+      }
+      .page-header,.page-content,.page-content-above,.page-content-below{
+        width:inherit;
+        position:relative;
+        box-sizing:border-box;
+      }
+      .page-image{
+        position:absolute;
+        top:0;
+        left:0;
+        bottom:0;
+        right:0;
+        z-index:-1;
+      }
+      .page-image god-damned-image{
+        
+        width:inherit;
+        height:100%;
+      }
+      .page-title,.page-subtitle,.page-summary{
+        position:relative;
+        text-align:center;
+        z-index:1;
+      }
+      .page-title{
+        @apply --edb-headline-styles;
+        margin-top:60px;
+        margin-bottom:60px;
+        @apply --page-title-styles;
+      }
+      .page-summary{
+        @apply --edb-subhead-styles;
+        margin-top:60px;
+        margin-bottom:60px;
+        margin-left:auto;
+        margin-right:auto;
+        /*width:786px;*/
+        max-width:80%;
+      }
+      
+      #pageAboveContent,#pageContent,#pageBelowContent{
+        background:#fff;
+        /*min-width:100%;*/
+        width:inherit;
+      }
+      #pageContent{
+        min-height:calc(100vh - 192px);
+      }
+      
+      
+    </style>
+  
+    <div id="pageTemplate" class="page-template">
+      
+        <div id="pageHeader" class="page-header">
+          <slot name="header-content">
+            <div class="page-image">
+              <god-damned-image src="[[image.src]]" colors="[[image.colors]]"></god-damned>
+            </div>
+            <div class="page-title">[[title]]</div>
+            <div class="page-subtitle">[[subtitle]]</div>
+            <div class="page-summary">[[summary]]</div>
+            
+          </slot>
+        </div>
+      
+      <div id="pageAboveContent" class="page-content-above page-content">
+        <slot name="above-content"></slot>
+      </div>
+      
+      <div id="pageContent" class="page-content">
+        <slot name="page-content">
+            <template is="juicy-html" html="[[content]]"></template>
+        </slot>
+      </div>
+      
+      <div id="pageBelowContent" class="page-content-below page-content">
+        <slot name="below-content"></slot>
+      </div>
+    </div>
+    
+  </template>
+
+  <script>
+    class PageTemplate extends MyOptionsMixin(Polymer.Element) {
+      static get is() { return 'page-template'; }
+      static get properties() {
+        return {
+         
+          title: {
+            type: String,
+            value: null
+          },
+          subtitle: {
+            type: String,
+            value: null
+          },
+          summary: {
+            type: String,
+            value: null
+          },
+          image: {
+            type: Object,
+            value: () => ({
+                     src: null,
+                     colors: []
+                   })
+          },
+          fixedHeader: {
+            type: Boolean,
+            value: false,
+            reflectToAttribute: true,
+            observer: '__onFixedHeaderChanged'
+          },
+          hasImage: {
+            type: Boolean,
+            computed: '__setHasImage(image, image.src)',
+            observer: '__onHasImageChanged'
+          },
+          content: {
+            type: String,
+            value: '<b>...</b>'
+          }
+        }
+      }
+      
+      
+      __setHasImage(image,src){
+        return image && src;
+      }
+      
+      __onHasImageChanged(){
+        if(this.hasImage){
+          var headerHeight = this.options ? this.options.headerHeight||0 : 0;
+          this.$.pageHeader.style.height = 'calc(100vh - '+headerHeight+'px)';    
+          this.$.pageHeader.querySelector('.page-image').style.display='block';
+        }else{
+          this.$.pageHeader.style.height = 'auto';    
+          this.$.pageHeader.querySelector('.page-image').style.display='none';
+        }
+      }
+      
+      connectedCallback(){
+        super.connectedCallback();
+        this.__onFixedHeaderChanged();
+      }
+      
+      __onFixedHeaderChanged(){
+        var headerHeight = this.options ? this.options.headerHeight||0 : 0;
+        if(this.fixedHeader){
+          var w = this.$.pageHeader.getBoundingClientRect().width;
+          this.$.pageHeader.style.position = 'fixed';
+          this.$.pageHeader.style.top = headerHeight + 'px';
+          this.$.pageHeader.style.width = w + 'px';
+          this.$.pageHeader.style.zIndex = '-1';
+          var headHeight = this.$.pageHeader.getBoundingClientRect().height;
+          this.$.pageTemplate.style.paddingTop = Math.max(headHeight,192) + 'px';
+        }else{
+          this.$.pageHeader.style.position = 'relative';
+          this.$.pageTemplate.style.paddingTop ='0px';
+          this.$.pageHeader.style.width =  'inherit';
+          this.$.pageHeader.style.zIndex = '0';
+        }
+      }
+      
+    }
+
+    window.customElements.define(PageTemplate.is, PageTemplate);
+  </script>
+</dom-module>

@@ -1,0 +1,28 @@
+{
+  "name": "god-damned-geonames-ca",
+  "description": "Gets geoname data for canadian locations using geogratis.ca&#39;s api",
+  "main": "god-damned-geonames-ca.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "iron-ajax": "^2.0.5"
+  },
+  "devDependencies": {
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+  },
+  "resolutions": {
+    "polymer": "^2.0.0"
+  },
+  "homepage": "https://github.com/god-damned-elements/god-damned-geonames-ca",
+  "_release": "eff3299b8e",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "eff3299b8e03f667b66265bcd746b7a8a57f0cb7"
+  },
+  "_source": "git://github.com/god-damned-elements/god-damned-geonames-ca.git",
+  "_target": "*",
+  "_originalSource": "god-damned-elements/god-damned-geonames-ca",
+  "_direct": true
+}

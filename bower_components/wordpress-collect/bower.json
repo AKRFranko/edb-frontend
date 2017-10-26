@@ -1,0 +1,45 @@
+{
+  "name": "wordpress-collect",
+  "version": "0.0.1",
+  "description": "webcomponent for interacting with the Wordpress REST API",
+  "private": true,
+  "authors": [
+    "Marnix Harderwijk <marnix.harderwijk@rocketscience.io>"
+  ],
+  "keywords": [
+    "web-components",
+    "polymer",
+    "ajax",
+    "wordpress",
+    "api"
+  ],
+  "main": "wordpress-collect.html",
+  "repository": {
+    "type": "git",
+    "url": "github.com:rocketsciencesolutions/wordpress-collect.git"
+  },
+  "license": "https://rocketscience.io/LICENSE.txt",
+  "homepage": "https://github.com/rocketsciencesolutions/wordpress-collect",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "iron-ajax": "^2.0.5"
+  },
+  "devDependencies": {
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
+    "iron-component-page": "^3.0.1"
+  },
+  "resolutions": {
+    "polymer": "^2.0.0",
+    "iron-component-page": "^3.0.1",
+    "iron-doc-viewer": "^3.0.0"
+  }
+}

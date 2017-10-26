@@ -1,0 +1,452 @@
+<!-- @license Copyright (c) 2016 The Polymer Project Authors. All rights reserved. This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as part of the polymer project is also subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt -->
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="shared-styles.html">
+<dom-module id="product-page-template">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        @apply --layout;
+        min-height:100%;
+        /*backgruond:blue;*/
+      }
+      .page-template{
+        @apply --layout-vertical;
+        @apply --layout-start-justified;
+        width:100%;
+        clear:both;
+        /*backgruond:red;*/
+      }
+      *{
+        box-sizing:border-box;
+      }
+    
+     .product-name{
+       @apply --edb-product-name;
+       margin:0;
+       line-height:1;
+       padding:0 0 32px 0;
+       margin-top:-16px;
+     }
+     .product-price{
+       @apply --edb-product-price;
+       white-space:nowrap;
+     }
+      
+      #slider{
+        display:block;
+        width:810px;
+        height:560px;
+        overflow:hidden;
+        position:relative;
+      }
+    
+      .slide{
+        position:absolute;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        width:810px;
+        height:500px;
+        max-height:500px;
+      }
+      
+      #productMenu{
+        
+        width:302px;
+        padding:16px;
+        box-sizing:border-box;
+        @apply --layout-vertical;
+        
+      }
+      .wide-group{
+        @apply --layout-horizontal;
+        @apply --layout-start-justified;
+      }
+      .quantity-select,.availability{
+        @apply --layout-horizontal;
+        @apply --layout-center;
+      }
+      .choice-dropdown{
+        width:100%;
+        @apply --layout-vertical;
+      }
+      .choice-dropdown paper-button{
+        
+        @apply --edb-product-widget;
+        
+        --paper-button: {
+          @apply --edb-product-widget;
+          @apply --layout-start-justified;
+          margin:0;padding:0;
+        }
+      }
+      .choice-dropdown paper-button,.quantity-select,.availability{
+        border-top:1px solid #000;
+        height:54px;
+        vertical-align:top;
+      }
+      .label{
+        min-width:30%;
+        @apply --edb-product-widget;
+      }
+      
+      .inner-collapse{
+        width:calc(100% + 12px);
+        margin-left:-6px;
+        margin-right:-6px;
+        padding-bottom:32px;
+        padding-top:16px;
+        
+      }
+      .inner-collapse iron-selector{
+        @apply --layout-horizontal;
+        @apply --layout-wrap;
+        @apply --layout-start-justified;
+      }
+      edb-material-button,edb-leg-button{
+        margin:6px;
+      }
+      .flex{
+        @apply --layout-flex;
+      }
+      #dcrQty,#incrQty{
+        /*background:#000;*/
+        /*color:#fff;*/
+        width:24px;
+        height:24px;
+        min-width:24px;
+        min-height:24px;
+        max-width:24px;
+        max-height:24px;
+        text-align:center;
+        border-radius:50%;
+        overflow:hidden;
+        /*margin:3px;*/
+        --paper-icon-button:{
+          padding:0;
+        }
+      }
+      #dcrQty{
+        margin-right:6px;
+      }
+      #incrQty{
+        margin-left:6px;
+      }
+      #qty::-webkit-inner-spin-button, 
+      #qty::-webkit-outer-spin-button { 
+        -webkit-appearance: none; 
+        margin: 0; 
+      }
+      #qty{
+        border:0;
+        font-size:22px;
+        font-weight:normal;
+        width:auto;
+        max-width:32px;
+        text-align:center;
+        /*--paper-input-container-color: transparent;*/
+        /*--paper-input-container-focus-color: transparent;*/
+        /*--paper-input-container:{*/
+        /*  border:0;*/
+        /*  font-size:64px;*/
+          
+        /*}*/
+      }
+      .wide-group{
+        margin-top:60px;
+        border-top:1px solid #000;
+      }
+      #pageHeader.wide-group{
+        margin-top:0!important;
+        border-top:0!important;
+      }
+      #productDescription{
+        text-align:center;
+        @apply --layout-vertical;
+        @apply --layout-center-center;
+        @apply --edb-summary-styles;
+        padding:0 20%;
+        
+        
+      }
+      #anatomy,#whywelove{
+        text-align:center;
+        @apply --layout-vertical;
+        @apply --layout-center-center;
+        @apply --edb-summary-styles;
+        margin-top:60px;
+        margin-bottom:60px;
+      }
+      #anatomy img{
+        max-width:100%;
+        width:100%;
+      }
+      #productDimSheet,#productStatSheet{
+        width:50%;
+        @apply --edb-product-body;
+        @apply --layout-vertical;
+        @apply --layout-start-justified;
+        text-align:center;
+        margin-bottom:-60px
+      }
+      #productDimSheet{
+        border-right:1px solid #000;
+      }
+      h2{
+        @apply --edb-product-title;
+        margin-bottom:30px;
+        padding-top:30px;
+        color:#222;
+      }
+     
+      #wireframe{
+        max-width:80%;
+        margin-left:auto;
+        margin-right:auto;
+        margin-top:32px;
+        margin-bottom:32px;
+      }
+      
+    </style>
+    <div id="pageTemplate" class="page-template">
+      <div class="wide-group" id="pageHeader">
+        <!--<god-damned-carousel id="slider">-->
+          
+        <!--</god-damned-carousel>-->
+        <!--<god-damned-image src="[[product.image.src]]" colors="[[product.image.colors]]"></god-damned-image>      -->
+        <div id="slider">
+          <template is="dom-repeat" items="[[product.images]]" as="image">
+            <div class="slide">
+              <god-damned-image content-is-clickable src="[[image.src]]" colors="[[image.colors]]"></god-damned-image>
+            </div>
+          </template>
+          <edb-slider></edb-slider>
+        </div>
+        <div id="productMenu">
+           <h1 class="product-name">[[renderAsString(product.name)]]</h1>
+
+          <p class="product-price">$[[product.minPrice]] - $[[product.maxPrice]]</p>
+          <div hidden$="[[!product.options.slipcover]]" class="choice-dropdown">
+            <paper-button on-click="toggleCollapse" data-collapse="materialDropdown">select a color</paper-button>
+            <iron-collapse id="materialDropdown">
+              <div class="inner-collapse">
+                <iron-selector attr-for-selected="name" selected="{{product.options.slipcover.selected}}" fallback-selection="[[product.options.slipcover.defaultSelection]]">
+                  <template is="dom-repeat" items="{{product.options.slipcover.choices}}" as="choice">
+                    <edb-material-button name="[[choice.name]]" material="[[choice.material]]"></edb-material-button>
+                  </template>
+                </iron-selector>
+              </div>
+            </iron-collapse>
+          </div>
+          <div hidden$="[[!product.options.leg]]" class="choice-dropdown">
+            <paper-button on-click="toggleCollapse" data-collapse="legDropdown">select a leg</paper-button>
+            <iron-collapse id="legDropdown">
+              <div class="inner-collapse">
+                <iron-selector attr-for-selected="name" selected="{{product.options.leg.selected}}" fallback-selection="[[product.options.leg.defaultSelection]]">
+                  <template is="dom-repeat" items="{{product.options.leg.choices}}" as="choice">
+                    <edb-leg-button name="{{choice.name}}" leg="{{choice.leg}}"></edb-leg-button>
+                  </template>
+                </iron-selector>
+              </div>
+            </iron-collapse>
+          </div>
+          <div class="quantity-select">
+            <div class="label">Quantity</div>
+            <paper-icon-button id="dcrQty" on-click="_decrQty" icon="my-icons:minus"></paper-icon-button>
+            <input id="qty" type="number" min="1" max="100" value$="{{wantedQuantity}}"></input>
+            <paper-icon-button id="incrQty" on-click="_incrQty" icon="my-icons:plus"></paper-icon-button>
+          </div>
+          <div class="availability">
+            <div class="label">Availability</div>
+          </div>
+          <div class="flex"></div>
+          <div class="add-to-cart">
+            <paper-button primary>add to cart</paper-button>
+          </div>
+        </div>
+      </div>
+      <div id="productDescription" class="wide-group">
+        <div>
+           <h2>DESCRIPTION</h2>
+           <template is="juicy-html" html="[[renderAsString(product.description)]]"></template>
+            
+        </div>
+      </div>
+      <div class="wide-group">
+        <div id="productDimSheet">
+           <h2>DIMENSIONS</h2>
+          <p>Product dimension : 88” x 32” x 29” h<br>Packaged dimension : 90” x 34” x 24” h</p>
+          <iron-image id="wireframe" src="[[product.wireframe.src]]"></iron-image>
+        </div>
+        <div id="productStatSheet">
+           <h2>COMPOSITION</h2>
+
+          <table>
+            <tr>
+              <th>Frame</th>
+              <td>solid pine wood</td>
+            </tr>
+            <tr>
+              <th>Leg</th>
+              <td>turned solid wood</td>
+            </tr>
+            <tr>
+              <th>Seat cushion</th>
+              <td>polyurethane foam</td>
+            </tr>
+            <tr>
+              <th>Back cushion</th>
+              <td>dacron filling</td>
+            </tr>
+            <tr>
+              <th>Seating</th>
+              <td>suspension webbing</td>
+            </tr>
+            <tr>
+              <th>Comfort & firmness</th>
+              <td>medium/firm</td>
+            </tr>
+            <tr>
+              <th>Choice of fabrics</th>
+              <td>12</td>
+            </tr>
+            <tr>
+              <th>Care</th>
+              <td>dry cleaning</td>
+            </tr>
+            <tr>
+              <th>Cover</th>
+              <td>removable</td>
+            </tr>
+            <tr>
+              <th>Assembly</th>
+              <td>light assembly required</td>
+            </tr>
+          </table>
+          <div class="flex"></div>
+          <p>1 year warranty against defects in materials and workmanship that covers frames and cushions of our sofas.<br>Designed in montreal, made in china</p>
+          
+        </div>
+        
+      </div>
+      <div id="anatomy" class="wide-group">
+        <h2>ANATOMY of [[product.name]]</h2>
+        <img id="anatomy" src$="[[product.anatomy.src]]">
+      </div>
+      <div id="whywelove" class="wide-group">
+        <h2>{{product.whyWeLove.title}}</h2>
+        <template is="juicy-html" html="[[renderAsString(product.whyWeLove.content)]]"></template>
+      </div>
+    </div>
+  </template>
+  <script>
+    class ProductPageTemplate extends MyOptionsMixin(EDBHelperMixin(Polymer.Element)) {
+      static get is() { return 'product-page-template'; }
+      static get properties() {
+        return {
+         
+          product: {
+            type: Object,
+            value: function(){
+              return {};
+            },
+            observer: '_productChanged'
+          },
+          wantedQuantity: {
+            type: Number,
+            value: 1,
+            observer:'_onWantedQuantityChanged'
+          }
+        }
+      }
+      static get observers(){
+        return [
+          '_onWantedQuantityChanged(wantedQuantity)']
+      }
+      _decrQty(){
+        var old = parseFloat(this.get('wantedQuantity'));
+        if(old <= 1) return;
+        this.set('wantedQuantity',old - 1);
+      }
+      _incrQty(){
+        var old = parseFloat(this.get('wantedQuantity'));
+        if(old >= 100) return;
+        this.set('wantedQuantity',old + 1);
+      }
+      _onWantedQuantityChanged(q){
+        if(!this.product) return;
+        if(!this.product.id) return;
+        if(typeof q == 'undefined' || q === null ){
+          this.product.wanted = 0;
+        }else{
+          this.product.wanted = parseFloat(q);  
+        }
+        
+        
+      }
+      
+      toggleCollapse(e){
+        var collapse = e.target.dataset.collapse;
+        this.$[collapse].toggle();
+      }
+      _productChanged(product){
+        
+        if(!product){
+          Array.prototype.forEach.call(this.shadowRoot.querySelectorAll('iron-collapse'), function(n){
+            n.opened = false;
+          });
+          this.wantedQuantity = 0;  
+        }else{
+          console.log(product.options && product.options.slipcover ? product.options.slipcover.choices : null)
+          this.wantedQuantity = 1;  
+        }
+        
+          
+        // }
+
+      }
+      
+      // __setHasImage(image,src){
+      //   return image && src;
+      // }
+      
+      // __onHasImageChanged(){
+      //   if(this.hasImage){
+      //     var headerHeight = this.options ? this.options.headerHeight||0 : 0;
+      //     this.$.pageHeader.style.height = 'calc(100vh - '+headerHeight+'px)';    
+      //     this.$.pageHeader.querySelector('.page-image').style.display='block';
+      //   }else{
+      //     this.$.pageHeader.style.height = 'auto';    
+      //     this.$.pageHeader.querySelector('.page-image').style.display='none';
+      //   }
+      // }
+      
+      // connectedCallback(){
+      //   super.connectedCallback();
+      //   this.__onFixedHeaderChanged();
+      // }
+      
+      // __onFixedHeaderChanged(){
+      //   var headerHeight = this.options ? this.options.headerHeight||0 : 0;
+      //   if(this.fixedHeader){
+      //     this.$.pageHeader.style.position = 'fixed';
+      //     this.$.pageHeader.style.top = headerHeight + 'px';
+      //     this.$.pageHeader.style.zIndex = '-1';
+      //     var headHeight = this.$.pageHeader.getBoundingClientRect().height;
+      //     this.$.pageTemplate.style.paddingTop = Math.max(headHeight,192) + 'px';
+      //   }else{
+      //     this.$.pageHeader.style.position = 'relative';
+      //     this.$.pageTemplate.style.paddingTop ='0px';
+      //     this.$.pageHeader.style.zIndex = '0';
+      //   }
+      // }
+      
+    }
+
+    window.customElements.define(ProductPageTemplate.is, ProductPageTemplate);
+  </script>
+</dom-module>

@@ -1,0 +1,278 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="article-template">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        @apply --layout;
+      }
+      .article-template{
+        @apply --layout-vertical;
+        width:100%;
+        overflow:hidden;
+        /*padding-top:100%;*/
+        clear:both;
+      }
+      
+      .article-header,.article-content,.article-content-above,.article-content-below{
+        width:100%;
+        position:relative;
+        box-sizing:border-box;
+      }
+      .article-header{
+        width:100%;
+        height:100%;
+        
+        
+        @apply --article-header-styles;
+      }
+      
+      
+      .article-image{
+        position:relative;
+        /*top:0;*/
+        /*left:0;*/
+        
+        width:56%;
+        height:0;
+        padding-top:calc( 56% * 0.613);
+        
+      }
+      .article-image god-damned-image{
+        position:absolute;
+        top:0;left:0;bottom:0;right:0;
+        margin:0;
+        width:100%;
+        height:100%;
+        
+      }
+      .article-header-texts{
+        padding:60px;
+        width:calc(44% - 96px);
+        @apply --article-header-text-styles;
+      }
+      .article-title,.article-subtitle,.article-summary{
+        position:relative;
+        z-index:1;
+      }
+      .article-title{
+        @apply --edb-item-title-styles;
+        @apply --article-title-styles;
+        
+      }
+      .article-subtitle{
+        @apply --article-subtitle-styles;
+      }
+      .article-summary{
+        height:4rem;
+        max-height:100%;
+        overflow:hidden;
+        @apply --article-summary-styles;
+      }
+      
+      
+    </style>
+<!--<alicorn-scroll-watcher id="scrollWatcher" on-viewport-state-changed="__measureViewport" on-exit-viewport="__measureViewport">-->
+    <div class="article-template">
+      
+      <div id="articleHeader" class="article-header">
+        <slot name="article-header">
+        
+          <div class="article-image">
+            <god-damned-image id="fadeImage" hide-image-on-load src="[[image.src]]" colors="[[image.colors]]"></god-damned-image>
+            <!--<edb-image id="fadeImage" image="[[image]]"></edb-image>-->
+            <!--<iron-image id="fadeImage" style="[[_setBgColor(image.colors)]]"  preload fade sizing="cover"></iron-image>-->
+          </div>
+          <div class="article-header-texts">
+          <div class="article-title">[[title]]</div>
+          <div class="article-subtitle">[[subtitle]]</div>
+          <div class="article-summary">
+            <soso-truncated-text style="height:5rem" text="[[summary]]"></soso-truncated-text>
+            </div>
+          </div>
+          
+        
+        </slot>
+      </div>
+      <div class="article-content">
+        <slot name="article-content">
+          <template is="juicy-html" html="[[content]]"></template>
+        </slot>
+      </div>
+      
+    </div>
+    <!--</alicorn-scroll-watcher>-->
+  </template>
+
+  <script>
+    class ArticleTemplate extends AlicornScrollWatcherMixin(MyOptionsMixin(Polymer.Element)){
+      static get is() { return 'article-template'; }
+      static get properties() {
+        return {
+         
+          title: {
+            type: String,
+            notify: true,
+            value: null
+          },
+          subtitle: {
+            type: String,
+            notify: true,
+            value: null
+          },
+          summary: {
+            type: String,
+            notify: true,
+            value: null
+          },
+          image: {
+            type: Object,
+            notify: true,
+            value: () => ({
+                     src: null,
+                     colors: []
+                   })
+          },
+          hasImage: {
+            type: Boolean,
+            
+            computed: '__setHasImage(image, image.src)',
+            observer: '__onHasImageChanged'
+          },
+          
+        }
+      }
+      
+      // _setBgColor(colors){
+        
+      //   if(!Array.isArray(colors)) return null;
+      //   var gradientColors = [];
+      //   // sort by darkest saturated color.
+      //   colors.sort( function( a, b){
+      //     var sa = (tinycolor(a).toHsl().s - tinycolor(a).toHsl().l);
+      //     var sb = (tinycolor(b).toHsl().s - tinycolor(b).toHsl().s);
+      //     return  sa >  sb ? -1 : sb > sa ? 1 : 0;
+      //   } );
+      //   // grab first two
+      //   var colorA = tinycolor(colors.shift());
+      //   var colorB = tinycolor(colors.shift());
+      //   // make translucent
+      //   colorA.setAlpha(0.6);
+      //   colorB.setAlpha(0.6);
+
+      //   gradientColors.push(colorA.toString());
+      //   gradientColors.push(colorB.toString());
+        
+        
+      //   // gradientColors.push(colors.shift());
+      //   // gradientColors.push(colors[0]);
+      //   // gradientColors.push(colors[Math.round(colors.length/2)]);
+      //   // gradientColors.push(colors[colors.length-1]);
+      //   return 'background-image:radial-gradient(at bottom right, ' +gradientColors.join(',')+');';
+        
+      // }
+      
+        
+      __setHasImage(image,src){
+        return image && src;
+      }
+      
+      __onHasImageChanged(){
+        if(this.hasImage){
+              
+          // this.$.articleHeader.querySelector('.article-image').style.display='block';
+        }else{
+          
+          // this.$.articleHeader.querySelector('.article-image').style.display='none';
+        }
+      }
+      
+      
+      _scrollHandler(e){
+        var bbox = this.getBoundingClientRect();
+        var bottom = (bbox.height + bbox.top);
+        var top = bbox.top;
+        var bottomExit = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+        var topExit = this.options ? this.options.headerHeight||0 : 0;
+        var wasInViewport = this.classList.contains('in-viewport');
+        
+        
+          var inViewport = false;
+          this.classList.remove('above-viewport');
+          this.classList.remove('below-viewport');
+          this.classList.remove('partially-above');
+          this.classList.remove('partially-below');
+          if( bottom <= topExit || top >= bottomExit ){
+            this.classList.remove('in-viewport');
+          }else{
+            this.classList.add('in-viewport');
+            inViewport = true;
+          }
+          
+          if( inViewport ){
+            if( top >= topExit && bottom <= bottomExit ){
+              this.classList.add('fully-in-viewport');
+            }else{
+              this.classList.remove('fully-in-viewport');
+            }
+            if( top < topExit ){
+              this.classList.add('partially-above');
+            }
+            if( bottom > bottomExit ){
+              this.classList.add('partially-below');
+            }
+          }
+          if( bottom <= topExit ){
+            this.classList.add('above-viewport');
+            this.classList.remove('below-viewport');
+          }
+          if( top >= bottomExit ){
+            this.classList.add('below-viewport');
+            this.classList.remove('above-viewport');
+          }
+          // var imageLoaded = this.$.fadeImage.classList.contains('src-loaded');
+          if(this.classList.contains('in-viewport') && !wasInViewport){
+              Polymer.Async.animationFrame.run( ()=>{
+                this.$.fadeImage.showImage();
+              })
+              // if(!imageLoaded && !!this.image.src){
+                // this.$.fadeImage.classList.add('src-loaded');
+                // console.log(this.$.fadeImage)
+                // this.$.fadeImage.loadImage();
+              // }
+          }
+          
+          
+            
+     
+        
+      }
+      
+    
+      // connectedCallback() {
+      //   super.connectedCallback();
+        
+        
+     
+      // }
+      
+     
+      
+    }
+
+    window.customElements.define(ArticleTemplate.is, ArticleTemplate);
+  </script>
+</dom-module>

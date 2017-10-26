@@ -1,0 +1,824 @@
+<!-- @license Copyright (c) 2016 The Polymer Project Authors. All rights reserved. This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as part of the polymer project is also subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt -->
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/google-map/google-map.html">
+<link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../bower_components/soso-truncated-text/soso-truncated-text.html">
+<!--<link rel="import" href="../bower_components/iron-multi-ajax/iron-multi-ajax.html">-->
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/god-damned-carousel/god-damned-carousel.html">
+<link rel="import" href="../bower_components/god-damned-image/god-damned-image.html">
+<link rel="import" href="../bower_components/god-damned-geonames-ca/god-damned-geonames-ca.html">
+<link rel="import" href="../bower_components/paper-carousel/paper-carousel.html">
+<link rel="import" href="../bower_components/app-storage/app-network-status-behavior.html">
+<link rel="import" href="../bower_components/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.html">
+
+
+<link rel="import" href="../bower_components/granite-spinner/granite-spinner.html">
+
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-dialog-lite/paper-dialog-lite.html">
+<link rel="import" href="../bower_components/iron-localstorage/iron-localstorage.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+
+
+
+<link rel="import" href="../bower_components/juicy-html/juicy-html.html">
+<link rel="import" href="../bower_components/ibm-toolbar/ibm-toolbar.html">
+<link rel="import" href="../bower_components/alicorn-scroll-watcher/alicorn-scroll-watcher.html">
+<link rel="import" href="../bower_components/wordpress-collect/wordpress-collect.html">
+<link rel="import" href="../bower_components/shadycss/apply-shim.html">
+<link rel="import" href="../bower_components/wow-tabs/wowtabs.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<link rel="import" href="my-mixins.html">
+<link rel="import" href="my-options.html">
+<!--<link rel="import" href="edb-cataloger.html">-->
+<!--<link rel="import" href="edb-api-data.html">-->
+<!--<link rel="import" href="edb-api-consumer.html">-->
+<link rel="import" href="edb-api-request.html">
+<link rel="import" href="edb-api-catalog.html">
+<link rel="import" href="edb-api-control.html">
+<link rel="import" href="edb-material-button.html">
+<link rel="import" href="edb-leg-button.html">
+<link rel="import" href="edb-slider.html">
+<link rel="import" href="edb-image.html">
+<link rel="import" href="my-icons.html">
+<link rel="import" href="my-logo.html">
+
+<link rel="import" href="page-template.html">
+<link rel="import" href="product-page-template.html">
+<link rel="import" href="article-template.html">
+<link rel="lazy-import" href="my-home.html">
+<link rel="lazy-import" href="my-inspiration.html">
+<link rel="lazy-import" href="my-order-samples.html">
+<link rel="lazy-import" href="my-about.html">
+<link rel="lazy-import" href="my-shipping.html">
+<link rel="lazy-import" href="my-contact.html">
+<link rel="lazy-import" href="my-lookbook.html">
+<link rel="lazy-import" href="my-shop.html">
+<link rel="lazy-import" href="my-view3.html">
+<link rel="lazy-import" href="my-view404.html">
+<dom-module id="my-app">
+  <template>
+    <style>
+      :host {
+
+        display: block;
+        max-width:1111px;
+        margin-left:auto;
+        margin-right:auto;
+        --app-primary-color: #fff;
+        --app-secondary-color: #000;
+  
+  
+        --app-sans-serif-font:'pragmatica-web-condensed', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        --app-serif-font:'adobe-caslon-pro', Georgia, 'Times New Roman', Times, serif;
+  
+  
+        --link-hover-color: #38aaa0;      
+        
+        
+        
+        --nav-link-text-styles: {
+          font-family:var(--app-sans-serif-font);
+          font-size:12px;
+          text-transform:lowercase;
+          text-decoration:none;
+          color:inherit;
+        }
+        
+        
+        --edb-copy-styles:{
+          font-family:var(--app-sans-serif-font);
+          font-size:18px;
+          text-transform:lowercase;
+          width:100%;
+          color:inherit;
+        }
+        
+        --edb-headline-styles: {
+          font-family:var(--app-sans-serif-font);
+          font-size:81px;
+          font-weight:bold;
+          text-transform:uppercase;
+          color:inherit;
+        }
+        
+        --edb-feature-list-title:{
+          font-family:var(--app-serif-font);
+          font-size:30px;
+          font-weight:normal;
+          text-transform:uppercase;
+          color:inherit;
+        }
+        --edb-feature-list-subtitle:{
+          font-family:var(--app-sans-serif-font);
+          font-size:16px;
+          font-weight:normal;
+          text-transform:lowercase;
+          color:inherit;
+        }
+        --edb-feature-list-summary:{
+          font-family:var(--app-sans-serif-font);
+          font-size:14px;
+          font-weight:normal;
+          text-transform:lowercase;
+          color:inherit;
+        }
+        
+        --edb-inspiration-list-title:{
+          font-family:var(--app-sans-serif-font);
+          font-size:41px;
+          font-weight:normal;
+          text-transform:uppercase;
+          color:inherit;
+        }
+        
+        --edb-subhead-styles: {
+          font-family:var(--app-sans-serif-font);
+          font-size:24px;
+          font-weight:normal;
+          text-transform:lowercase;
+          color:inherit;
+        }
+        --edb-pullquote-styles: {
+          font-family:var(--app-sans-serif-font);
+          font-size:31px;
+          font-weight:normal;
+          text-transform:lowercase;
+          color:inherit;
+        }
+        
+        --edb-footnote-title:{
+          font-family:var(--app-serif-font);
+          font-size:61px;
+          font-weight:normal;
+          text-transform:uppercase;
+          color:inherit;
+        }
+        
+        --edb-footnote-subtitle:{
+          font-family:var(--app-sans-serif-font);
+          font-size:28px;
+          font-weight:normal;
+          text-transform:lowercase;
+          color:inherit;
+        }
+        
+        --edb-footnote-body:{
+          font-family:var(--app-sans-serif-font);
+          font-size:18px;
+          font-weight:normal;
+          text-transform:lowercase;
+          color:inherit;
+        }
+        
+        --edb-footnote-loud:{
+          @apply --edb-pullquote-styles;
+          
+        }
+        
+        --edb-product-name:{
+          font-family:var(--app-serif-font);
+          font-size:35px;
+          font-weight:normal;
+          text-transform:uppercase;
+          color:inherit;
+        }
+        
+        --edb-product-price:{
+          font-family:var(--app-sans-serif-font);
+          font-size:28px;
+          font-weight:normal;
+          text-transform:lowercase;
+          color:inherit;
+        }
+        
+        --edb-product-widget:{
+          @apply --edb-copy-styles;
+        }
+        
+        --edb-product-widget-hint:{
+          @apply --edb-copy-styles;
+          font-size:13px;
+        }
+        --edb-product-title:{
+          font-family:var(--app-serif-font);
+          font-size:35px;
+          font-weight:normal;
+          text-transform:uppercase;
+          color:inherit;
+        }
+        
+        --edb-title-styles:{
+          font-family:var(--app-serif-font);
+          font-size:35px;
+          font-weight:normal;
+          text-transform:uppercase;
+          color:inherit;
+        }
+        --edb-product-subtitle:{
+          font-family:var(--app-sans-serif-font);
+          font-size:22px;
+          font-weight:normal;
+          text-transform:lowercase;
+          color:inherit;
+        }
+        --edb-product-body:{
+          @apply --edb-copy-styles;
+        }
+        
+        --edb-button-styles:{
+          @apply --edb-copy-styles;
+          text-transport:uppercase;
+          white-space:nowrap;
+        }
+        
+        
+        --edb-material-name:{
+          font-family:var(--app-sans-serif-font);
+          font-size:28px;
+          font-weight:normal;
+          text-transform:uppercase;
+          color:inherit;
+        }
+        
+        --edb-material-composition:{
+          font-family:var(--app-sans-serif-font);
+          font-size:24px;
+          font-weight:normal;
+          text-transform:uppercase;
+          color:inherit;
+        }
+        --edb-material-body:{
+          @apply --edb-copy-styles;
+        }
+        --edb-material-note:{
+          @apply --edb-product-widget-hint;
+        }
+        
+ 
+        
+        --menu-link-text-styles: {
+          font-family:var(--app-sans-serif-font);
+          font-size:15px;
+          text-transform:lowercase;
+          text-decoration:none;
+          color:inherit;
+          
+        }
+        
+        /*--edb-headline-styles: {*/
+        /*  font-family:var(--app-sans-serif-font);*/
+        /*  font-size:96px;*/
+        /*  font-weight:bold;*/
+        /*  text-transform:uppercase;*/
+          
+        /*  line-height:84px;*/
+        
+        /*  text-align:center;*/
+        /*  width:100%;*/
+        /*  color:inherit;*/
+        /*}*/
+        --edb-summary-styles:{
+          font-family:var(--app-sans-serif-font);
+          font-size:20px;
+          text-align:center;
+          width:100%;
+          color:inherit;
+        }
+        --edb-product-title-styles: {
+          font-family:var(--app-serif-font);
+          font-size:52px;
+          font-weight:normal;
+          text-transform:uppercase;
+          color:inherit;
+        }
+        
+        
+        --edb-item-title-styles:{
+          font-family:var(--app-serif-font);
+          font-size:48px;
+          text-transform:uppercase;
+          text-align:center;
+          width:100%;
+          color:inherit;
+        }
+        
+        
+          
+        
+        
+        background:purple;
+      }
+
+      [main-title] {
+        /* override pointer-events: none set by app-toolbar */
+        pointer-events: auto;
+        /* set margin-right so title won't be on top of the 2 buttons on the right */
+        margin-right: 100px
+      }
+      #logo{
+        display:block;
+        z-index:1;
+      }
+
+      my-logo{
+        
+        
+        /*height:96px;*/
+        width:96px;
+      }
+      
+      
+      
+      app-header{
+        height:192px;
+        overflow:hidden;
+        background:#fff;
+      }
+      app-toolbar {
+        padding-top: 48px;
+        padding-bottom: 64px;
+        margin-bottom: 0;
+        height: 96px;
+      }
+      a.article-wrap{
+        color:inherit;
+        text-deooration:none;
+      }
+      #userNav a,#siteNav a{
+          @apply --nav-link-text-styles;
+          
+                   
+                   padding:0 1em;
+                 }
+                 #userNav a:last-of-type,#siteNav a:last-of-type{
+                   margin-right:-1em;
+                 }
+      
+      #userNav{
+        height:32px;
+        line-height:24px;
+        text-align:right;
+        
+      }
+      #userNav a:hover,#siteNav a:hover{
+        color:var(--link-hover-color);
+      }
+      
+      #siteNav{
+        height:64px;
+        line-height:96px;
+      }
+      
+
+      app-header paper-icon-button {
+        /*--paper-icon-button-ink-color: white;*/
+      }
+
+      #categoriesPanel{
+        top:192px;
+        position:fixed;
+        display:block;
+        width:100%;
+        height:0;
+        min-height:0;
+        transition:all .2s ease-in;
+        background:rgba(0,0,0,0.8);
+        color:#fff;
+        overflow:hidden;
+        margin-top:-48px;
+        margin-bottom:48px;
+      }
+      #categoriesPanel.open{
+        padding-top:48px;
+        height:calc(100vh - 144px);
+        min-height:calc(100vh - 144px);
+        z-index:10;
+      }
+      #footer{
+        @apply --layout-vertical;
+        @apply --layout-justified;
+        height:320px;
+        min-height:320px;
+        width:100%;
+        background:#fff;
+      }
+      #footNav{
+        background:#333;
+        height:240px;
+        min-height:240px;
+        width:100%;
+      }
+      
+      #back-to-top{
+        height:calc(320px - 240px);
+        
+      }
+      iron-pages{
+        @apply --layout;
+        min-height:100vh;
+        min-width:100%;
+      }
+      #pages{
+        width:100%;
+        min-width:100%;
+        /*min-height:100vh;*/
+      }
+      
+      
+      
+      [hidden]{
+        display:none!important;
+      }
+      
+      #lockScreen{
+        position:fixed;
+        /*width:100vw;*/
+        /*height:100vh;*/
+        background:rgba(255,255,255,0.7);
+        @apply --layout-vertical;
+        @apply --layout-center-center;
+        z-index:999999;
+      }
+      
+      #waitPage{
+        /*min-height:100vh;*/
+        /*min-width:100vw;*/
+        
+      }
+      .categories-list{
+        
+        @apply --layout-vertical;
+        @apply --layout-start-justified;
+        margin:0;
+        padding:48px;
+        list-style-type:none;
+      }
+      .categories-list li{
+        display:block;
+        list-style-type:none;
+      }
+      .categories-list li a{
+        @apply --nav-link-text-styles;
+        color:#fff;  
+      }
+      
+    </style>
+    <!--<div id="lockScreen" hidden$="[[!loading]]">-->
+    <!--  <div>-->
+    <!--    <p>{{loadingMessage}}</p>-->
+    <!--    <granite-spinner color="#000" line-width="5px" size="64"  active="[[loading]]"></granite-spinner>-->
+    <!--  </div>-->
+      
+    <!--</div>-->
+    
+    <my-options></my-options>
+    <!--<edb-api-consumer online="{{online}}" catalog="{{catalog}}" selected-category="[[selectedCategory]]" id="consumer" loading="{{loading}}"></edb-api-consumer>-->
+    
+    <iron-media-query query="(min-width: 840px)" query-matches="{{showNavTabs}}"></iron-media-query>
+
+    
+    
+    <!--<app-drawer-layout fullbleed narrow="{{narrow}}">-->
+    <!-- Drawer content -->
+    <!--<app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">-->
+    <!--<app-toolbar>Menu</app-toolbar>-->
+    <!--<iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">-->
+    <!--<a name="view1" href="[[rootPath]]view1">View One</a>-->
+    <!--<a name="view2" href="[[rootPath]]view2">View Two</a>-->
+    <!--<a name="view3" href="[[rootPath]]view3">View Three</a>-->
+    <!--</iron-selector>-->
+    <!--</app-drawer>-->
+    <!-- Main content -->
+    <app-header-layout id="appLayout" fullbleed>
+      <app-header slot="header" fixed>
+        <app-toolbar>
+          <!--<paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>-->
+          <div main-title>
+            <a href="[[rootPath]]home/" id="logo" title="EDB Home">
+              <my-logo online="{{online}}"></my-logo>
+            </a>
+          </div>
+          <div>
+            <div id="userNav" top-item>
+              
+              <a href="[[rootPath]]contact/">1-888-888-8888</a>
+              
+                <a href="[[rootPath]]auth/" on-click="openAuthDialog" hidden$="[[isLoggedIn]]">Sign In.</a>
+              
+              
+                <a href="[[rootPath]]auth/" on-click="logout" hidden$="[[!isLoggedIn]]">Sign Out.</a>
+              
+              <a href="[[rootPath]]cart/" hidden$="[[!isLoggedIn]]">Cart</a>
+              
+            </div>
+            <div id="siteNav" bottom-item>
+              <template is="dom-if" if="[[showNavTabs]]">
+                <a href="[[rootPath]]shop/" on-click="toggleCategoriesPanel">Products</a>
+                <a href="[[rootPath]]order-samples/">Order Samples</a>
+                <a href="[[rootPath]]about/">About</a>
+                <a href="[[rootPath]]shipping/">Shipping</a>
+                <a href="[[rootPath]]contact/">Contact</a>
+                <a href="[[rootPath]]lookbook/">Lookbook</a>
+                <a href="[[rootPath]]inspiration/">Inspiration</a>
+                
+              </template>
+            </div>
+          </div>
+        </app-toolbar>
+        
+        <!--<app-toolbar>-->
+        <!-- <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>-->
+        <!-- <div main-title>My App</div>-->
+        <!--</app-toolbar>-->
+      </app-header>
+      <div id="categoriesPanel" on-click="closeCategoriesPanel">
+        <ul class="categories-list">
+        <template is="dom-repeat" items="[[categories]]" as="category">
+          <li><a href="[[rootPath]]shop/[[category.slug]]/">[[renderAsString(category.name)]]</a></li>
+        </template>
+        </ul>
+      </div>
+      
+      <div id="pages">
+      
+      <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
+        <div id="waitPage" name="wait"><granite-spinner color="#000" line-width="5px" size="64"  active="[[_spinnerIsActive(page,loading)]]"></granite-spinner></div>
+        <my-home id="homePage" name="home" slides="{{slides}}" features="[[features]]"></my-home>
+        <my-inspiration id="inspirationPage" name="inspiration" route="[[subroute]]" inspirations="[[inspirations]]"></my-inspiration>
+        <my-shop id="shopPage" name="shop" route="[[shoproute]]" products="[[products]]" current-category="[[selectedCategory]]" current-product="[[currentProduct]]"></my-shop>
+        <my-about id="aboutPage" page="[[_getPageBySlug('about-page', pages)]]" name="about"></my-about>
+        <my-shipping id="shippingPage" page="[[_getPageBySlug('shipping-page', pages)]]" name="shipping"></my-shipping>
+        <my-order-samples id="orderSamplesPage" name="order-samples" materials="[[materials]]"></my-order-samples>
+        <my-contact id="contactPage" page="[[_getPageBySlug('contact-page', pages)]]" name="contact"></my-contact>
+        <my-lookbook id="lookbookPage" name="lookbook"></my-lookbook>
+        <my-view404 id="errorPage" name="view404"></my-view404>
+      </iron-pages>
+      </div>
+      
+      <footer id="footer">
+        <paper-button id="back-to-top">back to top</paper-button>
+        <div id="footNav">
+          
+        </div>
+        <edb-api-control 
+        loading="{{loading}}"
+        route="{{route}}"
+        pages="{{pages}}"
+        features="{{features}}"
+        inspirations="{{inspirations}}"
+        materials="{{materials}}"
+        categories="{{categories}}"
+        slides="{{slides}}"
+        catalog-items="{{products}}"
+        current-catalog-item="{{currentProduct}}"
+        selected-category="{{selectedCategory}}"
+        current-user="{{currentUser}}"
+        ></edb-api-control>
+      </footer>
+    </app-header-layout>
+    <paper-dialog-lite id="authDialog" with-backdrop>
+      <form id="loginForm">
+        <paper-input id="loginEmail" type="email" label="email"></paper-input>
+        <paper-input id="loginPassword" type="password" label="password"></paper-input>
+        <paper-button id="loginButton" type="submit" on-click="login">login</paper-button>
+      </form>
+    </paper-dialog-lite>
+    <!--<app-location route="{{liveRoute}}" url-space-regex="^[[rootPath]]"></app-location>-->
+    <app-route route="[[route]]" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+    <app-route route="[[route]]" pattern="[[rootPath]]shop/:category" data="{{shopRouteData}}" tail="{{shoproute}}"></app-route>
+    
+    <!--</app-drawer-layout>-->
+  </template>
+  <script>
+    // class MySlidingPages extends SlidingPages{
+    //   static get is() { return 'my-sliding-pages'; }
+    //   static get properties() { return {
+    //     hasSlides: {
+    //       type:Boolean,
+    //       value: false
+    //     }
+    //   } }
+    //   _initPages() {
+    //     if(this.timeOut) this.timeOut.cancel();
+    //     this.timeOut = Polymer.Async.timeOut.after(100);
+    //     if(!this.hasSlides) return this.timeOut.run( this._initPages.bind(this) );
+    //     else{
+    //       super._initPages();  
+    //     }
+        
+        
+        
+
+    //     // this.initialised = false;
+    //     // this.prevPage = null;
+    //     // this.activePage = null;
+
+    //     // this._initPages();
+
+    //   }
+
+    // }
+    // window.customElements.define(MySlidingPages.is,MySlidingPages);
+    class MyApp extends MyOptionsMixin(EDBHelperMixin(Polymer.Element)) {
+      static get is() { return 'my-app'; }
+
+      static get properties() {
+        return {
+          page: {
+            type: String,
+            reflectToAttribute: true,
+            value: 'wait',
+            observer: '_pageChanged',
+          },
+          route: {
+            type: Object,
+            value: null
+          },
+          routeData: Object,
+          shopRouteData: Object,
+          shoproute: String,
+          subroute: String,
+          // This shouldn't be neccessary, but the Analyzer isn't picking up
+          // Polymer.Element#rootPath
+          rootPath: String,
+          showNavTabs: {
+            type: Boolean,
+            value: true
+          },
+          isLoggedIn: {
+            type: Boolean,
+            value:false
+          },
+          loadingMessage: {
+            type: String,
+            notify: true
+          },
+          // pages:Array,
+          // features:Array,
+          // inspirations:Array,
+          // materials:Array,
+          // slides:Array,
+          // products:Array,
+          // currentProduct:Object,
+          // currentUser:Object
+        };
+      }
+
+      static get observers() {
+        return [
+          '_routePageChanged(routeData.page)',
+          // '_shopCategoryChanged(shopRouteData.category)',
+          '_computeCategories(categories)',
+          'closeCategoriesPanel(routeData.page)',
+          '_currentUserChanged(currentUser)'
+        ];
+      }
+      
+      _getPageBySlug(slug,pages){
+        if(!pages) return null;
+        if(!pages.length) return null;
+        var index = pages.findIndex( function(a){ return a.slug === slug});
+        if(~index){
+          return pages[index];
+        }
+        return null;
+      }
+      
+      _computeCategories(categories){
+        console.log('_computeCategories',categories)
+        // if(categories){
+        //   return Object.keys(categories).map(function(k){
+        //     return categories[k];
+        //   });  
+        // }
+        // return [];
+      }
+      _spinnerIsActive( page, loading ){
+        return !page || loading;
+      }
+    
+      openAuthDialog(e){
+        if(e) e.preventDefault();
+        this.$.authDialog.opened=true;
+      }
+      closeAuthDialog(){
+        this.$.authDialog.opened=false;
+      }
+      
+      _currentUserChanged(currentUser){
+        this.isLoggedIn = !!currentUser;
+        if(this.isLoggedIn){
+          this.closeAuthDialog();
+        }
+      }
+      
+      login(){
+        this.$.consumer.login(
+          this.$.loginEmail.value,
+          this.$.loginPassword.value
+        );
+      }
+      
+      logout(e){
+        if(e) e.preventDefault();
+        this.$.consumer.logout();
+      }
+      
+      connectedCallback(){
+        super.connectedCallback();
+        this.options.headerHeight = 192;
+        // this.$.consumer.subscribe(this);  
+        
+        // console.log(this.options)
+      }
+     
+      toggleCategoriesPanel( event ){
+        event.preventDefault();
+        if(this.$.categoriesPanel.classList.contains('open')){
+          this.closeCategoriesPanel();
+        }else{
+         this.openCategoriesPanel(); 
+        }
+        return false;
+      }
+      
+      openCategoriesPanel(){
+        this.$.categoriesPanel.dataset.scrollPos = window.document.body.querySelector('my-app').shadowRoot.querySelector('#appLayout').shadowRoot.querySelector('#contentContainer').getBoundingClientRect().top;
+        this.$.categoriesPanel.classList.add('open');
+        this.$.appLayout.style.position="fixed";
+        this.$.appLayout.style.paddingTop="32px";
+        
+        // console.log(this.$.categoriesPanel.dataset.scrollPos)
+      }
+      
+      closeCategoriesPanel(e){
+        
+        if(e && e.target && e.target.id && e.target.id !== 'categoriesPanel'){
+          return;
+        }
+        this.$.categoriesPanel.classList.remove('open');  
+        this.$.appLayout.style.position="relative";
+        this.$.appLayout.style.paddingTop="0";
+        window.document.body.scrollTo(0,this.$.categoriesPanel.dataset.scrollPos*-1);
+        return false;
+      }
+
+      _shopCategoryChanged(category){
+        this.selectedCategory=category;
+        this.$.consumer.selectedProduct = 463;
+      }
+      
+      _routePageChanged(page) {
+        
+        if(!page || page == 'wait'){
+          
+          if(window.location.pathname == '/'){
+            this.page = 'home';
+          }
+        }else{
+          
+          this.page = page;
+        }
+        
+      }
+
+      _pageChanged(page) {
+        // Load page import on demand. Show 404 page if fails
+        if(page == 'wait') return;
+        console.log('page', page  );
+        var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
+        Polymer.importHref(
+            resolvedPageUrl,
+            null,
+            this._showPage404.bind(this),
+            true);
+      }
+
+      _showPage404() {
+        this.page = 'view404';
+      }
+    }
+
+    window.customElements.define(MyApp.is, MyApp);
+  </script>
+</dom-module>

@@ -1,0 +1,94 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+
+<dom-module id="my-options">
+  <template>
+    <style>
+      :host {
+        display: none;
+      
+      }
+      
+    </style>
+    
+  </template>
+
+  <script>
+    (function() {
+
+      let optionsInstance = null;
+
+      class MyOptions extends Polymer.Element {
+        static get is() { return 'my-options'; }
+
+        static get properties() {
+          return {
+            options: {
+              type: Object,
+              value: () => ({
+                subscribe: false
+              })
+            },
+            subscribers: {
+              type: Array,
+              value: () => []
+            }
+          }
+        }
+
+        static get observers() {
+          return [
+            'optionsChanged(options.*)'
+          ]
+        }
+
+        constructor() {
+          super();
+
+          if (!optionsInstance) optionsInstance = this;
+        }
+
+        register(subscriber) {
+          this.subscribers.push(subscriber);
+          subscriber.options = this.options;
+          subscriber.notifyPath('options');
+        }
+
+        unregister(subscriber) {
+          var i = this.subscribers.indexOf(subscriber);
+          if (i > -1) this.subscribers.splice(i, 1)
+        }
+
+        optionsChanged(change) {
+          for(var i = 0; i < this.subscribers.length; i++) {
+            this.subscribers[i].notifyPath(change.path);
+          }
+        }
+      }
+
+      window.customElements.define(MyOptions.is, MyOptions);
+
+      MyOptionsMixin = (superClass) => {
+        return class extends superClass {
+          static get properties() {
+            return {
+              options: {
+                type: Object
+              }
+            }
+          }
+
+          connectedCallback() {
+            super.connectedCallback();
+            optionsInstance.register(this);
+          }
+
+          disconnectedCallback() {
+            super.disconnectedCallback();
+            optionsInstance.unregister(this);
+          }
+        }
+      }
+    }());
+  </script>
+</dom-module>

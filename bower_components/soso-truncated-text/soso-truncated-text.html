@@ -1,0 +1,157 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/utils/render-status.html">
+
+<dom-module id="soso-truncated-text">
+  <template>
+    <style>
+       :host {
+        display: block;
+        overflow: hidden;
+        position: relative;
+        box-sizing: border-box;
+      }
+
+      #txt {
+        opacity: 0;
+      }
+    </style>
+    <div id="txt">[[_text]]</div>
+  </template>
+
+  <script>
+    class SosoTruncatedText extends Polymer.Element {
+      static get is() { return 'soso-truncated-text'; }
+      static get properties() {
+        return {
+          text: {
+            type: String,
+            observer: 'refresh'
+          },
+          stepSize: {
+            type: Number,
+            value: 7
+          },
+          _truncation: Number,
+          _text: String
+        };
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        this._text = this.text;
+        Polymer.RenderStatus.beforeNextRender(this, () => {
+          this.refresh();
+        });
+      }
+
+      refresh() {
+        if (this._truncating) {
+          return;
+        }
+        this._truncationStart = (new Date()).getTime();
+        this._truncating = true;
+        this.text = this.text || "";
+        this.set("_text", this.text)
+        this._truncation = 0;
+        if (this.text.length) {
+          setTimeout(() => {
+            this._checkSize();
+          }, 50);
+        } else {
+          this._finishTruncation();
+        }
+      }
+
+      _finishTruncation() {
+        this._truncating = false;
+        this.$.txt.style.opacity = 1;
+      }
+
+      _checkSize() {
+        let oh = this.getBoundingClientRect().height;
+        let ih = this.$.txt.getBoundingClientRect().height;
+        if (ih <= oh) {
+          this._finishTruncation();
+        } else {
+          this._computeLineHeight();
+        }
+      }
+
+      _computeLineHeight() {
+        this.$.txt.style.opacity = 0;
+        this.set("_text", "m");
+        setTimeout(() => {
+          this._lineHeight = this.$.txt.getBoundingClientRect().height || 10;
+          this.set("_text", this.text);
+          setTimeout(() => {
+            this._truncate();
+          }, 50);
+        }, 10);
+      }
+
+      _truncate() {
+        let oh = this.getBoundingClientRect().height;
+        let ih = this.$.txt.getBoundingClientRect().height;
+        if (ih <= oh) {
+          this._finishTruncation();
+        } else {
+          let extraLines = Math.ceil((ih - oh) / this._lineHeight);
+          let totalLines = Math.ceil(ih / this._lineHeight);
+          let charsPerLine = Math.round(this.text.length / totalLines);
+          this._truncation = extraLines * charsPerLine;
+          this.set("_text", this.text.substring(0, this.text.length - this._truncation).trim() + "...");
+          setTimeout(() => {
+            let oh = this.getBoundingClientRect().height;
+            let ih = this.$.txt.getBoundingClientRect().height;
+            if (ih > oh) {
+              this._shrink();
+            } else {
+              this._grow();
+            }
+          }, 50);
+        }
+      }
+
+      _shrink() {
+        let oh = this.getBoundingClientRect().height;
+        let ih = this.$.txt.getBoundingClientRect().height;
+        if (ih > oh) {
+          this._truncation = this._truncation ? (this._truncation + this.stepSize) : this.stepSize;
+          if (this._truncation >= this.text.length) {
+            this.set("_text", "");
+            this._finishTruncation();
+          } else {
+            this.set("_text", this.text.substring(0, this.text.length - this._truncation).trim() + "...");
+            setTimeout(() => {
+              this._shrink();
+            }, 50);
+          }
+        } else {
+          this._finishTruncation();
+        }
+      }
+
+      _grow() {
+        let oh = this.getBoundingClientRect().height;
+        let ih = this.$.txt.getBoundingClientRect().height;
+        if (ih <= oh) {
+          this._truncation = this._truncation - this.stepSize;
+          if (this._truncation == 0) {
+            this._finishTruncation();
+          } else {
+            this.set("_text", this.text.substring(0, this.text.length - this._truncation).trim() + "...");
+            setTimeout(() => {
+              this._grow();
+            }, 50);
+          }
+        } else {
+          this._truncation = this._truncation + this.stepSize;
+          this.set("_text", this.text.substring(0, this.text.length - this._truncation).trim() + "...");
+          this._finishTruncation();
+        }
+      }
+    }
+
+    window.customElements.define(SosoTruncatedText.is, SosoTruncatedText);
+  </script>
+</dom-module>

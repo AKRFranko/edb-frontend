@@ -1,0 +1,270 @@
+<!-- @license Copyright (c) 2016 The Polymer Project Authors. All rights reserved. This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as part of the polymer project is also subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt -->
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<dom-module id="my-home">
+  <template>
+    <style include="shared-styles">
+      *{box-sizing:border-box;}
+        :host {
+          display: block;
+          
+          @apply --layout;
+          
+        }
+        
+        #slider{
+          display:block;
+          width:100%;
+          max-width:1111px;
+          min-width:100%;
+          height:calc(100vh - 192px);
+          max-height:698px;
+          overflow:hidden;
+          position:relative;
+        }
+      
+        .slide{
+          position:absolute;
+          width:100%;
+          height:calc(100vh - 252px);
+          max-height:638px;
+        }
+        
+        /*.slide{*/
+        /*  padding:0;*/
+        /*  width:100%;*/
+        /*  height:100%;*/
+        /*}*/
+        /*.slide edb-image{*/
+        /*  width:100%;*/
+        /*  height:100%;*/
+        /*}*/
+        
+        .article-grid{
+          width:100%;
+        }
+        
+        #repeater{
+          display:block;
+          width:100%;
+        }
+        
+        article-template{
+          width:100%;
+          --article-header-text-styles:{
+            text-align:left;
+            @apply --layout-vertical;
+            @apply --layout-center-justified;
+          }
+          
+          --article-title-styles:{
+            
+            @apply --edb-feature-list-title;
+            text-align:left;
+            margin-bottom:16px;
+          }
+          --article-subtitle-styles:{
+            @apply --edb-feature-list-subtitle;
+            margin-bottom:16px;
+          }
+          --article-summary-styles:{
+            @apply --edb-feature-list-summary;
+          }
+          /*min-height:100px;*/
+          
+          margin-bottom:256px;
+          /*margin-bottom:96px;*/
+          /*background-color:red;*/
+          transition:all .3s ease-out;
+          /*transition-delay: .2s;*/
+  
+        }
+        article-template.partially-above,article-template.above-viewport{
+          transition-delay: .0s;
+          transition:all 0s ease-in;
+          margin-bottom:60px;
+        }
+        article-template.fully-in-viewport{
+          
+          margin-bottom:60px;
+        }
+        
+           
+          
+
+        .article-wrap:nth-of-type(odd) article-template{
+          --article-header-styles:{
+            @apply --layout-horizontal;
+          }
+          
+        }
+        .article-wrap:nth-of-type(even) article-template{
+          --article-header-styles:{
+            @apply --layout-horizontal-reverse;
+          }
+          
+        }
+        god-damned-image{
+          --gd-image-overlay-content:{
+            @apply --layout-vertical;
+            @apply --layout-center-center;
+          }
+        }
+        .slide-title{
+          @apply --edb-headline-styles;
+          color:#fff;
+         
+        }
+        
+    </style>
+    <app-route route="{{route}}" pattern=":id" data="{{routeData}}"></app-route>
+    <page-template>
+      <div id="slider" slot="header-content">
+        <template is="dom-repeat" items="[[slides]]" as="slide">
+            <div class="slide">
+              <god-damned-image content-is-clickable src="[[_computeSlideImageSrc(slide)]]" colors="[[_computeSlideImageColors(slide)]]">
+                <div slot="overlay-content">
+                  <div class="slide-title">{{renderAsString(slide.title)}}</div>
+                </div>
+              </god-damned-image>
+              
+            </div>
+          </template>
+        <edb-slider>
+          
+        </edb-slider> 
+        <!--<god-damned-carousel id="slider">-->
+        
+        <!--</god-damned-carousel>-->
+        <!--<my-sliding-pages active-index="1" has-slides="[[slides.length]]">-->
+          
+          <!--<div>-->
+          <!--   <h1>-->
+          <!--  Page 1-->
+          <!--</h1>-->
+
+          <!--  <div>Child div</div>-->
+          <!--</div>-->
+          <!--<div>-->
+          <!--   <h1>-->
+          <!--  Page 2-->
+          <!--</h1>-->
+
+          <!--</div>-->
+          <!--<div>-->
+          <!--   <h1>-->
+          <!--  Page 3-->
+          <!--</h1>-->
+
+          <!--</div>-->
+        <!--</my-sliding-pages>-->
+      </div>
+      <div slot="page-content">
+        <div class="article-grid">
+          <template is="dom-repeat" items="[[features]]" as="feature">
+            <a class="article-wrap" href="{{_computeFeatureLink(feature)}}">
+            <article-template
+              title="[[renderAsString(feature.title)]]" 
+              image="[[_computeImage(feature)]]"
+              subtitle="[[renderAsString(feature.subtitle)]]"
+              summary="[[renderAsString(feature.content)]]">
+            </article-template>
+            </a>
+          </template>
+          
+        </div>
+      </div>
+    </page-template>
+    
+    
+  </template>
+  <script>
+    class MyHome extends EDBHelperMixin(Polymer.Element) {
+      static get is() { return 'my-home'; }
+      static get properties(){
+        return { 
+          image: { type: Object, value: {src:'https://placehold.it/300/300', colors:['#ff0000','#00ff00','#0000ff'] } },
+          // features: {
+          //   type: Array,
+          //   value: function(){
+          //     return [];
+          //   }
+          // },
+          // slides: {
+          //   type: Array,
+          //   value: function(){
+          //     return [];
+          //   }
+          // },
+          route: {
+            type: Object
+          },
+          routeData: {
+            type: Object
+            
+          }
+          
+        }
+      }
+      static get observers() {
+        return [
+          '_routeIdChanged(routeData.id)',
+          '_routeDataChanged(routeData)',
+          "_onslides(slides)"
+       
+        ];
+      }
+      
+      _onslides(slides){
+        console.log('_onslides',slides)
+        
+      }
+      
+      
+      
+      
+      _computeFeatureLink(feature){
+        if(!feature) return;
+        var edb_feature_url = feature.meta_box.edb_feature_url;
+        if(!edb_feature_url) return '/404';
+        return edb_feature_url;
+      }
+      
+      _handleArticleClick(event){
+        console.log(event.model.feature)
+      }
+      _routeDataChanged(data){
+        console.log('_routeDataChanged',data)
+        
+      }
+      _routeIdChanged(id){
+        console.log('_routeIdChanged',id)
+      }
+      logTitle(t){
+        console.log('logTitle',t);
+        return 'werwqer';
+      }
+      _computeSlideImageColors( data ){
+        if(!data) return null;
+        return data.featured_colors||[];
+      }
+      _computeSlideImageSrc( data ){
+        if(!data) return null;
+        // console.log('_computeSlideImageSrc',data)
+        return data.featured_image;
+        
+      }
+      _computeImage( feature ){
+        
+        if(!feature) return null;
+        return {
+          colors: feature.featured_colors||[],
+          src: feature.featured_image
+        };
+      }
+    }
+
+    window.customElements.define(MyHome.is, MyHome);
+  </script>
+</dom-module>
