@@ -115,7 +115,7 @@
               JSON.parse(string, function(key,value){
                 if(/^http(.+)\.jpg$/.test(value)){
                   Polymer.Async.idlePeriod.run(()=>{
-                    window.imagePreloader.simplePreload(value);
+                  window.imagePreloader.simplePreload(value);
                   })
                 }
               })

@@ -1,6 +1,7 @@
 <!-- @license Copyright (c) 2016 The Polymer Project Authors. All rights reserved. This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
 The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as part of the polymer project is also subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../bower_components/google-map/google-map.html">
 <link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
 <link rel="import" href="../bower_components/soso-truncated-text/soso-truncated-text.html">
@@ -56,6 +57,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 <link rel="import" href="edb-api-catalog.html">
 <link rel="import" href="edb-api-control.html">
 <link rel="import" href="edb-material-button.html">
+<link rel="import" href="edb-material-patch.html">
 <link rel="import" href="edb-leg-button.html">
 <link rel="import" href="edb-slider.html">
 <link rel="import" href="edb-image.html">
@@ -582,7 +584,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         <my-shop id="shopPage" name="shop" route="[[shoproute]]" products="[[products]]" current-category="[[selectedCategory]]" current-product="[[currentProduct]]"></my-shop>
         <my-about id="aboutPage" page="[[_getPageBySlug('about-page', pages)]]" name="about"></my-about>
         <my-shipping id="shippingPage" page="[[_getPageBySlug('shipping-page', pages)]]" name="shipping"></my-shipping>
-        <my-order-samples id="orderSamplesPage" name="order-samples" materials="[[materials]]"></my-order-samples>
+        <my-order-samples id="orderSamplesPage" page="[[_getPageBySlug('order-samples-page', pages)]]"  name="order-samples" materials="[[materials]]"></my-order-samples>
         <my-contact id="contactPage" page="[[_getPageBySlug('contact-page', pages)]]" name="contact"></my-contact>
         <my-lookbook id="lookbookPage" name="lookbook"></my-lookbook>
         <my-view404 id="errorPage" name="view404"></my-view404>
