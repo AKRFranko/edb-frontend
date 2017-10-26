@@ -140,6 +140,7 @@
             // console.log(this.url,'setting NULL from cache')
             this._setLastResponse(null);  
           }else{
+            this.lastSource === 'cache';
             // console.log(this.url,'setting DATA from cache', Array.isArray(data.response) ? data.response.length + ' item(s)' : typeof data.response );
             this._setLastResponse(data.response);  
           }
