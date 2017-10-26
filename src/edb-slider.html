@@ -103,16 +103,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         };
       }
       static get observers(){
-        return ['_refit(total,current,items)']
+        return ['_refit(total,current,items.*)']
       }
       connectedCallback(){
         super.connectedCallback();
         Polymer.Async.idlePeriod.run( this._refit.bind(this) );
-        
+        window.addEventListener('resize', this._refit.bind(this) );
       }
       _refit(){
         console.log('refit',this.parentNode.getBoundingClientRect().height);
-        this.style.paddingTop = (this.parentNode.getBoundingClientRect().height - 60 ) + 'px';
+        Polymer.Async.animationFrame.run(()=>{
+          var bounds = this.parentNode.getBoundingClientRect();
+          if(bounds.height){
+              this.style.paddingTop = (bounds.height - 60 ) + 'px';
+          }
+          if(bounds.width){
+            this.style.width = bounds.width  + 'px';    
+          }
+          
+        })
+        
       }
     }
 

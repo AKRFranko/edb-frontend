@@ -783,7 +783,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
       }
       
       openCategoriesPanel(){
-        this.$.categoriesPanel.dataset.scrollPos = window.document.body.querySelector('my-app').shadowRoot.querySelector('#appLayout').shadowRoot.querySelector('#contentContainer').getBoundingClientRect().top;
+        // this.$.categoriesPanel.dataset.scrollPos = window.document.body.querySelector('my-app').shadowRoot.querySelector('#appLayout').shadowRoot.querySelector('#contentContainer').getBoundingClientRect().top;
         this.$.categoriesPanel.classList.add('open');
         
         this.$.appLayout.style.position="fixed";
@@ -800,8 +800,8 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         }
         this.$.categoriesPanel.classList.remove('open');  
         this.$.appLayout.style.position="relative";
-        this.$.appLayout.style.paddingTop="0";
-        window.document.body.scrollTo(0,this.$.categoriesPanel.dataset.scrollPos*-1);
+        // this.$.appLayout.style.paddingTop="0";
+        // window.document.body.scrollTo(0,this.$.categoriesPanel.dataset.scrollPos*-1);
         return false;
       }
 
