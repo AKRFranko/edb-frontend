@@ -67,7 +67,7 @@
       <b>jwtAuth</b><i>Token: [[_boolText(jwtAuth.token)]]</i>
     </div>
     <div class="debug-line">
-      <b>currentUser</b><i>Loaded: [[_boolText(currentUser)]]</i>
+      <b>currentUser</b><i>Loaded: [[_boolText(currentUser.name)]]</i>
       <i>Via: [[currentUserLastSource]]</i>
       <i>Name: [[_emptyText(currentUser.name)]]</i>
       <i>Billing: [[_emptyText(currentUser.customer_meta.billing_postcode)]]</i>
@@ -312,7 +312,7 @@
            };
          }
          _boolText( t ){
-           return (!!t).toString();
+           return (!t) ? 'false' : 'true';
          }
          _emptyText( t ){
            return !t ? '...' : t;
