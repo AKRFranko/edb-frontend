@@ -26,16 +26,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       *{
         box-sizing:border-box;
       }
-      .page-template{
+      #pageTemplate.page-template{
+        position:relative;
         @apply --layout-vertical;
         clear:both;
         width:inherit;
         
+        
       }
       .page-header,.page-content,.page-content-above,.page-content-below{
         width:inherit;
+        min-width:inherit;
         position:relative;
         box-sizing:border-box;
+        max-width:100%;
       }
       .page-image{
         position:absolute;
@@ -61,6 +65,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-bottom:60px;
         @apply --page-title-styles;
       }
+      
+      .page-header{
+        width:inherit;
+        
+        @apply --page-header-styles;
+      }
       .page-summary{
         @apply --edb-subhead-styles;
         margin-top:60px;
@@ -71,6 +81,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-width:80%;
       }
       
+      #pageHeader{
+        width:inherit;
+      }
       #pageAboveContent,#pageContent,#pageBelowContent{
         background:#fff;
         /*min-width:100%;*/
@@ -78,6 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       #pageContent{
         min-height:calc(100vh - 192px);
+        width:inherit;
       }
       
       
@@ -157,6 +171,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
       
+      static get observers(){
+        return ['__fixHeaderWidth(title,subtitle,summary,image,fixedHeader,hasImage)']
+      }
       
       __setHasImage(image,src){
         return image && src;
@@ -164,34 +181,60 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
       __onHasImageChanged(){
         if(this.hasImage){
+          var w = this.$.pageHeader.getBoundingClientRect().width;
           var headerHeight = this.options ? this.options.headerHeight||0 : 0;
-          this.$.pageHeader.style.height = 'calc(100vh - '+headerHeight+'px)';    
+          this.$.pageHeader.style.height = 'calc(100vh - '+headerHeight+'px)';  
+          // this.$.pageHeader.style.width = w + 'px';
           this.$.pageHeader.querySelector('.page-image').style.display='block';
         }else{
           this.$.pageHeader.style.height = 'auto';    
+          // this.$.pageHeader.style.width = 'inherit;
           this.$.pageHeader.querySelector('.page-image').style.display='none';
         }
+        
+      }
+      
+      __fixHeaderWidth(){
+        
+        
+          Polymer.Async.animationFrame.run(()=>{
+            var w = this.$.pageTemplate.getBoundingClientRect().width;
+            if(w){
+            this.$.pageHeader.style.width = w + 'px';
+            console.log('__fixHeaderWidth',w)    
+            }
+          })
+          
+        
+        
       }
       
       connectedCallback(){
         super.connectedCallback();
         this.__onFixedHeaderChanged();
+        window.addEventListener("resize",this.__fixHeaderWidth.bind(this));
+        this.__fixHeaderWidth();
       }
       
       __onFixedHeaderChanged(){
         var headerHeight = this.options ? this.options.headerHeight||0 : 0;
         if(this.fixedHeader){
-          var w = this.$.pageHeader.getBoundingClientRect().width;
-          this.$.pageHeader.style.position = 'fixed';
-          this.$.pageHeader.style.top = headerHeight + 'px';
-          this.$.pageHeader.style.width = w + 'px';
-          this.$.pageHeader.style.zIndex = '-1';
-          var headHeight = this.$.pageHeader.getBoundingClientRect().height;
-          this.$.pageTemplate.style.paddingTop = Math.max(headHeight,192) + 'px';
+          
+          
+          Polymer.Async.animationFrame.run(()=>{
+            this.$.pageHeader.style.position = 'fixed';
+            this.$.pageHeader.style.top = headerHeight + 'px';
+            
+            this.$.pageHeader.style.zIndex = '-1';
+            var headHeight = this.$.pageHeader.getBoundingClientRect().height;
+            this.$.pageTemplate.style.paddingTop = Math.max(headHeight,192) + 'px';
+            this.__fixHeaderWidth();
+            // this.$.pageHeader.style.width =  'inherit';
+          })
         }else{
           this.$.pageHeader.style.position = 'relative';
           this.$.pageTemplate.style.paddingTop ='0px';
-          this.$.pageHeader.style.width =  'inherit';
+          this.__fixHeaderWidth();
           this.$.pageHeader.style.zIndex = '0';
         }
       }

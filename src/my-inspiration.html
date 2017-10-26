@@ -27,8 +27,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width:100%;
       }
       page-template{
+        --page-header-styles:{
+        width:100%;
+        text-align:center;
+      }
         --page-title-styles:{
           white-space:nowrap;
+          
         }
       }
       
@@ -168,7 +173,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           
           <!--<edb-image image="[[_computeImage(currentInspiration)]]" visible></edb-image>-->
           
-          <god-damned-image appears fullscreen-on-click uses-image-height src="[[_computeFeaturedImageSrc(currentInspiration)]]" colors="[[_computeFeaturedImageColors(currentInspiration)]]"></god-damned-image>
+          <god-damned-image fullscreen-on-click uses-image-height src="[[_computeFeaturedImageSrc(currentInspiration)]]" colors="[[_computeFeaturedImageColors(currentInspiration)]]"></god-damned-image>
           
           <div id="inspirationGallery">
             <template is="dom-repeat" items="[[formatImages(currentInspiration.meta_box.edb_inspiration_images)]]" as="image">

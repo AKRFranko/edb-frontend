@@ -101,7 +101,28 @@
         }
         
         static get observers(){
-          return ['_updateCache(lastResponse)']
+          return [
+            '_updateCache(lastResponse)',
+            '_preloadImages(lastResponse)'
+          ]
+        }
+        
+        _preloadImages( a){
+          if(a){
+            
+              var string = JSON.stringify(a);
+              var images = [];
+              JSON.parse(string, function(key,value){
+                if(/^http(.+)\.jpg$/.test(value)){
+                  Polymer.Async.idlePeriod.run(()=>{
+                    window.imagePreloader.simplePreload(value);
+                  })
+                }
+              })
+            
+          }
+          
+          
         }
         
         _updateCache(){

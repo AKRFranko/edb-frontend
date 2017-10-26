@@ -40,7 +40,8 @@
     "lzwCompress.js": "lzwcompress#^0.2.4",
     "dexie": "^2.0.1",
     "iron-collapse": "^2.0.0",
-    "google-map": "GoogleWebComponents/google-map#^2.0.2"
+    "google-map": "GoogleWebComponents/google-map#^2.0.2",
+    "image-preloader": "smelukov/imagePreloader#^1.1.1"
   },
   "resolutions": {
     "polymer": "^2.0.0",
