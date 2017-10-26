@@ -329,6 +329,9 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         
         background:purple;
       }
+      *{
+        boz-sizing:border-box;
+      }
 
       [main-title] {
         /* override pointer-events: none set by app-toolbar */
@@ -346,6 +349,13 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         
         /*height:96px;*/
         width:96px;
+      }
+      
+      app-header-layout,app-header{
+        width:100%;
+        max-width:1111px;
+        margin-left:auto;
+        margin-right:auto;
       }
       
       
@@ -399,7 +409,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         top:192px;
         position:fixed;
         display:block;
-        width:100%;
+        width:inherit;
         height:0;
         min-height:0;
         transition:all .2s ease-in;
@@ -413,6 +423,8 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         padding-top:48px;
         height:calc(100vh - 144px);
         min-height:calc(100vh - 144px);
+        width:inherit;
+        margin:0 auto;
         z-index:10;
       }
       #footer{
@@ -472,6 +484,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         @apply --layout-start-justified;
         margin:0;
         padding:48px;
+        width:100%;
         list-style-type:none;
       }
       .categories-list li{
@@ -766,8 +779,10 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
       openCategoriesPanel(){
         this.$.categoriesPanel.dataset.scrollPos = window.document.body.querySelector('my-app').shadowRoot.querySelector('#appLayout').shadowRoot.querySelector('#contentContainer').getBoundingClientRect().top;
         this.$.categoriesPanel.classList.add('open');
+        
         this.$.appLayout.style.position="fixed";
-        this.$.appLayout.style.paddingTop="32px";
+        // this.$.appLayout.style.paddingTop="32px";
+        this.$.categoriesPanel.style.width = this.$.appLayout.getBoundingClientRect().width + 'px';
         
         // console.log(this.$.categoriesPanel.dataset.scrollPos)
       }
