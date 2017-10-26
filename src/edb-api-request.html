@@ -95,7 +95,7 @@
             lastSource: {
               type: String,
               notify: true,
-              value: null
+              value: 'cache'
             }   
           }
         }
@@ -126,9 +126,10 @@
         }
         
         _updateCache(){
-          this.lastSource = 'remote';
+          
+          console.log(this.url,'from remote?',this.lastSource)
           window.EDBBrowserCache.putRequest( this ).then( ()=>{
-            // console.log(this.url, 'stored request!');
+            this.lastSource = 'remote';
           })
         }
         
@@ -136,22 +137,23 @@
           if(this.lastSource === 'remote'){
             return true;
           }
+          console.log(this.url,'from cache?',this.lastSource)
+          this.lastSource = 'cache';
           if(!data){
-            // console.log(this.url,'setting NULL from cache')
             this._setLastResponse(null);  
           }else{
-            this.lastSource === 'cache';
-            // console.log(this.url,'setting DATA from cache', Array.isArray(data.response) ? data.response.length + ' item(s)' : typeof data.response );
             this._setLastResponse(data.response);  
           }
         }
         
         _beforeSend( event ){
+          
           window.EDBBrowserCache.getRequest( this ).then( this._updateFromCache.bind(this) );
         }
         
         constructor(){
           super();
+          this.lastSource = 'cache';
           this.addEventListener('iron-ajax-presend', this._beforeSend.bind(this) );
           // console.log(this)
         }
