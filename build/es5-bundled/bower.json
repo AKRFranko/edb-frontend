@@ -1,0 +1,60 @@
+{
+  "name": "polymer-starter-kit",
+  "authors": [
+    "The Polymer Authors"
+  ],
+  "license": "https://polymer.github.io/LICENSE.txt",
+  "dependencies": {
+    "app-layout": "PolymerElements/app-layout#^2.0.0",
+    "app-route": "PolymerElements/app-route#^2.0.0",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#^2.0.0",
+    "iron-iconset-svg": "PolymerElements/iron-iconset-svg#^2.0.0",
+    "iron-media-query": "PolymerElements/iron-media-query#^2.0.0",
+    "iron-pages": "PolymerElements/iron-pages#^2.0.0",
+    "iron-selector": "PolymerElements/iron-selector#^2.0.0",
+    "paper-icon-button": "PolymerElements/paper-icon-button#^2.0.0",
+    "polymer": "Polymer/polymer#^2.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
+    "ibm-toolbar": "IBMResearch/ibm-toolbar#^2.0.2",
+    "wow-tabs": "matthewp/wow-tabs#^1.0.0",
+    "wordpress-collect": "rocketsciencesolutions/wordpress-collect#^0.0.1",
+    "alicorn-scroll-watcher": "mlunnay/alicorn-scroll-watcher#^1.0.2",
+    "juicy-html": "Juicy/juicy-html#^2.0.0",
+    "iron-scroll-threshold": "PolymerElements/iron-scroll-threshold#^2.0.0",
+    "paper-button": "PolymerElements/paper-button#^2.0.0",
+    "iron-image": "PolymerElements/iron-image#^2.1.2",
+    "iron-ajax": "PolymerElements/iron-ajax#^2.0.5",
+    "iron-localstorage": "PolymerElements/iron-localstorage#^2.0.0",
+    "paper-dialog-lite": "ryanburns23/paper-dialog-lite#^3.0.0",
+    "paper-input": "PolymerElements/paper-input#^2.0.2",
+    "granite-spinner": "LostInBrittany/granite-spinner#^2.1.0",
+    "soso-truncated-text": "pshihn/soso-truncated-text#^1.0.2",
+    "tinycolor": "^1.4.1",
+    "app-storage": "PolymerElements/app-storage#^2.0.2",
+    "god-damned-geonames-ca": "god-damned-elements/god-damned-geonames-ca",
+    "god-damned-image": "god-damned-elements/god-damned-image",
+    "god-damned-carousel": "god-damned-elements/god-damned-carousel",
+    "iron-icon": "PolymerElements/iron-icon#^2.0.1",
+    "iron-icons": "PolymerElements/iron-icons#^2.0.1",
+    "iron-multi-ajax": "RoXuS/iron-multi-ajax#^0.1.4",
+    "lzwCompress.js": "lzwcompress#^0.2.4",
+    "dexie": "^2.0.1",
+    "iron-collapse": "^2.0.0",
+    "google-map": "GoogleWebComponents/google-map#^2.0.2",
+    "image-preloader": "smelukov/imagePreloader#^1.1.1",
+    "paper-checkbox": "PolymerElements/paper-checkbox#^2.0.1"
+  },
+  "resolutions": {
+    "polymer": "^2.0.0",
+    "iron-flex-layout": "^2.0.0",
+    "iron-iconset-svg": "^2.0.0",
+    "webcomponentsjs": "^v1.0.2",
+    "paper-spinner": "^2.0.0",
+    "iron-icon": "1 - 2",
+    "iron-icons": "^2.0.1"
+  },
+  "devDependencies": {
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0"
+  },
+  "private": true
+}
