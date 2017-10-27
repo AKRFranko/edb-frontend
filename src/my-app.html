@@ -67,6 +67,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 <link rel="import" href="page-template.html">
 <link rel="import" href="product-page-template.html">
 <link rel="import" href="article-template.html">
+<link rel="import" href="my-generic-page.html">
 <link rel="lazy-import" href="my-home.html">
 <link rel="lazy-import" href="my-inspiration.html">
 <link rel="lazy-import" href="my-order-samples.html">
@@ -75,7 +76,6 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 <link rel="lazy-import" href="my-contact.html">
 <link rel="lazy-import" href="my-lookbook.html">
 <link rel="lazy-import" href="my-shop.html">
-<link rel="lazy-import" href="my-view3.html">
 <link rel="lazy-import" href="my-view404.html">
 <dom-module id="my-app">
   <template>
@@ -480,8 +480,8 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
       }
       
       #waitPage{
-        /*min-height:100vh;*/
-        /*min-width:100vw;*/
+        min-height:100vh;
+        min-width:100vw;
         
       }
       .categories-list{
@@ -581,7 +581,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
       
       <div id="pages">
       
-      <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
+      <iron-pages id="mainPages" selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
         <div id="waitPage" name="wait"><granite-spinner color="#000" line-width="5px" size="64"  active="[[_spinnerIsActive(page,loading)]]"></granite-spinner></div>
         <my-home id="homePage" name="home" slides="{{slides}}" features="[[features]]"></my-home>
         <my-inspiration id="inspirationPage" name="inspiration" route="[[subroute]]" inspirations="[[inspirations]]"></my-inspiration>
@@ -591,6 +591,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         <my-order-samples id="orderSamplesPage" page="[[_getPageBySlug('order-samples-page', pages)]]"  name="order-samples" materials="[[materials]]"></my-order-samples>
         <my-contact id="contactPage" page="[[_getPageBySlug('contact-page', pages)]]" name="contact"></my-contact>
         <my-lookbook id="lookbookPage" name="lookbook"></my-lookbook>
+        <my-generic-page id="genericPage"></my-generic-page>
         <my-view404 id="errorPage" name="view404"></my-view404>
       </iron-pages>
       </div>
@@ -667,8 +668,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
           page: {
             type: String,
             reflectToAttribute: true,
-            value: 'wait',
-            observer: '_pageChanged',
+            value: 'wait'
           },
           route: {
             type: Object,
@@ -710,7 +710,8 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
           // '_shopCategoryChanged(shopRouteData.category)',
           '_computeCategories(categories)',
           'closeCategoriesPanel(routeData.page)',
-          '_currentUserChanged(currentUser)'
+          '_currentUserChanged(currentUser)',
+          '_pageChanged(page,pages)'
         ];
       }
       
@@ -823,16 +824,38 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         }
         
       }
+      _bindGenericPage(page,data){
+        var tmpl = this.$.genericPage;
+        tmpl.page = data;
+        tmpl.setAttribute('name', page );
+        Polymer.Async.microTask.run( ()=>{
+          console.log('selecting');
+          this.$.mainPages.selected = page;  
+        });
+        
+      }
 
-      _pageChanged(page) {
+      _pageChanged(page,pages) {
         // Load page import on demand. Show 404 page if fails
         if(page == 'wait') return;
-        console.log('page', page  );
+        
+        
         var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
         Polymer.importHref(
             resolvedPageUrl,
             null,
-            this._showPage404.bind(this),
+            ()=>{
+              var pageObject = this._getPageBySlug( page + '-page', pages);
+              
+              if(!pageObject){
+                console.log('no page object', page, pages, page + '-page')
+                
+                this._showPage404.bind(this);
+              }else{
+                console.log('use generic page', page, pageObject)
+                this._bindGenericPage(page,pageObject);
+              }
+            },
             true);
       }
 

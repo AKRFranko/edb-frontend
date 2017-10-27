@@ -40,6 +40,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         position:relative;
         box-sizing:border-box;
         max-width:100%;
+        text-align:center;
       }
       .page-image{
         position:absolute;
@@ -73,6 +74,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .page-summary{
         @apply --edb-subhead-styles;
+        
         margin-top:60px;
         margin-bottom:60px;
         margin-left:auto;
@@ -90,8 +92,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width:inherit;
       }
       #pageContent{
+        
         min-height:calc(100vh - 192px);
         width:inherit;
+        @apply --edb-copy-styles;
       }
       
       
