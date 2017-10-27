@@ -480,9 +480,11 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
       }
       
       #waitPage{
+        width:100%;
+        height:100%;
         min-height:100vh;
         min-width:100vw;
-        
+                
       }
       .categories-list{
         
@@ -768,6 +770,8 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
       connectedCallback(){
         super.connectedCallback();
         this.options.headerHeight = 192;
+        
+
         // this.$.consumer.subscribe(this);  
         
         // console.log(this.options)
@@ -822,7 +826,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
           
           this.page = page;
         }
-        
+        window.document.body.scrollTo(0,0);
       }
       _bindGenericPage(page,data){
         var tmpl = this.$.genericPage;
