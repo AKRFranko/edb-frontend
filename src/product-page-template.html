@@ -173,6 +173,9 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         
         
       }
+      #whywelove{
+        padding:0 20%;
+      }
       #anatomy,#whywelove{
         text-align:center;
         @apply --layout-vertical;
@@ -211,6 +214,13 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         margin-bottom:32px;
       }
       
+      ol{
+        text-align:left;
+        @apply --edb-copy-styles;
+      }
+      ol li{
+        margin-bottom:30px;
+      }
     </style>
     <div id="pageTemplate" class="page-template">
       <div class="wide-group" id="pageHeader">
@@ -335,11 +345,12 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
       </div>
       <div id="anatomy" class="wide-group">
         <h2>ANATOMY of [[product.name]]</h2>
+        
         <img id="anatomy" src$="[[product.anatomy.src]]">
       </div>
       <div id="whywelove" class="wide-group">
         <h2>{{product.whyWeLove.title}}</h2>
-        <template is="juicy-html" html="[[renderAsString(product.whyWeLove.content)]]"></template>
+        <template is="juicy-html" html="[[computeWWL(product.whyWeLove.content)]]"></template>
       </div>
     </div>
   </template>
@@ -366,6 +377,14 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
       static get observers(){
         return [
           '_onWantedQuantityChanged(wantedQuantity)']
+      }
+      computeWWL(content){
+        if(!content) return content;
+        content = this.renderAsString(content);
+        var parts = content.split(/\d\./);
+        var a = parts.shift();
+        var list = '<ol><li>' +parts.join('</li><li>') + '</li></ol>';
+        return '<h3>'+a+'</h3>'+list;
       }
       _decrQty(){
         var old = parseFloat(this.get('wantedQuantity'));
