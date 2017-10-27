@@ -80,9 +80,17 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         
         --paper-button: {
           @apply --edb-product-widget;
-          @apply --layout-start-justified;
+          @apply --layout-horizontal;
+          @apply --layout-justified;
+          
           margin:0;padding:0;
         }
+      }
+      .choice-dropdown paper-button.active iron-icon{
+        transition:transform 0.2s ease-in;
+      }
+      .choice-dropdown paper-button.active iron-icon{
+        transform:rotate(90deg);
       }
       .choice-dropdown paper-button,.quantity-select,.availability{
         border-top:1px solid #000;
@@ -241,7 +249,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 
           <p class="product-price">$[[product.minPrice]] - $[[product.maxPrice]]</p>
           <div hidden$="[[!product.options.slipcover]]" class="choice-dropdown">
-            <paper-button on-click="toggleCollapse" data-collapse="materialDropdown">select a color</paper-button>
+            <paper-button on-click="toggleCollapse" data-collapse="materialDropdown">select a color <iron-icon icon="my-icons:chevron-right"></iron-icon></paper-button>
             <iron-collapse id="materialDropdown">
               <div class="inner-collapse">
                 <iron-selector attr-for-selected="name" selected="{{product.options.slipcover.selected}}" fallback-selection="[[product.options.slipcover.defaultSelection]]">
@@ -253,7 +261,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
             </iron-collapse>
           </div>
           <div hidden$="[[!product.options.leg]]" class="choice-dropdown">
-            <paper-button on-click="toggleCollapse" data-collapse="legDropdown">select a leg</paper-button>
+            <paper-button on-click="toggleCollapse" data-collapse="legDropdown">select a leg <iron-icon icon="my-icons:chevron-right"></iron-icon></paper-button>
             <iron-collapse id="legDropdown">
               <div class="inner-collapse">
                 <iron-selector attr-for-selected="name" selected="{{product.options.leg.selected}}" fallback-selection="[[product.options.leg.defaultSelection]]">
@@ -410,6 +418,8 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
       
       toggleCollapse(e){
         var collapse = e.target.dataset.collapse;
+        var btn = e.target;
+        btn.classList.toggle('active');
         this.$[collapse].toggle();
       }
       _productChanged(product){
