@@ -1,5 +1,5 @@
 <?php
-if(preg_match('test-report', $_SERVER['REQUEST_URI'])){
+if(preg_match('/test-report/', $_SERVER['REQUEST_URI'])){
  $html = file_get_contents(__DIR__ . '/test-report.html');
  echo $html;
  die();
