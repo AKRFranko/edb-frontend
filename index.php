@@ -1,4 +1,9 @@
 <?php
+if(preg_match('test-report', $_SERVER['REQUEST_URI'])){
+ $html = file_get_contents(__DIR__ . '/test-report.html');
+ echo $html;
+ die();
+}
 $html = file_get_contents(__DIR__ . '/index.html');
 $token = '<title>edb-frontend</title>';
 $template_directory = get_bloginfo('template_directory');
