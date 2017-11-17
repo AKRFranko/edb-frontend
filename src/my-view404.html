@@ -9,10 +9,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-
+<link rel="import" href="shared-styles.html">
 <dom-module id="my-view404">
   <template>
-    <style>
+    <style incude="shared-styles">
       :host {
         display: block;
         width:100%;
@@ -36,7 +36,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width:100%;
         height:calc(100vh - 192px);
       }
-      
+      h1{
+        @apply --edb-font-headline;
+      }
+      p{
+        @apply --edb-font-subhead;
+      }
+      a{
+        color:#036792;
+      }
     </style>
     <div id="fourOFour">
       <div id="monster">
@@ -57,15 +65,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get properties() {
         return {
           icon: String,
+          trigger: {
+            type: String,
+            observer: '_randomize'
+          },
           // This shouldn't be neccessary, but the Analyzer isn't picking up
           // Polymer.Element#rootPath
           rootPath: String,
         };
       }
-      connectedCallback(){
-        super.connectedCallback();
+      _randomize(){
         this.icon = 'my-icons:monster-' + (Math.floor(Math.random()*6)+1);
         this.$.icon.style.color = 'hsl('+Math.floor(Math.random()*255)+',60%,40%)';
+      }
+      connectedCallback(){
+        super.connectedCallback();
       }
     }
 

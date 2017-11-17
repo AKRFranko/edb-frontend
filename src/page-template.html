@@ -223,10 +223,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
       __onFixedHeaderChanged(){
         var headerHeight = this.options ? this.options.headerHeight||0 : 0;
+        
         if(this.fixedHeader){
-          
-          
-          Polymer.Async.animationFrame.run(()=>{
+          Polymer.Async.idlePeriod.run(()=>{
             this.$.pageHeader.style.position = 'fixed';
             this.$.pageHeader.style.top = headerHeight + 'px';
             

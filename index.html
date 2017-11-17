@@ -76,11 +76,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       // Load and register pre-caching Service Worker
       if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('service-worker.js', {
-            scope: Polymer.rootPath,
-          });
-        });
+        // window.addEventListener('load', function() {
+        //   navigator.serviceWorker.register('service-worker.js', {
+        //     scope: Polymer.rootPath,
+        //   });
+        // });
       }
     </script>
 
@@ -108,9 +108,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 0;
         /*font-family: 'Roboto', 'Noto', sans-serif;*/
         /*line-height: 1.5;*/
+        /*width:100vw;*/
         min-height: 100vh;
         background-color: #fff;
       }
+      my-app{
+        min-height: 100vh;
+        min-width: 100vh;
+      }
+      
     </style>
   </head>
   <body>

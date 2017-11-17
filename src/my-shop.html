@@ -89,7 +89,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
             </div>
           </page-template>
           
-          <product-page-template name="single" product="[[currentProduct]]">
+          <product-page-template id="productPage" name="single" product="[[currentProduct]]">
             
           </product-page-template>          
           
@@ -167,6 +167,14 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
       _computeProductLink(product){
         if(!product) return;
         return '/shop/' + this.currentCategory + '/' + product.id;
+      }
+      
+      connectedCallback(){
+        super.connectedCallback();
+        if(this.addToCartHandler){
+          this.$.productPage.addToCartHandler = this.addToCartHandler;
+        }
+         
       }
       
       

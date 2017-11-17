@@ -1,0 +1,595 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<dom-module id="edb-blackboard">
+  <template>
+    <iron-localstorage name="edb-cart" value="{{board.0}}"></iron-localstorage>
+  </template>
+  <script>
+    /**
+     * `edb-api-endpoint`
+     * edb API endpoint
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    (function(){
+    
+     
+     
+     
+      
+      class EdbBlackboard extends EDBHelperMixin(Polymer.Element) {
+        static get is() { return 'edb-blackboard'; }
+        static get properties(){
+          return {
+            board: {
+              type: Object,
+              value: function(){
+                return { 'cart': { items: [] }};
+              }
+            },
+            sources: {
+              type: Object,
+              value: function(){
+                return {};
+              }
+            },
+            actions: {
+              type: Object,
+              value: function(){
+                return {};
+              }
+            }
+          }
+        }
+        
+        static get observers(){
+          
+        }
+        
+        _parseArgs( args ){
+          return Array.prototype.slice.call( args );
+        }
+        
+        updateNode( id, data ){
+          if(data.meta_box){
+            var meta = Object.keys(data.meta_box||{}).reduce( function(m,k){
+              m[k.replace(/^_/,'')] = data.meta_box[k];
+              return m;
+            }, {} );
+            data.meta = meta;  
+          }else{
+            data.meta = {};
+          }
+          if(data.parent_product_id){
+            Object.defineProperty( data, 'parent', {
+              get: ()=>{
+                     return this.accessNode( data.parent_product_id )
+                   }
+            });
+          }
+          this.set('board.'+id, data );
+          if(!this.get('sources.'+id)){
+            this.set('sources.'+id, {} );
+          }
+          // if(!this.get('actions.'+id)){
+          //   this.set('actions.'+id, {} );
+          // }
+        }
+        
+        accessNode( id ){
+          return this.get('board.'+id);
+        }
+        
+        hasNode( id ){
+          return !!this.get('board.'+id);
+        }
+        
+        
+        
+        // setAction( args ){
+        //   args = this._parseArgs(arguments);
+        //   var execute = args.pop();
+        //   var name = args.join('.');
+        //   var action = this.get('actions.'+name);
+        //   var newAction;
+        //   if(action){
+        //     newAction = function(node){
+        //       return action( node ).then( function(){
+        //         return execute( node );
+        //       });
+        //     }
+        //   }else{
+        //     newAction = execute;
+        //   }
+        //   this.set('actions.'+name, newAction );
+        //   return this;
+        // }
+        
+        // hasAction(args){
+        //   args = this._parseArgs(arguments);
+        //   var name = args.join('.');
+        //   var action =  this.get('actions.'+name);
+        //   if(!action) return null;
+        //   return true;
+        // }
+        
+        // executeAction( args ){
+        //   args = this._parseArgs(arguments);
+        //   var data = args.pop();
+        //   var id = args[0];
+        //   var node = this.accessNode(id);
+        //   var name = args.join('.');
+        //   var action = this.get('actions.'+name);
+        //   if(!action) return Promise.reject( 'No such action: ' + name );
+        //   var output;
+        //   try{
+        //     output = action( node );
+        //   }catch(e){
+        //     return Promise.reject(e);
+        //   }
+        //   return Promise.resolve( output );
+        // }
+        
+        addToCart(pp,oo){
+          
+          var cart = this.accessNode( 'cart' );
+          var items = cart.items[pp.id];
+          if(!items){
+            items = []
+          }
+          var item = { 
+                       id: pp.id,
+                       product: pp,
+                       options: oo
+                     };
+          items.push( item );
+          this.updateNode('cart', { items: items });
+          
+          console.log('addToCart', item );
+        }
+        
+        setSource( args ){
+          args = this._parseArgs(arguments);
+          var execute = args.pop();
+          var name = args.join('.');
+          var source = this.get('sources.'+name);
+          var newSource;
+          if(source){
+            newSource = function(node){
+              return execute( node, source( node ) );
+            }
+          }else{
+            newSource = execute;
+          }
+          this.set('sources.'+name, newSource );
+
+          return this;
+        }
+        
+        _renderSource( object, node ){
+          if( Array.isArray( object ) ){
+            return  object.map(( item )=>{
+              return this._renderSource( item, node );
+            });
+          }
+          if( typeof object == 'function'){
+            return object( node );
+          }else{
+            var keys = Object.keys(object);
+            return keys.reduce( ( o, k )=>{
+              o[k] = this._renderSource( object[k], node );
+              return o;
+            }, {} );
+          }
+          return object;
+        }
+        
+        hasSource(args){
+          args = this._parseArgs(arguments);
+          var name = args.join('.');
+          var source =  this.get('sources.'+name);
+          if(!source) return null;
+          return true;
+        }
+        
+        getSource( args ){
+          args = this._parseArgs(arguments);
+          var name = args.join('.');
+          var source =  this.get('sources.'+name);
+          if(!source) return null;
+          return this._renderSource( source, this.accessNode( args[0] ) );
+          
+        }
+        
+        __getProductType(product){
+          var isBucket     = product.meta_box.edb_is_bucket=='1';
+          var hasBasePrice = ( product.meta_box.edb_base_price || product.meta_box.edb_base_price == '');
+          var hasGroupIds  = !!product.meta_box.edb_group_ids;
+          if( isBucket ) return 'bucket';
+          if( hasBasePrice) return 'base';
+          if(hasGroupIds) return 'composite';
+          return 'normal';
+        }
+        
+        _readVariation( variation ){
+          var productId = variation.parent_product_id;
+          var kss = this;
+          kss.updateNode( variation.variation_id, variation  );
+          if(!kss.hasSource( variation.variation_id, 'stock')){
+            kss.setSource(variation.variation_id, 'stock', ( node )=>{
+              var cartCount = kss.getSource(node.variation_id,'cartCount');
+              cartCount = cartCount||0;
+              if(!!node.parent.meta.edb_bucket_slug){
+                var stock = parseInt(node.stock);
+                if( isNaN(stock) || stock > 1000){
+                  stock = Infinity;
+                }
+              }else{
+                var stock = parseInt(node.stock);
+                return stock - cartCount;  
+              }
+              return stock - cartCount;
+            });  
+          }
+          if(!kss.hasSource(variation.variation_id, 'current_price')){
+            kss.setSource(variation.variation_id, 'current_price', ( node )=>{
+              var basePrice = kss.getSource(productId,'base_price') || 0;
+              return node.display_price + basePrice;;
+            });  
+          }
+
+          if(!kss.hasSource(variation.variation_id, 'sale_price')){
+            kss.setSource(variation.variation_id, 'sale_price', ( node )=>{
+              var basePrice = kss.getSource(productId,'base_price') || 0;
+              return node.display_regular_price > node.display_price ? node.display_price + basePrice : null;
+            });  
+          }
+          
+          if(!kss.hasSource(variation.variation_id, 'regular_price')){
+            kss.setSource(variation.variation_id, 'regular_price', ( node )=>{
+              var basePrice = kss.getSource(productId,'base_price') || 0;
+              return node.display_regular_price + basePrice;
+            });
+          }
+          
+        }
+        _readProducts( products ){
+          if(!products) return;
+          products = Array.prototype.slice.call( products );
+          var combos = [];
+          var  buckets = [];
+          var others = [];
+          products.forEach( (p)=>{
+            if(this.__getProductType(p) == 'composite'){
+              combos.push( p );
+            }else if(this.__getProductType(p) == 'bucket'){
+              buckets.push(p );
+            }else{
+              others.push( p );
+            }
+            // console.log('p',p)
+          })
+          buckets.forEach( ( p )=>{
+            this._readProduct( p );
+          });
+          others.forEach( ( p )=>{
+            this._readProduct( p );
+          });
+          combos.forEach( ( p )=>{
+            this._readProduct( p );
+          });
+        }
+        
+        _readAttributes( product, attribute ){
+          
+          var kss = this;
+          var isVariation = attribute.variation === true;
+          var isBucketOption = !isVariation;
+          
+          
+          if(!kss.hasSource( product.id,   attribute.name)){
+            kss.setSource( product.id, attribute.name, ( node  )=>{
+              return node.variations.map( ( variation, index )=>{
+                return {
+                  name: attribute.options[index],
+                  stock: kss.getSource(variation,'stock'),
+                  current_price: kss.getSource(variation,'current_price'),
+                  sale_price: kss.getSource(variation,'sale_price'),
+                  regular_price: kss.getSource(variation,'regular_price'),
+                  get variation(){
+                    return kss.getSource( variation );
+                  }
+                }
+              });
+            });
+          }
+          
+          
+        }
+        
+        _readProduct( product ){
+          var kss = this;
+          
+          kss.updateNode( product.id, product );
+          console.log('readProduct', product.name );
+          var type=  this.__getProductType( product );
+          
+          var variations = product.variation_data ||[];
+          var attributes = product.attributes;
+
+          // parse-on variations
+          if(variations && variations.length){
+            variations.forEach( this._readVariation.bind(this) );
+          }
+          // parse-on attributes 
+          if(attributes && attributes.length ){
+            attributes.forEach( (attribute)=>{
+              this._readAttributes( product, attribute );
+            });
+          }
+          
+
+          if( !kss.hasSource( product.id, 'id') ){
+            kss.setSource(product.id, 'id', ( node )=>{
+              return node.id;
+            });
+          }
+          if( !kss.hasSource( product.id, 'name') ){
+            console.log('set name', product.name )
+            kss.setSource(product.id, 'name', ( node )=>{
+              return this.renderAsString(node.name);
+            });
+          }
+          if( !kss.hasSource( product.id, 'description') ){
+            kss.setSource(product.id, 'description', (node)=>{
+              return this.renderAsString(node.description);
+            });
+          }
+          if( !kss.hasSource( product.id, 'type') ){
+            kss.setSource(product.id, 'type', (node)=>{
+              return type;
+            });
+          }
+          if( !kss.hasSource( product.id, 'image') ){
+            
+            kss.setSource(product.id, 'image', (node)=>{
+              return { src: node.images[0].src, colors: [], alt: kss.getSource( node.id, 'name') + ' featured image' }
+            });
+          }
+          if( !kss.hasSource( product.id, 'images') ){
+            kss.setSource(product.id, 'images', (node)=>{
+              return node.images.slice(1).map( ( img, index )=>{
+                return { src: img.src, colors: [], alt:  kss.getSource( node.id, 'name') + ' product image ' + index };
+              });
+            });
+          }
+          if( !kss.hasSource( product.id, 'anatomy_image') ){
+            kss.setSource(product.id, 'anatomy_image', (node)=>{
+              var meta = node.meta;
+              var image = meta.edb_anatomy_en ? meta.edb_anatomy_en : meta.edb_anatomy_fr;
+              if(!image) return null;
+              return { src: image, colors: [], alt:  kss.getSource( node.id, 'name') + 'anatomy image ' };
+            });
+          }
+          if( !kss.hasSource( product.id, 'why_we_love') ){
+            kss.setSource(product.id, 'why_we_love', ( node )=>{
+              var meta = node.meta;
+              if(meta.edb_why_we_love_content && meta.edb_why_we_love_title){
+                return {
+                  title: this.renderAsString(meta.edb_why_we_love_title),
+                  content: this.renderAsString(meta.edb_why_we_love_content)
+                }
+              }
+              return null;
+            });
+          }
+          if( !kss.hasSource( product.id, 'wireframe_image') ){
+            kss.setSource(product.id, 'wireframe_image', ( node )=>{
+              var meta = node.meta;
+              if(!meta.edb_wireframe) return null;
+                return {
+                  src: meta.edb_wireframe
+                }
+            });
+          }
+          
+          
+          
+          
+
+          switch( type){
+          
+            case 'composite':
+              if(!kss.hasSource(product.id, 'stock')){
+                kss.setSource(product.id, 'stock', (  node )=>{
+                    var meta = node.meta;
+                    var pids = meta.edb_group_ids.trim().split(',');
+                    return pids.reduce( ( previous, pid )=>{
+                      var current = kss.getSource( pid, 'stock');
+                      if(previous === null ) return current;
+                      return Math.min( previous, current );  
+                    }, null );  
+                });
+              }
+              if(!kss.hasSource(product.id, 'base_price')){
+                kss.setSource(product.id, 'base_price', (  node )=>{
+                  var meta = node.meta;
+                  var pids = meta.edb_group_ids.trim().split(',');
+                  return pids.reduce( ( previous, pid )=>{
+                    var current = kss.getSource( pid, 'base_price');
+                    return previous + current;
+                  }, 0 );  
+                });
+              }
+              if(!kss.hasSource(product.id, 'min_variation_price')){
+                kss.setSource(product.id, 'min_variation_price', (  node )=>{
+                  var meta = node.meta;
+                  var pids = meta.edb_group_ids.trim().split(',');
+                  return pids.reduce( ( previous, pid )=>{
+                    var current = kss.getSource( pid, 'min_variation_price');
+                    return previous + current;
+                  }, 0 );  
+                });
+              }
+              if(!kss.hasSource(product.id, 'max_variation_price')){
+               kss.setSource(product.id, 'max_variation_price', (  node )=>{
+                 var meta = node.meta;
+                 var pids = meta.edb_group_ids.trim().split(',');
+                 return pids.reduce( ( previous, pid )=>{
+                   var current = kss.getSource( pid, 'max_variation_price');
+                   return previous + current;
+                 }, 0 );  
+               });
+              }
+              if(!kss.hasSource(product.id, 'slipcover')){
+               kss.setSource(product.id, 'slipcover', (  node )=>{
+                 var meta = node.meta;
+                 var pids = meta.edb_group_ids.trim().split(',');
+                 var group = [];
+                 pids.reduce( ( previous, pid )=>{
+                   var current = kss.getSource( pid, 'slipcover');
+                   previous.push(current);
+                   return previous;
+                 }, group );  
+                 
+                 
+                 var options ={};
+                 var valueArrays = ['stock','current_price', 'sale_price', 'regular_price'];
+                 pids.forEach( function( pid, index ){
+                   group[index].forEach( function( item ){
+                     
+                     if(!options[item.name]){
+                       options[item.name] = {name: item.name};
+                       valueArrays.reduce( function(a,key){
+                         a[key] = [];
+                         return a;
+                       }, options[item.name]);
+                     }
+                     valueArrays.forEach( function(key){
+                      options[item.name][key].push( item[key] );
+                     });
+                   });
+                 });
+                 return Object.keys(options).reduce( function( all, key ){
+                   var stock = Math.min.apply( Math, options[key].stock);
+                   var current_price = options[key].current_price.reduce( function(a,b){ return a+b},0);
+                   var sale_price = options[key].sale_price.reduce( function(a,b){ return a+b},0);
+                   var regular_price = options[key].regular_price.reduce( function(a,b){ return a+b},0);
+                   all.push( { name: key, stock: stock, current_price: current_price , sale_price: sale_price, regular_price:regular_price});
+                   return all;
+                 }, [] );
+                 
+                  console.log('groups', group)
+                 return group;
+                 
+               });
+              }
+              
+            break;
+            case 'bucket':
+            case 'base': 
+              if(!kss.hasSource(product.id, 'stock')){
+                kss.setSource(product.id, 'stock', (  node )=>{
+                    var vids = node.variations || [];
+                    return vids.reduce( ( previous, vid )=>{
+                      return previous + kss.getSource( vid, 'stock');
+                    }, 0 );  
+                });
+              }
+              if(!kss.hasSource(product.id, 'base_price')){
+                kss.setSource(product.id, 'base_price', (  node )=>{
+                    var meta = node.meta;
+                    return parseFloat(meta.edb_base_price);
+                });
+              }
+              if(!kss.hasSource(product.id, 'min_variation_price')){
+                kss.setSource(product.id, 'min_variation_price', (  node )=>{
+                    var meta = node.meta;
+                    var vids = node.variations || [];
+                    return vids.reduce( ( previous, vid )=>{
+                      return Math.min(previous, kss.getSource( vid, 'current_price') );
+                    }, Infinity );
+                });
+              }
+              if(!kss.hasSource(product.id, 'max_variation_price')){
+                kss.setSource(product.id, 'max_variation_price', (  node )=>{
+                    var meta = node.meta;
+                    var vids = node.variations || [];
+                    return vids.reduce( ( previous, vid )=>{
+                        return Math.max(previous, kss.getSource( vid, 'current_price'));
+                    }, 0 );  
+                });
+              }
+              if(!kss.hasSource(product.id, 'cartCount')){
+                kss.setSource(product.id, 'cartCount', (  node )=>{
+                    var meta = node.meta;
+                    var vids = node.variations || [];
+                    return vids.reduce( ( previous, vid )=>{
+                        return Math.max(previous, kss.getSource( vid, 'current_price'));
+                    }, 0 );  
+                });
+              }
+            break;
+            default:
+              console.warn('DIDNT TrEAT', type );
+            break;
+          }
+          
+          
+          
+          
+          // Object.keys(meta).forEach( ( k )=>{
+          // if(~/^edb/.test(k)){
+          // if( !kss.getSource( product.id, k ) ){
+          //   kss.setSource(product.id, k, ( node )=>{
+          //     return meta[k];
+          //   });
+          // } 
+          // }
+          // });
+          
+          // if(type == 'base'){
+          //   this._defer.forEach( ( def )=>{
+          //     if( def.ids.every( ( id )=>{ return kss.getSource( id ) }) ){
+          //       console.log('readpropduct', data.product )
+          //       this._readProduct( data.product );
+          //     }
+          //   });
+          // }
+          console.log('should return full source?', kss.getSource(product.id) )
+          console.log('attributes?', kss.getSource(product.id,'slipcover') )
+          
+          // console.log('this.$.bb', this.$.bb.kss.getSource(product.id))
+          // console.log('this.$.bb', this.$.bb.kss.setSource(product.id))
+          
+          
+        }
+        
+        
+        
+
+        
+        constructor(){
+          super();
+          window._edbAddToCart = this.addToCart.bind(this);
+          // create cart node
+          
+            
+        }
+        
+        
+        
+        
+        
+        
+      } 
+      
+      
+    window.EdbBlackboard = EdbBlackboard;
+          window.customElements.define(EdbBlackboard.is, EdbBlackboard);
+          
+          
+        })();
+  </script>
+</dom-module>

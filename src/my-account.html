@@ -1,0 +1,154 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<dom-module id="my-account">
+  <template>
+    <style include="shared-styles">
+      
+      *{box-sizing:border-box;}
+      :host {
+        display: block;
+        
+        @apply --layout;
+        width:100%;  
+      }
+      wow-tabs{
+        width:100%;
+      }
+      #avatar{
+        width:96px;
+        height:96px;
+        margin-right:60px;
+      }
+      #userProfile{
+        width:486px;
+        background:#fff;
+        @apply --layout-horizontal;
+      }
+      iron-icon{
+        color:#ddd;
+        margin-left:-30px;
+      }
+      
+      form{
+        @apply --edb-copy-styles;
+        text-align:left;
+      }
+      paper-button[primary]{
+         margin-top:30px;
+      }
+      #userInfo{
+        @apply --layout-vertical;
+
+      @apply --layout-start-justified;      }
+      #account{
+        padding-top:60px;
+        @apply --layout-vertical;
+        @apply --layout-center;
+      }
+      #addresses{
+        border-top:1px solid #000;
+        padding-top:60px;
+        margin-top:60px;
+      }
+      #billing,#shipping{
+        padding:0 60px;
+      }
+      /*god-damned-image{*/
+      /*  min-height:60vh;*/
+      /*  height:60vh;*/
+      /*}*/
+      
+      /*article{*/
+      /*  padding:30px calc(50% - 243px);*/
+      /*  width:100%;*/
+      /*  border-top:1px solid #000;*/
+      /*  margin-bottom:60px;*/
+      /*}*/
+      /*article:first-of-type{*/
+      /*  border-top:0;*/
+      /*}*/
+      /*.bignumber{*/
+      /*  @apply --edb-title-styles;*/
+      /*  font-size:3em;*/
+      /*}*/
+      /*table{*/
+      /*  margin:30px auto;*/
+      /*}*/
+      
+    </style>
+    <page-template fixed-header title="Your EDB Account">
+      <div slot="page-content">
+        <div id="account" class="column">
+          <div id="userProfile">
+            <god-damned-image id="avatar" src="[[currentUser.avatar_urls.96]]">
+              <paper-button>change avatar</paper-button>
+            </god-damned-image>
+            <div id="userInfo">
+              <div><iron-icon icon="my-icons:email"></iron-icon> [[currentUser.email]]</div>
+              <form>
+                <paper-input type="password" label="Old Password"></paper-input>
+                <paper-input type="password" label="New Password"></paper-input>
+                <paper-input type="password" label="Confirm New Password"></paper-input>
+                
+                <paper-button primary>change password</paper-button>
+              </form>
+            </div>
+          </div>
+          <div class="columns" id="addresses">
+              <div id="billing" class="column">
+                <h3>Billing</h3>
+                <edb-billing-form customer={{currentUser.customer_meta}}></edb-billing-form>
+              </div>
+              <div id="shipping" class="column">
+                <h3>Shipping</h3>
+                <edb-billing-form customer={{currentUser.customer_meta}}></edb-billing-form>
+                <paper-button primary on-click="_updateAddesses">update addresses</paper-button>
+              </div>
+          </div>
+          <div id="orders">
+            <h3>orders</h3>
+          </div>
+        </div>
+          
+      </div>
+    </page-template>
+  </template>
+
+  <script>
+    class MyAccount extends EDBHelperMixin(Polymer.Element) {
+      static get is() { return 'my-account'; }
+      static get properties() {
+        return {
+          currentUser: {
+            type: Object,
+            notify: true
+          },
+          orders: {
+            type: Array,
+            notify: true
+          }
+        };
+      }
+      _updateAddesses(){
+        window.EdbApiControl.instance.updateCurrentUser().then( function(yup){
+          console.log('udpated!');
+        }).catch(function(error){
+          console.log('failed update!', error );
+        })
+      }
+      
+    }
+
+    window.customElements.define(MyAccount.is, MyAccount);
+  </script>
+</dom-module>

@@ -110,15 +110,15 @@
         _preloadImages( a){
           if(a){
             
-              var string = JSON.stringify(a);
-              var images = [];
-              JSON.parse(string, function(key,value){
-                if(/^http(.+)\.jpg$/.test(value)){
-                  Polymer.Async.idlePeriod.run(()=>{
-                  window.imagePreloader.simplePreload(value);
-                  })
-                }
-              })
+              // var string = JSON.stringify(a);
+              // var images = [];
+              // JSON.parse(string, function(key,value){
+              //   if(/^http(.+)\.jpg$/.test(value)){
+              //     Polymer.Async.idlePeriod.run(()=>{
+              //     window.imagePreloader.simplePreload(value);
+              //     })
+              //   }
+              // })
             
           }
           

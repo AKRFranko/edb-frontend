@@ -1,0 +1,104 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<dom-module id="edb-billing-form">
+  <template>
+    <style include="shared-styles">
+      
+      *{box-sizing:border-box;}
+      :host {
+        display: block;
+        
+        @apply --layout;
+        width:100%;  
+      }
+      god-damned-image{
+        min-height:60vh;
+        height:60vh;
+      }
+      
+      article{
+        padding:30px calc(50% - 243px);
+        width:100%;
+        border-top:1px solid #000;
+        margin-bottom:60px;
+      }
+      form{
+        width:100%;
+        text-align:left;
+      }
+      
+    </style>
+    
+    <form id="billing">
+      <!--<div class="title">Billing Address-->
+      <!--  <paper-toggle-button on-change="handleAddressToggleChanged" checked$="{{customer.useBillingAddressForShipping}}">use for shipping</paper-toggle-button>-->
+      <!--</div>-->
+      <div class="twinfields">
+        <paper-input label="first name" value="{{customer.billing_first_name}}" auto-validate required></paper-input>
+        <paper-input label="last name" value="{{customer.billing_last_name}}"></paper-input>
+      </div>
+      <paper-input label="company" value="{{customer.billing_company}}"></paper-input>
+      <div class="twinfields">
+        
+        <paper-input label="telephone" value="{{customer.billing_phone}}" auto-validate required></paper-input>
+        <paper-input label="email" value="{{customer.billing_email}}" auto-validate required></paper-input>
+      </div>
+      
+      <paper-input label="address" value="{{customer.billing_address_1}}" auto-validate required></paper-input>
+      <div class="twinfields">
+        <paper-dropdown-menu id="selectBillingCountry" label="country">
+          <paper-listbox class="dropdown-content" attr-for-selected="data-country" selected="{{billingCountrySelection}}" fallback-selection="CA">
+            <template is="dom-repeat" items="[[listOfCountries]]" as="country">
+              <paper-item data-country="[[country.code]]">[[country.name.en]]</paper-item>  
+            </template>
+          </paper-listbox>
+        </paper-dropdown-menu>
+        <!--<paper-input label="country" value="{{customer.billing_country}}" auto-validate required></paper-input>-->
+        <paper-input hidden$="[[showListOfProvinces]]" label="state" value="{{customer.billing_state}}" auto-validate required></paper-input>
+        <paper-dropdown-menu hidden$="[[!showListOfProvinces]]" id="selectBillingProvince" label="state" >
+          <paper-listbox class="dropdown-content" attr-for-selected="data-province" selected="{{billingStateSelection}}" fallback-selection="QC" auto-validate required>
+            <template is="dom-repeat" items="[[listOfProvinces]]" as="province">
+              <paper-item data-province="[[province.code]]">[[province.name.en]]</paper-item>  
+            </template>
+          </paper-listbox>
+        </paper-dropdown-menu>
+      </div>
+      <div class="twinfields">
+        <paper-input label="city" value="{{customer.billing_city}}" auto-validate required></paper-input>
+        <paper-input label="postal_code" value="{{customer.billing_postcode}}" required$="{{customer.useBillingAddressForShipping}}">
+          <div suffix hidden$="{{!customer.useBillingAddressForShipping}}" auto-validate on-keyup="__updateShippingZone" class="zone-suffix">{{shippingZone}}</div>
+        </paper-input>
+        
+      </div>
+    </form>
+  </template>
+
+  <script>
+    class EDBBillingForm extends EDBHelperMixin(Polymer.Element) {
+      static get is() { return 'edb-billing-form'; }
+      static get properties() {
+        return {
+          customer: {
+            type: Object,
+            notify: true
+          }
+        };
+      }
+      
+    }
+
+    window.customElements.define(EDBBillingForm.is, EDBBillingForm);
+  </script>
+</dom-module>
+
+

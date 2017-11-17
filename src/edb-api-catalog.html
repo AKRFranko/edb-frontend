@@ -1,6 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <dom-module id="edb-api-catalog">
-  <template></template>
+  <template>
+    <edb-blackboard id="bb"></edb-blackboard>
+  </template>
   <script>
     /**
      * `edb-api-endpoint`
@@ -13,10 +15,10 @@
     (function(){
     
      
-
+     
       
       
-      class EdbApiCatalog extends Polymer.Element {
+      class EdbApiCatalog extends EDBHelperMixin(Polymer.Element) {
         static get is() { return 'edb-api-catalog'; }
         static get properties(){
           return {
@@ -56,6 +58,13 @@
                 return [];
               },
               notify: true
+            },
+            blackboard: {
+              type: Object,
+              notify: true,
+              value: function(){
+                return {};
+              }
             }
             
           }
@@ -64,11 +73,15 @@
         static get observers(){
           return [
             '_onProductsChanged(products)',
+            '_readProducts(products)',
             '_onCurrentCategoryChanged(currentCategory,products)',
             '_onCurrentProductChanged(currentProduct,currentVariations)'
           ];
         }
         
+        _readProducts( p ){
+          this.$.bb._readProducts( p );
+        }
         
         constructor(){
           super();
@@ -79,6 +92,7 @@
           if(products && products.length){
             // console.log('onProducts',products)
             products.forEach((product)=>{
+              
               product.categories.forEach( ( cat )=>{
                 if(!this.__catMap[cat.slug]){
                   // console.log('categories.'+cat.slug)
@@ -86,6 +100,7 @@
                   this.push('categories', cat);
                 }
               });
+              
             });
             this.__createUnits(products);
             // this.notifyPath('categories');
@@ -436,6 +451,7 @@
         
         _onCurrentProductChanged(product,variations){
           if(product){
+            
             console.log('calling _onCurrentProductChanged('+product.id+')');
             if(!variations && !product.variations){
               this._createObjectForProduct( product, [] );
@@ -445,6 +461,7 @@
           }
         }
         
+      
        
         
       } 

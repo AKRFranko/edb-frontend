@@ -36,7 +36,11 @@
       "type": "document",
       "weight": 1
     },
-    "src/my-view3.html": {
+    "src/my-auth.html": {
+      "type": "document",
+      "weight": 1
+    },
+    "src/my-account.html": {
       "type": "document",
       "weight": 1
     },
@@ -51,6 +55,10 @@
     "src/article-template.html": {
       "type": "document",
       "weight": 1
+    },
+    "src/my-generic-page.html": {
+      "type": "document",
+      "weight": 1
     }
   },
   "src/article-template.html": {},
@@ -62,6 +70,9 @@
   "src/my-about.html": {},
   "src/my-shipping.html": {},
   "src/my-lookbook.html": {},
+  "src/my-generic-page.html": {},
   "src/my-shop.html": {},
+  "src/my-account.html": {},
+  "src/my-auth.html": {},
   "src/my-view404.html": {}
 }

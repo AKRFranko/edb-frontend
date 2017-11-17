@@ -283,7 +283,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
           </div>
           <div class="flex"></div>
           <div class="add-to-cart">
-            <paper-button primary>add to cart</paper-button>
+            <paper-button on-click="requestAddToCart" primary>add to cart</paper-button>
           </div>
         </div>
       </div>
@@ -413,6 +413,10 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
           this.product.wanted = parseFloat(q);  
         }
         
+        
+      }
+      requestAddToCart(){
+        window._edbAddToCart( this.get('product'), this.get('product.options')  );
         
       }
       

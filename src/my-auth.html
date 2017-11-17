@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
-<dom-module id="my-generic-page">
+<dom-module id="my-auth">
   <template>
     <style include="shared-styles">
       
@@ -32,34 +32,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         border-top:1px solid #000;
         margin-bottom:60px;
       }
-      
+      article:first-of-type{
+        border-top:0;
+      }
+      .bignumber{
+        @apply --edb-title-styles;
+        font-size:3em;
+      }
+      table{
+        margin:30px auto;
+      }
       
     </style>
-    
-    <page-template fixed-header$="[[page.title]]" title="[[renderAsString(page.title)]]">
+    <page-template fixed-header title="Authentication">
       <div slot="page-content">
-        <template is="dom-if" if="[[page.featured_image]]">
-          <god-damned-image  src="[[page.featured_image]]" colors="[[page.featured_colors]]"></god-damned-image>
-        </template>
-        <template is="juicy-html" html="[[renderAsString(page.content)]]"></template>
+          <form>
+            <paper-input label="login"></paper-input>
+          </form>
         
       </div>
     </page-template>
   </template>
 
   <script>
-    class MyGenericPage extends EDBHelperMixin(Polymer.Element) {
-      static get is() { return 'my-generic-page'; }
+    class MyAuth extends EDBHelperMixin(Polymer.Element) {
+      static get is() { return 'my-auth'; }
       static get properties() {
         return {
-          page: {
-            type: Object,
+          email: {
+            type: String,
+            notify: true
+          },
+          password: {
+            type: String,
             notify: true
           }
         };
       }
     }
 
-    window.customElements.define(MyGenericPage.is, MyGenericPage);
+    window.customElements.define(MyAuth.is, MyAuth);
   </script>
 </dom-module>

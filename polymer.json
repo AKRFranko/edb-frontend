@@ -12,7 +12,10 @@
     "src/my-contact.html",
     "src/my-shipping.html",
     "src/my-lookbook.html",
+    "src/my-generic-page.html",
     "src/my-shop.html",
+    "src/my-account.html",
+    "src/my-auth.html",
     "src/my-view404.html"
   ],
   "sources": [
