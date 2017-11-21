@@ -66,7 +66,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
     </style>
     <app-route route="{{route}}" pattern="/:id" data="{{routeData}}"></app-route>
     
-    
+      
     
     
         <iron-pages selected="[[pageType]]" attr-for-selected="name">
@@ -76,7 +76,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
             <div slot="page-content">
               <div name="listing">
                 <div class="article-grid">
-                  <template is="dom-repeat" items="{{products}}" as="product">
+                  <template is="dom-repeat" items="{{catalogItems}}" as="product">
                     <a class="article-wrap" href="{{_computeProductLink(product)}}">
                       <article-template title="[[renderAsString(product.name)]]" 
                       image="[[product.image]]"
@@ -89,13 +89,14 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
             </div>
           </page-template>
           
-          <product-page-template id="productPage" name="single" product="[[currentProduct]]">
+          <product-page-template id="productPage" name="single" product="{{currentCatalogItem}}" materials="[[materials]]">
+            
             
           </product-page-template>          
           
         </iron-pages>
         
-      
+        
         
     
     
@@ -111,15 +112,21 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
             notify:true,
             value: 'listing'
           },
-          products: {
+          materials: {
             type: Array
-            
           },
-          currentProduct: {
+          catalogItems: {
             type: Array
+          },
+          selectedProduct: {
+            type: Number
           },
           currentCategory: {
             type: String
+          },
+          currentCatalogItem: {
+            type: Object
+            
           },
           route: {
             type: Object
@@ -135,8 +142,9 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         return [
           '_setPageType(routeData.id)',
           
-          
-          '_logData("my-shop currentProduct",currentProduct)',
+          '_logData("my-shop pageType",pageType)',
+          '_logData("my-shop currentCatalogItem",currentCatalogItem)',
+          '_logData("my-shop selectedProduct",selectedProduct)',
           
           
           // '_routeIdChanged(routeData.id)',
@@ -150,11 +158,12 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
       _setPageType(id){
         if(!!id){
           this.pageType = 'single';
+          
         }else{
           this.pageType = 'listing';
-          this.currentProduct = null;
+          // this.currentCatalogItem = null;
         }
-        console.log('setPAgeType', this.pageType)
+        console.log('setPageType', this.pageType, this.currentCatalogItem)
       }
       _computeTitle(prod,cat){
         if(!prod) return cat;

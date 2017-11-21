@@ -43,7 +43,8 @@
     "google-map": "GoogleWebComponents/google-map#^2.0.2",
     "image-preloader": "smelukov/imagePreloader#^1.1.1",
     "paper-checkbox": "PolymerElements/paper-checkbox#^2.0.1",
-    "paper-badge": "PolymerElements/paper-badge#^2.0.0"
+    "paper-badge": "PolymerElements/paper-badge#^2.0.0",
+    "edb-catalog-brain-element": "AKRFranko/edb-catalog-brain-element"
   },
   "resolutions": {
     "polymer": "^2.0.0",

@@ -51,12 +51,21 @@
    <!--<edb-api-request id="productVariations" loading="{{loading}}" url="[[apiRoot]]/wp-json/wc/v2/products/[[currentProduct.id]]/variations" method="get" headers='[[headers]]' content-type="application/json" handle-as="json" last-response="{{currentProductVariations}}"></edb-api-request>-->
    <edb-api-request id="customerOrders" loading="{{loading}}" url="[[apiRoot]]/wp-json/wc/v2/orders" params="[[_computeCustomerIdParam(currentUser)]]" method="get" headers='[[headers]]' content-type="application/json" handle-as="json" last-response="{{currentCustomerOrders}}"></edb-api-request>   
     
-   <array-selector id="productSelector"   items="{{products}}" selected="{{currentProduct}}"></array-selector>
+   <!--<array-selector id="productSelector"   items="{{products}}" selected="{{ignore}}"></array-selector>-->
    <array-selector id="pageSelector"      items="{{pages}}" selected="{{currentPage}}"></array-selector>
    <!--<array-selector id="variationSelector" items="{{currentProductVariations}}" selected="{{currentVariation}}"></array-selector>-->
    
    
-  <edb-api-catalog materials="[[materials]]" products="[[products]]" current-category="[[selectedCategory]]" current-product="[[currentProduct]]"  categories="{{categories}}" items="{{catalogItems}}" current-item="{{currentCatalogItem}}"></edb-api-catalog>
+  <!--<edb-api-catalog materials="[[materials]]" products="[[products]]" current-category="[[selectedCategory]]" current-product="[[currentProduct]]"  categories="{{categories}}" items="{{catalogItems}}" current-item="{{currentCatalogItem}}"></edb-api-catalog>-->
+  
+   <edb-catalog-brain-element id="importer" 
+    api-product-data="[[products]]" 
+    selected-category="[[selectedCategory]]" 
+    selected-product="[[selectedProduct]]" 
+    categories="{{categories}}" 
+    current-listing="{{catalogItems}}" 
+    current-product="{{currentCatalogItem}}"
+    cart-item-count="{{cartItemCount}}"></edb-catalog-brain-element>
    <app-location route="{{liveRoute}}" url-space-regex="^[[rootPath]]"></app-location>
   
   <div id="debug">
@@ -66,6 +75,9 @@
     </div>
     <div class="debug-line">
       <b>jwtAuth</b><i>Token: [[_boolText(jwtAuth.token)]]</i>
+    </div>
+    <div class="debug-line">
+      <b>cart</b><i>Count: [[cartItemCount]]</i>
     </div>
     <div class="debug-line">
       <b>currentUser</b><i>Loaded: [[_boolText(currentUser.name)]]</i>
@@ -125,7 +137,7 @@
     (function(){
       
        
-       class EdbApiControl extends Polymer.Element {
+       class EdbApiControl extends MyOptionsMixin(Polymer.Element) {
          static get is() { return 'edb-api-control'; }
          static get properties() {
            return {
@@ -217,11 +229,11 @@
                  }
                }
              },
-             currentProduct:{
-               type: Object,
-               notify: true,
-               exposed: true
-             },
+            // currentProduct:{
+            //   type: Object,
+            //   notify: true,
+            //   exposed: true
+            // },
             // currentProductVariations:{
             //   type: Object,
             //   notify: true,
@@ -289,7 +301,7 @@
              },
              selectedProduct:{
                notify: true,
-               type: Object
+               type: Number
              }
              ,selectedCategory: {
                notify: true,
@@ -312,8 +324,7 @@
              },
              cartItemCount: {
                type: Number,
-               notify: true,
-               value: 0
+               notify: true
              }
            };
          }
@@ -327,15 +338,30 @@
         static get observers(){
           return [
             '_onJwtAuthChanged(jwtAuth)',
-            '_onCurrentProductChanged(currentProduct)',
+            // '_onCurrentProductChanged(currentProduct)',
             '_onCurrentUserChanged(currentUser)',
             '_onProductsChanged(products)',
-            '_onSelectedProductChanged(selectedProduct,products)',
+            '_onSelectedProductChanged(selectedProduct)',
             // '_onSelectedVariationChanged(selectedVariation,currentProductVariations)',
-            // '_notifyChange("features",features)',
-            // '_notifyChange("slides",slides)',
+            // '_notifyChange("ccitem",currentCatalogItem)',
             
+            // '_notifyChange("slides",slides)',
+            '_onMaterials(materials)'
             ];
+        }
+        
+        _onMaterials(mats){
+          
+          if(mats){
+            if(!this.options.materials){
+              var materials = {};
+              mats.forEach( (  m )=>{
+                materials[m.meta_box.edb_material_number] = m;
+              });
+              this.options.materials = materials;
+            }
+          }
+          
         }
         
         _notifyChange(path,data){
@@ -344,14 +370,15 @@
         }
         
         
-        _onSelectedProductChanged(id,products){
-          if(id && products && products.length > 0){
-            var index = this.$.productSelector.items.findIndex( function( item  ){ return parseFloat(item.id) == parseFloat(id);});
-            if(index || index ===0){
-              // console.log('selecting product at index' + index + ' for id ' + id)
-              this.$.productSelector.selectIndex( index );
-            }
-          }
+        _onSelectedProductChanged(id){
+          // console.log('_onSelectedProductChanged',id)
+          // if(id && products && products.length > 0){
+          //   var index = this.$.productSelector.items.findIndex( function( item  ){ return parseFloat(item.id) == parseFloat(id);});
+          //   if(index || index ===0){
+          //     // console.log('selecting product at index' + index + ' for id ' + id)
+          //     this.$.productSelector.selectIndex( index );
+          //   }
+          // }
         }
         _onSelectedVariationChanged(id,variations){
           if(id && variations && variations.length > 0){
@@ -364,27 +391,35 @@
         }
         
         _liveRouteChanged(route){
+          if(!this.$.importer.imported){
+            return this.$.importer.addEventListener('imported-changed', (e)=>{
+              console.log('imported')
+              
+              return this._liveRouteChanged( route );
+            }, { once: true })
+            
+          }
           if(/shop/.test( route.path )){
+            
             var paths = route.path.split('/').filter( function(a){ return !!a});
-            if(paths[3]){
-              this.set('selectedVariation', paths[3] );
-            }else{
-              this.set('selectedVariation', null );
-            }
-            if(paths[2]){
-              this.set('selectedProduct', paths[2] );
-            }else{
-              this.set('selectedProduct', null );
-            }
             if(paths[1]){
               this.set('selectedCategory', paths[1] );
             }else{
               this.set('selectedCategory', null );
             }
-            
-            
+            if(paths[2] || paths[2] === 0){
+              this.set('selectedProduct', parseInt(paths[2]) );
+            }else{
+              this.set('selectedProduct', null );
+            }
+            if(paths[3] || paths[3] === 0){
+              this.set('selectedVariation', paths[3] );
+            }else{
+              this.set('selectedVariation', null );
+            }
           }
-          this.set('route', route);
+          this.set('route', route);  
+
         }
         
         _computeCustomerIdParam(currentUser){
@@ -393,6 +428,7 @@
         }
         
         _onProductsChanged(products){
+          
           // if(products && products.length){
           //   this.$.productSelector.selectIndex(0);
           // }
@@ -449,6 +485,16 @@
           super.connectedCallback();
           
           window.EdbApiControl.instance = this;
+          
+          // var props = Object.keys(Object.getPrototypeOf(this.$.importer).constructor.properties);
+          // props.forEach( ( prop )=>{
+          //   this.$.importer.addEventListener(`${prop}-changed`, ()=>{
+          //     // console.log(`${prop}-changed`)
+          //     this.notifyPath(prop)
+          //     // this.set(prop,this.$.importer[prop]);
+          //   })
+          // })
+          
           // return this._fetchProductVariations( 463 );
           // this.$.features.generateRequest();
         }

@@ -1,0 +1,33 @@
+{
+  "name": "pedantic-count",
+  "description": "Overly verbose, indexable, linkable, gherkinable numbers.",
+  "main": "index.js",
+  "authors": [
+    "franko <code@akr.club> (http://akr.club)"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "Number"
+  ],
+  "scripts": {
+    "preinstall": "cp ./src/count.js ./index.js && cp ./src/count.js ./browser.js && sed -i 's/exports/window/g' browser.js"
+  },
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "homepage": "https://github.com/AKRFranko/pedantic-count",
+  "_release": "66ef28886a",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "66ef28886aa1f2a3f49a3046f50941816f40f627"
+  },
+  "_source": "git://github.com/AKRFranko/pedantic-count.git",
+  "_target": "*",
+  "_originalSource": "AKRFranko/pedantic-count"
+}

@@ -247,26 +247,28 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         <div id="productMenu">
            <h1 class="product-name">[[renderAsString(product.name)]]</h1>
 
-          <p class="product-price">$[[product.minPrice]] - $[[product.maxPrice]]</p>
-          <div hidden$="[[!product.options.slipcover]]" class="choice-dropdown">
+          
+          <p hidden$="[[!showCurrentPrice]]" class="product-price">$[[renderAsNumber(product.currentPrice)]]</p>
+          <p hidden$="[[showCurrentPrice]]"  class="product-price">$[[renderAsNumber(product.minPrice)]] - $[[renderAsNumber(product.maxPrice)]]</p>
+          <div hidden$="[[!hasChoice(product.choices,'slipcover')]]" class="choice-dropdown">
             <paper-button on-click="toggleCollapse" data-collapse="materialDropdown">select a color <iron-icon icon="my-icons:chevron-right"></iron-icon></paper-button>
             <iron-collapse id="materialDropdown">
               <div class="inner-collapse">
-                <iron-selector attr-for-selected="name" selected="{{product.options.slipcover.selected}}" fallback-selection="[[product.options.slipcover.defaultSelection]]">
-                  <template is="dom-repeat" items="{{product.options.slipcover.choices}}" as="choice">
-                    <edb-material-button name="[[choice.name]]" material="[[choice.material]]"></edb-material-button>
+                <iron-selector name="slipcover" attr-for-selected="name" selected="[[getSelectedChoice(product.choices,'slipcover')]]" on-selected-changed="_onSelectionChange">
+                  <template is="dom-repeat" items="[[getChoiceOptions(product.choices,'slipcover')]]" as="option">
+                    <edb-material-button name="[[option.name]]" material="[[option.name]]"></edb-material-button>
                   </template>
                 </iron-selector>
               </div>
             </iron-collapse>
           </div>
-          <div hidden$="[[!product.options.leg]]" class="choice-dropdown">
+          <div hidden$="[[!hasChoice(product.choices,'leg')]]" class="choice-dropdown">
             <paper-button on-click="toggleCollapse" data-collapse="legDropdown">select a leg <iron-icon icon="my-icons:chevron-right"></iron-icon></paper-button>
             <iron-collapse id="legDropdown">
               <div class="inner-collapse">
-                <iron-selector attr-for-selected="name" selected="{{product.options.leg.selected}}" fallback-selection="[[product.options.leg.defaultSelection]]">
-                  <template is="dom-repeat" items="{{product.options.leg.choices}}" as="choice">
-                    <edb-leg-button name="{{choice.name}}" leg="{{choice.leg}}"></edb-leg-button>
+                <iron-selector name="leg" attr-for-selected="name" selected="[[getSelectedChoice(product.choices,'leg')]]" on-selected-changed="_onSelectionChange">
+                  <template is="dom-repeat" items="[[getChoiceOptions(product.choices,'leg')]]" as="option">
+                    <edb-leg-button name="[[option.name]]" leg="[[option.parent]]"></edb-leg-button>
                   </template>
                 </iron-selector>
               </div>
@@ -361,6 +363,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         <template is="juicy-html" html="[[computeWWL(product.whyWeLove.content)]]"></template>
       </div>
     </div>
+    <edb-catalog-brain-product-element id="reflection" selected-product="[[product.id]]"></edb-catalog-brain-product-element>
   </template>
   <script>
     class ProductPageTemplate extends MyOptionsMixin(EDBHelperMixin(Polymer.Element)) {
@@ -370,6 +373,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
          
           product: {
             type: Object,
+            notify: true,
             value: function(){
               return {};
             },
@@ -379,12 +383,28 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
             type: Number,
             value: 1,
             observer:'_onWantedQuantityChanged'
+          },
+          showCurrentPrice: {
+            type: Boolean,
+            notify: true,
+            computed: '_computePriceDisplay(product.*)'
           }
         }
+      }
+      
+      toNumber( n ){
+        return 1*n;
       }
       static get observers(){
         return [
           '_onWantedQuantityChanged(wantedQuantity)']
+      }
+      
+      _computePriceDisplay(){
+        return Object.keys( this.product.selected ).filter( (k)=> { return k!=='quantity' }).some(( k)=>{
+          return this.product.choices.get(k).selected;
+         });
+        
       }
       computeWWL(content){
         if(!content) return content;
@@ -397,27 +417,56 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
       _decrQty(){
         var old = parseFloat(this.get('wantedQuantity'));
         if(old <= 1) return;
+        
         this.set('wantedQuantity',old - 1);
+        // this.product.select( {quantity: old - 1 });
+        
       }
       _incrQty(){
         var old = parseFloat(this.get('wantedQuantity'));
         if(old >= 100) return;
         this.set('wantedQuantity',old + 1);
+        // this.product.select( {quantity: old + 1 });
       }
       _onWantedQuantityChanged(q){
         if(!this.product) return;
-        if(!this.product.id) return;
+        if(!this.product.id && this.product.id !== 0) return;
         if(typeof q == 'undefined' || q === null ){
-          this.product.wanted = 0;
+          this.product.select( { quantity: 0 });
         }else{
-          this.product.wanted = parseFloat(q);  
+          this.product.select( { quantity: parseFloat(q) });
         }
         
         
       }
       requestAddToCart(){
-        window._edbAddToCart( this.get('product'), this.get('product.options')  );
+        var qty = this.get('wantedQuantity');
+        var result = this.$.reflection.addToCart();
+        if(result instanceof Error){
+          console.error( result );
+        }else{
+          this.set('wantedQuantity', 1 );
+          this.product.select( { quantity: 1 });
+          this._productChanged();
+          // this.notifyPath('product.choices');
+          ['choices','minPrice','maxPrice','currentPrice'].forEach( (path)=>{
+            this.notifyPath(`product.${path}`);  
+          });
+        }
         
+        return result;
+        
+      }
+      hasChoice(choices, choice){
+        return choices.has(choice);
+      }
+      getSelectedChoice( choices, choice ){
+        return choices.get(choice).selected;
+      }
+      getChoiceOptions( choices, choice ){
+        return Array.from(choices.get(choice).options.keys()).map(( k )=>{
+          return choices.get(choice).options.get(k);
+        });
       }
       
       toggleCollapse(e){
@@ -427,20 +476,30 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         this.$[collapse].toggle();
       }
       _productChanged(product){
-        
-        if(!product){
+        // if(!product){
           Array.prototype.forEach.call(this.shadowRoot.querySelectorAll('iron-collapse'), function(n){
             n.opened = false;
           });
-          this.wantedQuantity = 0;  
-        }else{
-          console.log(product.options && product.options.slipcover ? product.options.slipcover.choices : null)
-          this.wantedQuantity = 1;  
-        }
-        
-          
+        // }else{
+          this.set('wantedQuantity', 1 );
         // }
-
+      }
+      
+      
+      _onSelectionChange( e ){
+        var name = e.target.getAttribute('name');
+        var value = e.detail.value;
+        var select = {};
+        select[name] = value;
+        var result = this.product.select(select);
+        if( result instanceof Error){
+          return result;
+        }
+        ['minPrice','maxPrice','currentPrice'].forEach( (path)=>{
+          this.notifyPath(`product.${path}`);  
+        });
+        
+        return result;
       }
       
       // __setHasImage(image,src){

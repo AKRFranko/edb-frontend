@@ -1,0 +1,29 @@
+{
+  "name": "edb-catalog-brain",
+  "description": "",
+  "main": "index.min.js",
+  "authors": [
+    "franko <code@akr.club> (http://akr.club)"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Codiad/Codiad",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pedantic-count": "AKRFranko/pedantic-count"
+  },
+  "_release": "57e60cc030",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "57e60cc0301df144b900257c2580e7be6bb21190"
+  },
+  "_source": "git://github.com/AKRFranko/edb-importer.git",
+  "_target": "*",
+  "_originalSource": "AKRFranko/edb-importer"
+}

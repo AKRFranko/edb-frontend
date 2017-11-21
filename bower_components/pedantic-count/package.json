@@ -1,0 +1,19 @@
+{
+  "name": "pedantic-count",
+  "version": "1.0.5",
+  "description": "Overly verbose, indexable, linkable, gherkinable numbers.",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "npm run-script build",
+    "test": "./node_modules/.bin/cucumber.js",
+    "build": "npx babel ./src/count.js --out-file ./compiled.js --source-maps && browserify --debug --no-builtins --standalone PedanticCount ./compiled.js -o index.js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.32",
+    "@babel/core": "^7.0.0-beta.32",
+    "@babel/preset-env": "^7.0.0-beta.32",
+    "cucumber": "^3"
+  },
+  "author": "franko <code@akr.club> (http://akr.club)",
+  "license": "ISC"
+}

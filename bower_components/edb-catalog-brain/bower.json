@@ -1,0 +1,20 @@
+{
+  "name": "edb-catalog-brain",
+  "description": "",
+  "main": "index.min.js",
+  "authors": [
+    "franko <code@akr.club> (http://akr.club)"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Codiad/Codiad",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pedantic-count": "AKRFranko/pedantic-count"
+  }
+}

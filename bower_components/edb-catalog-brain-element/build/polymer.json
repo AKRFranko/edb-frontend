@@ -1,0 +1,36 @@
+{
+  "entrypoint": "edb-catalog-brain-element.html",
+  "fragments": [],
+  "sources": [
+    "src/**/*",
+    "edb-catalog-brain-element.html"
+  ],
+  "extraDependencies": [
+    "bower_components/webcomponentsjs/*.js"
+  ],
+  "builds": [
+    {
+      "name": "es5-bundled",
+      "js": {
+        "minify": true,
+        "compile": true
+      },
+      "css": {
+        "minify": true
+      },
+      "html": {
+        "minify": true
+      },
+      "bundle": true,
+      "addServiceWorker": true,
+      "addPushManifest": true,
+      "insertPrefetchLinks": true,
+      "preset": "es5-bundled"
+    }
+  ],
+  "lint": {
+    "rules": [
+      "polymer-2-hybrid"
+    ]
+  }
+}

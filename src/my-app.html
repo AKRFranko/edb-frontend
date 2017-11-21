@@ -8,6 +8,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 <link rel="import" href="../bower_components/soso-truncated-text/soso-truncated-text.html">
 <!--<link rel="import" href="../bower_components/iron-multi-ajax/iron-multi-ajax.html">-->
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/god-damned-carousel/god-damned-carousel.html">
@@ -25,7 +26,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 <link rel="import" href="../bower_components/iron-localstorage/iron-localstorage.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 
-
+<link rel="import" href="../bower_components/edb-catalog-brain-element/edb-catalog-brain-element.html">
 
 <link rel="import" href="../bower_components/juicy-html/juicy-html.html">
 <link rel="import" href="../bower_components/ibm-toolbar/ibm-toolbar.html">
@@ -49,8 +50,9 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 
-<link rel="import" href="my-mixins.html">
 <link rel="import" href="my-options.html">
+<link rel="import" href="my-mixins.html">
+
 <!--<link rel="import" href="edb-cataloger.html">-->
 <!--<link rel="import" href="edb-api-data.html">-->
 <!--<link rel="import" href="edb-api-consumer.html">-->
@@ -71,6 +73,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 <link rel="import" href="product-page-template.html">
 <link rel="import" href="article-template.html">
 <link rel="import" href="my-generic-page.html">
+
 <link rel="lazy-import" href="my-home.html">
 <link rel="lazy-import" href="my-inspiration.html">
 <link rel="lazy-import" href="my-order-samples.html">
@@ -672,7 +675,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         <div id="waitPage" name="wait"><granite-spinner color="#000" line-width="5px" size="64"  active="[[_spinnerIsActive(page,loading)]]"></granite-spinner></div>
         <my-home id="homePage" name="home" slides="{{slides}}" features="[[features]]"></my-home>
         <my-inspiration id="inspirationPage" name="inspiration" route="[[subroute]]" inspirations="[[inspirations]]"></my-inspiration>
-        <my-shop id="shopPage" name="shop" route="[[shoproute]]" products="[[products]]" current-category="[[selectedCategory]]" current-product="[[currentProduct]]"></my-shop>
+        <my-shop id="shopPage" name="shop" route="[[shoproute]]" materials="[[materials]]" catalog-items="[[catalogItems]]" current-catalog-item="[[currentCatalogItem]]" current-category="[[selectedCategory]]" selected-product="[[selectedProduct]]"></my-shop>
         <my-about id="aboutPage" page="[[_getPageBySlug('about-page', pages)]]" name="about"></my-about>
         <my-shipping id="shippingPage" page="[[_getPageBySlug('shipping-page', pages)]]" name="shipping"></my-shipping>
         <my-order-samples id="orderSamplesPage" page="[[_getPageBySlug('order-samples-page', pages)]]"  name="order-samples" materials="[[materials]]"></my-order-samples>
@@ -699,11 +702,12 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         materials="{{materials}}"
         categories="{{categories}}"
         slides="{{slides}}"
-        catalog-items="{{products}}"
-        current-catalog-item="{{currentProduct}}"
+        selected-product="{{selectedProduct}}"
         selected-category="{{selectedCategory}}"
         current-user="{{currentUser}}"
         cart-item-count="{{cartItemCount}}"
+        catalog-items="{{catalogItems}}"
+        current-catalog-item="{{currentCatalogItem}}"
         ></edb-api-control>
       </footer>
     </app-header-layout>
@@ -833,8 +837,6 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
       static get observers() {
         return [
           '_routePageChanged(routeData.page)',
-          // '_shopCategoryChanged(shopRouteData.category)',
-          '_computeCategories(categories)',
           'closeCategoriesPanel(routeData.page)',
           '_currentUserChanged(currentUser)',
           '_pageChanged(page,pages)'
@@ -851,15 +853,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         return null;
       }
       
-      _computeCategories(categories){
-        console.log('_computeCategories',categories)
-        // if(categories){
-        //   return Object.keys(categories).map(function(k){
-        //     return categories[k];
-        //   });  
-        // }
-        // return [];
-      }
+      
       _spinnerIsActive( page, loading ){
         return !page || loading;
       }
@@ -969,10 +963,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         return false;
       }
 
-      _shopCategoryChanged(category){
-        this.selectedCategory=category;
-        this.$.consumer.selectedProduct = 463;
-      }
+      
       
       _routePageChanged(page) {
         

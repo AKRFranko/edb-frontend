@@ -16,76 +16,93 @@
   <script>
     (function() {
 
-      let optionsInstance = null;
+      // let optionsInstance = null;
 
-      class MyOptions extends Polymer.Element {
-        static get is() { return 'my-options'; }
+      // class MyOptions extends Polymer.Element {
+      //   static get is() { return 'my-options'; }
 
-        static get properties() {
-          return {
-            options: {
-              type: Object,
-              value: () => ({
-                subscribe: false
-              })
-            },
-            subscribers: {
-              type: Array,
-              value: () => []
-            }
-          }
-        }
+      //   static get properties() {
+      //     return {
+      //       options: {
+      //         type: Object,
+      //         value: () => ({
+      //           subscribe: false
+      //         })
+      //       },
+      //       subscribers: {
+      //         type: Array,
+      //         value: () => []
+      //       }
+      //     }
+      //   }
 
-        static get observers() {
-          return [
-            'optionsChanged(options.*)'
-          ]
-        }
+      //   static get observers() {
+      //     return [
+      //       'optionsChanged(options.*)'
+      //     ]
+      //   }
 
-        constructor() {
-          super();
+      //   constructor() {
+      //     super();
 
-          if (!optionsInstance) optionsInstance = this;
-        }
+      //     if (!optionsInstance) optionsInstance = this;
+      //   }
 
-        register(subscriber) {
-          this.subscribers.push(subscriber);
-          subscriber.options = this.options;
-          subscriber.notifyPath('options');
-        }
+      //   register(subscriber) {
+      //     this.subscribers.push(subscriber);
+      //     subscriber.options = this.options;
+      //     subscriber.notifyPath('options');
+      //   }
 
-        unregister(subscriber) {
-          var i = this.subscribers.indexOf(subscriber);
-          if (i > -1) this.subscribers.splice(i, 1)
-        }
+      //   unregister(subscriber) {
+      //     var i = this.subscribers.indexOf(subscriber);
+      //     if (i > -1) this.subscribers.splice(i, 1)
+      //   }
 
-        optionsChanged(change) {
-          for(var i = 0; i < this.subscribers.length; i++) {
-            this.subscribers[i].notifyPath(change.path);
-          }
-        }
-      }
+      //   optionsChanged(change) {
+      //     console.log('optionsChanged', this.options)
+      //     for(var i = 0; i < this.subscribers.length; i++) {
+      //       this.subscribers[i].notifyPath(change.path);
+      //     }
+      //   }
+      // }
 
-      window.customElements.define(MyOptions.is, MyOptions);
-
+      // window.customElements.define(MyOptions.is, MyOptions);
+      const options = {};
+      const subs = [];
       MyOptionsMixin = (superClass) => {
         return class extends superClass {
           static get properties() {
             return {
               options: {
-                type: Object
+                type: Object,
+                notify: true,
+                value: options
               }
             }
           }
-
+          
+          static get observers() {
+            return [
+              'optionsChanged(options.*)'
+            ]
+          }
+          
+          optionsChanged(change) {
+            for(var i = 0; i < subs.length; i++) {
+              subs[i].notifyPath(change.path);
+            }
+          }
+          
           connectedCallback() {
             super.connectedCallback();
-            optionsInstance.register(this);
+            subs.push(this);
           }
 
           disconnectedCallback() {
             super.disconnectedCallback();
-            optionsInstance.unregister(this);
+            var i = subs.indexOf( this );
+            if(~i) subs.splice(i,1);
           }
         }
       }

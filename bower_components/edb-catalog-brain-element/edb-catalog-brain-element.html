@@ -1,0 +1,558 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="./edb-catalog-brain-import.html">
+
+<dom-module id="edb-catalog-cart-item">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    
+  </template>
+  <script>
+  (function(){
+    
+  
+    const slipNames = {
+      'slipcover-001': '001',
+      'slipcover-002': '002',
+      'slipcover-003': '003',
+      'slipcover-004': '004',
+      'slipcover-005': '005',
+      'slipcover-006': '006',
+      'slipcover-007': '007',
+      'slipcover-008': '008',
+      'slipcover-009': '009',
+      'slipcover-010': '010',
+      'slipcover-011': '011',
+      'slipcover-012': '012',
+      'slipcover-013': '013',
+      'slipcover-014': '014',
+      'slipcover-015': '015',
+      'slipcover-016': '016',
+      'slipcover-017': '017',
+      'slipcover-018': '018',
+      'slipcover-019': '019',
+      'slipcover-020': '020'
+    };
+    
+    const legNames = {
+      'leg-001': 'NATURAL',
+      'leg-002': 'WALNUT',
+      'leg-003': 'GOLD',
+    };
+    
+    
+    
+    const Brain = new EDBCatalogBrain();
+    Brain.elements = [];
+    Brain.notifiables = ['cart','currentProduct','currentListing','imported'];
+    Brain.notify = function(){
+      Brain.elements.forEach( ( element )=>{
+        Brain.notifiables.forEach( ( prop )=>{
+          element.notifyPath(`brain.${prop}`);  
+        });
+      });
+    };
+    
+    
+    var ReflectValuesMixin = function(superClass) {
+      return class extends superClass {
+        _reflectString(l,...s){
+          if(!s || s && !s.length) return null;
+          s = s.map( ( ss )=>{
+            if( /slipcover-\d\d\d/.test(ss)){
+              return slipNames[ss];
+            }
+            if( /leg-\d\d\d/.test(ss)){
+              return legNames[ss];
+            }
+            return ss;
+          })
+          return s.join(' ');
+        }
+        
+        _reflect( v, defaultValue ){
+          defaultValue = defaultValue == 'array' ? [] : defaultValue == 'object' ? {} : defaultValue;
+          return v === null || typeof v == 'undefined' ? defaultValue ? defaultValue : null : v;
+        }
+        
+        _reflectNumber( n ){
+          return isNaN(n) ? 0 : n;
+        }
+        
+        _reflectAmount( n ){
+          return isNaN(n) || n === 0 ? '---' : Number(n).toLocaleString('en-CA', { style: 'currency', currency: 'CAD' });
+        }
+      }
+    }
+    /**
+     * `edb-catalog-brain-element`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+     
+     class EdbCatalogBrainCartItemElement extends ReflectValuesMixin(Polymer.Element) {
+      static get is() { return 'edb-catalog-brain-cart-item-element'; }
+      static get properties(){
+        return {
+          brain: {
+            type: Object,
+            readOnly: true,
+            value: Brain
+          },
+          lang: {
+            type: String,
+            value: 'en',
+            notify: true
+          },
+          ref: {
+            type: Object,
+            notify: true,
+            readOnly: true,
+          },
+          productRef: {
+            type: Object,
+            notify: true,
+            computed: '_computeProductRef(ref)',
+          },
+          token: {
+            type: String,
+            notify: true,
+            observer: 'onTokenChanged'
+          },
+          name: {
+            type: String,
+            notify: true,
+            computed: '_reflectString(lang,productRef.name,choices.leg,choices.slipcover)'
+          },
+          image: {
+            type: Object,
+            notify: true,
+            computed: '_reflect(productRef.image,"object")'
+          },
+          images: {
+            type: Object,
+            notify: true,
+            computed: '_reflect(productRef.images,"array")'
+          },
+          cartCount: {
+            type: Number,
+            notify: true,
+            computed: '_reflectString(lang,ref.choices.quantity)'
+          },
+          choices: {
+            type: Object,
+            notify: true,
+            computed: '_reflect(ref.choices, "object" )'
+          },
+          shippingClass: {
+            type: Number,
+            notify: true,
+            computed: '_reflectString(lang,ref.shippingClass)'
+          }
+        }
+      }
+      
+      
+      constructor( ){
+        super();
+        Brain.elements.push( this );
+      }
+      
+      
+      connectedCallback(){
+        super.connectedCallback();
+        var pEl = this.querySelector('edb-catalog-brain-product-element');
+        
+      }
+      onTokenChanged( token ){
+        if(!token){
+          this._setRef(null);
+        }else{
+          var item = this.brain.cart.tokens.get(token);
+          if(!item){
+            return false;
+          }
+          this._setRef(item);
+        }
+      }
+      _computeProductRef(ref){
+        
+        return this.brain.getProduct( parseInt( this.ref.id ) );
+      }
+      
+      incr( qty ){
+        var result = this.ref.incr(  qty );
+        this.notifyPath('ref.choices');
+        return result;
+      }
+      
+      decr( qty ){
+        var result = this.ref.decr( qty );
+        this.notifyPath('ref.choices');
+        return result;
+      }
+      
+      remove(){
+        var result = this.ref.remove();
+        Brain.notify();
+        return result;
+      }
+     }
+     
+    class EdbCatalogBrainProductElement extends ReflectValuesMixin(Polymer.Element) {
+      static get is() { return 'edb-catalog-brain-product-element'; }
+      static get properties(){
+        return {
+          brain: {
+            type: Object,
+            readOnly: true,
+            value: Brain
+          },
+          ref: {
+            type: Object,
+            notify: true,
+            readOnly: true
+          },
+          lang: {
+            type: String,
+            value: 'en',
+            notify: true
+          },
+          selectedProduct:{
+            type: Number,
+            notify: true,
+            observer: 'onSelectedProductChanged'
+          },
+          name: {
+            type: String,
+            notify: true,
+            computed: '_reflectString(lang,ref.name)'
+          },
+          description: {
+            type: String,
+            notify: true,
+            computed: '_reflectString(lang,ref.description)'
+          },
+          image: {
+            type: String,
+            notify: true,
+            computed: '_reflect(ref.image, "object")'
+          },
+          images: {
+            type: String,
+            notify: true,
+            computed: '_reflect(ref.images, "array")'
+          },
+          cartCount: {
+            type: Number,
+            notify: true,
+            computed: '_reflectNumber(ref.cartCount)'
+          },
+          stockCount: {
+            type: Number,
+            notify: true,
+            computed: '_reflectNumber(ref.stockCount)'
+          },
+          minPrice: {
+            type: String,
+            notify: true,
+            computed: '_reflectAmount(ref.minPrice)'
+          },
+          maxPrice: {
+            type: String,
+            notify: true,
+            computed: '_reflectAmount(ref.maxPrice)'
+          },
+          currentPrice: {
+            type: String,
+            notify: true,
+            computed: '_reflectAmount(ref.currentPrice)'
+          },
+          choices: {
+            type: Object,
+            notify: true,
+            computed: '_reflect(ref.choices)'
+          }
+        }
+      }
+      
+      
+     
+      
+     
+      
+      constructor( id ){
+        super();
+        if(id && !isNaN(id)){
+          this.set('id', parseInt(id) );
+        }
+        Brain.elements.push( this );
+      }
+      
+      onSelectedProductChanged( id ){
+        if((!id && id !== 0) || isNaN(id)){
+          return this._setRef( null );
+        }
+        var product = this.brain.getProduct( parseInt( id ) );
+        if(!product) return;
+        this._setRef( product );
+      }
+      
+      choose( option, value ){
+        if(!option) return false;
+        if(!value && value !== 0){
+          // if(value === null){
+          //   var unselect = {};
+          //   unselect[option] = null;
+          //   return this.ref.unselect( unselect );
+          // }
+          return false;
+        }
+        var selection = {};
+        selection[option]=value;
+        var result = this.ref.select(selection);
+        Brain.notify();
+        return result;
+        
+        
+      }
+      
+      addToCart(){
+        var qty = this.choices.get('quantity').selected.valueOf();
+        if(!qty){
+          return new Error('Must select a quantity');
+        }
+        
+        var result = this.ref.addToCart();
+        Brain.notify();
+        this.notifyPath('ref');
+        return result;
+      }
+      
+    }
+   
+    class EdbCatalogBrainElement extends ReflectValuesMixin(Polymer.Element) {
+      static get is() { return 'edb-catalog-brain-element'; }
+      static get properties() {
+        return {
+          brain: {
+            type: Object,
+            readOnly: true,
+            value: Brain
+          },
+          lang: {
+            type: String,
+            value: 'en',
+            notify: true
+          },
+          apiProductData: {
+            type: Object,
+            notify: true,
+            observer:'onApiProductDataChanged'
+          },
+          imported: {
+            type: Boolean,
+            value: false,
+            notify: true
+          },
+          categories: {
+            type: Array,
+            notify: true,
+            readOnly: true
+          },
+          selectedCategory: {
+            type: String,
+            value: null,
+            notify: true,
+            observer: 'onSelectedCategoryChanged'
+          },
+          selectedProduct: {
+            type: String,
+            notify: true,
+            observer: 'onSelectedProductChanged'
+          },
+          selectedPostCode: {
+            type: String,
+            notify: true,
+            observer: 'onSelectedPostCodeChanged'
+          },
+          currentProduct: {
+            type: Object,
+            notify: true
+          },
+          currentListing: {
+            type: Object,
+            notify: true
+          },
+          cartItemCount: {
+            type: Number,
+            notify: true,
+            computed: '_reflectNumber(brain.cart.itemCount)'
+          },
+          cartDiscountCost:{
+            type: Number,
+            notify: true,
+            computed: '_reflectAmount(brain.cart.discountCost)'
+          },
+          cartShippingCost:{
+            type: Number,
+            notify: true,
+            computed: '_reflectAmount(brain.cart.shippingCost)'
+          },
+          cartTaxCost:{
+            type: Number,
+            notify: true,
+            computed: '_reflectAmount(brain.cart.taxCost)'
+          },
+          cartItemCost:{
+            type: Number,
+            notify: true,
+            computed: '_reflectAmount(brain.cart.itemCost)'
+          },
+          cartTotal:{
+            type: Number,
+            notify: true,
+            computed: '_reflectAmount(brain.cart.total)'
+          },
+          cartShippingZone: {
+            type: String,
+            notify: true,
+            computed: '_reflect(brain.cart.shippingZone)'
+          },
+          cartItemTokens: {
+            type: Array,
+            notify: true,
+            computed: '_computeCartItemTokens(brain.cart.tokens)'
+          }
+        };
+      }
+      
+      static get observers(){
+        return [ '_notifyBrain('+Brain.notifiables.join(',')+')'];
+      }
+      
+      _notifyBrain(){
+        Brain.notify();
+      }
+      
+      constructor(){
+        super();
+        Brain.elements.push( this );
+      }
+      
+      
+      
+     
+     _computeCartItemTokens( tokens ){
+       if(!tokens) return [];
+       if(!tokens.keys) return [];
+       return Array.from(tokens.keys());
+     }
+      
+      onApiProductDataChanged( apiProductData ){
+        if(!apiProductData) return;
+        if(!this.imported){
+          
+          this.brain.import( apiProductData.sort( (a,b)=>{
+                               var aIsComposite = a.meta_box.edb_group_ids;
+                               var bIsComposite = b.meta_box.edb_group_ids;
+                               var aIsBucket = a.meta_box.edb_bucket_slug;
+                               var bIsBucket = b.meta_box.edb_bucket_slug
+                               if(aIsComposite && bIsComposite){
+                                 return 0;
+                               }else if(aIsComposite && !bIsComposite){
+                                 return 1;
+                               }else if(bIsComposite && !aIsComposite){
+                                 return -1;
+                               }
+                               if(aIsBucket && bIsBucket){
+                                 return 0;
+                               }else if(aIsBucket && !bIsBucket){
+                                 return -1;
+                               }else if(bIsBucket && !aIsBucket){
+                                  return 1;
+                               }
+                               return 0;
+                             }));
+          this.imported = true;
+        }
+        this._setCategories( Brain.categories.map( (c)=>{
+          var n = c.split('-');
+          if(n.length > 1){
+            n.shift();
+          }
+          return { name: n.join('-'), slug: c };
+        }));
+      }
+
+      onSelectedCategoryChanged( selectedCategory ){
+        if(!selectedCategory || !this.imported){
+          this._switchListing( null );
+        }else{
+          this._switchListing( this.brain.catalog.get(selectedCategory) );
+        }
+        this.set('currentProduct', null );
+        
+      }
+
+      onSelectedProductChanged( selectedProduct ){
+        if((!selectedProduct && selectedProduct!== 0)|| !this.imported){
+          this._switchProduct( null );
+        }else{
+          this._switchProduct( this.brain.getProduct( parseInt(selectedProduct)  ) );
+        }
+      }
+      
+      onSelectedPostCodeChanged( postCode ){
+        
+        if(!postCode) return null;
+        var result = this.brain.cart.setZoneFromPostalCode( postCode );
+        return result;
+      }
+      
+      
+      
+      
+      _switchListing( listing ){
+        
+        if(listing){
+          this.set('currentListing', Array.from( listing.values() ) );    
+        }else{
+          this.set('currentListing', null );  
+        }
+        
+      }
+      
+      _switchProduct( product ){
+        if(this.currentProduct){
+          this.currentProduct.reset();
+        }
+        
+        if(product){
+          this.set( 'currentProduct', product );  
+        }else{
+          this.set( 'currentProduct', null );  
+        }
+      }
+      
+      removeCartItem(){
+        
+      }
+      
+      updateCartItem(){
+        
+      }
+
+    }
+    window.customElements.define(EdbCatalogBrainCartItemElement.is, EdbCatalogBrainCartItemElement);
+    window.customElements.define(EdbCatalogBrainProductElement.is, EdbCatalogBrainProductElement);
+    window.customElements.define(EdbCatalogBrainElement.is, EdbCatalogBrainElement);
+  })();
+  </script>
+</dom-module>
