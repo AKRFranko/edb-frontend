@@ -256,7 +256,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
               <div class="inner-collapse">
                 <iron-selector name="slipcover" attr-for-selected="name" selected="[[getSelectedChoice(product.choices,'slipcover')]]" on-selected-changed="_onSelectionChange">
                   <template is="dom-repeat" items="[[getChoiceOptions(product.choices,'slipcover')]]" as="option">
-                    <edb-material-button name="[[option.name]]" material="[[option.name]]"></edb-material-button>
+                    <edb-material-button name$="[[option.name]]" material="[[option.name]]"></edb-material-button>
                   </template>
                 </iron-selector>
               </div>
@@ -268,7 +268,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
               <div class="inner-collapse">
                 <iron-selector name="leg" attr-for-selected="name" selected="[[getSelectedChoice(product.choices,'leg')]]" on-selected-changed="_onSelectionChange">
                   <template is="dom-repeat" items="[[getChoiceOptions(product.choices,'leg')]]" as="option">
-                    <edb-leg-button name="[[option.name]]" leg="[[option.parent]]"></edb-leg-button>
+                    <edb-leg-button name$="[[option.name]]" leg="[[option.parent]]"></edb-leg-button>
                   </template>
                 </iron-selector>
               </div>
@@ -401,6 +401,8 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
       }
       
       _computePriceDisplay(){
+        if(!this.product) return false;
+        if(!this.product.selected) return false;
         return Object.keys( this.product.selected ).filter( (k)=> { return k!=='quantity' }).some(( k)=>{
           return this.product.choices.get(k).selected;
          });
@@ -444,6 +446,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         var result = this.$.reflection.addToCart();
         if(result instanceof Error){
           console.error( result );
+          window.EDBApp.notifyError(result.message);
         }else{
           this.set('wantedQuantity', 1 );
           this.product.select( { quantity: 1 });
@@ -452,20 +455,33 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
           ['choices','minPrice','maxPrice','currentPrice'].forEach( (path)=>{
             this.notifyPath(`product.${path}`);  
           });
+          console.log(result)
+          window.EDBApp.notifySuccess(`added ${qty} to cart`);
         }
         
         return result;
         
       }
+      
       hasChoice(choices, choice){
+        if(!choices) return false;
         return choices.has(choice);
       }
+      
       getSelectedChoice( choices, choice ){
+        if(!choices) return null;
         return choices.get(choice).selected;
       }
+      
       getChoiceOptions( choices, choice ){
+        if(!choices) return null;
         return Array.from(choices.get(choice).options.keys()).map(( k )=>{
-          return choices.get(choice).options.get(k);
+          var value = choices.get(choice).options.get(k);
+          if(value.size){
+            var first = value.values().next();
+            value = first.value;
+          }
+          return {name: value.name, slug: value.name, parent: value.parent };
         });
       }
       
@@ -476,6 +492,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         this.$[collapse].toggle();
       }
       _productChanged(product){
+        // console.log('_productChanged',product.choices)
         // if(!product){
           Array.prototype.forEach.call(this.shadowRoot.querySelectorAll('iron-collapse'), function(n){
             n.opened = false;

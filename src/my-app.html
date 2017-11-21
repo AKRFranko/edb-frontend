@@ -1,6 +1,7 @@
 <!-- @license Copyright (c) 2016 The Polymer Project Authors. All rights reserved. This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
 The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as part of the polymer project is also subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../bower_components/paper-badge/paper-badge.html">
 <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../bower_components/google-map/google-map.html">
@@ -591,6 +592,15 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
       #loginErrors{
         color:#ffa7a7;
       }
+      
+      #successToast{
+        --paper-toast-background-color: green;
+        --paper-toast-color: white;
+      }
+      #errorToast{
+        --paper-toast-background-color: red;
+        --paper-toast-color: white;
+      }
     </style>
     <!--<div id="lockScreen" hidden$="[[!loading]]">-->
     <!--  <div>-->
@@ -742,7 +752,8 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         
       
     </paper-dialog-lite>
-    <!--<app-location route="{{liveRoute}}" url-space-regex="^[[rootPath]]"></app-location>-->
+    <paper-toast horizontal-align="right" class="fit-bottom" dynamic-align id="successToast"></paper-toast>
+    <paper-toast horizontal-align="right" class="fit-bottom" dynamic-align id="errorToast"></paper-toast>
     <app-route route="[[route]]" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
     <app-route route="[[route]]" pattern="[[rootPath]]shop/:category" data="{{shopRouteData}}" tail="{{shoproute}}"></app-route>
     
@@ -843,6 +854,16 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         ];
       }
       
+      
+      notifySuccess( message ){
+        this.$.successToast.text = message;
+        this.$.successToast.open();
+      }
+      
+      notifyError( message ){
+        this.$.errorToast.text = message;
+        this.$.errorToast.open();
+      }
       _getPageBySlug(slug,pages){
         if(!pages) return null;
         if(!pages.length) return null;
@@ -1028,6 +1049,11 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
       _showPage404() {
         document.title = "EDB - 404 Error";
         this.page = 'view404';
+      }
+      
+      constructor(){
+        super();
+        window.EDBApp = this;
       }
     }
 
