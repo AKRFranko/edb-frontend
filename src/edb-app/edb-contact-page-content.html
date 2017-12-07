@@ -1,0 +1,205 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+
+<dom-module id="edb-contact-page-content">
+  <template>
+    <style> 
+      :host { 
+      display: block;
+      } 
+      #content{
+        @apply --layout-horizontal;
+        @apply --layout-wrap;
+        @apply --layout-start-justified;
+        text-align:center;
+      }
+      
+      table{
+        margin:60px auto;
+      }
+      table,tr,td,th{
+        margin:0;
+        padding:0;
+        border-collapse:collapse;
+      }
+      table{
+        max-width:98%;
+        margin-left:auto;
+        margin-right:auto;
+        
+      }
+      th,td{
+        text-align:left;
+        height:32px;
+        width:50%;
+        border-bottom:1px solid #000;
+      }
+      table.checkered{
+        width:520px;
+      }
+      table.checkered td{
+        @apply --edb-copy-styles;
+        background:#eee;
+        width:25%;
+        border:0;
+        height:60px;
+        padding:15px;
+        text-align:center;
+      }
+      table.checkered td.chosen,
+      table td.chosen{
+        color:var(--edb-success-color,#093);
+      }
+      table.checkered td:nth-of-type(odd){
+        background:#fff;
+      }
+      table.checkered tr:nth-of-type(even) td:nth-of-type(even){
+        background:#fff;
+      }
+      table.checkered tr:nth-of-type(even) td:nth-of-type(odd){
+        background:#eee;
+      }
+      .edb-title{
+        @apply --edb-title-styles;
+      }
+      article{
+        width:50%;
+        box-sizing:border-box;
+        padding:30px;
+      }
+      article:nth-child(1),
+      article:nth-child(2){
+        padding-top:0;
+      }
+      article:nth-of-type(odd){
+        padding-left:0;
+      }
+      article:nth-of-type(even){
+        padding-right:0;
+      }
+      ul{
+        text-align:left;
+      }
+      
+    </style>
+    <div id="content">
+      
+        
+        <article class="address">
+           <h2 class="edb-title">ADDRESS</h2>
+          <span class="street-address">534 mccaffrey</span>
+          <span class="locality">montreal, qc</span>
+          <span class="postcode">h4t 1n1</span>
+  
+          <br> <span class="phone">514-738-6484</span>
+          <span class="phone">1-844-738-6484</span>
+          <span class="email"><a href="mailto:info@elementdebase.com">info@elementdebase.com</a></span>
+  
+        </article>
+       
+         
+       
+         <article class="showroom">
+            <h2 class="edb-title">SHOWROOM OPEN TO THE PUBLIC</h2>
+  
+           <table>
+             <tr>
+               <th>mon – tue</th>
+               <td>by appointment*</td>
+             </tr>
+             <tr>
+               <th>wed</th>
+               <td>12h00 to 18h00</td>
+             </tr>
+             <tr>
+               <th>thu - fri</th>
+               <td>12h00 to 20h00</td>
+             </tr>
+             <tr>
+               <th>sat - sun</th>
+               <td>13h00 to 17h00</td>
+             </tr>
+           </table>
+           <p class="edb-footnote">* to arrange an appointment, please call us within our opening hours or write to us at least 24 hours in advance at
+             <a href="mailto:info@elementdebase.com">info@elementdebase.com</a>
+           </p>
+           <p>Our showroom is open to the public. everyone is welcome to pass by during our opening hours.</p>
+         </article>
+         
+         <article class="map">
+           
+             <google-map id="gmap" map="{{map}}" api-key="AIzaSyBdDY23DjMS6vinyNjD74StRoIiYOZtHZ4" latitude="45.484497" longitude="-73.706519" map-type="roadmap" zoom="11" fit-to-markers disable-map-type-control disable-street-view-control>
+               <google-map-marker latitude="45.484497" longitude="-73.706519" icon="./images/edb-pin.png"></google-map-marker>
+             </google-map>
+           
+           <p>our showroom is conveniently located in montreal near the junction of the 40 and the 13.</p>
+           <p>approximate time without heavy traffic:</p>
+           <ul>
+             <li>5 min from trudeau airport</li>
+             <li>25 min from downtown montreal</li>
+             <li>30 min from olympic stadium</li>
+             <li>25 min from outremont</li>
+             <li>20 min from tmr</li>
+             <li>30 min from the plateau</li>
+             <li>25 min from the mile end</li>
+             <li>2 min from ikea (cavendish)</li>
+             <li>15 min from ville st-laurent</li>
+             <li>5 min from plaza cote-vertu</li>
+           </ul>
+         </article>
+         
+         <article class="form">
+           <form id="contactForm">
+              <h2 class="edb-title">WRITE TO US</h2>
+  
+             <p>we'll respond within 24 hours</p>
+             <paper-input label="name" type="text"></paper-input>
+             <paper-input label="email" type="email"></paper-input>
+             <paper-input label="confirm email" type="email"></paper-input>
+             <paper-input label="phone number" type="tel"></paper-input>
+             <paper-input label="subject" type="text"></paper-input>
+             <paper-textarea rows="5" label="your message"></paper-textarea>
+             <paper-button id="sendButton" primary>send</paper-button>
+           </form>
+         </article>
+       
+      
+      
+    </div>
+    
+  </template>
+
+  <script>
+    /**
+     * `edb-router`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class EdbContactPageContent extends Polymer.Element {
+      static get is() { return 'edb-contact-page-content'; }
+      static get properties() {
+        return {
+          postCode: {
+            type: String,
+            notify: true
+          },zone: {
+              type: String,
+              notify: true
+            },
+          
+        };
+      }
+      static get observers(){
+        return [];
+      }
+      
+      
+    }
+
+    window.customElements.define(EdbContactPageContent.is, EdbContactPageContent);
+  </script>
+</dom-module>
+

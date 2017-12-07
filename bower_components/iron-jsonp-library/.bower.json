@@ -60,7 +60,7 @@
     "tag": "v2.0.0",
     "commit": "61d47ed327b76bd597d1e1800d3040b2279ae329"
   },
-  "_source": "git://github.com/PolymerElements/iron-jsonp-library.git",
+  "_source": "https://github.com/PolymerElements/iron-jsonp-library.git",
   "_target": "1 - 2",
   "_originalSource": "PolymerElements/iron-jsonp-library"
 }

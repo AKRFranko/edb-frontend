@@ -1,0 +1,223 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+
+<dom-module id="edb-shipping-page-content">
+  <template>
+    <style> 
+      :host { 
+      display: block;
+      } 
+      #content{
+        @apply --layout-vertical;
+        @apply --layout-start-justified;
+        text-align:center;
+      }
+      .step{
+        @apply --layout-vertical;
+        @apply --layout-center;
+        width:100%;
+        border-bottom:1px solid #000;
+        padding-bottom:60px;
+      }
+      .step:first-of-type{
+        padding-top:0;
+      }
+      .step:last-of-type{
+        border-bottom:0;
+      }
+      .bignumber{
+        @apply --edb-title-styles;
+        font-size:3em;
+      }
+      table{
+        margin:60px auto;
+      }
+      table,tr,td,th{
+        margin:0;
+        padding:0;
+        border-collapse:collapse;
+      }
+      table{
+        max-width:98%;
+        margin-left:auto;
+        margin-right:auto;
+        
+      }
+      th,td{
+        text-align:left;
+        height:32px;
+        width:50%;
+        border-bottom:1px solid #000;
+      }
+      table.checkered{
+        width:520px;
+      }
+      table.checkered td{
+        @apply --edb-copy-styles;
+        background:#eee;
+        width:25%;
+        border:0;
+        height:60px;
+        padding:15px;
+        text-align:center;
+      }
+      table.checkered td.chosen,
+      table td.chosen{
+        color:var(--edb-success-color,#093);
+      }
+      table.checkered td:nth-of-type(odd){
+        background:#fff;
+      }
+      table.checkered tr:nth-of-type(even) td:nth-of-type(even){
+        background:#fff;
+      }
+      table.checkered tr:nth-of-type(even) td:nth-of-type(odd){
+        background:#eee;
+      }
+      
+      #zoneSuffix{
+          @apply --edb-widget-styles;
+          color:#999;
+      }
+    </style>
+    <div id="content">
+      <edb-stack>
+      <article class="step">
+        <div class="bignumber">1</div>
+        <p>Identify your shipping zone</p>
+        <p>most canadian urban centers will fall in zone 1</p>
+        <div class="check-postcode">
+          <paper-input id="postCodeInput" placeholder="enter your postal code" type="text" value="{{postCode}}" pattern="[A-Z][0-9][A-Z] [0-9][A-Z][0-9]">
+              <div id="zoneSuffix" slot="suffix">{{_computeShippingZoneSuffix(zone,postCode)}}</div>
+          </paper-input>        
+          <!--<paper-input label="enter your postal code">-->
+          <!--  <paper-button slot="suffix">check</paper-button>-->
+          <!--</paper-input>-->
+        </div>
+      </article>
+      <article class="step">
+        <div class="bignumber">2</div>
+        <p>Find your shipping rate on orders of furniture and accessories.</p>
+        <table class="checkered">
+          <tr><td></td><td>zone 1</td><td>zone 2</td><td>zone 3</td></tr>
+          <tr><td>order
+                  below
+                  $500</td>
+        <td>flat fee $65</td><td> flat fee $150</td><td> flat fee $250</td>
+                  
+          <tr><td>order
+                  above
+                  $500</td><td>free        </td><td> flat fee $85  </td><td>flat fee $150</td>
+                  </tr>
+        </table>
+  
+      </article>
+      <article class="step">
+        <div class="bignumber">3</div>
+        <p>Find your shipping rate on orders of small furniture.</p>
+        <table class="checkered">
+          <tr><td></td><td>zone 1</td><td>zone 2</td><td>zone 3</td></tr>
+          <tr><td>order
+                  below
+                  $500</td>
+        <td>flat fee $18</td><td> flat fee $25</td><td> flat fee $28</td>
+                  
+          <tr><td>order
+                  above
+                  $500</td><td>free        </td><td> flat fee $10  </td><td>flat fee $15</td>
+                  </tr>
+        </table>
+  
+      </article>
+      <article class="step">
+        <div class="bignumber">4</div>
+        <p>Find your shipping rate on orders of accessories only.</p>
+        <table class="checkered">
+          <tr><td></td><td>zone 1</td><td>zone 2</td><td>zone 3</td></tr>
+          <tr><td>order
+                  below
+                  $50</td>
+        <td>flat fee $15</td><td> flat fee $15</td><td> flat fee $15</td>
+                  
+          <tr><td>order
+                  above
+                  $50</td><td>free        </td><td>free</td><td>free</td>
+                  </tr>
+        </table>
+  
+      </article>  
+      </edb-stack>
+    </div>
+    
+  </template>
+
+  <script>
+    /**
+     * `edb-router`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class EdbShippingPageContent extends Polymer.Element {
+      static get is() { return 'edb-shipping-page-content'; }
+      static get properties() {
+        return {
+          postCode: {
+            type: String,
+            notify: true
+          },zone: {
+              type: String,
+              notify: true
+            },
+          
+        };
+      }
+      static get observers(){
+        return [
+          '_postCodeChanged(postCode)',
+          '_zoneChanged(zone)'
+          
+          ];
+      }
+      _zoneChanged(zone){
+        var task = ()=>{
+          this.shadowRoot.querySelectorAll('td').forEach( (cell)=>{
+            cell.classList.remove('chosen');
+          });
+          var cells = {
+            'zone-1': this.shadowRoot.querySelectorAll('tr td:nth-child(2)'),
+            'zone-2': this.shadowRoot.querySelectorAll('tr td:nth-child(3)'),
+            'zone-3': this.shadowRoot.querySelectorAll('tr td:nth-child(4)'),
+          } 
+          if(cells[zone]){
+            cells[zone].forEach( (cell)=>{
+              cell.classList.add('chosen');
+            });
+          }  
+        }
+        
+        this._zoneChangeDebounced = Polymer.Debouncer.debounce(this._zoneChangeDebounced, Polymer.Async.animationFrame, task ); 
+        
+      }
+      
+      _postCodeChanged(postCode){
+        // console.log('_postCodeChanged',postCode,this.getZoneFromPostalCode(postCode) )
+        if(this.getZoneFromPostalCode){
+          this.set('zone', this.getZoneFromPostalCode(postCode) );
+        }
+      }
+      _computeShippingZoneSuffix(zone){
+        // console.log('_computeShippingZoneSuffix',zone)
+          return zone == 'n/a' || zone === null ? '' : zone;
+      }
+   
+      
+      
+    }
+
+    window.customElements.define(EdbShippingPageContent.is, EdbShippingPageContent);
+  </script>
+</dom-module>
+

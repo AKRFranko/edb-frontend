@@ -1,30 +1,33 @@
 &lt;juicy-html&gt; [![Build Status](https://travis-ci.org/Juicy/juicy-html.svg?branch=master)](https://travis-ci.org/Juicy/juicy-html)
 ==============
+> Declarative way for client-side includes
 
-`<juicy-html>` is a custom element that lets you load HTML partials from JS objects and external files into your DOM. It acts more or less, as `include` statement known in many other languages. It also provides data binding, that works for native JS/HTML as well as for Polymer's `dom-bind`.
+`<juicy-html>` is a custom element that lets you load HTML partials from JS objects and external files into your DOM. It acts more or less, as `include` statement known in many other languages. It also provides a simple data binding, that works for native JS/HTML as well as for Polymer's `dom-bind`.
 
 ### External files
 To load HTML from external file all you need is:
 ```html
-<template is="juicy-html" href="./path/to/file.html"></template>
+<juicy-html href="./path/to/file.html"></juicy-html>
 ```
 
 ### Markup provided by attribute
 ```html
-<template is="juicy-html" html="<h1>Hello World</h1>"></template>
+<juicy-html html="<h1>Hello World</h1>"></juicy-html>
 ```
 
 ### Data Binding
 `juicy-html` may forward given model object to stamped elements.
 
 ```html
-<template is="juicy-html"
+<juicy-html
   html='
     All those nodes will get <code>.model</code> property
     with the reference to the object given in model attribute.
-    <template is="dom-bind">
-      <p>which can be used by <span>{{model.polymer}}</span></p>
-    </template>
+    <dom-bind>
+      <template is="dom-bind">
+        <p>which can be used by <span>{{model.polymer}}</span></p>
+      </template>
+    </dom-bind>
     <custom-element>that uses `.model` property<custom-element>
     <script>
       // script that may use
@@ -33,7 +36,7 @@ To load HTML from external file all you need is:
   model='{
     "polymer": "Polymer&apos;s dom-bind",
     "vanilla": "as well as by native JS <code>&amp;lt;script&amp;gt;</code> or custom elements"
-   }'>
+  }'></juicy-html>
 ```
 HTML may naturally be provided from external file, and `model` can be provided using Polymer's/or any other data-binding as real object (not a string)
 
@@ -69,7 +72,7 @@ Please note, that loaded `<script>` and `<style>` will be executed every time HT
 1. Import Web Components' polyfill (if needed):
 
     ```html
-    <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     ```
 
 2. Import Custom Element:
@@ -83,15 +86,15 @@ Please note, that loaded `<script>` and `<style>` will be executed every time HT
 	Load HTML partial from a string:
 
 	```html
-	<template is="juicy-html" html="<b>some</b> HTML"></template>
-	<!-- Or <template is="juicy-html" html="{{var}}"></template> where {{ var }} equals "<b>some</b> HTML" -->
+	<juicy-html html="<b>some</b> HTML"></juicy-html>
+	<!-- Or <juicy-html html="{{var}}"></juicy-html> where {{ var }} equals "<b>some</b> HTML" -->
 	```
 
 	Load HTML partial from a URL:
 
 	```html
-	<template is="juicy-html" href="./path/to/file.html"></template>
-	<!-- Or <template is="juicy-html" href="{{var}}"></template>
+	<juicy-html href="./path/to/file.html"></juicy-html>
+	<!-- Or <juicy-html href="{{var}}"></juicy-html>
 	     where {{var}} equals "./path/to/file.html", a path relative to the document that must start with / or ./ -->
 	```
 
@@ -99,18 +102,19 @@ Please note, that loaded `<script>` and `<style>` will be executed every time HT
 
 Attribute           | Options         | Default     | Description
 ---                 | ---             | ---         | ---
-`html`              | *string*		  | `""`	    | Safe HTML code to be stamped. Setting this one will skip any pending request for `href` and remove `href` attribute.
-`href`              | *string*		  | `""`	    | Path of a partial to be loaded. Setting this one will remove `html` attribute.
-`model`(_optional_) | *Object|String* | `undefined` | Object (or `JSON.stringify`'ied Object) to be attached to every root node of loaded document
+`html`              | *String*		  | `""`	    | Safe HTML code to be stamped. Setting this one will skip any pending request for `href` and remove `href` attribute.
+`href`              | *String*		  | `""`	    | Path of a partial to be loaded. Setting this one will remove `html` attribute.
+`model`(_optional_) | *Object/String* | `undefined` | Object (or `JSON.stringify`'ied Object) to be attached to every root node of loaded document
 
 ## Properties
 
-Property  | Type             | Default     | Description
----       | ---              | ---         | ---
-`model`   | *Object*         | `undefined` | See [attributes](#Attributes)
-`html`    | *string*         | `""`	       | See [attributes](#Attributes)
-`href`    | *string*         | `""`	       | See [attributes](#Attributes)
-`pending` | *XMLHttpRequest* |             | pending XHR if any
+Property       | Type              | Default     | Description
+---            | ---               | ---         | ---
+`model`        | *Object*          | `undefined` | See [attributes](#Attributes), plays nice with Polymer data-binding
+`html`         | *String*          | `""`	     | See [attributes](#Attributes)
+`href`         | *String*          | `""`	     | See [attributes](#Attributes)
+`pending`      | *XMLHttpRequest*  |             | pending XHR if any
+`stampedNodes` | *Array*           | `[]`        | Array of stamped nodes.
 
 Please note, that properties are available after element is upgraded.
 To provide a state before element is upgraded, please use attributes.

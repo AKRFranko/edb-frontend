@@ -58,7 +58,7 @@
     "tag": "v2.0.0",
     "commit": "5d5a93884627057bab6cbf635072036376a4b572"
   },
-  "_source": "git://github.com/PolymerElements/iron-checked-element-behavior.git",
+  "_source": "https://github.com/PolymerElements/iron-checked-element-behavior.git",
   "_target": "1 - 2",
   "_originalSource": "PolymerElements/iron-checked-element-behavior"
 }

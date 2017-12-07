@@ -27,7 +27,7 @@
     "branch": "master",
     "commit": "66ef28886aa1f2a3f49a3046f50941816f40f627"
   },
-  "_source": "git://github.com/AKRFranko/pedantic-count.git",
+  "_source": "https://github.com/AKRFranko/pedantic-count.git",
   "_target": "*",
   "_originalSource": "AKRFranko/pedantic-count"
 }

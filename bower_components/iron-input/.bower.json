@@ -63,7 +63,7 @@
     "tag": "v2.0.1",
     "commit": "354343f4bdad87de7049f6c8242941f2457a6b8c"
   },
-  "_source": "git://github.com/PolymerElements/iron-input.git",
+  "_source": "https://github.com/PolymerElements/iron-input.git",
   "_target": "1 - 2",
   "_originalSource": "PolymerElements/iron-input"
 }

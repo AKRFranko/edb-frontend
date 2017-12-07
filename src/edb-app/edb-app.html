@@ -1,0 +1,906 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
+<!--<link rel="import" href="../../bower_components/god-damned-image/god-damned-image.html">-->
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+
+<link rel="import" href="../../bower_components/google-map/google-map.html">
+
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/edb-catalog-brain-element/edb-catalog-brain-element.html">
+<link rel="import" href="../../bower_components/edb-elements/edb-elements.html">
+
+<link rel="import" href="./edb-shipping-page-content.html">
+<link rel="import" href="./edb-contact-page-content.html">
+
+
+<dom-module id="edb-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+        @apply --edb-copy-styles;
+      }
+      
+      .edb-headline{
+        @apply --edb-headline-styles;
+      }
+      .edb-title{
+        @apply --edb-title-styles;
+      }
+      .edb-copy{
+        @apply --edb-copy-styles;
+      }
+      .edb-product-name{
+        @apply --edb-product-name;
+      }
+      .edb-product-price{
+        @apply --edb-product-price;
+      }
+      #zoneSuffix{
+          @apply --edb-widget-styles;
+          color:#999;
+      }
+      #emptyCart{
+        widtth:100%;
+        text-align:center;
+        min-height:320px;
+      }
+      
+      
+      
+      .flex{
+        @apply --layout-flex;
+      }
+      iron-pages{
+        width:100%;
+        max-width:100%;
+        min-width:100%;
+      }
+      section{
+        position:relative;
+        width:100%;
+        max-width:100%;
+        min-width:100%;
+        background:#fff;
+        @apply --layout-vertical;
+        @apply --layout-start-justified;
+      }
+      
+      h1,h2{
+        text-align:center;
+      }
+      
+      nav{
+        @apply --layout-horizontal;
+      }
+      a{
+        text-decoration:none;
+        display:inline-block;
+        color:var(--edb-link-color, #000);
+        @apply --menu-link-text-styles;
+      }
+      nav a{
+        display:block;
+        text-decoration:none;
+        position:relative;
+        padding:0 1rem;
+      }
+      nav a:last-of-type{
+        margin-right:-1rem;
+      }
+      edb-layout,section,edb-toolbar{
+        background:#fff;  
+        
+      }
+      .badge{
+        display:inline-block;
+        width:16px;
+        height:16px;
+        border-radius:8px;
+        font-size:11px;
+        text-align:center;
+        line-height:16px;
+        padding:1px;
+        background:#e91e63;
+        color:#fff;
+      }
+      
+      #foot{
+        min-height:512px;
+        background:purple;
+        z-index:1;
+      }
+      
+      .fixed-header{
+        position:fixed;
+        width:inherit;
+        min-width:inherit;
+        max-width:inherit;
+        left:0;
+        z-index:1;
+      }
+      
+      .fixed-header-sizer{
+        position:relative;
+        height:232px;
+      }
+      .fixed-header-sizer.with-body{
+        height:404px;
+      }
+      .fixed-header ~ *{
+        z-index:2;
+      }
+      
+      #checkoutItems{
+          margin-bottom:60px;
+      }
+      #checkoutTotals{
+          padding-top:32px;
+          border-top:1px solid #000;
+      }
+      #cartTotals{
+          padding-top:32px;
+          border-top:1px solid #000;
+      }
+      #cartShipping{
+          @apply --layout-horizontal;
+          @apply --layout-center;
+      }
+      /*#checkoutPage .title{*/
+      /*  text-align:center;*/
+      /* @apply --edb-product-title;   */
+      /* margin-bottom:32px;*/
+      /*}*/
+      .fieldset .title{
+          text-align:left;
+       @apply --edb-material-name;
+       margin-bottom:16px;
+      }
+      
+      
+      section > *{
+        background:inherit;
+      }
+      paper-checkbox{
+        /*margin-bottom:16px;*/
+        margin-top:16px;
+      }
+      
+      paper-button{
+        border-radius:0;
+        margin:0;
+        @apply --edb-button-styles;
+        
+      }
+      paper-button[primary]{
+        background-color:var(--edb-primary-button-color);
+        color:var(--edb-primary-button-text);
+      }
+      paper-button[secondary]{
+        background-color:var(--edb-secondary-button-color);
+        color:var(--edb-secondary-button-text);
+      }
+      .stack-item-title{
+        @apply --edb-feature-list-title;
+        margin-bottom:8px;
+      }
+      .stack-item-subtitle{
+        @apply --edb-feature-list-subtitle;
+        margin-bottom:8px;
+      }
+      .stack-item-body{
+        @apply --edb-feature-summary;
+      }
+      .feature-item-title{
+        @apply --edb-feature-list-title;
+        margin-bottom:8px;
+      }
+      .feature-item-subtitle{
+        @apply --edb-feature-list-subtitle;
+        margin-bottom:8px;
+      }
+      .feature-item-body{
+        @apply --edb-feature-summary;
+      }
+      iron-icon{
+        min-width:32px;
+        min-height:32px;
+      }
+      #menuPanel{
+        display:block;
+        z-index:1000;
+      }
+      #userNav{
+          padding-right:48px;
+      }
+      #siteNav a{
+        position:relative;
+        white-space:nowrap;
+      }
+      #categoryList{
+          @apply --layout-vertical;
+      }
+      #categoryList a{
+          @apply --layout-horizontal;
+          display:block;
+          width:100%;
+          height:32px;
+      }
+      #shopLinks{
+        
+        @apply --layout-horizontal;
+        @apply --layout-center-center;
+        
+        height:96px;
+      }
+      #shopLinks a{
+        display:inline-block;
+        padding:10px 24px;
+        margin:0 20px;
+        color:#fff;
+        background:#000;
+      }
+      edb-slide{
+        color:#fff;
+      }
+      edb-slide .edb-headline{
+        line-height:1;
+        text-align:center;
+      }
+      @media all and (max-width:768px){
+        .fixed-header-sizer{
+          position:relative;
+          height:192px;
+        }
+        #siteNav{
+          display:none;
+        }
+        #userNav a{
+          padding:0 8px;
+        }
+        #phoneLink{
+          position:absolute;
+          top:120px;
+          right:0;
+          margin-right:-16px;
+        }
+        #registerLink{
+          display:none;
+        }
+      }
+      
+      @media all and (min-width:768px){
+        #loginForm,#registerForm{
+          width:320px;
+          max-width:320px;
+          min-width:320px;
+          margin-left:auto;
+          margin-right:auto;
+        }
+        #registerLink{
+          display:inline-block;
+        }
+        #phoneLink{
+          position:relative;
+          top:auto;
+          right:auto;
+          margin-right:0;
+        }
+        .twins{
+          @apply --layout-horizontal;
+        }  
+        .twins > *{
+          margin:0 30px;
+        }
+        .twins > *:first-child{
+          margin-left:0px;
+        }
+        .twins > *:last-child{
+          margin-right:0px;
+        }
+        .wider{
+          min-width:70%;
+        }
+          
+      }
+     
+     
+      @media all and (min-width:960px){
+        #userNav{
+            padding-right:0;
+        }
+      }
+      
+      @media all and (min-width:1000px){
+        #inner{
+          max-width:960px;
+        }
+      }
+      *[hidden],#shopLinks[hidden],#registerLink[hidden],#loginLink[hidden]{
+        display:none;
+      }
+      
+      
+    </style>
+    <a id="gohome" href="/home"></a>
+    <edb-notification-bar id="bar"></edb-notification-bar>
+    <edb-layout class="fullbleed">
+      <div slot="header">
+        <edb-toolbar logo-href="/home">
+          <nav id="userNav" slot="top-content">
+            
+            <a id="phoneLink" href="tel:555-555-5555" type="tel">555-555-5555</a>
+            <a id="userLink"  hidden$="{{!isLoggedIn}}" href="/account">{{currentUser.name}}</a>
+            <a id="accountLink"  hidden$="{{!isLoggedIn}}" href="/account">account</a>
+            <div class="flex"></div>
+            <a id="cartLink" href="/cart/view">cart <span class="badge">{{cartItemCount}}</span></a>
+            <a id="loginLink"    hidden$="{{isLoggedIn}}" href="/auth/login">login</a>
+            <a id="registerLink" hidden$="{{isLoggedIn}}" href="/auth/register">register</a>
+            
+            <a id="logoutLink"   hidden$="{{!isLoggedIn}}" href="#" on-click="_submitLogout">logout</a>
+          </nav>
+          <nav id="siteNav" slot="bottom-content">
+            <a href="#" on-click="toggleProductPanel">products<paper-ripple></paper-ripple></a>
+            <a on-click="_closeMenuPanel" href="/order-samples">order samples<paper-ripple></paper-ripple></a>
+            <a on-click="_closeMenuPanel" href="/about">about<paper-ripple></paper-ripple></a>
+            <a on-click="_closeMenuPanel" href="/shipping">shipping<paper-ripple></paper-ripple></a>
+            <a on-click="_closeMenuPanel" href="/contact">contact<paper-ripple></paper-ripple></a>
+            <a on-click="_closeMenuPanel" href="/lookbook">lookbook<paper-ripple></paper-ripple></a>
+            <a on-click="_closeMenuPanel" href="/inspirations">inspirations<paper-ripple></paper-ripple></a>
+          </nav>
+        </edb-toolbar>
+      </div>
+      <div slot="subhead">
+        <edb-menu-panel id="menuPanel" opened="{{menuPanelIsOpened}}">
+            <edb-menu-button id="menuButton" slot="button" opened="{{menuPanelIsOpened}}"></edb-menu-button>    
+            <div slot="shared-content">
+                <div id="categoryList">
+                <template is="dom-repeat" items="{{categories}}" as="category">
+                    <a href="/shop/{{category.slug}}" on-click="_closeMenuPanel">{{category.name}}</a>
+                </template>
+                </div>
+            </div>
+        </edb-menu-panel>  
+      </div>
+      <div slot="body">
+        <iron-pages id="sectionPages" attr-for-selected="name" selected="[[currentSection]]" fallback-selection="{{lastSection}}">
+          
+          <section id="homeSection" name="home">
+            
+            <edb-slider id="homeSlider" slide-count="[[slides.length]]">
+                <template is="dom-repeat" items="[[slides]]" as="slide">
+                    <edb-slide slot="slides" href="/slide/[[slide.id]]" image="[[_computePostImage(slide)]]" slide-count="[[slides.length]]">
+                      <div class="edb-headline">[[parseTitle(slide.title)]]</div>
+                      <div class="edb-subhead">[[parseTitle(slide.subtitle)]]</div>
+                    </edb-slide>
+                </template>
+            </edb-slider>
+            
+            
+            <edb-stack>
+              <template is="dom-repeat" items="[[features]]" as="feature">
+                  <a href="/feature/[[feature.id]]">
+                    <edb-stack-item image="[[_computePostImage(feature)]]" alt="[[index]]">
+                      <div class="feature-item-title" slot="title">[[parseTitle(feature.title)]]</div>
+                      <div class="feature-item-subtitle" slot="subtitle">[[parseTitle(feature.subtitle)]]</div>
+                      <div class="feature-item-body" slot="body">[[parseContent(feature.content)]]</div>
+                    </edb-stack-item>
+                  </a>
+              </template>
+            </edb-stack>
+          </section>
+          
+          <section id="samplesSection" name="order-samples">
+            <div class="fixed-header">
+              <h1 class="edb-headline">ORDER SAMPLES</h1>  
+            </div>
+            <edb-page-layout page="[[orderSamplesPage]]">
+              <edb-squares slot="extra-content">
+                <template is="dom-repeat" items="{{materials}}" as="material">
+                 <edb-square>
+                    <edb-material-patch material="[[material.meta_box.edb_material_number]]"></edb-material-patch> 
+                 </edb-square>
+                </template>  
+              </edb-squares>
+              
+              
+              
+              
+            </edb-page-layout>
+          </section>
+          
+          <section id="aboutSection" name="about">
+            <div class="fixed-header">
+              <h1 class="edb-headline">DESIGNED IN MONTREAL</h1>  
+            </div>
+            <edb-page-layout page="[[aboutPage]]">
+              
+            </edb-page-layout>
+          </section>
+          
+          <section id="shippingSection" name="shipping">
+            <div class="fixed-header">
+              <h1 class="edb-headline">SHIPPING</h1>  
+            </div>
+            <edb-page-layout page="[[shippingPage]]">
+              <edb-shipping-page-content slot="extra-content" get-zone-from-postal-code="{{_getZoneFromPostalCodeMethod()}}"></edb-shipping-page-content>
+            </edb-page-layout>
+          </section>
+          
+          <section id="contactSection" name="contact">
+            <div class="fixed-header">
+              <h1 class="edb-headline">CONTACT</h1>  
+            </div>
+            <edb-page-layout page="[[contactPage]]">
+              <edb-contact-page-content slot="extra-content"></edb-contact-page-content>
+            </edb-page-layout>
+          </section>
+          
+          <section id="lookbookSection" name="lookbook">
+            <div class="fixed-header">
+              <h1 class="edb-headline">LOOKBOOK</h1>  
+            </div>
+            
+          </section>
+          
+          <section id="inspirationSection" name="inspirations">
+            <div class="fixed-header">
+              <h1 class="edb-headline">INSPIRATIONS</h1>  
+            </div>
+            
+          </section>
+          
+          <section id="accountSection" name="account">
+            <div class="fixed-header">
+              <h1 class="edb-headline">ACCOUNT</h1>  
+            </div>
+          </section>
+          
+          
+          <section id="authSection" name="auth">
+            <iron-pages id="authPages" attr-for-selected="name" selected="[[currentPage]]">
+              <section id="authPage" name="ask">
+                <a href="/auth/login">login</a>
+                or
+                <a href="/auth/register">register</a>
+              </section>
+              
+              <edb-form id="loginForm" name="login">
+                <h3 slot="title" class="edb-title">Login</h3>
+                <p slot="text">Login intro text goes here...</p>
+                <paper-input  id="loginEmail" slot="fields" name="email"    type="text" label="email"></paper-input>
+                <paper-input  id="loginPassword" slot="fields" name="password" type="password" label="password"></paper-input>
+                <paper-button on-click="_submitLogin" slot="actions" raised primary>login</paper-button>
+                <a slot="actions" href="/auth/register">register instead</a>
+              </edb-form>
+              
+              <edb-form id="registerForm" name="register">
+                <h3 slot="title" class="edb-title">Register</h3>
+                <p slot="text">Register intro text goes here...</p>
+                <paper-input  id="registerEmail" slot="fields" name="email" type="text" label="email"></paper-input>
+                <paper-input  id="registerPassword" slot="fields" name="password" type="password" label="password"></paper-input>
+                <paper-input  id="registerPasswordConfirmation" slot="fields" name="passwordConfirmation" type="password" label="confirm password"></paper-input>
+                <paper-button on-click="_submitRegister" slot="actions" raised primary>register</paper-button>
+                <paper-checkbox checked slot="fields">I have read and agree...</paper-checkbox>
+                <paper-checkbox slot="fields">Please subscribe me to the mailing list...</paper-checkbox>
+                <a slot="actions" href="/auth/login">login instead</a>
+              </edb-form>
+            </iron-pages>
+            
+          </section>
+          
+          <section id="shopSection" name="shop"> 
+            <iron-pages id="shopPages" attr-for-selected="name" selected="[[currentPage]]" fallback-selection="listing">
+              <section id="listingPage" name="listing">
+                <div class="fixed-header">
+                  <h1 class="edb-headline">{{_computeShopSectionTitle(currentCategory)}}</h1>  
+                </div>
+                <div id="shopLinks" hidden$="{{_truthy(currentCategory,currentPage)}}">
+                  <template is="dom-repeat" items="{{categories}}" as="category">
+                      <a href="/shop/{{category.slug}}">{{category.name}}</a>
+                  </template>
+                </div>
+                <edb-stack>
+                  <template is="dom-repeat" items="{{currentProducts}}" as="product" filter="_filterProduct" sort="_sortProduct">
+                    <a href="{{_computeProductLink(currentCategory,product)}}">
+                      <edb-stack-item image="{{product.image}}">
+                        <div class="stack-item-title" slot="title">{{product.name}}</div>
+                        <div class="stack-item-subtitle" slot="subtitle">${{product.minPrice}} - ${{product.maxPrice}}</div>
+                        <div class="stack-item-body" slot="body">lorem ipsum...</div>
+                      </edb-stack-item>
+                    </a>
+                  </template>
+                </edb-stack>
+              </section>
+              <edb-product-page-layout id="productPage" name="product" product="{{currentProduct}}"></edb-product-page-layout>
+            </iron-pages>
+          </section>
+          <section id="cartSection" name="cart">
+              
+             <iron-pages id="cartPages" attr-for-selected="name" selected="[[currentPage]]">
+                
+                <section id="cartViewPage" name="view">
+                    <div class="fixed-header">
+                      <h1 class="edb-headline">Cart</h1>  
+                    </div>    
+                    <div id="emptyCart" hidden$="{{_truthy(cartItemCount)}}">
+                      <p>Your cart is empty.</p>
+                      <paper-button raised primary><a href="/shop">shop</a></paper-button>
+                    </div>
+                    <div class="cart-items" hidden$="{{!_truthy(cartItemCount)}}">
+                        <template is="dom-repeat" items="{{cartItems}}" as="cartItem">
+                            <edb-cart-item item="{{cartItem}}"></edb-cart-item>
+                          <!--<div>{{cartItem.token}}</div>-->
+                          <!--<div>{{cartItem.choices.quantity}}</div>-->
+                        </template>
+                        <div id="cartTotals">
+                            <edb-labeled-line label="Enter your postal code to calculate shipping">
+                                <paper-input id="cartPostCodeInput" placeholder="postal code" type="text" value="{{selectedPostCode}}" pattern="[A-Z][0-9][A-Z] [0-9][A-Z][0-9]">
+                                    <div id="zoneSuffix" slot="suffix">{{_computeShippingZoneSuffix(cartShippingZone)}}</div>
+                                </paper-input>        
+                            </edb-labeled-line>
+                            <edb-labeled-line label="Cart Total">{{cartItemCost}}</edb-labeled-line>
+                            <edb-labeled-line label="Discount Total">{{cartDiscountCost}}</edb-labeled-line>
+                            <edb-labeled-line label="Shipping Total">{{_computeShippingCostDisplay(cartShippingCost,selectedPostCode)}}</edb-labeled-line>
+                            <edb-labeled-line label="Tax Total">{{cartTaxCost}}</edb-labeled-line>
+                            <edb-labeled-line label="Total" final>{{cartTotal}}</edb-labeled-line>
+                        </div>
+                        <paper-button name="view" raised primary><a href="/cart/checkout" tabindex="-1">checkout</a></paper-button>
+                    </div>            
+                    
+                </section>
+                <section id="cartCheckoutView" name="checkout">
+                    <div class="fixed-header">
+                      <h1 class="edb-headline">Checkout</h1>
+                    </div>
+                    <edb-checkout-layout current-tab="{{currentTab}}">
+                        <section slot="address">
+                            <div class="twins">
+                            <div class="fieldset">
+                                <div class="title">
+                                    Billing Address
+                                </div>
+                                <edb-billing-address-form  user="{{currentUser}}" address="{{currentUser.customer_meta}}" shipping-address="{{currentUser.customer_meta}}"></edb-billing-address-form>                            
+                            </div>                                    
+                            <div class="fieldset">
+                                <div class="title">
+                                    Shipping Address
+                                </div>
+                                <edb-shipping-address-form user="{{currentUser}}" address="{{currentUser.customer_meta}}" billing-address="{{currentUser.customer_meta}}"></edb-shipping-address-form>
+                            </div>
+                            </div>
+                        </section>
+                        <section slot="paiment">
+                            <div class="twins">
+                                <div class="fieldset">
+                                   <div class="title">Credit Card Details</div>
+                                   <edb-payment-method-form address="{{currentUser.customer_meta}}"></edb-payment-method-form>
+                                </div>
+                                <div class="fieldset">
+                                   <div class="title">Coupons</div>
+                                   <div>
+                                       <paper-input label="coupon code"></paper-input>
+                                   </div>
+                                   
+                                </div>
+                            </div>
+                        </section>
+                        <section slot="review">
+                            <div id="checkoutItems">
+                                
+                                <template is="dom-repeat" items="{{cartItems}}" as="cartItem">
+                                    <edb-checkout-item item="{{cartItem}}"></edb-checkout-item>
+                                </template>
+                            </div>
+                            <div id="checkoutTotals">
+                                <edb-labeled-line label="Cart Total">{{cartItemCost}}</edb-labeled-line>
+                                <edb-labeled-line label="Discount Total">{{cartDiscountCost}}</edb-labeled-line>
+                                <edb-labeled-line label="Shipping Total">{{_computeShippingCostDisplay(cartShippingCost,selectedPostCode)}}</edb-labeled-line>
+                                <edb-labeled-line label="Tax Total">{{cartTaxCost}}</edb-labeled-line>
+                                <edb-labeled-line label="Total" final>{{cartTotal}}</edb-labeled-line>
+                            </div>
+                            <paper-button raised primary>place order</paper-button>
+                        </section>
+                    </edb-checkout-layout>
+                    
+                </section>
+             </iron-pages>
+             
+            
+          </section>
+          
+          <section id="accountSection" name="account">
+            account
+          </section>
+          
+        </iron-pages>
+        
+      </div>
+      <div id="foot" slot="footer">
+        <p>footer</p>
+      </div>
+      <edb-overlay id="overlay" loading></edb-overlay>
+      <div slot="bottom">
+        <edb-status status="{{status}}" progress="{{dataProgress}}"></edb-status>    
+        
+      </div>
+    </edb-layout>
+    
+    <edb-router  id="router"  defer="{{!dataLoaded}}" section="{{currentSection}}" page="{{currentPage}}" tab="{{currentTab}}" pid="{{currentId}}" category="{{currentCategory}}" query="{{currentQuery}}"></edb-router>
+    <edb-methods id="methods" api-host="installatex.ca" is-logged-in="{{isLoggedIn}}" page-domain="edb.akr.club" status="{{status}}" loaded="{{dataLoaded}}" progress="{{dataProgress}}" error-handler="[[_onMethodError()]]" success-handler="[[_onMethodSuccess()]]"></edb-methods>
+    <edb-catalog-brain-element 
+      id="brain"
+      api-product-data="{{productData}}" 
+      categories="{{categories}}" 
+      selected-category="{{currentCategory}}"
+      selected-product="{{currentId}}"
+      selected-post-code="{{selectedPostCode}}"
+      current-listing="{{currentProducts}}"
+      current-product="{{currentProduct}}"
+      cart-item-count="{{cartItemCount}}"
+      cart-item-tokens="{{cartItemTokens}}"
+      cart-items="{{cartItems}}"
+      cart-item-cost="{{cartItemCost}}"
+      cart-discount-cost="{{cartDiscountCost}}"
+      cart-tax-cost="{{cartTaxCost}}"
+      cart-shipping-cost="{{cartShippingCost}}"
+      cart-total="{{cartTotal}}"
+      cart-shipping-zone="{{cartShippingZone}}">
+    </edb-catalog-brain-element>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class EdbApp extends EdbMethodsMixin(Polymer.Element) {
+      static get is() { return 'edb-app'; }
+      static get properties() {
+        return {
+          dataLoaded: {
+            type: Boolean,
+            notify: true
+          },
+          lastSection: {
+            type: String,
+            notify: true,
+            computed: '_getLastSection(currentSection)'
+          },
+          menuPanelIsOpened:{
+              type: Boolean,
+              notify: true,
+              value: false
+          }
+          
+        };
+      }
+      
+      _truthy(a){
+        console.log('trutyh',a,!!a)
+        return !!a;
+      }
+      
+      _sortProduct(product){
+        if(!product.filterScore) return 0;
+        var avgScore = this.currentProducts.reduce( (t,p)=>{
+          return t + p.filterScore;
+        },0)/this.currentProducts.length;
+        return product.filterScore > avgScore ? -1 : 1;
+      }
+      
+      _filterProduct(product){
+        // console.log('_filterProduct',product, this.currentQuery);
+        var result = true;
+        if(this.currentQuery && this.currentQuery.s){
+          var fuzz = FuzzySet();
+          fuzz.add(this.parseTitle(product.name));
+          var scores = fuzz.get(this.currentQuery.s);
+          var score = scores.map( (s)=> s[0] )[0];
+          // console.log('filterscore', score, product.name,this.currentQuery.s)
+          product.filterScore = score;
+          result =  score > 0.5;
+        }
+        if( this.currentQuery && this.currentQuery.after){
+          result = result ? product.created > parseInt(this.currentQuery.after) : false;
+          
+        }
+        return result;
+      }
+      
+      static get observers(){
+        return [
+          '_toggleOverlay(dataLoaded)',
+          '_importProductData(dataLoaded)',
+          '_sectionChanged(currentSection)',
+          '_closeMenuPanel(currentSection,currentPage,currentCategory)',
+          '_loginStateChanged(isLoggedIn)',
+          '_userShippingChanged(currentUser.customer_meta.shipping_postcode)'
+        ]
+      }
+      _computeProductLink(category,product){
+        if(!category){
+          category = product.mainCategory || 'sofas';
+        }
+        return `/shop/${category}/${product.id}`;
+      }
+      
+      toggleProductPanel(){
+            this.set('menuPanelIsOpened', !this.get('menuPanelIsOpened'))  
+      }
+      
+      _userShippingChanged(postCode){
+          this.set('selectedPostCode', postCode );
+      }
+      
+      _loginStateChanged(is){
+          this.set("currentUser", this.$.methods.getData('user') );
+      }
+      
+      _computePostImage( post ){
+          if(!post) return { src: null, colors: [] } ;
+          var src = post.featured_image||null;
+          var colors = post.featured_colors||[];
+          return {src: src, colors: colors };
+      }
+      constructor(){
+        super();
+
+      }
+      
+      _afterLogin(){
+          this.$.gohome.click();
+      }
+      
+      _afterLogout(){
+        window.location.reload( true );
+      }
+      
+      _submitLogout(){
+        this.$.methods.logout( ).then( this._afterLogout.bind(this))
+      }
+      _submitLogin(){
+          var email = this.$.loginEmail.value;
+          var password = this.$.loginPassword.value;
+          console.log(email,password)
+          this.$.methods.login( email, password ).then( this._afterLogin.bind(this))
+      }
+      
+      _submitRegister(){
+          
+      }
+      
+    //   _getCartItems( tokens, count  ){
+    //       console.log('_getCartItems', tokens, count )
+    //       if( tokens && count ){
+    //           return tokens.map( ( token )=>{
+    //               return this.$.brain.cart.tokens.get(token);
+    //           });
+    //       }
+    //       return []
+    //   }
+
+      _onMethodSuccess(  ){
+          return (message)=>{
+            this.$.bar.type = 'success';
+            this.$.bar.message = message;
+            
+            this.$.bar.show();    
+          }
+      }
+      
+      _computeShippingCostDisplay( cost, code ){
+          if( !code ){
+              return cost;
+          }
+          return cost == '---' ? `free for ${this.$.brain.cartShippingZone}` : cost;
+      }
+      
+      _computeShippingZoneSuffix(zone){
+          return zone == 'n/a' ? '' : zone;
+      }
+      
+      _onMethodError( ){
+          return ( message )=>{
+            this.$.bar.type = 'error';
+            this.$.bar.message = message;
+            
+            this.$.bar.show();    
+          }
+          
+      }
+      
+      
+      
+      _getLastSection(){
+        return localStorage.getItem('lastSection' );
+      }
+      
+      _sectionChanged(section){
+        localStorage.setItem('lastSection', section );
+      
+      }
+      _closeMenuPanel(){
+        this.set('menuPanelIsOpened', false );  
+      }
+      
+      _computeShopSectionTitle(category){
+        return category ? category.replace('sofas-','') : 'shop';
+      }
+      _importProductData(loaded){
+        if(loaded){
+          
+          this.productData = this.$.methods.getData('products');
+          
+          var pages = this.$.methods.getData('pages');
+          var orderSamplesPage = pages.findIndex( ( p )=>{
+            return p.slug == 'order-samples-page';
+          });
+          var aboutPage = pages.findIndex( ( p )=>{
+            return p.slug == 'about-page';
+          });
+          var contactPage = pages.findIndex( ( p )=>{
+            return p.slug == 'contact-page';
+          });
+          var shippingPage = pages.findIndex( ( p )=>{
+            return p.slug == 'shipping-page';
+          });
+          this.set('features',this.$.methods.getData('features'));
+          this.set('slides', this.$.methods.getData('slides'));
+          this.set('materials', this.$.methods.getData('materials'));
+          
+          this.set('orderSamplesPage', pages[orderSamplesPage]);
+          this.set('aboutPage', pages[aboutPage]);
+          this.set('contactPage', pages[contactPage]);
+          this.set('shippingPage', pages[shippingPage]);
+          console.log(this.contactPage)
+        }
+      }
+      
+      
+      
+      _toggleOverlay(loaded){
+        if(loaded){
+          this.$.overlay.hide();  
+        }else{
+          this.$.overlay.show();  
+        }
+        
+      }
+      
+      _setupFixedHeaders(){
+          var sizer = document.createElement('div');
+          sizer.setAttribute('class','fixed-header-sizer');
+          this.shadowRoot.querySelectorAll('.fixed-header').forEach( ( node )=>{
+            var clone = sizer.cloneNode();
+            if(node.classList.contains('with-body')){
+              clone.classList.add('with-body');
+            }
+            node.parentNode.insertBefore( clone, node );
+          });
+      }
+      
+      _getZoneFromPostalCodeMethod(){
+        return ( postcode )=>{
+          return this.$.brain.getZoneFromPostalCode(postcode);
+        }
+      }
+
+      connectedCallback(){
+        super.connectedCallback();
+        this.$.brain.listen( this );
+        
+        // this.$.brain.methods( this.$.methods );
+        // this.$.methods.provideMethods( this );
+        this._setupFixedHeaders();
+
+        
+      }
+    }
+
+    window.customElements.define(EdbApp.is, EdbApp);
+  </script>
+</dom-module>
