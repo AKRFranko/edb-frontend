@@ -248,7 +248,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
            <h1 class="product-name">[[renderAsString(product.name)]]</h1>
 
           
-          <p hidden$="[[!showCurrentPrice]]" class="product-price">$[[renderAsNumber(product.currentPrice)]]</p>
+          <p hidden$="[[!showCurrentPrice]]" title="[[explain(product,'currentPrice',product.*)]]" class="product-price">$[[renderAsNumber(product.currentPrice)]]</p>
           <p hidden$="[[showCurrentPrice]]"  class="product-price">$[[renderAsNumber(product.minPrice)]] - $[[renderAsNumber(product.maxPrice)]]</p>
           <div hidden$="[[!hasChoice(product.choices,'slipcover')]]" class="choice-dropdown">
             <paper-button on-click="toggleCollapse" data-collapse="materialDropdown">select a color <iron-icon icon="my-icons:chevron-right"></iron-icon></paper-button>
@@ -256,7 +256,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
               <div class="inner-collapse">
                 <iron-selector name="slipcover" attr-for-selected="name" selected="[[getSelectedChoice(product.choices,'slipcover')]]" on-selected-changed="_onSelectionChange">
                   <template is="dom-repeat" items="[[getChoiceOptions(product.choices,'slipcover')]]" as="option">
-                    <edb-material-button name$="[[option.name]]" material="[[option.name]]"></edb-material-button>
+                    <edb-material-button name$="[[option.name]]" material="[[option.name]]" title="[[explain(option,'stockCount',product.*)]]" badge="[[option.stockCount]]"></edb-material-button>
                   </template>
                 </iron-selector>
               </div>
@@ -387,7 +387,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
           showCurrentPrice: {
             type: Boolean,
             notify: true,
-            computed: '_computePriceDisplay(product.*)'
+            computed: '_computeShowCurrentPrice(product.*)'
           }
         }
       }
@@ -400,7 +400,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
           '_onWantedQuantityChanged(wantedQuantity)']
       }
       
-      _computePriceDisplay(){
+      _computeShowCurrentPrice(){
         if(!this.product) return false;
         if(!this.product.selected) return false;
         return Object.keys( this.product.selected ).filter( (k)=> { return k!=='quantity' }).some(( k)=>{
@@ -416,46 +416,53 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         var list = '<ol><li>' +parts.join('</li><li>') + '</li></ol>';
         return '<h3>'+a+'</h3>'+list;
       }
+      
+      explain( o, p ){
+        if(!o) return;
+        if(typeof o[p] == 'undefined') return;
+        var n = o[p];
+        if( (n || n ===0) && typeof n.explain == 'function'){
+          return n.explain();
+        }
+        return n;
+      }
       _decrQty(){
         var old = parseFloat(this.get('wantedQuantity'));
         if(old <= 1) return;
-        
         this.set('wantedQuantity',old - 1);
-        // this.product.select( {quantity: old - 1 });
-        
       }
+      
       _incrQty(){
         var old = parseFloat(this.get('wantedQuantity'));
         if(old >= 100) return;
         this.set('wantedQuantity',old + 1);
-        // this.product.select( {quantity: old + 1 });
       }
+      
       _onWantedQuantityChanged(q){
         if(!this.product) return;
         if(!this.product.id && this.product.id !== 0) return;
         if(typeof q == 'undefined' || q === null ){
-          this.product.select( { quantity: 0 });
+          // console.log('this.product.select', 0 )
+          // this.product.select( { quantity: 0 });
         }else{
-          this.product.select( { quantity: parseFloat(q) });
+          // console.log('this.product.select', q )
+          // this.product.select( { quantity: parseFloat(q) });
         }
-        
-        
       }
+      
       requestAddToCart(){
         var qty = this.get('wantedQuantity');
+        this.product.select( { quantity: parseFloat(qty) - this.product.choices.get('quantity').selected });
         var result = this.$.reflection.addToCart();
         if(result instanceof Error){
           console.error( result );
           window.EDBApp.notifyError(result.message);
         }else{
-          this.set('wantedQuantity', 1 );
-          this.product.select( { quantity: 1 });
-          this._productChanged();
-          // this.notifyPath('product.choices');
           ['choices','minPrice','maxPrice','currentPrice'].forEach( (path)=>{
             this.notifyPath(`product.${path}`);  
           });
-          console.log(result)
+          this._productChanged();
+          this.product.reset();
           window.EDBApp.notifySuccess(`added ${qty} to cart`);
         }
         
@@ -478,28 +485,45 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         return Array.from(choices.get(choice).options.keys()).map(( k )=>{
           var value = choices.get(choice).options.get(k);
           if(value.size){
-            var first = value.values().next();
-            value = first.value;
+            var obj = {};
+            value.forEach( ( v )=>{
+              
+              Object.assign( obj, {
+                name: v.name,
+                slug: v.name,
+                parent: v.parent,
+                stockCount: obj.stockCount || obj.stockCount === 0 ? Math.min(v.stockCount,obj.stockCount) : v.stockCount
+              } );
+              console.log( 'value', v.id, v.name, v.stockCount )
+            })
+            // var first = value.values().next();
+            value = obj;
           }
-          return {name: value.name, slug: value.name, parent: value.parent };
+          return {name: value.name, slug: value.name, parent: value.parent,stockCount: value.stockCount };
         });
       }
       
       toggleCollapse(e){
-        var collapse = e.target.dataset.collapse;
+        
         var btn = e.target;
+        if(!btn.dataset.collapse && btn.parentNode.dataset.collapse){
+          btn = btn.parentNode;
+        }
+        var collapse = btn.dataset.collapse;
         btn.classList.toggle('active');
         this.$[collapse].toggle();
       }
       _productChanged(product){
-        // console.log('_productChanged',product.choices)
-        // if(!product){
+        
           Array.prototype.forEach.call(this.shadowRoot.querySelectorAll('iron-collapse'), function(n){
             n.opened = false;
           });
-        // }else{
+        
           this.set('wantedQuantity', 1 );
-        // }
+          if(this.product){
+            this.product.select( { quantity: 1 });
+          }
+        
       }
       
       

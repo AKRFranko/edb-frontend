@@ -56,7 +56,7 @@
       });
     };
     
-    
+    window.Brain = Brain;
     var ReflectValuesMixin = function(superClass) {
       return class extends superClass {
         _reflectString(l,...s){
@@ -324,11 +324,11 @@
       }
       
       addToCart(){
-        var qty = this.choices.get('quantity').selected.valueOf();
+        var qty = this.ref.choices.get('quantity').selected;
         if(!qty){
           return new Error('Must select a quantity');
         }
-        
+        // console.log('ADDING TO CART',qty.explain())
         var result = this.ref.addToCart();
         Brain.notify();
         this.notifyPath('ref');

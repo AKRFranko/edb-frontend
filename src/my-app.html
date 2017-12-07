@@ -423,6 +423,8 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
        position:relative;
        margin-left:6px;
        transform:scale(0.8) translateY(-2px);
+       top:auto!important;
+       left:auto!important;
       }
       
       #userNav{
@@ -648,7 +650,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
               
                 <a href="[[rootPath]]account/" hidden$="[[!isLoggedIn]]"><span class="colored">[[currentUser.email]]</span></a>
                 <a href="[[rootPath]]account/" hidden$="[[!isLoggedIn]]">my account</a>
-                <a id="cartButton" href="[[rootPath]]cart/" hidden$="[[!isLoggedIn]]">Cart <paper-badge label=[[cartItemCount]]></paper-badge></a>
+                <a id="cartButton" href="[[rootPath]]cart/">Cart <paper-badge label=[[cartItemCount]]></paper-badge></a>
                 <a href="[[rootPath]]auth/" on-click="logout" hidden$="[[!isLoggedIn]]">Sign Out</a>
             </div>
             <div id="siteNav" bottom-item>
@@ -1022,6 +1024,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
         if(page == 'wait') return;
         
         
+        console.log('resolvedPageUrl', page )
         
         var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
         

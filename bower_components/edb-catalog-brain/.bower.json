@@ -17,13 +17,13 @@
   "dependencies": {
     "pedantic-count": "AKRFranko/pedantic-count"
   },
-  "_release": "57e60cc030",
+  "_release": "7af5b6da75",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "57e60cc0301df144b900257c2580e7be6bb21190"
+    "commit": "7af5b6da7537e5c0e1db54c17fa2c5ddbb58c29a"
   },
-  "_source": "git://github.com/AKRFranko/edb-importer.git",
+  "_source": "https://github.com/AKRFranko/edb-importer.git",
   "_target": "*",
   "_originalSource": "AKRFranko/edb-importer"
 }

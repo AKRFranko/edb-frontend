@@ -29,13 +29,21 @@
         background-color:#ccc;
         background-position:center;
         background-size:cover;
+        position:relative;
         
-        
+      }
+      #badge{
+        position: absolute;
+        color: #fff;
+        bottom: 10px;
+        right: 10px;
+        @apply --app-sans-serif-font;
       }
       
     </style>
     <div id="materialButton" type="button" style$="{{__computeBgStyle(material)}}">
       <paper-ripple center></paper-ripple>
+      <div id="badge">{{badge}}</div>
     </div>
   </template>
 
@@ -55,6 +63,10 @@
               value: function(){
                 return {};
               }
+            },
+            badge: {
+              type: Number,
+              notify: true
             }
           }
         }
