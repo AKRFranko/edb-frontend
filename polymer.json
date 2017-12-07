@@ -1,7 +1,25 @@
 {
-  "lint": {
-    "rules": [
-      "polymer-2"
-    ]
-  }
+  "entrypoint": "index.html",
+  "shell": "src/edb-app/edb-app.html",
+
+"sources": [
+"src/**/*",
+"images/**/*",
+"bower.json"
+],
+"extraDependencies": [
+"manifest.json",
+"bower_components/webcomponentsjs/*.js",
+"bower_components/fuzzyset.js/lib/*.js"
+],
+"lint": {
+"rules": [
+"polymer-2"
+]
+},
+"builds": [
+{
+"preset": "es5-bundled"
+}
+]
 }

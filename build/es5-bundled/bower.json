@@ -1,0 +1,23 @@
+{
+  "name": "edb-app",
+  "main": "index.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "paper-input-elements": "PolymerElements/paper-input-elements",
+    "iron-selector": "PolymerElements/iron-selector#^2.0.1",
+    "paper-button": "^2.0.0",
+    "iron-icon": "^2.0.1",
+    "iron-iconset-svg": "^2.1.0",
+    "google-map": "GoogleWebComponents/google-map#^2.0.3",
+    "fuzzyset.js": "*"
+  },
+  "devDependencies": {
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+  },
+  "resolutions": {
+    "polymer": "^2.0.0",
+    "webcomponentsjs": "^v1.0.2",
+    "iron-flex-layout": "^2.0.1"
+  }
+}
