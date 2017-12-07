@@ -630,7 +630,7 @@
     </edb-layout>
     
     <edb-router  id="router"  defer="{{!dataLoaded}}" section="{{currentSection}}" page="{{currentPage}}" tab="{{currentTab}}" pid="{{currentId}}" category="{{currentCategory}}" query="{{currentQuery}}"></edb-router>
-    <edb-methods id="methods" api-host="installatex.ca" is-logged-in="{{isLoggedIn}}" page-domain="edb.akr.club" status="{{status}}" loaded="{{dataLoaded}}" progress="{{dataProgress}}" error-handler="[[_onMethodError()]]" success-handler="[[_onMethodSuccess()]]"></edb-methods>
+    <edb-methods id="methods" api-host="installatex.ca" is-logged-in="{{isLoggedIn}}" page-domain="{{pageDomain}}" status="{{status}}" loaded="{{dataLoaded}}" progress="{{dataProgress}}" error-handler="[[_onMethodError()]]" success-handler="[[_onMethodSuccess()]]"></edb-methods>
     <edb-catalog-brain-element 
       id="brain"
       api-product-data="{{productData}}" 
@@ -664,6 +664,12 @@
           dataLoaded: {
             type: Boolean,
             notify: true
+          },
+          pageDomain:{
+            type: String,
+            value: ()=>{
+              return window.location.host;
+            }
           },
           lastSection: {
             type: String,
@@ -728,8 +734,9 @@
         return `/shop/${category}/${product.id}`;
       }
       
-      toggleProductPanel(){
-            this.set('menuPanelIsOpened', !this.get('menuPanelIsOpened'))  
+      toggleProductPanel(e){
+        if(e) e.preventDefault();
+        this.set('menuPanelIsOpened', !this.get('menuPanelIsOpened'))  
       }
       
       _userShippingChanged(postCode){
@@ -756,7 +763,7 @@
       }
       
       _afterLogout(){
-        window.location.reload( true );
+        window.location.href = '/';
       }
       
       _submitLogout(){

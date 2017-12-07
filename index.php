@@ -9,6 +9,7 @@ $token = '<title>edb-frontend</title>';
 $template_directory = get_bloginfo('template_directory');
 $blogname = get_bloginfo('blogname');
 $token_replacement = "<base href=\"$template_directory/\"><title>$blogname</title>";
+// $token_replacement = "<title>$blogname</title>";
 
 // $current_user = wp_get_current_user(); 
 // if ( !(is_user_logged_in()) ){
