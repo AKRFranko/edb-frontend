@@ -10,6 +10,7 @@ if(preg_match('/admin/', $_SERVER['SERVER_NAME'])){
 }else{
   $html = file_get_contents(__DIR__ . '/index.html');  
 }
+
 $token = '<title>edb-frontend</title>';
 $template_directory = get_bloginfo('template_directory');
 $blogname = get_bloginfo('blogname');
