@@ -4,7 +4,12 @@ if(preg_match('/test-report/', $_SERVER['REQUEST_URI'])){
  echo $html;
  die();
 }
-$html = file_get_contents(__DIR__ . '/index.html');
+
+if(preg_match('/admin/', $_SERVER['SERVER_NAME'])){
+  $html = file_get_contents(__DIR__ . '/admin.html');
+}else{
+  $html = file_get_contents(__DIR__ . '/index.html');  
+}
 $token = '<title>edb-frontend</title>';
 $template_directory = get_bloginfo('template_directory');
 $blogname = get_bloginfo('blogname');
