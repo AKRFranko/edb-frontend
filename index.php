@@ -6,6 +6,7 @@ if(preg_match('/test-report/', $_SERVER['REQUEST_URI'])){
 }
 if(preg_match('/manage/', $_SERVER['REQUEST_URI'])){
   $html = file_get_contents(__DIR__ . '/admin.html');
+  die();
 }else{
   $html = file_get_contents(__DIR__ . '/index.html');  
 }
