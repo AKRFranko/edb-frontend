@@ -4,6 +4,8 @@ if(preg_match('/test-report/', $_SERVER['REQUEST_URI'])){
  echo $html;
  die();
 }
+var_dump($_SERVER['SERVER_NAME']);
+die();
 if(preg_match('/admin/', $_SERVER['SERVER_NAME'])){
   $html = file_get_contents(__DIR__ . '/admin.html');
 }else{
