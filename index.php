@@ -4,9 +4,8 @@ if(preg_match('/test-report/', $_SERVER['REQUEST_URI'])){
  echo $html;
  die();
 }
-if(preg_match('/manage/', $_SERVER['REQUEST_URI'])){
+if(preg_match('/admin/', $_SERVER['SERVER_NAME'])){
   $html = file_get_contents(__DIR__ . '/admin.html');
-  var_dump('MANAGE');
 }else{
   $html = file_get_contents(__DIR__ . '/index.html');  
 }
