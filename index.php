@@ -5,17 +5,14 @@ if(preg_match('/test-report/', $_SERVER['REQUEST_URI'])){
  die();
 }
 
-if(preg_match('/admin/', $_SERVER['SERVER_NAME'])){
-  $html = file_get_contents(__DIR__ . '/admin.html');
-}else{
-  $html = file_get_contents(__DIR__ . '/index.html');  
-}
+
+$html = file_get_contents(__DIR__ . '/index.html');  
 
 $token = '<title>edb-frontend</title>';
 $template_directory = get_bloginfo('template_directory');
 $blogname = get_bloginfo('blogname');
-$token_replacement = "<base href=\"$template_directory/\"><title>$blogname</title>";
-// $token_replacement = "<title>$blogname</title>";
+// $token_replacement = "<base href=\"$template_directory/\"><title>$blogname</title>";
+$token_replacement = "<title>$blogname</title>";
 
 // $current_user = wp_get_current_user(); 
 // if ( !(is_user_logged_in()) ){

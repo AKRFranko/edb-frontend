@@ -129,7 +129,7 @@
          <article class="map">
            
              <google-map id="gmap" map="{{map}}" api-key="AIzaSyBdDY23DjMS6vinyNjD74StRoIiYOZtHZ4" latitude="45.484497" longitude="-73.706519" map-type="roadmap" zoom="11" fit-to-markers disable-map-type-control disable-street-view-control>
-               <google-map-marker latitude="45.484497" longitude="-73.706519" icon="./images/edb-pin.png"></google-map-marker>
+               <google-map-marker latitude="45.484497" longitude="-73.706519"></google-map-marker>
              </google-map>
            
            <p>our showroom is conveniently located in montreal near the junction of the 40 and the 13.</p>
@@ -188,7 +188,9 @@
           },zone: {
               type: String,
               notify: true
-            },
+            },map:{
+              type: Object
+            }
           
         };
       }

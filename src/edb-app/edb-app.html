@@ -11,6 +11,7 @@
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/edb-catalog-brain-element/edb-catalog-brain-element.html">
 <link rel="import" href="../../bower_components/edb-elements/edb-elements.html">
+<link rel="import" href="../../bower_components/edb-admin-element/edb-admin-element.html">
 
 
 <link rel="import" href="./edb-shipping-page-content.html">
@@ -326,7 +327,11 @@
       
       
     </style>
-    <a id="gohome" href="/home"></a>
+    
+    
+    
+    
+    <a id="gohome"  href="/home"></a>
     <edb-notification-bar id="bar"></edb-notification-bar>
     <edb-layout class="fullbleed">
       <div slot="header">
@@ -630,8 +635,8 @@
       </div>
     </edb-layout>
     
-    <edb-router  id="router"  defer="{{!dataLoaded}}" section="{{currentSection}}" page="{{currentPage}}" tab="{{currentTab}}" pid="{{currentId}}" category="{{currentCategory}}" query="{{currentQuery}}"></edb-router>
-    <edb-methods id="methods" api-host="installatex.ca" is-logged-in="{{isLoggedIn}}" page-domain="{{pageDomain}}" status="{{status}}" loaded="{{dataLoaded}}" progress="{{dataProgress}}" error-handler="[[_onMethodError()]]" success-handler="[[_onMethodSuccess()]]"></edb-methods>
+    <edb-router  id="router"  route="{{route}}" defer="{{!dataLoaded}}" section="{{currentSection}}" page="{{currentPage}}" tab="{{currentTab}}" pid="{{currentId}}" category="{{currentCategory}}" query="{{currentQuery}}"></edb-router>
+    <edb-methods id="methods" api-host="api.installatex.ca" is-logged-in="{{isLoggedIn}}" page-domain="{{pageDomain}}" status="{{status}}" loaded="{{dataLoaded}}" progress="{{dataProgress}}" error-handler="[[_onMethodError()]]" success-handler="[[_onMethodSuccess()]]"></edb-methods>
     <edb-catalog-brain-element 
       id="brain"
       api-product-data="{{productData}}" 
@@ -666,6 +671,7 @@
             type: Boolean,
             notify: true
           },
+          
           pageDomain:{
             type: String,
             value: ()=>{
@@ -721,12 +727,33 @@
       static get observers(){
         return [
           '_toggleOverlay(dataLoaded)',
+          '_setPageTitle(currentSection,currentPage,currentCategory,currentTab,currentId)',
           '_importProductData(dataLoaded)',
           '_sectionChanged(currentSection)',
           '_closeMenuPanel(currentSection,currentPage,currentCategory)',
           '_loginStateChanged(isLoggedIn)',
           '_userShippingChanged(currentUser.customer_meta.shipping_postcode)'
         ]
+      }
+      _setPageTitle(section,page,cat,tab,id){
+        var sub = page||cat||tab;
+        if(sub == 'home') sub = null;
+        var title = [section, sub, id].filter( (a)=> !!a);
+        title.unshift('EDB');
+        title = title.reduce( (t,a)=>{ if(!~t.indexOf(a)){ t.push(a)}; return t; }, [])
+        
+        title = title.join(' ');
+        document.title = title;
+        // if(window.OWATracker){
+        //   Polymer.Async.microTask.run( ()=>{
+        //     // window.OWATracker.resetSessionState();
+        //     window.OWATracker.setUserName( this.currentUser.name )
+        //     window.OWATracker.setPageType( id||page ? 'single' : 'listing' );
+        //     window.OWATracker.setPageTitle( document.title );
+        //     window.OWATracker.trackPageView();
+        //   });
+        // }
+        return title;
       }
       _computeProductLink(category,product){
         if(!category){
@@ -746,6 +773,7 @@
       
       _loginStateChanged(is){
           this.set("currentUser", this.$.methods.getData('user') );
+          
       }
       
       _computePostImage( post ){

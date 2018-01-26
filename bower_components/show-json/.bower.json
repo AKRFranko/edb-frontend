@@ -1,0 +1,29 @@
+{
+  "name": "show-json",
+  "description": "show json w/ syntax higlighting",
+  "main": "show-json.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "paper-fab": "PolymerElements/paper-fab#^2.0.0",
+    "marked-element": "PolymerElements/marked-element#^2.0.0",
+    "prism-element": "PolymerElements/prism-element#^2.0.0",
+    "iron-iconset-svg": "PolymerElements/iron-iconset-svg#^2.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^2.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
+    "web-component-tester": "^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+  },
+  "homepage": "https://github.com/ryanburns23/show-json",
+  "version": "2.0.0",
+  "_release": "2.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.0.0",
+    "commit": "4713a29cfcbc2bd7f6cd3f929b2fca2055797e37"
+  },
+  "_source": "https://github.com/ryanburns23/show-json.git",
+  "_target": "^2.0.0",
+  "_originalSource": "ryanburns23/show-json"
+}
